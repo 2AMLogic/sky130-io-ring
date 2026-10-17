@@ -7,7 +7,7 @@ designed by AI agents driving
 [klayout-tools](https://github.com/2AMLogic/klayout-tools) and the
 open-source xschem + ngspice flow.
 
-**Status: just opened, specification phase.** Nothing is designed yet.
+**Status: specification phase.** The spec is proposed; nothing is designed yet.
 
 **Built agent-native.** Every specification, decision record, testbench, and
 line of documentation here is produced by AI agents working from a ratified
@@ -33,7 +33,7 @@ sky130 ships its own I/O library (`sky130_fd_io`). This repo does not wrap
 or re-tile it; it draws its own cells so that every I/O-specific rule gets
 exercised by new geometry, and it uses the foundry library as the reference
 and comparison. Whether to draw every cell or adopt some foundry cells is
-the first question for the spec (see issue #1). Where the honest answer is
+the first question for the spec (see [decision 0001](spec/decisions/0001-draw-vs-adopt.md)). Where the honest answer is
 "the foundry cell already does this correctly," record that — it is a real
 result.
 
@@ -50,19 +50,12 @@ here should be written so a second PDK can follow them.
 - **Not in scope**: the core, the package, bond-wire modelling, and any ESD
   rating claim before measured silicon.
 
-## Target specification (DRAFT — engineering to ratify, see issue #1)
+## Specification
 
-All figures are targets.
-
-| Parameter | Target | Fallback | Stretch |
-|---|---|---|---|
-| I/O supply | 3.3 V ±10% | — | 5 V-tolerant input |
-| Core interface | 1.8 V ±10%, level-shifted in the pad | — | — |
-| GPIO | bidirectional, output enable, input enable, pull-up/pull-down | output + input only | selectable drive strength, slew control |
-| Cell set | GPIO, I/O-supply pad, core-supply pad, corner, fillers | GPIO + one supply pair + corner | analog pass-through pad |
-| ESD | clamp network on every pad, simulated with the PDK's models; HBM target 2 kV as a design target only | — | — |
-| Ring | closed demonstration ring, supply rails continuous | one side + corner | — |
-| Signoff | DRC + LVS clean, latch-up and guard-ring rules clean, ring ERC clean | — | — |
+The specification is proposed and awaiting human ratification:
+[`spec/io-ring.md`](spec/io-ring.md), with its rows as data in
+[`spec/io-ring.json`](spec/io-ring.json) and the decision records in
+[`spec/decisions/`](spec/decisions/). All figures are targets.
 
 ESD robustness is a silicon property. Pre-silicon, this repo can show that
 the clamp network turns on and carries the intended current in simulation
@@ -71,7 +64,7 @@ any cell ESD-rated until silicon says so.
 
 Maturity ladder: spec ratified → GPIO cell simulated across PVT → cells
 DRC/LVS-clean → ring assembled, DRC/LVS/ERC-clean → shuttle seat → measured
-silicon. **Current position: pre-spec.**
+silicon. **Current position: spec proposed, awaiting ratification.**
 
 ## Repo layout
 
