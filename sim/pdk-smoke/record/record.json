@@ -1,0 +1,63 @@
+{
+  "all_converged": true,
+  "corner": "tt",
+  "kind": "pdk-smoke",
+  "note": "Models load/converge only; bias, W and L are smoke values, not design choices.",
+  "pdk_revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "pdk_variant": "sky130A",
+  "runs": {
+    "smoke": {
+      "converged": true,
+      "errors": [],
+      "log": "logs/smoke.log",
+      "results": {
+        "nfet_01v8": {
+          "id_off_A": 2.04621e-12,
+          "id_on_A": 0.000501046,
+          "points": 37.0,
+          "vsup": 1.8
+        },
+        "nfet_01v8_op": {
+          "id_A": 0.000501046,
+          "vsup": 1.8
+        },
+        "nfet_g5v0d10v5": {
+          "id_off_A": 1.26043e-11,
+          "id_on_A": 0.000654509,
+          "points": 101.0,
+          "vsup": 5.0
+        },
+        "nfet_g5v0d10v5_op": {
+          "id_A": 0.000654509,
+          "vsup": 5.0
+        },
+        "pfet_01v8": {
+          "id_off_A": 3.19918e-10,
+          "id_on_A": 0.000200748,
+          "points": 37.0,
+          "vsup": 1.8
+        },
+        "pfet_01v8_op": {
+          "id_A": 0.000200748,
+          "vsup": 1.8
+        },
+        "pfet_g5v0d10v5": {
+          "id_off_A": 5.22055e-12,
+          "id_on_A": 0.000351682,
+          "points": 101.0,
+          "vsup": 5.0
+        },
+        "pfet_g5v0d10v5_op": {
+          "id_A": 0.000351682,
+          "vsup": 5.0
+        }
+      }
+    }
+  },
+  "temp_c": 27,
+  "tools": {
+    "ciel": "2.6.1",
+    "ngspice": "46",
+    "xschem": "3.4.7"
+  }
+}

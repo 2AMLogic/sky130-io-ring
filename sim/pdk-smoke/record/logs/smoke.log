@@ -1,0 +1,40 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * pdk-smoke: dc op + id-vgs per device, tt, 27 c
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+RESULT nfet_01v8_op vsup=1.8 id_A=0.000501046
+RESULT pfet_01v8_op vsup=1.8 id_A=0.000200748
+RESULT nfet_g5v0d10v5_op vsup=5.0 id_A=0.000654509
+RESULT pfet_g5v0d10v5_op vsup=5.0 id_A=0.000351682
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 37
+RESULT nfet_01v8 vsup=1.8 id_off_A=2.04621E-12 id_on_A=0.000501046 points=37
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 37
+RESULT pfet_01v8 vsup=1.8 id_off_A=3.19918E-10 id_on_A=0.000200748 points=37
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 101
+RESULT nfet_g5v0d10v5 vsup=5.0 id_off_A=1.26043E-11 id_on_A=0.000654509 points=101
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 101
+RESULT pfet_g5v0d10v5 vsup=5.0 id_off_A=5.22055E-12 id_on_A=0.000351682 points=101
+ngspice-46 done
