@@ -1,0 +1,13 @@
+{
+  "pdk_family": "sky130",
+  "variant": "sky130A",
+  "open_pdks_revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "install": "ciel enable --pdk-family sky130 f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "default_pdk_root": "~/.ciel",
+  "tools": {
+    "ciel": "2.6.1",
+    "ngspice": "46",
+    "xschem": "3.4.7"
+  },
+  "note": "Single source of the PDK pin. sim/lib/pdk_env.sh refuses any tree whose SOURCES revision differs. tools.* are the versions the committed smoke record was produced with; each record also states the versions it actually ran under."
+}
