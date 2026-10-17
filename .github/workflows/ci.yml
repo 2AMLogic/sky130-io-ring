@@ -1,0 +1,60 @@
+# PDK-free, headless CI: no PDK, ngspice, xschem or klayout is installed or run.
+# See signoff/README.md for what this does and does not check.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # The one place the signoff grader is pinned. A bump must regenerate
+  # signoff/signoff-record.json in the same PR (signoff/README.md).
+  KLT_VERSION: "0.7.0"
+
+jobs:
+  signoff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0
+
+      - name: Checker self-tests (each must reject its seeded defects)
+        run: python3 scripts/ci/test_checkers.py
+
+      - name: Evidence directories and sim record format
+        run: python3 -I scripts/ci/check_evidence_format.py .
+
+      - name: Re-grade the block manifest with the pinned grader
+        run: |
+          pipx install "klayout-tools==${KLT_VERSION}"
+          set +e
+          klt signoff --manifest signoff/block-manifest.json --format json > "$RUNNER_TEMP/fresh.json"
+          rc=$?
+          set -e
+          # 0 = tier reached, 3 = report produced with items unmet (expected today).
+          # The gate is the record below, not the exit code; anything else means
+          # the manifest no longer parses.
+          if [ "$rc" -ne 0 ] && [ "$rc" -ne 3 ]; then
+            echo "::error::klt signoff exited $rc (expected 0 or 3)"
+            exit 1
+          fi
+
+      - name: Committed record must reproduce byte for byte
+        run: |
+          if cmp -s "$RUNNER_TEMP/fresh.json" signoff/signoff-record.json; then
+            echo "signoff/signoff-record.json matches a fresh run."
+            exit 0
+          fi
+          echo "::error::signoff/signoff-record.json is stale or hand-edited. Regenerate it (signoff/README.md) and commit."
+          diff -u <(python3 -m json.tool signoff/signoff-record.json) <(python3 -m json.tool "$RUNNER_TEMP/fresh.json") || true
+          exit 1
+
+  append-only:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0
+        with:
+          fetch-depth: 0
+      - name: sim/ records may be added, never edited or deleted
+        run: python3 -I scripts/ci/check_append_only.py "origin/${{ github.base_ref }}"
