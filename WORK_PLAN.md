@@ -8,7 +8,7 @@ region between the markers is machine-generated.
 
 Judge-approved PRs under a hold (`loom:blocked` or `loom:operator`) — only a human merge decision is missing.
 
-- **#12**: build: wire check:ci to the PDK-free checks
+- **#14**: Bump Repo Skills 0.24.3 -> 0.24.7
 
 ## Very Important
 
@@ -32,7 +32,7 @@ _None._
 
 Issues currently being built (`loom:building`).
 
-- **#10**: Wire package.json check:ci stubs to the existing PDK-free checks
+_None._
 
 ## PRs Awaiting Review
 
@@ -44,7 +44,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#12**: build: wire check:ci to the PDK-free checks
+- **#14**: Bump Repo Skills 0.24.3 -> 0.24.7
 
 ## Proposed
 
@@ -69,7 +69,7 @@ _None._
 | Very important | 0 |
 | Important | 1 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 1 |
+| In Progress (`loom:building`) | 0 |
 | PRs awaiting review | 0 |
 | Approved PRs awaiting merge | 1 |
 | Curated | 2 |

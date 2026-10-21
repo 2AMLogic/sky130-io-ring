@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-20
+
+- **PR #12**: build: wire check:ci to the PDK-free checks
+- **Issue #10** (closed): Wire package.json check:ci stubs to the existing PDK-free checks
+
 ### 2026-10-17
 
 - **PR #9**: ci: add signoff manifest, committed record and PDK-free evidence checks
