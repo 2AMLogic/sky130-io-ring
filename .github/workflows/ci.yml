@@ -24,6 +24,12 @@ jobs:
       - name: Evidence directories and sim record format
         run: python3 -I scripts/ci/check_evidence_format.py .
 
+      - name: Ratified spec, md and json must agree
+        run: python3 -I spec/check_spec.py
+
+      - name: PDK resolver self-test (fake trees, no PDK needed)
+        run: bash sim/lib/test_pdk_env.sh
+
       - name: Re-grade the block manifest with the pinned grader
         run: |
           pipx install "klayout-tools==${KLT_VERSION}"
