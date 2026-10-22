@@ -39,12 +39,21 @@ wrappers are the open-source shuttle layer on top of it.
 
 Recorded as results, not as gaps to close:
 
-- A fully programmable GPIO with hysteresis, slew and threshold selection, 5 V
-  tolerance, and level shifting, in a single 80 µm-pitch cell. Our row set
+- A fully programmable GPIO with hysteresis, slew and threshold selection, a
+  1.71-5.5 V VDDIO operating range, and level shifting, in a single 80 µm-pitch
+  cell. (Correction 2026-10-22: an earlier draft said "5 V tolerance" here. The
+  foundry user guide, Table 101, lists over-voltage tolerance as "No" for
+  `gpio` and `gpiov2` and "Yes" for `gpio_ovtv2` and `sio_macro`. So this repo's
+  5.5 V pad stretch has no `gpiov2` precedent; the foundry solves it in a
+  different cell.) Our row set
   deliberately asks for far less (GF.4 to GF.6 are stretch).
 - The same filler widths (1, 5, 10, 20 µm). We arrive at the same set because
   it covers any 1 µm multiple; CELL.6 records it as convergent, not copied.
-- Clamped supply pads that carry their own ESD clamp.
+- Clamped supply pads that carry their own ESD clamp. The user guide describes
+  a rail-based scheme with an RC clamp per power domain (2 µs time constant on
+  the HV clamp), about 150 ohm in series at the core access, and states the clamps
+  are "robust up to 3.3KV HBM". That is the foundry's own statement about its
+  cell; it is not evidence about any cell drawn here.
 - Per-corner Liberty models, which our simulated results can be compared with.
 
 ## Consequences
@@ -52,6 +61,18 @@ Recorded as results, not as gaps to close:
 - CELL.2 / CELL.3 / CELL.4 are our own numbers, compared against 80 / 197.965 /
   65.4 x 75.4 µm.
 - Foundry cells are not instantiated in any test ring.
+
+## Review addendum, 2026-10-22
+
+Status unchanged: proposed. The survey table above was read from the installed
+library; the foundry user guide
+(<https://skywater-pdk.readthedocs.io/en/main/contents/libraries/sky130_fd_io/docs/user_guide.html>)
+adds the supply range, the rail-based ESD description and the over-voltage
+table. The guide states no pad pitch or cell widths, so CELL.2 / CELL.3
+comparisons stay on the installed LEF sizes. The guide says `sky130_fd_io__gpio`
+is not publicly available; `gpiov2` and `gpio_ovtv2` are. The draw decision
+stands; the evidence behind it is the CLAUDE.md purpose, not a finding about the
+foundry cell.
 
 ## PDK-independent part
 

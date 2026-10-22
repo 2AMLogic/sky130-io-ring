@@ -12,6 +12,33 @@ checked. The curated deck is `klt drc --deck sky130` (default engine); the
 other engine, `klt drc --engine klayout`, runs the PDK's own KLayout deck
 (`libs.tech/klayout/drc/sky130A_mr.drc`).
 
+## Re-inspection 2026-10-22
+
+Same open_pdks `f6eeac7d`; klt `0.7.1.dev2419+ga7dfbc5ce95d`; sky130 extraction
+deck hash `sha256:ba0f97887e3d231aec8b54f1f52f2941ded0228f0234b6759712bcaca0e942e6`
+(the survey below used the earlier hash). The deck is still marked
+`released: False`. What changed, from `klt deck info` and `klt deck devices`:
+
+- Diodes: the extraction deck now lists `diode_pw2nd_05v5`, `_lvt`, `_nvt`,
+  `_11v0` and `diode_pd2nw_05v5`, `_lvt`, `_hvt`, `_11v0`. The "Protection diodes
+  in LVS" row below is historical; #3803 is closed (klayout-tools PR #3863).
+  Devices flagged ESD (`areaid.ed`) are excluded from diode recognition by
+  design, so an ESD-marked clamp device is a separate question (not examined).
+- Marker-layer rules: `klt deck info` now prints a "NOT ENFORCED" list for sky130
+  that includes `hvi.1`, `hvi.2a`, `hvntm.1`, `hvntm.2`, `hvtp.1`, `hvtp.2`,
+  `hvtr.1`, `hvtr.2`, `pad.2` and `rdl.1/.2`; #3802 is closed by that disclosure
+  (PR #3848), not by adding the checks. The curated deck's thick-oxide coverage is
+  unchanged: still `nwell.enclosed.hvi.1` plus grid / angle rules.
+- Rail continuity: documented as a `klt erc` nets/ties recipe (PR #3846); no new
+  verb. Not exercised here (no layout yet).
+- Latch-up and ESD: still no rule in either deck. klt's own docs now say the open
+  `sky130A_mr.drc` defines none.
+- New evidence for the latch-up row: the PDK's *Magic* tech file
+  (`libs.tech/magic/sky130A.tech`) transcribes SkyWater tap-distance rules LU.2,
+  LU.2.1 and LU.3 at 15 µm (6 µm where the chip-top latch-up marker is absent).
+  That is a checker klt does not run; `klt tap-distance` can enforce 15 µm only if
+  the caller supplies the figure (see `review-2026-10.md`, gate G4).
+
 ## How the numbers were obtained
 
 ```
@@ -31,7 +58,7 @@ klt ring-check --help ; klt tap-distance --help; klt erc --help
 | Latch-up distance (tap spacing) | No rule | No rule (no id contains latch / tap distance) | `klt tap-distance` computes a distance for a caller-supplied value | **Not checked by any deck.** The command exists; the foundry value is not in the deck. LU.2 / LU.3 use interim internal values | #3802 |
 | Guard ring | No rule | No rule | `klt ring-check` asserts a layer set forms a single closed annulus (geometry only; no net or construction check) | **Checkable for closure only.** Construction (p+ ring on VSS, n+ ring on VDDIO) is not verified | #3802 |
 | ESD (implant / marker / device rules) | No rule | No rule (no id contains esd) | none | **Not checked.** SIGN.5 reads "not checked" | #3802 |
-| Protection diodes in LVS | No diode class: classes are nfet, pfet, pnp, two MiM caps and eight resistor kinds | n/a | `klt extract` / `klt lvs` use the curated classes | **Not extracted.** A protection network would be missing from the extracted netlist | [klayout-tools#3803](https://github.com/2AMLogic/klayout-tools/issues/3803) |
+| Protection diodes in LVS | (Original survey; superseded, see re-inspection above.) No diode class: classes are nfet, pfet, pnp, two MiM caps and eight resistor kinds | n/a | `klt extract` / `klt lvs` use the curated classes | **Not extracted.** A protection network would be missing from the extracted netlist | [klayout-tools#3803](https://github.com/2AMLogic/klayout-tools/issues/3803) |
 | Ring continuity (rail through every abutment, no floating well) | n/a | n/a | `klt erc` is an antenna / connectivity-ratio check; `klt components` reports connected components but takes no expected nets and returns no pass / fail | **Not checked directly.** SIGN.4's interim method composes `klt components` and `klt tap-distance` | [klayout-tools#3804](https://github.com/2AMLogic/klayout-tools/issues/3804) |
 
 The same two gaps exist for the `gf180mcu` deck and are already tracked

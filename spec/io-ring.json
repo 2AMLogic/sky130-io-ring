@@ -1,12 +1,15 @@
 {
  "spec_version": "0.1.0",
- "status": "proposed - pending human ratification (see spec/decisions)",
+ "status": "proposed - pending human ratification; reviewed 2026-10-22 (see spec/review-2026-10.md), nothing ratified",
  "pdk_inspected": {
   "variant": "sky130A",
   "open_pdks": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
   "klt": "0.7.1.dev1765+gb61f753d0369",
   "klt_sky130_deck_content_hash": "sha256:f3e6a304b5d7e02301b14643fab17e3a455e145b4ba684dc66b645c2016e5865",
-  "note": "The sky130_fd_io survey read the volare install (open_pdks c6d73a35f524070e85faff4a6a9eef49553ebc2b); klt resolved the ciel install above. Issue 4 owns the pin."
+  "note": "The sky130_fd_io survey read the volare install (open_pdks c6d73a35f524070e85faff4a6a9eef49553ebc2b); klt resolved the ciel install above. Issue 4 owns the pin.",
+  "klt_reinspected": "0.7.1.dev2419+ga7dfbc5ce95d",
+  "klt_sky130_deck_content_hash_reinspected": "sha256:ba0f97887e3d231aec8b54f1f52f2941ded0228f0234b6759712bcaca0e942e6",
+  "reinspected": "2026-10-22; same open_pdks f6eeac7d. The deck hash changed because klt gained diode classes and unmodeled-rule disclosure; earlier hash kept above as the record of the original survey."
  },
  "groups": [
   {
@@ -50,7 +53,7 @@
    "target": "3.3 V ±10% (2.97 / 3.30 / 3.63 V)",
    "fallback": "—",
    "stretch": "Input tolerates a pad voltage up to 5.5 V with VDDIO = 3.3 V",
-   "rationale": "3.3 V is the common GPIO level and sits inside the range the foundry GPIO documents (Liberty files named for 1.65-5.5 V VDDIO). 5 V tolerance is the hardest I/O-rule item, so it is stretch, not target.",
+   "rationale": "3.3 V is the common GPIO level. The foundry user guide states a 1.71-5.5 V VDDIO operating range and a 1.65-5.5 V simulation range, so 3.3 V +/-10% sits inside it. The foundry gpiov2 is NOT over-voltage tolerant (user guide Table 101: 'No'; only gpio_ovtv2 and sio_macro are 'Yes'), so 5 V tolerance has no foundry gpiov2 precedent and is the hardest I/O-rule item: stretch, not target. Provisional until decision 0002 is ratified; see review-2026-10.md gate G3.",
    "pdk_independent": false,
    "statistical": false
   },
@@ -72,7 +75,7 @@
    "target": "sky130_fd_pr 5 V gate-oxide devices (nfet_g5v0d10v5 / pfet_g5v0d10v5) operated at <= 3.63 V",
    "fallback": "—",
    "stretch": "Same flavor; input stage reworked for 5.5 V pad swing",
-   "rationale": "Thick-oxide devices are the point of this block (CLAUDE.md). The 3.3 V I/O supply needs a gate oxide rated above core; the PDK has one thick-oxide family.",
+   "rationale": "Thick-oxide devices are the point of this block (CLAUDE.md). The PDK documents model validity for nfet_g5v0d10v5 as VDS 0 to 11.0 V, VGS 0 to 5.5 V, VBS 0 to -5.5 V (pfet mirrored); 3.63 V VDDIO is inside it with margin. Model validity is not an absolute-maximum rating: the PDK publishes no absolute maxima (gate G1).",
    "pdk_independent": false,
    "statistical": false
   },
@@ -432,10 +435,10 @@
    "id": "ESD.3",
    "group": "ESD",
    "parameter": "GPIO pad protection",
-   "target": "Primary: diode from pad to VDDIO and diode from VSS to pad. Secondary: series resistor into the driver / receiver plus a local clamp at the receiver gate. Supply clamp (ESD.4) closes the loop.",
+   "target": "Primary: diode from pad to VDDIO and diode from VSS to pad. Secondary: series resistor into the driver / receiver plus a local clamp at the receiver gate. Supply clamp (ESD.4) closes the loop: pad-positive stress to VSS runs pad, VDDIO diode, VDDIO rail, VDDIO-VSS clamp, VSS (no pad-to-VSS clamp device).",
    "fallback": "Diode pair + supply clamp, no secondary stage",
    "stretch": "—",
-   "rationale": "Diode paths are forward conduction, the regime the PDK models cover best. See decision 0004.",
+   "rationale": "Diode paths are forward conduction, the regime the PDK models cover best, but the diode models are stated valid only for |V| 0 to 5.0 V and carry no current validity range (review-2026-10.md G1). The foundry GPIO documents rail-based ESD with a ~150 ohm series resistor at the core access (comparison only). The series resistance and the local clamp are unsized; see decision 0004.",
    "pdk_independent": false,
    "statistical": false
   },
@@ -446,7 +449,7 @@
    "target": "RC-triggered large thick-oxide NMOS clamp, trigger time constant about 1 µs",
    "fallback": "Grounded-gate NMOS clamp",
    "stretch": "—",
-   "rationale": "The RC clamp turns on in simulation. A grounded-gate clamp relies on snapback, which the models do not represent, so it is fallback and gets less pre-silicon evidence.",
+   "rationale": "The RC clamp turns on in simulation. A grounded-gate clamp relies on snapback, which the models do not represent, so it is fallback and gets less pre-silicon evidence. The ~1 us time constant is an unjustified starting value: the foundry HV clamp documents a 2 us time constant (comparison only). The constant must be justified in simulation against power-up-ramp false triggering and the ESD.2 pulse duration (gate G6); no HBM waveform timing was read from a standard in this review. Clamp device choice (standard nfet_g5v0d10v5, valid to L>=0.5 um in bins, vs esd_nfet_g5v0d10v5, a fixed-geometry model, L 0.55 um) is open.",
    "pdk_independent": false,
    "statistical": false
   },
@@ -476,10 +479,10 @@
    "id": "ESD.7",
    "group": "ESD",
    "parameter": "Stress limit during the HBM pulse",
-   "target": "Peak voltage on any node <= 80 % of the lowest breakdown the PDK states for a connected device",
+   "target": "During every simulated ESD.2 pulse, no device terminal pair exceeds the PDK model validity range for that device: nfet_g5v0d10v5 VDS <= 11.0 V and VGS <= 5.5 V, pfet_g5v0d10v5 mirrored, esd_nfet_g5v0d10v5 VGS <= 5.0 V, junction diodes |V| <= 5.0 V in reverse. Beyond that range a result is reported 'outside model validity', never as a pass.",
    "fallback": "—",
    "stretch": "—",
-   "rationale": "The limit value comes from the PDK documentation and is recorded in decision 0004 when ratified.",
+   "rationale": "OPEN, partly answered. The PDK documents model validity ranges (sources in review-2026-10.md), not absolute-maximum or oxide-breakdown ratings; no source read states a gate-oxide stress limit or an HBM failure current. The earlier '80% of breakdown' target is withdrawn because no breakdown figure for the 5 V gate oxide was found. Model-parameter breakdown values (bv 11.7 V, ibv 1.06 mA in the diode models) are fit parameters, not ratings. The missing oxide/junction stress limits remain gate G1 and must not be filled with an invented number.",
    "pdk_independent": true,
    "statistical": false
   },
@@ -488,7 +491,7 @@
    "group": "ESD",
    "parameter": "Discharge-path simulation",
    "target": "Every path in the ESD section of io-ring.md simulated with the PDK models for the ESD.2 pulse; turn-on and current split reported",
-   "fallback": "Paths G-VSS, G-VDDIO, VDDIO-VSS, VDD-VSS only",
+   "fallback": "Paths P1, P2, P3, P4, P5, P6 only (pad positive/negative to VSS and VDDIO, VDDIO-VSS, VDD-VSS)",
    "stretch": "—",
    "rationale": "What pre-silicon evidence can show. Snapback, second breakdown and failure current are not shown.",
    "pdk_independent": true,
@@ -532,9 +535,9 @@
    "group": "LU",
    "parameter": "Tap distance, I/O region",
    "target": "Every diffusion within 10 µm (Euclidean) of a qualifying tap, per well island",
-   "fallback": "15 µm",
+   "fallback": "15 µm: the SkyWater rule transcribed in the installed Magic tech file (N-diff to P-tap LU.2, N-diff to P-tap in deep nwell LU.2.1, P-diff to N-tap LU.3); 6 µm applies where the top-level latch-up marker is absent",
    "stretch": "—",
-   "rationale": "INTERIM internal value, tighter than a core rule. No latch-up distance rule is in klt's sky130 deck (klt-rule-coverage.md); replace with the foundry figure once pinned.",
+   "rationale": "Sourced: the installed PDK's Magic tech file (libs.tech/magic/sky130A.tech) checks 15 µm tap-to-diffusion for LU.2 / LU.2.1 / LU.3 and states 6 µm otherwise; the BAG3 tech_params file carries the same figures (3000 and 1200 grid units x 0.005 µm = 15 and 6 µm). The 10 µm target is an INTERIM internal margin below the foundry 15 µm, not a foundry value. Note the foundry rule ids LU.2 / LU.3 collide with this spec's row ids; they are different things. No klt deck checks it (klt-rule-coverage.md).",
    "pdk_independent": false,
    "statistical": false
   },
@@ -545,7 +548,7 @@
    "target": "I/O driver wells at least 20 µm from core wells, with the VSS guard ring between",
    "fallback": "10 µm",
    "stretch": "—",
-   "rationale": "INTERIM internal value; replace with the foundry figure once pinned.",
+   "rationale": "INTERIM internal value with NO source: no foundry I/O-to-core well spacing rule was found in the PDK, the Magic tech file or the SkyWater documents read. Retained only as a layout-planning margin; it is not a rule and cannot be checked by any deck (gate G4). Replace with a sourced figure or delete before ratification.",
    "pdk_independent": false,
    "statistical": false
   },
@@ -644,7 +647,7 @@
    "target": "Zero mismatches (klt extract + klt lvs) against the schematic netlist for every device klt can extract. Devices outside the deck's classes (protection diodes) are listed as 'not extracted'.",
    "fallback": "Same",
    "stretch": "—",
-   "rationale": "The deck has no diode class (issue filed upstream).",
+   "rationale": "Updated 2026-10-22: the current klt sky130 extraction deck recognises eight junction-diode classes (diode_pw2nd_05v5/_lvt/_nvt/_11v0, diode_pd2nw_05v5/_lvt/_hvt/_11v0), closing the earlier gap. Whether the drawn protection diodes extract and match must still be shown on a drawn layout; ESD-flagged devices (areaid.ed) are excluded from diode recognition by design.",
    "pdk_independent": true,
    "statistical": false
   },
@@ -666,7 +669,7 @@
    "target": "Each rail net is one connected component through every cell abutment; every well has at least one tie; no floating well",
    "fallback": "Rail continuity only",
    "stretch": "—",
-   "rationale": "No klt command checks this directly; interim method uses klt components and tap-distance. Gap filed upstream.",
+   "rationale": "Updated 2026-10-22: klt documents a rail-continuity and well-tie recipe with the existing klt erc nets/ties spec (cut rail, shorted rails and missing tie are distinct findings). Not yet exercised on a drawn ring; it cannot see everything (see klayout-tools docs/cli/erc.md blind spots).",
    "pdk_independent": true,
    "statistical": false
   },

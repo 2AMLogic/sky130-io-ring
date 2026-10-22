@@ -17,6 +17,16 @@
   more than their oxide limit while the pad is at 5.5 V, which is the hardest
   rule item on this block.
 
+## Review addendum, 2026-10-22
+
+The PDK states model validity for the 5 V family as VDS 0 to 11.0 V and VGS 0 to
+5.5 V (NMOS), mirrored for the PMOS. 3.63 V VDDIO is inside it. These are model
+ranges, not absolute maxima, so the 5.5 V pad stretch is not yet backed by a
+stress limit: a 5.5 V pad against a 3.3 V VDDIO leaves a 5.5 V VGS/VDS on
+receiver devices at the very edge of validity. The foundry `gpiov2` is not
+over-voltage tolerant (Table 101), which confirms the stretch placement. Status:
+still proposed.
+
 ## Alternatives rejected
 
 - 1.8 V I/O on the thin-oxide family: no thick-oxide rules exercised.
