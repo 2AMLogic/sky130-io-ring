@@ -8,7 +8,7 @@ region between the markers is machine-generated.
 
 Judge-approved PRs under a hold (`loom:blocked` or `loom:operator`) — only a human merge decision is missing.
 
-- **#18**: ci: run spec/check_spec.py and PDK resolver self-test as gates
+_None._
 
 ## Very Important
 
@@ -32,7 +32,7 @@ _None._
 
 Issues currently being built (`loom:building`).
 
-- **#17**: Wire spec/check_spec.py into CI: documented gate is never run
+_None._
 
 ## PRs Awaiting Review
 
@@ -44,7 +44,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#18**: ci: run spec/check_spec.py and PDK resolver self-test as gates
+_None._
 
 ## Proposed
 
@@ -65,13 +65,13 @@ _None._
 
 | Bucket | Count |
 |------|-------|
-| Operator merge-risk holds | 1 |
+| Operator merge-risk holds | 0 |
 | Very important | 0 |
 | Important | 1 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 1 |
+| In Progress (`loom:building`) | 0 |
 | PRs awaiting review | 0 |
-| Approved PRs awaiting merge | 1 |
+| Approved PRs awaiting merge | 0 |
 | Curated | 2 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
