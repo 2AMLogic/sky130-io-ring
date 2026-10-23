@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-23
+
+- **PR #18**: ci: run spec/check_spec.py and PDK resolver self-test as gates
+- **Issue #17** (closed): Wire spec/check_spec.py into CI: documented gate is never run
+
 ### 2026-10-22
 
 - **PR #20**: docs(spec): evidence review of proposed I/O-ring spec; fix ESD paths, limits, latch-up sourcing
