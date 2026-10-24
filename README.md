@@ -52,7 +52,8 @@ here should be written so a second PDK can follow them.
 
 ## Specification
 
-The specification is proposed and awaiting human ratification:
+The specification is proposed and awaiting EE-key and market-key review, then operator
+ratification (2026-10-22 ruling, 2am#5864):
 [`spec/io-ring.md`](spec/io-ring.md), with its rows as data in
 [`spec/io-ring.json`](spec/io-ring.json) and the decision records in
 [`spec/decisions/`](spec/decisions/). All figures are targets.
@@ -64,7 +65,7 @@ any cell ESD-rated until silicon says so.
 
 Maturity ladder: spec ratified → GPIO cell simulated across PVT → cells
 DRC/LVS-clean → ring assembled, DRC/LVS/ERC-clean → shuttle seat → measured
-silicon. **Current position: spec proposed, awaiting ratification.**
+silicon. **Current position: spec proposed, awaiting EE-key and market-key review, then operator ratification.**
 
 ## Repo layout
 
