@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-24
+
+- **PR #25**: docs: install ee-key and market-key reviewer trees; route spec review before ratification
+- **Issue #23** (closed): Install the EE-key and market-key ratification reviewer trees (2am#5346 stage 2)
+
 ### 2026-10-23
 
 - **PR #18**: ci: run spec/check_spec.py and PDK resolver self-test as gates
