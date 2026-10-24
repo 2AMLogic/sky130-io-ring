@@ -34,7 +34,9 @@ agents.
 - **Verification is the product**: no claim without a testbench. PVT corners
   on every recorded analog result; recorded results are append-only evidence.
 - Spec changes go through `spec/` with a decision record; agents do not relax
-  the ratified spec to make results pass.
+  the ratified spec to make results pass. A spec PR goes to the EE-key and
+  market-key reviewers first (`ratification/`), then the operator ratifies
+  (2026-10-22 ruling, 2am#5864); no agent waits for a human before drafting.
 - **One GPIO cell, one supply pair and a corner close first.** The full ring
   and the stretch features wait until those three are DRC/LVS-clean.
 

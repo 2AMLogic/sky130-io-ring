@@ -1,7 +1,7 @@
 # spec
 
-The specification of the I/O ring. **Status: proposed, pending human
-ratification.**
+The specification of the I/O ring. **Status: proposed, pending EE-key
+and market-key review, then operator ratification.**
 
 | File | What it is |
 |---|---|
@@ -12,5 +12,8 @@ ratification.**
 | [`review-2026-10.md`](review-2026-10.md) | Evidence review of the proposal: sources, sourced / provisional / open classification, remaining gates, validation plan. Ratifies nothing |
 | [`decisions/`](decisions/) | Decision records: 0001 draw vs adopt, 0002 supplies and devices, 0003 PVT corners, 0004 ESD topology |
 
-Ratification is recorded by a human in the decision record. Agents do not
-relax a ratified row to make a result pass.
+Per the 2026-10-22 ruling (2am#5864), the EE-key and market-key reviewers
+(`ratification/ee-key/`, `ratification/market-key/`) review a spec PR first,
+as input; the operator then ratifies, and the ratification is recorded in the
+decision record. Authors cannot ratify their own design. Agents do not relax
+a ratified row to make a result pass.
