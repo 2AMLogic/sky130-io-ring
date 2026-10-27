@@ -8,7 +8,7 @@
   "pdk": null,
   "findings_only": true,
   "gate_role": "poly",
-  "gate_count": 25,
+  "gate_count": 26,
   "antenna_tables_omitted": true,
   "gates": [],
   "nets": [
@@ -47,41 +47,10 @@
       "unlabelled_allowed_islands": null
     }
   ],
-  "erc_findings": [
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VDDIO' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VDDIO",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDDIO' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDDIO",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    }
-  ],
-  "erc_finding_count": 3,
-  "erc_status": "violations",
-  "status": "violations",
+  "erc_findings": [],
+  "erc_finding_count": 0,
+  "erc_status": "clean",
+  "status": "not_checked",
   "coverage": {
     "scope": "antenna",
     "schema_version": 1,
@@ -112,6 +81,7 @@
     "known": true,
     "checked": [
       "erc.floating_gate:[]",
+      "erc.missing_tie:[\"ntap_vdd\"]",
       "erc.missing_tie:[\"ntap_vddio\"]",
       "erc.missing_tie:[\"ptap_vss\"]",
       "erc.net_connectivity:[\"VDD\"]",
@@ -125,6 +95,8 @@
     "nothing_checked_reasons": [],
     "checked_by_assertion": [],
     "checked_by_well_assertion": [
+      "erc.missing_tie:[\"ntap_vdd\"]",
+      "erc.missing_tie:[\"ntap_vddio\"]",
       "erc.missing_tie:[\"ptap_vss\"]"
     ],
     "layers_in_stream_without_declaration": [
@@ -133,7 +105,6 @@
       "75/20",
       "76/20",
       "79/20",
-      "89/44",
       "93/44",
       "94/20",
       "95/20"
@@ -151,9 +122,16 @@
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:21e0d5320ce9cd02e8d6921a9650b4544d4c27d5a9ea8231c530c638b1e398f4"
+      "content_hash": "sha256:1e8526e79ec4cd4cb90fa0bd8419e837020eae1bd4758c3bfd0d1e79e99c2960"
     },
-    "devices": [],
+    "devices": [
+      {
+        "name": "cap_mim",
+        "body_layer": "89/44",
+        "on": "via3",
+        "body_area_um2": 153.6
+      }
+    ],
     "net_exclusions": [],
     "label_layers": [
       {
@@ -174,10 +152,10 @@
     ]
   },
   "compact": {
-    "gate_count": 25,
-    "antenna_levels_skipped": 150,
-    "antenna_reference_levels": 25,
-    "floating_gate_checked": 25,
+    "gate_count": 26,
+    "antenna_levels_skipped": 156,
+    "antenna_reference_levels": 26,
+    "floating_gate_checked": 26,
     "skipped_reason": "findings_only"
   }
 }

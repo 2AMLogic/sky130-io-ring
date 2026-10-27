@@ -8,7 +8,7 @@
   "pdk": null,
   "findings_only": true,
   "gate_role": "poly",
-  "gate_count": 26,
+  "gate_count": 28,
   "antenna_tables_omitted": true,
   "gates": [],
   "nets": [
@@ -49,66 +49,6 @@
   ],
   "erc_findings": [
     {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VDDIO' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VDDIO",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VDDIO' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VDDIO",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDD' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDD",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDDIO' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDDIO",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
-      "rule": "erc.supply_short",
-      "description": "declared nets 'VDDIO' and 'VSS' are electrically the same net (shorted together)",
-      "net": "VDDIO",
-      "other_net": "VSS",
-      "gate_id": null,
-      "layer": null,
-      "bbox": null,
-      "islands": null
-    },
-    {
       "rule": "erc.unconnected_net",
       "description": "declared net 'VDD' resolves to 2 disconnected electrical islands (expected exactly one)",
       "net": "VDD",
@@ -116,31 +56,31 @@
       "gate_id": null,
       "layer": null,
       "bbox": {
-        "left": 10000,
-        "bottom": 10000,
-        "right": 817000,
-        "top": 817000
+        "left": 50000,
+        "bottom": 50000,
+        "right": 777000,
+        "top": 777000
       },
       "islands": [
         {
           "bbox": {
-            "left": 401500,
-            "bottom": 10000,
-            "right": 817000,
-            "top": 817000
+            "left": 415500,
+            "bottom": 50000,
+            "right": 777000,
+            "top": 777000
           },
-          "layer": "met5",
-          "shape_count": 1497
+          "layer": "met3",
+          "shape_count": 863
         },
         {
           "bbox": {
-            "left": 10000,
-            "bottom": 10000,
-            "right": 425500,
-            "top": 817000
+            "left": 50000,
+            "bottom": 50000,
+            "right": 413500,
+            "top": 777000
           },
-          "layer": "met5",
-          "shape_count": 1497
+          "layer": "met3",
+          "shape_count": 863
         }
       ]
     },
@@ -152,31 +92,31 @@
       "gate_id": null,
       "layer": null,
       "bbox": {
-        "left": 10000,
-        "bottom": 10000,
-        "right": 817000,
-        "top": 817000
+        "left": 30000,
+        "bottom": 30000,
+        "right": 797000,
+        "top": 797000
       },
       "islands": [
         {
           "bbox": {
-            "left": 401500,
-            "bottom": 10000,
-            "right": 817000,
-            "top": 817000
+            "left": 30000,
+            "bottom": 30000,
+            "right": 413500,
+            "top": 797000
           },
-          "layer": "met5",
-          "shape_count": 1497
+          "layer": "met4",
+          "shape_count": 496
         },
         {
           "bbox": {
-            "left": 10000,
-            "bottom": 10000,
-            "right": 425500,
-            "top": 817000
+            "left": 415500,
+            "bottom": 30000,
+            "right": 797000,
+            "top": 797000
           },
-          "layer": "met5",
-          "shape_count": 1497
+          "layer": "met4",
+          "shape_count": 496
         }
       ]
     },
@@ -196,28 +136,28 @@
       "islands": [
         {
           "bbox": {
-            "left": 401500,
-            "bottom": 10000,
-            "right": 817000,
-            "top": 817000
-          },
-          "layer": "met5",
-          "shape_count": 1497
-        },
-        {
-          "bbox": {
             "left": 10000,
             "bottom": 10000,
             "right": 425500,
             "top": 817000
           },
           "layer": "met5",
-          "shape_count": 1497
+          "shape_count": 138
+        },
+        {
+          "bbox": {
+            "left": 401500,
+            "bottom": 10000,
+            "right": 817000,
+            "top": 817000
+          },
+          "layer": "met5",
+          "shape_count": 138
         }
       ]
     }
   ],
-  "erc_finding_count": 9,
+  "erc_finding_count": 3,
   "erc_status": "violations",
   "status": "violations",
   "coverage": {
@@ -250,6 +190,7 @@
     "known": true,
     "checked": [
       "erc.floating_gate:[]",
+      "erc.missing_tie:[\"ntap_vdd\"]",
       "erc.missing_tie:[\"ntap_vddio\"]",
       "erc.missing_tie:[\"ptap_vss\"]",
       "erc.net_connectivity:[\"VDD\"]",
@@ -263,6 +204,8 @@
     "nothing_checked_reasons": [],
     "checked_by_assertion": [],
     "checked_by_well_assertion": [
+      "erc.missing_tie:[\"ntap_vdd\"]",
+      "erc.missing_tie:[\"ntap_vddio\"]",
       "erc.missing_tie:[\"ptap_vss\"]"
     ],
     "layers_in_stream_without_declaration": [
@@ -271,7 +214,6 @@
       "75/20",
       "76/20",
       "79/20",
-      "89/44",
       "93/44",
       "94/20",
       "95/20"
@@ -285,13 +227,20 @@
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:fe18be7dc69b82d09b2450825b7a7be19f819592b4b1c5bdcade9c07bdba5aed",
+      "content_hash": "sha256:fc7afce596d92b890d469e403337fdae71b6da9f8d656df5387c5404d7cfa7f3",
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:21e0d5320ce9cd02e8d6921a9650b4544d4c27d5a9ea8231c530c638b1e398f4"
+      "content_hash": "sha256:1e8526e79ec4cd4cb90fa0bd8419e837020eae1bd4758c3bfd0d1e79e99c2960"
     },
-    "devices": [],
+    "devices": [
+      {
+        "name": "cap_mim",
+        "body_layer": "89/44",
+        "on": "via3",
+        "body_area_um2": 153.6
+      }
+    ],
     "net_exclusions": [],
     "label_layers": [
       {
@@ -312,10 +261,10 @@
     ]
   },
   "compact": {
-    "gate_count": 26,
-    "antenna_levels_skipped": 156,
-    "antenna_reference_levels": 26,
-    "floating_gate_checked": 26,
+    "gate_count": 28,
+    "antenna_levels_skipped": 168,
+    "antenna_reference_levels": 28,
+    "floating_gate_checked": 28,
     "skipped_reason": "findings_only"
   }
 }

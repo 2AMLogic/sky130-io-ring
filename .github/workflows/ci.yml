@@ -82,6 +82,18 @@ jobs:
         run: |
           klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
 
+      - name: Ring ERC must reproduce clean (the three supplies stay separate nets) and the cut ring must still split
+        run: |
+          klt erc --check signoff/evidence/erc/ring.json --rerun
+          python3 -I - <<'PY'
+          import json
+          ring = json.load(open("signoff/evidence/erc/ring.json"))
+          neg = json.load(open("signoff/evidence/erc/ring-negative.json"))
+          assert ring["erc_status"] == "clean" and not ring["erc_findings"], ring["erc_findings"]
+          assert all(n["matched_islands"] == n["expected_islands"] == 1 for n in ring["nets"])
+          assert all(n["matched_islands"] != n["expected_islands"] for n in neg["nets"])
+          PY
+
   append-only:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
