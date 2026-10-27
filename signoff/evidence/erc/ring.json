@@ -1,0 +1,1014 @@
+{
+  "schema_version": 2,
+  "file": {
+    "path": "layout/gds/sky130_ioring_ring.gds",
+    "scope": "repo"
+  },
+  "spec": "signoff/erc-supply-spec.json",
+  "pdk": null,
+  "findings_only": true,
+  "gate_role": "poly",
+  "gate_count": 232,
+  "antenna_tables_omitted": true,
+  "gates": [],
+  "nets": [
+    {
+      "name": "VDDIO",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [
+        "met4"
+      ],
+      "unlabelled_islands": 0,
+      "unlabelled_area_um2": 0.0,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VDD",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [
+        "met3"
+      ],
+      "unlabelled_islands": 112,
+      "unlabelled_area_um2": 1854.912,
+      "unlabelled_bbox": {
+        "left": 68570,
+        "bottom": 68570,
+        "right": 758430,
+        "top": 758430
+      },
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VSS",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [],
+      "unlabelled_islands": null,
+      "unlabelled_area_um2": null,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": null
+    }
+  ],
+  "erc_findings": [
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 671610,
+        "bottom": 541400,
+        "right": 674380,
+        "top": 545900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 541400,
+        "right": 733260,
+        "top": 545900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 562800,
+        "right": 733260,
+        "top": 567300
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 674110,
+        "bottom": 567050,
+        "right": 676880,
+        "top": 571900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 743260,
+        "bottom": 528800,
+        "right": 747030,
+        "top": 578400
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 674110,
+        "bottom": 574300,
+        "right": 676880,
+        "top": 587600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 584200,
+        "right": 733260,
+        "top": 588700
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 601100,
+        "bottom": 671610,
+        "right": 605600,
+        "top": 674380
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 559400,
+        "bottom": 674110,
+        "right": 572700,
+        "top": 676880
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 575100,
+        "bottom": 674110,
+        "right": 579950,
+        "top": 676880
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 558300,
+        "bottom": 730490,
+        "right": 562800,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 579700,
+        "bottom": 730490,
+        "right": 584200,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 601100,
+        "bottom": 730490,
+        "right": 605600,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 568600,
+        "bottom": 743260,
+        "right": 618200,
+        "top": 747030
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 579700,
+        "right": 96510,
+        "top": 584200
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 239400,
+        "bottom": 674110,
+        "right": 252700,
+        "top": 676880
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 255100,
+        "bottom": 674110,
+        "right": 259950,
+        "top": 676880
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 150120,
+        "bottom": 559400,
+        "right": 152890,
+        "top": 572700
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 558300,
+        "right": 96510,
+        "top": 562800
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 150120,
+        "bottom": 575100,
+        "right": 152890,
+        "top": 579950
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 238300,
+        "bottom": 730490,
+        "right": 242800,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 259700,
+        "bottom": 730490,
+        "right": 264200,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 281100,
+        "bottom": 730490,
+        "right": 285600,
+        "top": 733260
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 601100,
+        "right": 96510,
+        "top": 605600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 152620,
+        "bottom": 601100,
+        "right": 155390,
+        "top": 605600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 79970,
+        "bottom": 568600,
+        "right": 83740,
+        "top": 618200
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 248600,
+        "bottom": 743260,
+        "right": 298200,
+        "top": 747030
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 281100,
+        "bottom": 671610,
+        "right": 285600,
+        "top": 674380
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 208800,
+        "bottom": 79970,
+        "right": 258400,
+        "top": 83740
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 221400,
+        "bottom": 93740,
+        "right": 225900,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 242800,
+        "bottom": 93740,
+        "right": 247300,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 264200,
+        "bottom": 93740,
+        "right": 268700,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 247050,
+        "bottom": 150120,
+        "right": 251900,
+        "top": 152890
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 254300,
+        "bottom": 150120,
+        "right": 267600,
+        "top": 152890
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 221400,
+        "bottom": 152620,
+        "right": 225900,
+        "top": 155390
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 238300,
+        "right": 96510,
+        "top": 242800
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 150120,
+        "bottom": 239400,
+        "right": 152890,
+        "top": 252700
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 150120,
+        "bottom": 255100,
+        "right": 152890,
+        "top": 259950
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 259700,
+        "right": 96510,
+        "top": 264200
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 93740,
+        "bottom": 281100,
+        "right": 96510,
+        "top": 285600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 152620,
+        "bottom": 281100,
+        "right": 155390,
+        "top": 285600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 79970,
+        "bottom": 248600,
+        "right": 83740,
+        "top": 298200
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 671610,
+        "bottom": 221400,
+        "right": 674380,
+        "top": 225900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 221400,
+        "right": 733260,
+        "top": 225900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 584200,
+        "bottom": 93740,
+        "right": 588700,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 242800,
+        "right": 733260,
+        "top": 247300
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 674110,
+        "bottom": 247050,
+        "right": 676880,
+        "top": 251900
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 743260,
+        "bottom": 208800,
+        "right": 747030,
+        "top": 258400
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 528800,
+        "bottom": 79970,
+        "right": 578400,
+        "top": 83740
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 674110,
+        "bottom": 254300,
+        "right": 676880,
+        "top": 267600
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 730490,
+        "bottom": 264200,
+        "right": 733260,
+        "top": 268700
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 567050,
+        "bottom": 150120,
+        "right": 571900,
+        "top": 152890
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 574300,
+        "bottom": 150120,
+        "right": 587600,
+        "top": 152890
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 541400,
+        "bottom": 93740,
+        "right": 545900,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 562800,
+        "bottom": 93740,
+        "right": 567300,
+        "top": 96510
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.missing_tie",
+      "description": "well/tub tap is not connected to declared net 'VDDIO'",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "ntap_vddio",
+      "bbox": {
+        "left": 541400,
+        "bottom": 152620,
+        "right": 545900,
+        "top": 155390
+      },
+      "islands": null
+    },
+    {
+      "rule": "erc.unlabelled_conductor",
+      "description": "declared net 'VDD' owns role met3, carrying 112 unlabelled conductor islands (1854.912 um^2) reachable from no label",
+      "net": "VDD",
+      "other_net": null,
+      "gate_id": null,
+      "layer": "met3",
+      "bbox": {
+        "left": 68570,
+        "bottom": 68570,
+        "right": 758430,
+        "top": 758430
+      },
+      "islands": null
+    }
+  ],
+  "erc_finding_count": 57,
+  "erc_status": "violations",
+  "status": "violations",
+  "coverage": {
+    "scope": "antenna",
+    "schema_version": 1,
+    "known": true,
+    "checked": [],
+    "skipped": [
+      {
+        "id": "antenna:[]",
+        "reason": "findings_only"
+      }
+    ],
+    "inapplicable": [
+      {
+        "id": "antenna:[\"gate_reference_level\"]",
+        "reason": "gate_reference_level"
+      }
+    ],
+    "unknown": [],
+    "nothing_checked": true,
+    "nothing_checked_reasons": [
+      "findings_only",
+      "gate_reference_level"
+    ]
+  },
+  "erc_coverage": {
+    "scope": "connectivity",
+    "schema_version": 1,
+    "known": true,
+    "checked": [
+      "erc.floating_gate:[]",
+      "erc.missing_tie:[\"ntap_vddio\"]",
+      "erc.missing_tie:[\"ptap_vss\"]",
+      "erc.net_connectivity:[\"VDD\"]",
+      "erc.net_connectivity:[\"VDDIO\"]",
+      "erc.net_connectivity:[\"VSS\"]"
+    ],
+    "skipped": [],
+    "inapplicable": [],
+    "unknown": [],
+    "nothing_checked": false,
+    "nothing_checked_reasons": [],
+    "checked_by_assertion": [],
+    "checked_by_well_assertion": [
+      "erc.missing_tie:[\"ptap_vss\"]"
+    ],
+    "layers_in_stream_without_declaration": [
+      "65/20",
+      "66/13",
+      "69/5",
+      "75/20",
+      "76/20",
+      "81/23",
+      "86/20",
+      "93/44",
+      "94/20",
+      "95/20"
+    ],
+    "well_assertion_coverage": []
+  },
+  "ties_disclosure": null,
+  "provenance": {
+    "klt_version": "0.8.0",
+    "klayout_version": "0.30.12",
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "content_hash": "sha256:a41d3b0783338de73bf69edbaa42e2b90ee5e096c38605dc812e195bcc6370d8",
+      "role": "layout"
+    },
+    "spec": {
+      "content_hash": "sha256:21e0d5320ce9cd02e8d6921a9650b4544d4c27d5a9ea8231c530c638b1e398f4"
+    },
+    "devices": [],
+    "net_exclusions": [],
+    "label_layers": [
+      {
+        "name": "met3",
+        "label_layer": "70/5",
+        "label_text_count": 12
+      },
+      {
+        "name": "met4",
+        "label_layer": "71/5",
+        "label_text_count": 12
+      },
+      {
+        "name": "met5",
+        "label_layer": "72/5",
+        "label_text_count": 20
+      }
+    ]
+  },
+  "compact": {
+    "gate_count": 232,
+    "antenna_levels_skipped": 1392,
+    "antenna_reference_levels": 232,
+    "floating_gate_checked": 232,
+    "skipped_reason": "findings_only"
+  }
+}

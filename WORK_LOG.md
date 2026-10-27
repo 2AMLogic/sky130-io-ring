@@ -5,6 +5,9 @@ triage role. Newest first.
 
 ### 2026-10-27
 
+- **PR #45**: feat(signoff): add klt lvs report generator and per-cell LVS evidence
+- **Issue #33** (closed): T1 item 4 (LVS clean): klt lvs match of each cell and the ring against the item-1 netlists
+- **Issue #47** (closed): x
 - **PR #39**: feat(signoff): attest T1 item 10 repo hygiene, bump klt to 0.8.0
 - **Issue #35** (closed): T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section
 - **PR #40**: feat(design): add sky130 I/O ring xschem sources and netlists for T1 item 1

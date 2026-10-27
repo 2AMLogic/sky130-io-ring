@@ -2,7 +2,7 @@
 
 | File | Role |
 |---|---|
-| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites the item-1 design-sources attestation (`evidence/item1.json`, from `design/attest-inventory.json`), the item-2 layout attestation (`evidence/layout-attestation.json`), the item-3 ring DRC report (`evidence/drc/ring.json`), the item-9 testbench attestation (`evidence/item9.json`) and the item-10 hygiene attestation (`evidence/item10.json`); paths are relative to the repo root where `klt` runs. Every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
+| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites the item-1 design-sources attestation (`evidence/item1.json`, from `design/attest-inventory.json`), the item-2 layout attestation (`evidence/layout-attestation.json`), the item-3 ring DRC report (`evidence/drc/ring.json`), the item-9 testbench attestation (`evidence/item9.json`), the item-10 hygiene attestation (`evidence/item10.json`) and, unmet, the item-11 ERC report plus the `gpio` LVS report (see "Regenerate the ERC report"); paths are relative to the repo root where `klt` runs. Every other T1 row except 11 is `unmet` / `no_evidence`, which is the honest statement. |
 | `attest/item9.json` | Attestation inventory for T1 item 9: the testbenches (`sim/pdk-smoke/run.sh`, `cold-start.sh`), the cold-start command and the PDK/tool pins (same values as `sim/pdk.json`, plus `klt`). |
 | `evidence/item9.json` | Envelope produced by `klt signoff --attest 9`; never hand-written. It pins the inventory's hash and each listed file's hash. |
 | `attest/item10.json` | Inventory for T1 item 10 (repo hygiene): `README.md`, `LICENSE`, `.github/workflows/ci.yml` must exist, and each listed PDK-free CI command must exit 0. |
@@ -12,6 +12,9 @@
 | `gen_lvs_reports.py` | Runs `klt lvs` (sky130 deck, `reference.form: "subckt-call"`) on each stream in `layout/gds/` against `design/netlists/<cell>.spice` and writes the reports under `evidence/lvs/`. |
 | `diag_lvs_without_diodes.py` | Diagnostic only: the `gpio` LVS comparison with the diodes removed from both sides (see the LVS section). Writes nothing under `evidence/`. |
 | `evidence/lvs/*.json` | `klt lvs --format json` reports, never hand-written. Only the cells `klt lvs` accepted have one (table below); the ring, `vddio` and `vdd` have none. |
+| `erc-supply-spec.json` | The `klt erc` supply spec for the assembled ring: `VDDIO`, `VDD`, `VSS` as `"kind": "supply"` nets, a poly-li1-met5 stackup with labels on met3/met4/met5, and two checked `ties[]` (n+ tap in n-well on VDDIO, p+ tap in the substrate on VSS). `VDDIO` and `VDD` declare `roles` (met4, met3) so a severed rail shows as unlabelled conductor. `VSS` does not: met5 also carries the pad metal. |
+| `gen_erc_report.py` | Runs `klt erc --findings-only` on the ring and writes `evidence/erc/ring.json`; `--negative` also writes `evidence/erc/ring-negative.json` from a scratch copy cut in two places. |
+| `evidence/erc/*.json` | `klt erc` reports, never hand-written: `ring.json` (cited for item 11) and `ring-negative.json` (the same spec on a ring cut at two opposite sides, which must fail). |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
 
 ## Regenerate the record
@@ -65,7 +68,22 @@ python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.8.
 
 Deletes the diode marker layer from a scratch copy of the `gpio` stream and the four diode cards from a scratch copy of its netlist, runs `klt lvs` (reference flattened) and prints the result; nothing is written under `signoff/`. Exit 0 = `match`. It narrows the `mismatch` to the diodes; it does not make item 4 met, because the diodes are exactly what it leaves out.
 
-Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. `block-manifest.json` cites no LVS report; this change updates only its item-2 and item-3 hashes (the ring stream changed) and the record with them. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
+Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. The manifest cites the `gpio` LVS report only as the `lvs` part of item 11 (see "Regenerate the ERC report"); it is not the ring's LVS and does not make item 4 met. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
+
+## Regenerate the ERC report (item 11)
+
+```sh
+python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.8.0 klt" --negative
+uvx --from klayout-tools==0.8.0 klt erc --check signoff/evidence/erc/ring.json
+```
+
+`--negative` needs the pip `klayout` module. Exit 4: the ring has findings, or the cut ring was not reported as split.
+
+Result on the current ring stream (with the guard rings and the met2/met5 straps): `erc_status` is **`violations`**, 57 findings. The connectivity half holds: one island each for `VDDIO`, `VDD` and `VSS`, no `erc.unconnected_net` / `erc.supply_short`. The findings are 56 `erc.missing_tie` on layer `ntap_vddio` ("well/tub tap is not connected to declared net 'VDDIO'": the n+ taps the guard rings draw are not reached from the `VDDIO` label through the declared stackup) and 1 `erc.unlabelled_conductor` on `VDD` (met3: 112 unlabelled islands, 1854.9 um^2, reachable from no label, so the strap geometry on met3 is not all connected to the `VDD` rail). Not diagnosed here: whether the taps are truly floating in the drawing or the spec's stackup/`ties[]` does not model the path the drawing uses. Neither is waived and the spec was not edited to make them pass. The cut copy (2 um slab through every stackup conductor at the south and north edges) still splits all three supplies into two islands each (`erc.unconnected_net` x3), on top of the same 57 findings. `--findings-only` skips antenna accumulation (the ring has no gates), so the envelope's `status` is `not_checked`; `erc_status` is the verdict. `layers_in_stream_without_declaration` is `65/20`, `66/13`, `69/5`, `75/20`, `76/20`, `81/23`, `86/20`, `93/44`, `94/20`, `95/20`; the spec declares none of them as conductors. The previous result on the placeholder rails (`clean`, no findings) no longer describes the ring; the generator exits 4 on this report.
+
+What this shows: the supply nets are still each one island through the abutment seams, and a cut still splits them, so the seam check can fail. It also shows the tie check failing on the new guard-ring taps. It says nothing about final geometry, ESD or IR drop.
+
+Item 11 stays `unmet`, now with reason `check_failed`: the manifest's ERC and `gpio` LVS hashes point at the current streams (they were stale), and the ERC part itself fails. It is a compound item (`klt signoff` needs an `erc` part and an `lvs` part), and the ring has no LVS report (2AMLogic/klayout-tools#4318), so item 4 cannot be `met` either. The manifest cites the ERC report plus the only LVS report that exists for a supply-carrying cell, `gpio` (`mismatch`). That `gpio` report is not the ring's LVS and is cited only so the grader treats item 11 as a compound item. Swap it for the ring report once #4318 is fixed and the compare matches, and fix or explain the tie findings. Related tool gap: 2AMLogic/klayout-tools#4193.
 
 ## Regenerate the item-9 envelope
 
