@@ -2,7 +2,7 @@
 
 | File | Role |
 |---|---|
-| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Empty today, so every T1 row is `unmet` / `no_evidence`, which is the honest statement. |
+| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites only the item-2 layout attestation today (`evidence/layout-attestation.json`, path relative to the repo root where `klt` runs); every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
 
 ## Regenerate the record
@@ -20,11 +20,12 @@ The grader version is pinned in one place: `KLT_VERSION` in `.github/workflows/c
 - `scripts/ci/test_checkers.py`: the checkers reject seeded defects (run first).
 - `scripts/ci/check_evidence_format.py`: `design/ layout/ sim/ measurements/ spec/` each have a README; every sim record (`sim/<experiment>/record{,s}/*.json`) has `kind`, `pdk_revision` (40-hex), `pdk_variant`, `runs`, and only repo-relative paths (keys such as `log`, `netlist`, `path`, `file`). Passes trivially with no records.
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.
+- `layout/tests/test_ring.py` and `scripts/ci/check_layout_reproducible.py` (installs the pip `klayout` module, no PDK): the generator's spec/seam checks reject seeded defects, and a fresh regeneration of `layout/gds/` is byte-identical to what is committed and to the attestation's hashes.
 - `scripts/ci/check_append_only.py` (pull requests): files under `sim/` may be added, not modified, deleted or renamed.
 
 ## What CI does not check
 
 - That any number in a record is correct, or that a record was produced by a real run.
-- DRC, LVS, simulation or ESD behaviour. No T1 row is `met`.
+- DRC, LVS, simulation or ESD behaviour. Only T1 item 2 (layout) is `met`: it says a stream exists and is reproducibly generated, nothing about it being rule-clean.
 - Append-only on direct pushes to `main` (branch protection covers that), or records outside `sim/`.
 - That the manifest's `evidence` is honest; the grader judges only what it cites.

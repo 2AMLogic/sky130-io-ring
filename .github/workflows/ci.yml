@@ -1,4 +1,5 @@
-# PDK-free, headless CI: no PDK, ngspice, xschem or klayout is installed or run.
+# PDK-free, headless CI: no PDK, ngspice or xschem is installed or run. The pip
+# `klayout` module is installed only to re-run the layout generator (no PDK).
 # See signoff/README.md for what this does and does not check.
 name: ci
 
@@ -20,6 +21,12 @@ jobs:
 
       - name: Checker self-tests (each must reject its seeded defects)
         run: python3 scripts/ci/test_checkers.py
+
+      - name: Layout generator tests and stream reproducibility (klayout module, no PDK)
+        run: |
+          python3 -m pip install "klayout==0.30.10"
+          python3 layout/tests/test_ring.py
+          python3 scripts/ci/check_layout_reproducible.py .
 
       - name: Evidence directories and sim record format
         run: python3 -I scripts/ci/check_evidence_format.py .
