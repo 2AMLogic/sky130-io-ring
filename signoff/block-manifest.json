@@ -3,6 +3,7 @@
   "kind": "analog",
   "evidence": {
     "2": {"file": "signoff/evidence/layout-attestation.json", "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d"},
+    "3": {"file": "signoff/evidence/drc/ring.json", "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d"},
     "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:8d55cff76a5b3bbb726b471bf15f3e71ab1b481a5d54a315760748d7c6278fdb"}
   }
 }
