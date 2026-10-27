@@ -288,7 +288,6 @@ def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, l
     y_outer = y_t0 + max(ys.values()) + TRACK_PITCH + hp
     height = y_outer + 0.7
     ys = {n: round(y_t0 + y, 3) for n, y in ys.items()}
-    xy = make_xy(y_outer)
     got = collect(dx, y_outer)
     ports = got["n"] + got["p"]
     wcell = max(wn, wp + dx) + 0.7

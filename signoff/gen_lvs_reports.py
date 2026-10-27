@@ -14,6 +14,16 @@ Exit 0 only if every report was written and every status is `match`; a
 exit 4. When `klt lvs` refuses a request (no report exists) the refusal is
 printed, no file is written, the remaining streams still run and the script
 exits 5. No hints, tolerances or ignored devices are passed: nothing is forced.
+
+`klt lvs` extracts the layout flat, so a reference that defines sub-circuits is
+compared flattened (`options.flatten_reference`, `--flatten-reference auto`);
+with the reference one circuit, only the top-level devices, nets and pins are
+compared, which is what the flat layout offers. A reference with no
+sub-circuit is sent without that option.
+
+`options.compare_mos_flavour` is always on: by default `klt lvs` treats a
+thick-oxide and a thin-oxide MOS of the same polarity as the same device, which
+would hide the one error an I/O cell is built around.
 """
 import argparse
 import json
@@ -26,6 +36,11 @@ STREAMS = ["ring", "gpio", "vddio", "vdd", "vss", "corner",
            "fill_1", "fill_5", "fill_10", "fill_20"]
 
 
+def _subckts(path):
+    with open(path) as f:
+        return sum(1 for line in f if line.lstrip().lower().startswith(".subckt"))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--klt", default="klt", help="klt command (may be a quoted uvx line)")
@@ -35,6 +50,9 @@ def main():
     ap.add_argument("--out-dir", default="signoff/evidence/lvs")
     ap.add_argument("--prefix", default="sky130_ioring_", help="cell/stream name prefix")
     ap.add_argument("--streams", nargs="*", default=STREAMS)
+    ap.add_argument("--flatten-reference", choices=["auto", "always", "never"], default="auto",
+                    help="flatten a hierarchical reference before comparing (auto: when it "
+                         "defines more than one .subckt)")
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
     bad = refused = 0
@@ -44,6 +62,10 @@ def main():
                "reference": {"netlist": f"{a.netlist_dir}/{cell}.spice", "top": cell,
                          "form": "subckt-call", "deck": a.deck}}
         out = f"{a.out_dir}/{'ring' if s == 'ring' else cell}.json"
+        req["options"] = {"compare_mos_flavour": True}
+        hierarchical = _subckts(req["reference"]["netlist"]) > 1
+        if a.flatten_reference == "always" or (a.flatten_reference == "auto" and hierarchical):
+            req["options"]["flatten_reference"] = True
         p = subprocess.run(shlex.split(a.klt) + ["lvs", "--format", "json", json.dumps(req)],
                            capture_output=True, text=True)
         if not p.stdout.strip() or '"error"' in p.stdout.split("\n", 3)[2]:

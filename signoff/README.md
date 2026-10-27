@@ -10,6 +10,7 @@
 | `gen_drc_reports.py` | Runs `klt drc --deck sky130` on the ring and each cell stream in `layout/gds/` and writes the envelopes under `evidence/drc/`. |
 | `evidence/drc/*.json` | `klt drc` envelopes, never hand-written: `ring.json` (cited for item 3) and one per cell stream beside it. |
 | `gen_lvs_reports.py` | Runs `klt lvs` (sky130 deck, `reference.form: "subckt-call"`) on each stream in `layout/gds/` against `design/netlists/<cell>.spice` and writes the reports under `evidence/lvs/`. |
+| `diag_lvs_without_diodes.py` | Diagnostic only: the `gpio` LVS comparison with the diodes removed from both sides (see the LVS section). Writes nothing under `evidence/`. |
 | `evidence/lvs/*.json` | `klt lvs --format json` reports, never hand-written. Only the cells `klt lvs` accepted have one (table below); the ring, `vddio` and `vdd` have none. |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
 
@@ -31,7 +32,7 @@ python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.8.0 klt"
 
 No PDK or standalone klayout is needed (curated deck). Exit 4 means a report is not clean; it is still written. If `ring.json` changes, update the item-3 `content_hash` in `block-manifest.json` (the input stream hash, equal to the item-2 hash) and regenerate the record. The manifest holds one file per item, so only `ring.json` is cited; the per-cell reports sit beside it.
 
-What item 3 claims: the closed ring stream is clean against the curated `sky130` deck's modeled rules (`deck_scope` in the report), on **placeholder** drawing, with the spec still proposed (the CELL rows are re-checked on ratification). `coverage.layers_in_stream_without_rules` is `70/5`, `71/5`, `72/5`; `coverage.rules_skipped` is 57 rule ids, all `no_applicable_geometry`; `deck_scope` is 23 layers/groups (m1-m5, via-via4, nwell, difftap, poly, licon, li, npc, nsdm, psdm, capm, cap2m, rpm, urpm, ct, x); deck hash `sha256:ba0f9788...942e6`. It does **not** claim thick-oxide, latch-up, guard-ring-construction or ESD compliance: the deck does not check them (`spec/klt-rule-coverage.md`, "Reconciliation").
+What item 3 claims: the closed ring stream is clean against the curated `sky130` deck's modeled rules (`deck_scope` in the report), on drawing that includes the GPIO's transistors, diodes and resistor (`layout/README.md`), with the spec still proposed (the CELL rows are re-checked on ratification). `coverage.layers_in_stream_without_rules` is `66/13`, `69/5`, `70/5`, `71/5`, `72/5`, `81/23` (the resistor marker, the diode marker and the label purposes); `coverage.rules_skipped` is 42 rule ids, all `no_applicable_geometry`; `deck_scope` is 23 layers/groups (m1-m5, via-via4, nwell, difftap, poly, licon, li, npc, nsdm, psdm, capm, cap2m, rpm, urpm, ct, x); deck hash `sha256:ba0f9788...942e6`. It does **not** claim thick-oxide, latch-up, guard-ring-construction or ESD compliance: the deck does not check them (`spec/klt-rule-coverage.md`, "Reconciliation"; the report's `voltage_domain_warnings` says no rule but `nwell.enclosed.hvi.1` reads `hvi`, so the 5 V devices are held only to the general-case thresholds). `sky130_ioring_gpio.json` is `clean` too.
 
 Known per-cell finding, not waived: `sky130_ioring_fill_1.json` is `violations` (one `met5.width.1`): checked alone, the 1 µm filler's met5 rail segment is 1 µm wide in the short direction. The placed ring is clean. The generator cannot widen it without overlapping neighbours (CELL.8); tool gap filed as 2AMLogic/klayout-tools#4226; left for spec review rather than relaxed here.
 
@@ -44,13 +45,27 @@ for f in signoff/evidence/lvs/*.json; do uvx --from klayout-tools==0.8.0 klt lvs
 
 No hints, tolerances, `device_map` or ignored devices are passed. Exit 4: a report is `mismatch` (still written). Exit 5: `klt lvs` refused a request, so no report exists for that cell (the refusal is printed).
 
+`klt lvs` extracts the layout flat. A reference that defines sub-circuits (the `gpio` netlist defines 15) is therefore sent with `options.flatten_reference: true` (`--flatten-reference auto`, the default); the comparison is one flat circuit, so the sub-block boundaries of the netlist are not compared. A reference without sub-circuits is not flattened.
+
+`options.compare_mos_flavour` is on for every request: by default `klt lvs` compares a thick-oxide and a thin-oxide MOS of the same polarity as equal (checked by hand with klt 0.8.0 on the pull-network block: its thick `pfet_g5v0d10v5` against a reference that declares `pfet_01v8` is `match` by default and `mismatch` with the option), which would hide the error an I/O cell is built around. The `corner`, `fill_*` and `vss` reports differ from the previous ones only in echoing this option.
+
+Body ties: `body_verification` is `verified` for `gpio` because the three rails carry `VSS` / `VDDIO` / `VDD` labels; without them klt reported 106 bodies `unverified` with a message about missing tap geometry although the taps were drawn (2AMLogic/klayout-tools#4361).
+
 | Cell | `status` | `power_connectivity` | Note |
 |---|---|---|---|
 | `corner`, `fill_1`, `fill_5`, `fill_10`, `fill_20`, `vss` | `match` | `unchecked` | Vacuous: schematic and layout both have zero devices; the layout has 1 net against 3 reference pins, and the pins were paired by the comparer (a `warning`, "paired ambiguously"). This shows the flow runs, not that supply wiring is right. |
-| `gpio` | `mismatch` | `unchecked` | 20 errors. The layout has 0 devices (placeholder diffusions, `layout/README.md`); the reference has devices. The reference's four diode cards are also `reference.unresolved_subckt_call` (2AMLogic/klayout-tools#4319), and the resistor `L`/`W`/`A`/`P` are not compared (`device.geometry_not_compared`). |
+| `gpio` | `mismatch` | `unchecked` | 11 errors, all from the four diode cards of the reference (2AMLogic/klayout-tools#4319): 4 `reference.unresolved_subckt_call` (the cards become empty placeholders), the 4 diodes the layout extracts are `device.unmatched`, and 3 `topology` (the two diode classes cannot be mapped; net `RXG`, which carries diodes, is paired despite a name conflict). Everything else compares: 107 of 107 reference devices (106 MOS fingers, 1 resistor) and 10 of 10 pins match, 39 of 43 nets (layout 111 devices, reference 107); `body_verification` is `verified`. Not compared: the resistor `L`/`W`/`A`/`P` (`device.geometry_not_compared`), and its `R` is a placeholder (`device.placeholder_value`). With the diodes taken out of both sides (`diag_lvs_without_diodes.py`, below; a diagnostic, not evidence) the same stream reports `match` on 43 nets, 107 devices and 10 pins, so the diode cards are the only difference the tool found. |
 | `vddio`, `vdd`, `ring` | no report | n/a | `klt lvs` refuses the reference: `sky130_fd_pr__cap_mim_m3_1` with `m=2` cannot be converted (2AMLogic/klayout-tools#4318). The netlist was not edited to get past it. |
 
-Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. `block-manifest.json` and `signoff-record.json` are unchanged. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
+### Diagnostic: the same comparison without the diodes
+
+```sh
+python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.8.0 klt"
+```
+
+Deletes the diode marker layer from a scratch copy of the `gpio` stream and the four diode cards from a scratch copy of its netlist, runs `klt lvs` (reference flattened) and prints the result; nothing is written under `signoff/`. Exit 0 = `match`. It narrows the `mismatch` to the diodes; it does not make item 4 met, because the diodes are exactly what it leaves out.
+
+Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. `block-manifest.json` cites no LVS report; this change updates only its item-2 and item-3 hashes (the ring stream changed) and the record with them. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
 
 ## Regenerate the item-9 envelope
 

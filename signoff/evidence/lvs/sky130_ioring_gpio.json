@@ -19,14 +19,14 @@
     "combine_devices_per_circuit": null,
     "combine_devices_max_attempts": 5,
     "flatten_layout": false,
-    "flatten_reference": false,
+    "flatten_reference": true,
     "netgen_setup": null,
     "parameter_tolerance": null,
     "compare_parameters": null,
     "power_connectivity": null,
     "anchor_top_level_pins": null,
     "strict_top_level_pin_count": false,
-    "compare_mos_flavour": false,
+    "compare_mos_flavour": true,
     "supply_nets": [
       "GND",
       "VCC",
@@ -61,14 +61,16 @@
   },
   "device_parameter_coverage": [
     {
-      "class": "RES_HIGH_PO",
+      "class": "res_high_po",
       "device_kind": "resistor",
-      "layout_devices": 0,
+      "layout_devices": 1,
       "reference_devices": 1,
-      "compared": [
-        "R"
-      ],
+      "compared": [],
       "not_compared": [
+        {
+          "parameter": "R",
+          "reason": "placeholder_value"
+        },
         {
           "parameter": "L",
           "reason": "secondary"
@@ -88,32 +90,36 @@
       ]
     }
   ],
-  "mismatch_count": 22,
-  "error_count": 20,
+  "mismatch_count": 15,
+  "error_count": 11,
   "category_counts": {
     "device.geometry_not_compared": 1,
+    "device.placeholder_value": 1,
+    "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 17
+    "topology": 4,
+    "topology.flattened": 1
   },
   "category_error_counts": {
+    "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 16
+    "topology": 3
   },
   "counts": {
     "nets": {
-      "layout": 2,
-      "reference": 19,
-      "matched": 0
+      "layout": 43,
+      "reference": 43,
+      "matched": 39
     },
     "devices": {
-      "layout": 0,
-      "reference": 0,
-      "matched": 0
+      "layout": 111,
+      "reference": 107,
+      "matched": 107
     },
     "pins": {
-      "layout": 2,
+      "layout": 10,
       "reference": 10,
-      "matched": 0
+      "matched": 10
     }
   },
   "device_classes": [
@@ -136,7 +142,7 @@
     "engine": "klayout",
     "engine_version": "0.30.12",
     "netgen_binary": null,
-    "layout_sha256": "0f2f721bd0b2a71536dbd62ff50c74eb62cbdd64b80bd00efab7aaf1e1568668",
+    "layout_sha256": "699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
     "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
     "extracted_netlist": null
   },
@@ -150,7 +156,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:0f2f721bd0b2a71536dbd62ff50c74eb62cbdd64b80bd00efab7aaf1e1568668",
+      "content_hash": "sha256:699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
       "role": "layout"
     },
     "klayout_version_mismatch": false
@@ -159,8 +165,36 @@
     {
       "category": "device.geometry_not_compared",
       "severity": "warning",
-      "description": "device class 'RES_HIGH_PO' is a resistor class, whose ['A', 'L', 'P', 'W'] parameter(s) KLayout declares *secondary*: kdb.NetlistComparer compares primary parameters only, so none of them took part in this compare and each is NOT verified -- this resistor's geometry could differ between the two sides by any amount and this run would still report 'match'. The compared parameter(s) were ['R']. Name them in options.compare_parameters to compare them (see docs/cli/lvs.md, 'device.geometry_not_compared')",
+      "description": "device class 'res_high_po' is a resistor class, whose ['A', 'L', 'P', 'W'] parameter(s) KLayout declares *secondary*: kdb.NetlistComparer compares primary parameters only, so none of them took part in this compare and each is NOT verified -- this resistor's geometry could differ between the two sides by any amount and this run would still report 'match'. No parameter of this class was compared at all: the remaining parameter(s) were separately excluded from this run (see the device.placeholder_value/device.parameter_excluded entries), so the two sides were paired on topology alone. Name them in options.compare_parameters to compare them (see docs/cli/lvs.md, 'device.geometry_not_compared')",
       "side": "both",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "res_high_po"
+      },
+      "property": null,
+      "details": {
+        "device_kind": "resistor",
+        "compared_parameters": [],
+        "not_compared_parameters": [
+          "A",
+          "L",
+          "P",
+          "W"
+        ],
+        "layout_devices": 1,
+        "reference_devices": 1
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.placeholder_value",
+      "severity": "warning",
+      "description": "reference device class 'RES_HIGH_PO' was converted from a subcircuit call (request.reference.form: \"subckt-call\"), so its 'R' value is the literal 0 placeholder on all 1 reference instance(s) -- klt lvs has no PDK sheet-resistance/capacitance-per-area data to compute a real one. 'R' was therefore excluded from this compare on both sides (layout: 1 instance(s), R 502.3118074609929) and the two sides were paired on topology alone -- that dimension of the compare is not independently verified. Supply a reference in the plain-element form carrying real 'R' values to compare it (see docs/cli/lvs.md, 'device.placeholder_value')",
+      "side": "reference",
       "net": null,
       "device": {
         "layout": null,
@@ -169,19 +203,82 @@
       },
       "property": null,
       "details": {
+        "parameter": "R",
         "device_kind": "resistor",
-        "compared_parameters": [
-          "R"
-        ],
-        "not_compared_parameters": [
-          "A",
-          "L",
-          "P",
-          "W"
-        ],
-        "layout_devices": 0,
-        "reference_devices": 1
+        "reference_devices": 1,
+        "layout_devices": 1,
+        "layout_values": [
+          502.3118074609929
+        ]
       },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.unmatched",
+      "severity": "error",
+      "description": "device has no counterpart on the other side",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": "\\$107",
+        "reference": null,
+        "class": "diode_pw2nd_05v5"
+      },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.unmatched",
+      "severity": "error",
+      "description": "device has no counterpart on the other side",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": "\\$108",
+        "reference": null,
+        "class": "diode_pw2nd_05v5"
+      },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.unmatched",
+      "severity": "error",
+      "description": "device has no counterpart on the other side",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": "\\$109",
+        "reference": null,
+        "class": "diode_pd2nw_05v5"
+      },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.unmatched",
+      "severity": "error",
+      "description": "device has no counterpart on the other side",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": "\\$110",
+        "reference": null,
+        "class": "diode_pd2nw_05v5"
+      },
+      "property": null,
+      "details": null,
       "circuit": null,
       "instance": null,
       "subcircuit": null
@@ -293,16 +390,16 @@
     {
       "category": "topology",
       "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
+      "description": "nets were paired despite a name/identity conflict",
       "side": "both",
-      "net": null,
+      "net": {
+        "layout": "\\$31",
+        "reference": "RXG"
+      },
       "device": null,
       "property": null,
       "details": null,
-      "circuit": {
-        "layout": "sky130_ioring_gpio",
-        "reference": "SKY130_IORING_GPIO"
-      },
+      "circuit": null,
       "instance": null,
       "subcircuit": null
     },
@@ -326,238 +423,44 @@
     {
       "category": "topology",
       "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_LOGIC"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_INV"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_NAND2"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_NOR2"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_NAND3"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_LS"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_DRV"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_PULLS"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_ESD"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_FD_PR__DIODE_PD2NW_05V5(AREA=2e+14|PERIM=60MEG)"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_FD_PR__DIODE_PW2ND_05V5(AREA=2e+14|PERIM=60MEG)"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_FD_PR__DIODE_PD2NW_05V5(AREA=1e+13|PERIM=14MEG)"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_FD_PR__DIODE_PW2ND_05V5(AREA=1e+13|PERIM=14MEG)"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "circuit could not be matched to a counterpart",
-      "side": "reference",
-      "net": null,
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": {
-        "layout": null,
-        "reference": "SKY130_IORING_GPIO_RCV"
-      },
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
-      "severity": "error",
-      "description": "device class could not be mapped to a counterpart: 'RES_HIGH_PO'",
-      "side": "reference",
+      "description": "device class could not be mapped to a counterpart: 'diode_pw2nd_05v5'",
+      "side": "layout",
       "net": null,
       "device": {
         "layout": null,
         "reference": null,
-        "class": "RES_HIGH_PO"
+        "class": "diode_pw2nd_05v5"
       },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "error",
+      "description": "device class could not be mapped to a counterpart: 'diode_pd2nw_05v5'",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "diode_pd2nw_05v5"
+      },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology.flattened",
+      "severity": "warning",
+      "description": "options.flatten_reference flattened the reference netlist before comparing: 15 circuit(s) were collapsed into 1 top-level circuit(s), substituting every subcircuit-call instance in place -- this compare verified topology only after removing the original hierarchy boundaries on this side (see docs/cli/lvs.md, \"topology.flattened\")",
+      "side": "reference",
+      "net": null,
+      "device": null,
       "property": null,
       "details": null,
       "circuit": null,
@@ -565,5 +468,201 @@
       "subcircuit": null
     }
   ],
-  "net_correspondence": []
+  "net_correspondence": [
+    {
+      "layout": "\\$3",
+      "reference": "1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$22",
+      "reference": "1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$4",
+      "reference": "1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$5",
+      "reference": "1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$6",
+      "reference": "1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$7",
+      "reference": "1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$13",
+      "reference": "1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$15",
+      "reference": "1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$19",
+      "reference": "1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$14",
+      "reference": "1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$42",
+      "reference": "5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$43",
+      "reference": "5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$36",
+      "reference": "5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$38",
+      "reference": "5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$39",
+      "reference": "5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$37",
+      "reference": "5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "A",
+      "reference": "A",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE",
+      "pin": true
+    },
+    {
+      "layout": "\\$25",
+      "reference": "L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$28",
+      "reference": "L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$26",
+      "reference": "L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$29",
+      "reference": "L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$27",
+      "reference": "L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$30",
+      "reference": "L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$41",
+      "reference": "L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$40",
+      "reference": "L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$24",
+      "reference": "NG",
+      "pin": false
+    },
+    {
+      "layout": "\\$17",
+      "reference": "NG_C",
+      "pin": false
+    },
+    {
+      "layout": "OE",
+      "reference": "OE",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD",
+      "pin": true
+    },
+    {
+      "layout": "\\$12",
+      "reference": "PDP",
+      "pin": false
+    },
+    {
+      "layout": "\\$20",
+      "reference": "PD_C",
+      "pin": false
+    },
+    {
+      "layout": "\\$33",
+      "reference": "PG",
+      "pin": false
+    },
+    {
+      "layout": "\\$16",
+      "reference": "PG_C",
+      "pin": false
+    },
+    {
+      "layout": "PU",
+      "reference": "PU",
+      "pin": true
+    },
+    {
+      "layout": "\\$21",
+      "reference": "PUN",
+      "pin": false
+    },
+    {
+      "layout": "\\$18",
+      "reference": "PUN_C",
+      "pin": false
+    },
+    {
+      "layout": "VDD",
+      "reference": "VDD",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y",
+      "pin": true
+    }
+  ]
 }

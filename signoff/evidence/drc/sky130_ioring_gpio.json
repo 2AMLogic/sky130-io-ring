@@ -61,6 +61,7 @@
       "64/20",
       "65/20",
       "65/44",
+      "66/20",
       "66/44",
       "67/20",
       "67/44",
@@ -73,18 +74,28 @@
       "71/20",
       "71/44",
       "72/20",
+      "75/20",
       "76/20",
+      "86/20",
       "93/44",
-      "94/20"
+      "94/20",
+      "95/20"
     ],
     "layers_in_stream_without_rules": [
-      "72/5"
+      "66/13",
+      "69/5",
+      "70/5",
+      "71/5",
+      "72/5",
+      "81/23"
     ],
     "rules_checked": [
       "diff.angle.1",
       "diff.enclosing.licon.1",
       "diff.ongrid.1",
       "diff.width.1",
+      "hvi.angle.1",
+      "hvi.ongrid.1",
       "li1.angle.1",
       "li1.enclosing.licon1.1",
       "li1.ongrid.1",
@@ -140,20 +151,33 @@
       "met5.ongrid.1",
       "met5.space.1",
       "met5.width.1",
+      "npc.angle.1",
+      "npc.ongrid.1",
+      "npc.space.1",
+      "npc.width.1",
       "nsdm.angle.1",
       "nsdm.ongrid.1",
       "nsdm.space.1",
       "nsdm.width.1",
       "nwell.angle.1",
+      "nwell.enclosed.hvi.1",
       "nwell.ongrid.1",
       "nwell.space.1",
       "nwell.width.1",
       "pad.angle.1",
       "pad.ongrid.1",
+      "poly.angle.1",
+      "poly.enclosing.licon.1",
+      "poly.endcap.diff.1",
+      "poly.ongrid.1",
+      "poly.width.1",
       "psdm.angle.1",
       "psdm.ongrid.1",
       "psdm.space.1",
       "psdm.width.1",
+      "rpm.angle.1",
+      "rpm.ongrid.1",
+      "rpm.width.1",
       "tap.angle.1",
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
@@ -187,8 +211,6 @@
       "capm2.width.1",
       "dnwell.angle.1",
       "dnwell.ongrid.1",
-      "hvi.angle.1",
-      "hvi.ongrid.1",
       "hvntm.angle.1",
       "hvntm.ongrid.1",
       "hvtp.angle.1",
@@ -203,27 +225,14 @@
       "mf.ongrid.1",
       "ncm.angle.1",
       "ncm.ongrid.1",
-      "npc.angle.1",
-      "npc.ongrid.1",
-      "npc.space.1",
-      "npc.width.1",
       "nsm.angle.1",
       "nsm.ongrid.1",
-      "nwell.enclosed.hvi.1",
-      "poly.angle.1",
-      "poly.enclosing.licon.1",
-      "poly.endcap.diff.1",
-      "poly.ongrid.1",
-      "poly.width.1",
       "pwbm.angle.1",
       "pwbm.ongrid.1",
       "pwde.angle.1",
       "pwde.ongrid.1",
       "pwell_rs.angle.1",
       "pwell_rs.ongrid.1",
-      "rpm.angle.1",
-      "rpm.ongrid.1",
-      "rpm.width.1",
       "tunm.angle.1",
       "tunm.ongrid.1",
       "uhvi.angle.1",
@@ -234,7 +243,12 @@
       "vpp.angle.1",
       "vpp.ongrid.1"
     ],
-    "voltage_domain_warnings": [],
+    "voltage_domain_warnings": [
+      {
+        "marker": "75/20",
+        "description": "hvi (75/20) marks sky130's 5V-gate/10.5V-drain thick-oxide voltage domain (see sky130.lvs's ngate_high_voltage/pgate_high_voltage). This curated deck models it for MOS device recognition/model binding (issue #1369: sky130_fd_pr__nfet_g5v0d10v5/pfet_g5v0d10v5 under --pdk) and for one DRC rule (nwell.enclosed.hvi.1, nwell.9, issue #3031); no other DRC rule here reads hvi, so every rule still applies its general-case threshold to geometry drawn inside hvi (e.g. diff.width.1 checks difftap.1's 0.15 um where the real DRM's medium-voltage column, difftap.14, requires 0.29 um -- not transcribed in this deck yet)."
+      }
+    ],
     "unchecked_rules": [],
     "marker_blind_layers_in_stream": [],
     "deck_scope": [
@@ -304,6 +318,8 @@
       "diff.enclosing.licon.1",
       "diff.ongrid.1",
       "diff.width.1",
+      "hvi.angle.1",
+      "hvi.ongrid.1",
       "li1.angle.1",
       "li1.enclosing.licon1.1",
       "li1.ongrid.1",
@@ -359,20 +375,33 @@
       "met5.ongrid.1",
       "met5.space.1",
       "met5.width.1",
+      "npc.angle.1",
+      "npc.ongrid.1",
+      "npc.space.1",
+      "npc.width.1",
       "nsdm.angle.1",
       "nsdm.ongrid.1",
       "nsdm.space.1",
       "nsdm.width.1",
       "nwell.angle.1",
+      "nwell.enclosed.hvi.1",
       "nwell.ongrid.1",
       "nwell.space.1",
       "nwell.width.1",
       "pad.angle.1",
       "pad.ongrid.1",
+      "poly.angle.1",
+      "poly.enclosing.licon.1",
+      "poly.endcap.diff.1",
+      "poly.ongrid.1",
+      "poly.width.1",
       "psdm.angle.1",
       "psdm.ongrid.1",
       "psdm.space.1",
       "psdm.width.1",
+      "rpm.angle.1",
+      "rpm.ongrid.1",
+      "rpm.width.1",
       "tap.angle.1",
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
@@ -441,14 +470,6 @@
         "reason": "no_applicable_geometry"
       },
       {
-        "id": "hvi.angle.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "hvi.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
         "id": "hvntm.angle.1",
         "reason": "no_applicable_geometry"
       },
@@ -505,51 +526,11 @@
         "reason": "no_applicable_geometry"
       },
       {
-        "id": "npc.angle.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "npc.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "npc.space.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "npc.width.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
         "id": "nsm.angle.1",
         "reason": "no_applicable_geometry"
       },
       {
         "id": "nsm.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "nwell.enclosed.hvi.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "poly.angle.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "poly.enclosing.licon.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "poly.endcap.diff.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "poly.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "poly.width.1",
         "reason": "no_applicable_geometry"
       },
       {
@@ -574,18 +555,6 @@
       },
       {
         "id": "pwell_rs.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "rpm.angle.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "rpm.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "rpm.width.1",
         "reason": "no_applicable_geometry"
       },
       {
@@ -639,7 +608,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:0f2f721bd0b2a71536dbd62ff50c74eb62cbdd64b80bd00efab7aaf1e1568668",
+      "content_hash": "sha256:699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
       "role": "layout"
     },
     "klayout_version_mismatch": false

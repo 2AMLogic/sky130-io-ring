@@ -1,24 +1,27 @@
 """sky130 device-level half of the I/O ring generator.
 
-Layer numbers, rail bands, guard strips and the placeholder pad / driver
-geometry for the sky130 cells. The PDK-independent half (ring assembly, seam
-checks, stream writing) is gen_ring.py and never names a layer.
+Layer numbers, rail bands, guard strips, the bond pad, the GPIO core and its
+tie to rails and pad, and the device census. Device drawing is in
+sky130_devices.py, sub-block cells in sky130_blocks.py. The PDK-independent half
+(ring assembly, seam checks, stream writing, netlist reader, router) never
+names a layer.
 
-Provenance: every shape here is drawn from the proposed spec/io-ring.json
-rows and generic sky130 layer numbers. No geometry is taken from or traced
-against the foundry sky130_fd_io library (decision 0001); that library is a
-comparison point only.
+Provenance: every shape here is drawn from the proposed spec/io-ring.json rows,
+generic sky130 layer numbers and the committed design/netlists/. No geometry is
+taken from or traced against the foundry sky130_fd_io library (decision 0001);
+that library is a comparison point only.
 
-Honest scope of the cells: rails, continuous guard strips, a bond-pad
-stack and placeholder driver diffusions inside closed guard-ring annuli.
-There is no gate wiring, level shifter, clamp or ESD device. Nothing here is
-ESD-rated, and DRC / LVS have not been run on it (separate issues).
+Honest scope of the cells: rails, continuous guard strips and a bond-pad stack
+on every pad cell; in the GPIO, every device of the GPIO netlists at its
+netlist W / L / m, wired, with guard rings round the output-driver banks. No
+supply clamp is drawn. Nothing here is ESD-rated; DRC and LVS results are in
+signoff/ (LVS of the GPIO is a mismatch on the netlist's diode cards only).
 """
 import klayout.db as db
 
 import ringgeom as g
 import sky130_blocks as sb
-from sky130_devices import LAYERS, Pen  # noqa: F401  (LAYERS is part of this module's API)
+from sky130_devices import LAYERS  # noqa: F401  (LAYERS is part of this module's API)
 
 NAME = "sky130"
 PREFIX = "sky130_ioring_"
@@ -215,6 +218,9 @@ def build_edge(ctx, kind, w):
         cx, cy = _pad(ctx, cell, w)
         _gpio_devices(ctx, cell, w)
         _label(ctx, cell, "met5.label", "PAD", cx, cy)
+        for net, (b0, b1) in RAIL_BANDS.items():      # name the rails, as the supply pads do
+            layer = ctx.rail_layer[net]
+            _label(ctx, cell, layer + ".label", net, w / 2, (b0 + b1) / 2)
     else:
         _supply_pad(ctx, cell, w, {"vddio": "VDDIO", "vdd": "VDD", "vss": "VSS"}[kind])
     return cell
@@ -285,7 +291,8 @@ def _drawn_devices(layout, cell):
         b = gate.bbox()
         one = db.Region(gate)
         kind = "p" if (one & nwell).count() else "n"
-        mos.append((kind, bool((one & hvi).count()), round(b.height() * g.DBU, 3), round(b.width() * g.DBU, 3)))
+        thick = bool((one & hvi).count())
+        mos.append((kind, thick, round(b.height() * g.DBU, 3), round(b.width() * g.DBU, 3)))
     dio = []
     nsdm = region("nsdm")
     for m in region("diode.mark").each():
