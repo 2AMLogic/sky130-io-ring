@@ -62,6 +62,16 @@ jobs:
           diff -u <(python3 -m json.tool signoff/signoff-record.json) <(python3 -m json.tool "$RUNNER_TEMP/fresh.json") || true
           exit 1
 
+      - name: Item 9 attestation must still reproduce (cold start is local-only, reported as skipped)
+        run: |
+          klt signoff --attest 9 --inventory signoff/attest/item9.json --check signoff/evidence/item9.json
+
+      - name: Committed DRC reports must still match the streams and deck (provenance re-hash; DRC not re-run)
+        run: |
+          for r in signoff/evidence/drc/*.json; do
+            klt drc --check "$r"
+          done
+
       - name: T1 item 10 hygiene attestation must reproduce (README, LICENSE, CI commands)
         run: |
           klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json

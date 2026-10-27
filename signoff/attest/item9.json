@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "t1-attestation-inventory",
+  "t1_item": 9,
+  "description": "PDK smoke only: shows the sky130 models load and converge. No design testbench exists yet; GPIO and clamp benches are added by the PRs that land them.",
+  "testbenches": ["sim/pdk-smoke/run.sh", "sim/pdk-smoke/cold-start.sh"],
+  "cold_start": {"argv": ["bash", "sim/pdk-smoke/cold-start.sh"], "local_only": true},
+  "pins": {
+    "pdk": {"name": "sky130A", "revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7"},
+    "tools": {"klt": "0.8.0", "ngspice": "46", "xschem": "3.4.7", "ciel": "2.6.1"}
+  }
+}
