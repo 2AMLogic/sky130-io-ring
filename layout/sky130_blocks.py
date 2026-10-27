@@ -43,6 +43,11 @@ RING_W = 0.5
 
 Built = namedtuple("Built", "cell w h pin_x extra")
 
+# n-wells the generator drew, by body net, from the netlist (not from the drawing):
+# {cell name: [(body net, thick oxide, (x0, y0, x1, y1) um in the cell's frame)]}.
+# signoff/gen_erc_spec.py reads it to declare which wells the ERC ties must reach.
+WELLS = {}
+
 
 def load_subckts():
     out = {}
@@ -370,6 +375,9 @@ def _draw_group(layout, cell, grp, row, gx, base_y, flip):
     if grp.row == "p":
         wb = (ax0 - WELL_MARGIN, ay0 - WELL_MARGIN, ax1 + WELL_MARGIN, ay1 + WELL_MARGIN)
         pen.box("nwell", *wb)
+        (x0, y0), (x1, y1) = pen.pt(wb[0], wb[1]), pen.pt(wb[2], wb[3])
+        WELLS.setdefault(cell.name, []).append(
+            (grp.key[0], thick, (min(x0, x1), min(y0, y1), max(x0, x1), max(y0, y1))))
         if thick:
             pen.box("hvi", wb[0] - 0.3, wb[1] - 0.3, wb[2] + 0.3, wb[3] + 0.3)
     elif thick:

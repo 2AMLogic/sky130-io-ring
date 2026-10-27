@@ -74,7 +74,7 @@ class Good(unittest.TestCase):
                              [(g.U(30), g.U(33))] * 2, kind)
 
     def test_erc_spec_lists_the_vdd_clamp_wells(self):
-        """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes."""
+        """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes (among others)."""
         import json
         spec = json.loads((HERE.parents[1] / "signoff" / "erc-supply-spec.json").read_text())
         tie = {t["name"]: t for t in spec["ties"]}["ntap_vdd"]
@@ -89,7 +89,18 @@ class Good(unittest.TestCase):
                 if max(b.width(), b.height()) < g.U(20):     # the clamp well, not the 80 x 24 guard well
                     got.add(tuple(round(v * layout.dbu, 3) for v in (b.left, b.bottom, b.right, b.top)))
         self.assertEqual(len(got), 4)
-        self.assertEqual(got, {tuple(round(v, 3) for v in b) for b in tie["well_requires_boxes"]})
+        self.assertLessEqual(got, {tuple(round(v, 3) for v in b) for b in tie["well_requires_boxes"]})
+
+    def test_erc_spec_matches_the_generator_record(self):
+        """The spec's VDD-well / GPIO-core boxes are what signoff/gen_erc_spec.py derives now."""
+        import json
+        sys.path.insert(0, str(HERE.parents[1] / "signoff"))
+        import gen_erc_spec
+        path = HERE.parents[1] / "signoff" / "erc-supply-spec.json"
+        spec = json.loads(path.read_text())
+        wells, cores = gen_erc_spec.ring_boxes()
+        self.assertEqual(len(wells), 7 * len(cores))
+        self.assertEqual(gen_erc_spec.refreshed(spec, wells, cores), spec)
 
     def test_reproducible_bytes(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
