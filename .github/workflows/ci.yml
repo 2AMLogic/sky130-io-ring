@@ -78,6 +78,10 @@ jobs:
             klt drc --check "$r"
           done
 
+      - name: T1 item 10 hygiene attestation must reproduce (README, LICENSE, CI commands)
+        run: |
+          klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+
   append-only:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

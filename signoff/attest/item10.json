@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "t1-attestation-inventory",
+  "t1_item": 10,
+  "hygiene": ["README.md", "LICENSE", ".github/workflows/ci.yml"],
+  "checks": [
+    {"name": "checker-self-tests", "argv": ["python3", "scripts/ci/test_checkers.py"]},
+    {"name": "evidence-format", "argv": ["python3", "-I", "scripts/ci/check_evidence_format.py", "."]},
+    {"name": "spec-md-json-agree", "argv": ["python3", "-I", "spec/check_spec.py"]},
+    {"name": "pdk-resolver-self-test", "argv": ["bash", "sim/lib/test_pdk_env.sh"]}
+  ]
+}

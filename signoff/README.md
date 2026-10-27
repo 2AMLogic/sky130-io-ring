@@ -2,9 +2,11 @@
 
 | File | Role |
 |---|---|
-| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites the item-1 design-sources attestation (`evidence/item1.json`, from `design/attest-inventory.json`), the item-2 layout attestation (`evidence/layout-attestation.json`), the item-3 ring DRC report (`evidence/drc/ring.json`) and the item-9 testbench attestation (`evidence/item9.json`); paths are relative to the repo root where `klt` runs. Every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
+| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites the item-1 design-sources attestation (`evidence/item1.json`, from `design/attest-inventory.json`), the item-2 layout attestation (`evidence/layout-attestation.json`), the item-3 ring DRC report (`evidence/drc/ring.json`), the item-9 testbench attestation (`evidence/item9.json`) and the item-10 hygiene attestation (`evidence/item10.json`); paths are relative to the repo root where `klt` runs. Every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
 | `attest/item9.json` | Attestation inventory for T1 item 9: the testbenches (`sim/pdk-smoke/run.sh`, `cold-start.sh`), the cold-start command and the PDK/tool pins (same values as `sim/pdk.json`, plus `klt`). |
 | `evidence/item9.json` | Envelope produced by `klt signoff --attest 9`; never hand-written. It pins the inventory's hash and each listed file's hash. |
+| `attest/item10.json` | Inventory for T1 item 10 (repo hygiene): `README.md`, `LICENSE`, `.github/workflows/ci.yml` must exist, and each listed PDK-free CI command must exit 0. |
+| `evidence/item10.json` | The envelope `klt signoff --attest 10` produced from that inventory. Never hand-written; the grader refuses anything it did not produce. |
 | `gen_drc_reports.py` | Runs `klt drc --deck sky130` on the ring and each cell stream in `layout/gds/` and writes the envelopes under `evidence/drc/`. |
 | `evidence/drc/*.json` | `klt drc` envelopes, never hand-written: `ring.json` (cited for item 3) and one per cell stream beside it. |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
@@ -41,6 +43,16 @@ Needs the pinned PDK and ngspice (`sim/pdk.json`): it runs `sim/pdk-smoke/cold-s
 
 The cold start is declared `local_only`: CI's `--attest 9 --check` re-checks file presence and hashes and lists it as `[SKIP]`; it never re-runs the smoke. The committed `pass` comes from a local run. Item 9 grades that testbenches, a cold start and pins exist, not that any number is right; the smoke only shows the models load and converge.
 
+## Re-attest item 10
+
+```sh
+uvx --from "klayout-tools==0.8.0" klt signoff --attest 10 --inventory signoff/attest/item10.json -o signoff/evidence/item10.json
+```
+
+Then copy the envelope's `provenance.input.content_hash` into the `10` entry of `block-manifest.json` and regenerate the record (above). The envelope pins the raw-byte hash of `README.md`, `LICENSE` and `.github/workflows/ci.yml`, so **any later edit to those files is drift and fails CI's `--check`** (exit 3) until you re-attest. Make all edits to them first, attest last. Do not list the signoff freshness step or the `--attest --check` step itself in the inventory (circular).
+
+The pin moved 0.7.0 -> 0.8.0 because `--attest` first ships in 0.8.0; the record was regenerated with it in the same change.
+
 ## What CI checks (`.github/workflows/ci.yml`, no PDK, ngspice or klayout)
 
 - `klt signoff --attest 9 --check`: the item-9 envelope still reproduces from the inventory and listed files (cold start skipped, see above).
@@ -50,11 +62,12 @@ The cold start is declared `local_only`: CI's `--attest 9 --check` re-checks fil
 - `klt drc --check` on every `evidence/drc/*.json`: the input stream and deck still hash as recorded (cheap mode; the DRC is not re-run, so a stale report after a stream edit fails).
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.
 - `layout/tests/test_ring.py` and `scripts/ci/check_layout_reproducible.py` (installs the pip `klayout` module, no PDK): the generator's spec/seam checks reject seeded defects, and a fresh regeneration of `layout/gds/` is byte-identical to what is committed and to the attestation's hashes.
+- Item-10 attestation: `klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json` must match (the hygiene files are unchanged since attested and the inventory's commands exit 0).
 - `scripts/ci/check_append_only.py` (pull requests): files under `sim/` may be added, not modified, deleted or renamed.
 
 ## What CI does not check
 
 - That any number in a record is correct, or that a record was produced by a real run.
-- LVS, simulation or ESD behaviour, or that a DRC report's rules are the right ones. T1 items 1, 2, 3 and 9 are `met`. Item 1 says schematics and freshness-checked netlists exist (CI does not re-netlist); item 2 says a stream exists and is reproducibly generated; item 3 is clean against the curated deck only (coverage above); item 9 says testbenches, a cold start and pins exist.
+- LVS, simulation or ESD behaviour, or that a DRC report's rules are the right ones. T1 items 1, 2, 3, 9 and 10 are `met`. Item 1 says schematics and freshness-checked netlists exist (CI does not re-netlist); item 2 says a stream exists and is reproducibly generated; item 3 is clean against the curated deck only (coverage above); item 9 says testbenches, a cold start and pins exist; item 10 says the README, license and CI exist and their commands run.
 - Append-only on direct pushes to `main` (branch protection covers that), or records outside `sim/`.
 - That the manifest's `evidence` is honest; the grader judges only what it cites.
