@@ -1,0 +1,140 @@
+{
+  "schema_version": 2,
+  "file": {
+    "path": "layout/gds/sky130_ioring_ring.gds",
+    "scope": "repo"
+  },
+  "spec": "signoff/erc-supply-spec.json",
+  "pdk": null,
+  "findings_only": true,
+  "gate_role": "poly",
+  "gate_count": 0,
+  "antenna_tables_omitted": true,
+  "gates": [],
+  "nets": [
+    {
+      "name": "VDDIO",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [
+        "met4"
+      ],
+      "unlabelled_islands": 0,
+      "unlabelled_area_um2": 0.0,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VDD",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [
+        "met3"
+      ],
+      "unlabelled_islands": 0,
+      "unlabelled_area_um2": 0.0,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VSS",
+      "matched_islands": 1,
+      "expected_islands": 1,
+      "roles": [],
+      "unlabelled_islands": null,
+      "unlabelled_area_um2": null,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": null
+    }
+  ],
+  "erc_findings": [],
+  "erc_finding_count": 0,
+  "erc_status": "clean",
+  "status": "not_checked",
+  "coverage": {
+    "scope": "antenna",
+    "schema_version": 1,
+    "known": true,
+    "checked": [],
+    "skipped": [],
+    "inapplicable": [
+      {
+        "id": "antenna:[]",
+        "reason": "no_gates"
+      }
+    ],
+    "unknown": [],
+    "nothing_checked": true,
+    "nothing_checked_reasons": [
+      "no_gates"
+    ]
+  },
+  "erc_coverage": {
+    "scope": "connectivity",
+    "schema_version": 1,
+    "known": true,
+    "checked": [
+      "erc.missing_tie:[\"ntap_vddio\"]",
+      "erc.missing_tie:[\"ptap_vss\"]",
+      "erc.net_connectivity:[\"VDD\"]",
+      "erc.net_connectivity:[\"VDDIO\"]",
+      "erc.net_connectivity:[\"VSS\"]"
+    ],
+    "skipped": [],
+    "inapplicable": [],
+    "unknown": [],
+    "nothing_checked": false,
+    "nothing_checked_reasons": [],
+    "checked_by_assertion": [],
+    "checked_by_well_assertion": [
+      "erc.missing_tie:[\"ptap_vss\"]"
+    ],
+    "layers_in_stream_without_declaration": [
+      "65/20",
+      "76/20",
+      "93/44",
+      "94/20"
+    ],
+    "well_assertion_coverage": []
+  },
+  "ties_disclosure": null,
+  "provenance": {
+    "klt_version": "0.8.0",
+    "klayout_version": "0.30.12",
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d",
+      "role": "layout"
+    },
+    "spec": {
+      "content_hash": "sha256:21e0d5320ce9cd02e8d6921a9650b4544d4c27d5a9ea8231c530c638b1e398f4"
+    },
+    "devices": [],
+    "net_exclusions": [],
+    "label_layers": [
+      {
+        "name": "met3",
+        "label_layer": "70/5",
+        "label_text_count": 4
+      },
+      {
+        "name": "met4",
+        "label_layer": "71/5",
+        "label_text_count": 4
+      },
+      {
+        "name": "met5",
+        "label_layer": "72/5",
+        "label_text_count": 12
+      }
+    ]
+  },
+  "compact": {
+    "gate_count": 0,
+    "antenna_levels_skipped": 0,
+    "antenna_reference_levels": 0,
+    "floating_gate_checked": 0,
+    "skipped_reason": "findings_only"
+  }
+}
