@@ -5,6 +5,11 @@ triage role. Newest first.
 
 ### 2026-10-27
 
+- **PR #39**: feat(signoff): attest T1 item 10 repo hygiene, bump klt to 0.8.0
+- **Issue #35** (closed): T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section
+- **PR #40**: feat(design): add sky130 I/O ring xschem sources and netlists for T1 item 1
+- **Issue #30** (closed): T1 item 1 (design sources): xschem schematics and derived netlists for the GPIO, VDDIO/VDD/VSS pads, corner, fillers and the demonstration ring
+- **PR #42**: feat(signoff): cite ring DRC report for T1 item 3 and re-check reports in CI
 - **PR #38**: feat(signoff): attest T1 item 9 testbenches and check the attestation in CI
 - **PR #37**: feat(layout): generate closed sky130 I/O ring stream and cite it for T1 item 2
 - **Issue #34** (closed): T1 item 9 (testbenches shipped): testbench inventory over the PDK smoke and the cell benches, attested with klt signoff --attest 9
