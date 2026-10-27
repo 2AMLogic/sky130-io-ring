@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "kind": "generic",
+  "status": "pass",
+  "t1_item": 9,
+  "summary": "T1 item 9 (Testbenches shipped): 5/5 attestation checks passed (klt signoff --attest)",
+  "source": "signoff/attest/item9.json",
+  "attestation": {
+    "producer": "klt signoff --attest",
+    "inventory_schema_version": 1,
+    "hash_algorithm": "sha256-raw-bytes",
+    "check_count": 5,
+    "passed_count": 5,
+    "checks": [
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/pdk-smoke/cold-start.sh",
+        "passed": true,
+        "content_hash": "sha256:3f013b2f4864288078264660b55d54dfa93906115376ca347bbd538cbe6e4809"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/pdk-smoke/run.sh",
+        "passed": true,
+        "content_hash": "sha256:fe15decdf6e7387e6f47c82780e4e5e4ced2e1a1cca5bfce510b35ffd635b7ca"
+      },
+      {
+        "check": "command",
+        "role": "cold_start",
+        "argv": [
+          "bash",
+          "sim/pdk-smoke/cold-start.sh"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "pin",
+        "role": "pdk",
+        "passed": true,
+        "value": {
+          "name": "sky130A",
+          "revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7"
+        }
+      },
+      {
+        "check": "pin",
+        "role": "tools",
+        "passed": true,
+        "value": {
+          "ciel": "2.6.1",
+          "klt": "0.8.0",
+          "ngspice": "46",
+          "xschem": "3.4.7"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "klt_version": "0.8.0",
+    "klayout_version": null,
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "path": {
+        "path": "signoff/attest/item9.json",
+        "scope": "repo"
+      },
+      "content_hash": "sha256:8d55cff76a5b3bbb726b471bf15f3e71ab1b481a5d54a315760748d7c6278fdb"
+    }
+  }
+}

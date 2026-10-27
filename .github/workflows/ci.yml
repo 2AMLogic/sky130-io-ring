@@ -11,7 +11,7 @@ on:
 env:
   # The one place the signoff grader is pinned. A bump must regenerate
   # signoff/signoff-record.json in the same PR (signoff/README.md).
-  KLT_VERSION: "0.7.0"
+  KLT_VERSION: "0.8.0"
 
 jobs:
   signoff:
@@ -61,6 +61,10 @@ jobs:
           echo "::error::signoff/signoff-record.json is stale or hand-edited. Regenerate it (signoff/README.md) and commit."
           diff -u <(python3 -m json.tool signoff/signoff-record.json) <(python3 -m json.tool "$RUNNER_TEMP/fresh.json") || true
           exit 1
+
+      - name: Item 9 attestation must still reproduce (cold start is local-only, reported as skipped)
+        run: |
+          klt signoff --attest 9 --inventory signoff/attest/item9.json --check signoff/evidence/item9.json
 
   append-only:
     if: github.event_name == 'pull_request'
