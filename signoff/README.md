@@ -9,6 +9,8 @@
 | `evidence/item10.json` | The envelope `klt signoff --attest 10` produced from that inventory. Never hand-written; the grader refuses anything it did not produce. |
 | `gen_drc_reports.py` | Runs `klt drc --deck sky130` on the ring and each cell stream in `layout/gds/` and writes the envelopes under `evidence/drc/`. |
 | `evidence/drc/*.json` | `klt drc` envelopes, never hand-written: `ring.json` (cited for item 3) and one per cell stream beside it. |
+| `gen_lvs_reports.py` | Runs `klt lvs` (sky130 deck, `reference.form: "subckt-call"`) on each stream in `layout/gds/` against `design/netlists/<cell>.spice` and writes the reports under `evidence/lvs/`. |
+| `evidence/lvs/*.json` | `klt lvs --format json` reports, never hand-written. Only the cells `klt lvs` accepted have one (table below); the ring, `vddio` and `vdd` have none. |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
 
 ## Regenerate the record
@@ -32,6 +34,23 @@ No PDK or standalone klayout is needed (curated deck). Exit 4 means a report is 
 What item 3 claims: the closed ring stream is clean against the curated `sky130` deck's modeled rules (`deck_scope` in the report), on **placeholder** drawing, with the spec still proposed (the CELL rows are re-checked on ratification). `coverage.layers_in_stream_without_rules` is `70/5`, `71/5`, `72/5`; `coverage.rules_skipped` is 57 rule ids, all `no_applicable_geometry`; `deck_scope` is 23 layers/groups (m1-m5, via-via4, nwell, difftap, poly, licon, li, npc, nsdm, psdm, capm, cap2m, rpm, urpm, ct, x); deck hash `sha256:ba0f9788...942e6`. It does **not** claim thick-oxide, latch-up, guard-ring-construction or ESD compliance: the deck does not check them (`spec/klt-rule-coverage.md`, "Reconciliation").
 
 Known per-cell finding, not waived: `sky130_ioring_fill_1.json` is `violations` (one `met5.width.1`): checked alone, the 1 µm filler's met5 rail segment is 1 µm wide in the short direction. The placed ring is clean. The generator cannot widen it without overlapping neighbours (CELL.8); tool gap filed as 2AMLogic/klayout-tools#4226; left for spec review rather than relaxed here.
+
+## Regenerate the LVS reports (item 4)
+
+```sh
+python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.8.0 klt"
+for f in signoff/evidence/lvs/*.json; do uvx --from klayout-tools==0.8.0 klt lvs --check "$f"; done
+```
+
+No hints, tolerances, `device_map` or ignored devices are passed. Exit 4: a report is `mismatch` (still written). Exit 5: `klt lvs` refused a request, so no report exists for that cell (the refusal is printed).
+
+| Cell | `status` | `power_connectivity` | Note |
+|---|---|---|---|
+| `corner`, `fill_1`, `fill_5`, `fill_10`, `fill_20`, `vss` | `match` | `unchecked` | Vacuous: schematic and layout both have zero devices; the layout has 1 net against 3 reference pins, and the pins were paired by the comparer (a `warning`, "paired ambiguously"). This shows the flow runs, not that supply wiring is right. |
+| `gpio` | `mismatch` | `unchecked` | 20 errors. The layout has 0 devices (placeholder diffusions, `layout/README.md`); the reference has devices. The reference's four diode cards are also `reference.unresolved_subckt_call` (2AMLogic/klayout-tools#4319), and the resistor `L`/`W`/`A`/`P` are not compared (`device.geometry_not_compared`). |
+| `vddio`, `vdd`, `ring` | no report | n/a | `klt lvs` refuses the reference: `sky130_fd_pr__cap_mim_m3_1` with `m=2` cannot be converted (2AMLogic/klayout-tools#4318). The netlist was not edited to get past it. |
+
+Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. `block-manifest.json` and `signoff-record.json` are unchanged. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
 
 ## Regenerate the item-9 envelope
 
