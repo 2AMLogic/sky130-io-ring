@@ -1,0 +1,25 @@
+{
+  "kind": "generic",
+  "provenance": {
+    "deck": null,
+    "input": {
+      "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d",
+      "path": {
+        "path": "layout/gds/sky130_ioring_ring.gds",
+        "scope": "repo"
+      }
+    },
+    "klayout_version": "0.30.10",
+    "klt_version": "n/a (written by layout/gen_ring.py)",
+    "pdk": null,
+    "regeneration": {
+      "generator": "python3 layout/gen_ring.py --out layout/gds",
+      "regenerated_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d"
+    }
+  },
+  "schema_version": 1,
+  "source": "layout/gen_ring.py",
+  "status": "pass",
+  "summary": "closed I/O ring stream generated from the proposed spec (status proposed - pending human ratification; reviewed 2026-10-22 (see spec/review-2026-10.md), nothing ratified, spec_version 0.1.0); generator self-checks passed (CELL.2/3/5/7/8/9, LU.1). Not DRC- or LVS-checked.",
+  "t1_item": 2
+}
