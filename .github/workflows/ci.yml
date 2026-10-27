@@ -37,9 +37,15 @@ jobs:
       - name: PDK resolver self-test (fake trees, no PDK needed)
         run: bash sim/lib/test_pdk_env.sh
 
-      - name: Re-grade the block manifest with the pinned grader
+      - name: Design-sources attestation still reproduces (item 1, no xschem)
         run: |
           pipx install "klayout-tools==${KLT_VERSION}"
+          # Re-hashes every inventoried source and netlist and the envelope.
+          # The re-netlist freshness commands are local_only (no xschem or PDK here).
+          klt signoff --attest 1 --inventory design/attest-inventory.json --check signoff/evidence/item1.json
+
+      - name: Re-grade the block manifest with the pinned grader
+        run: |
           set +e
           klt signoff --manifest signoff/block-manifest.json --format json > "$RUNNER_TEMP/fresh.json"
           rc=$?

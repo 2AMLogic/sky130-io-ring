@@ -1,0 +1,344 @@
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_ring.sch
+.subckt sky130_ioring_ring A0 OE0 IE0 PU0 PD0 A1 OE1 IE1 PU1 PD1 A2 OE2 IE2 PU2 PD2 A3 OE3 IE3 PU3 PD3 A4 OE4 IE4 PU4 PD4 A5 OE5
++ IE5 PU5 PD5 A6 OE6 IE6 PU6 PD6 A7 OE7 IE7 PU7 PD7 Y0 Y1 Y2 Y3 Y4 Y5 Y6 Y7 PAD0 PAD1 PAD2 PAD3 PAD4 PAD5 PAD6 PAD7 VDDIO VDD VSS
+*.PININFO A0:I OE0:I IE0:I PU0:I PD0:I A1:I OE1:I IE1:I PU1:I PD1:I A2:I OE2:I IE2:I PU2:I PD2:I A3:I OE3:I IE3:I PU3:I PD3:I A4:I
+*+ OE4:I IE4:I PU4:I PD4:I A5:I OE5:I IE5:I PU5:I PD5:I A6:I OE6:I IE6:I PU6:I PD6:I A7:I OE7:I IE7:I PU7:I PD7:I Y0:O Y1:O Y2:O Y3:O Y4:O
+*+ Y5:O Y6:O Y7:O PAD0:B PAD1:B PAD2:B PAD3:B PAD4:B PAD5:B PAD6:B PAD7:B VDDIO:B VDD:B VSS:B
+XC0 VDDIO VDD VSS sky130_ioring_corner
+XS0_0_gpio A0 OE0 IE0 PU0 PD0 Y0 PAD0 VDDIO VDD VSS sky130_ioring_gpio
+XS0_1_vddio VDDIO VDD VSS sky130_ioring_vddio
+XS0_2_vss VDDIO VDD VSS sky130_ioring_vss
+XS0_3_vdd VDDIO VDD VSS sky130_ioring_vdd
+XS0_4_gpio A1 OE1 IE1 PU1 PD1 Y1 PAD1 VDDIO VDD VSS sky130_ioring_gpio
+XS0_5_fill_20 VDDIO VDD VSS sky130_ioring_fill_20
+XS0_6_fill_10 VDDIO VDD VSS sky130_ioring_fill_10
+XS0_7_fill_5 VDDIO VDD VSS sky130_ioring_fill_5
+XS0_8_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XS0_9_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XC1 VDDIO VDD VSS sky130_ioring_corner
+XS1_0_gpio A2 OE2 IE2 PU2 PD2 Y2 PAD2 VDDIO VDD VSS sky130_ioring_gpio
+XS1_1_vddio VDDIO VDD VSS sky130_ioring_vddio
+XS1_2_vss VDDIO VDD VSS sky130_ioring_vss
+XS1_3_vdd VDDIO VDD VSS sky130_ioring_vdd
+XS1_4_gpio A3 OE3 IE3 PU3 PD3 Y3 PAD3 VDDIO VDD VSS sky130_ioring_gpio
+XS1_5_fill_20 VDDIO VDD VSS sky130_ioring_fill_20
+XS1_6_fill_10 VDDIO VDD VSS sky130_ioring_fill_10
+XS1_7_fill_5 VDDIO VDD VSS sky130_ioring_fill_5
+XS1_8_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XS1_9_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XC2 VDDIO VDD VSS sky130_ioring_corner
+XS2_0_gpio A4 OE4 IE4 PU4 PD4 Y4 PAD4 VDDIO VDD VSS sky130_ioring_gpio
+XS2_1_vddio VDDIO VDD VSS sky130_ioring_vddio
+XS2_2_vss VDDIO VDD VSS sky130_ioring_vss
+XS2_3_vdd VDDIO VDD VSS sky130_ioring_vdd
+XS2_4_gpio A5 OE5 IE5 PU5 PD5 Y5 PAD5 VDDIO VDD VSS sky130_ioring_gpio
+XS2_5_fill_20 VDDIO VDD VSS sky130_ioring_fill_20
+XS2_6_fill_10 VDDIO VDD VSS sky130_ioring_fill_10
+XS2_7_fill_5 VDDIO VDD VSS sky130_ioring_fill_5
+XS2_8_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XS2_9_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XC3 VDDIO VDD VSS sky130_ioring_corner
+XS3_0_gpio A6 OE6 IE6 PU6 PD6 Y6 PAD6 VDDIO VDD VSS sky130_ioring_gpio
+XS3_1_vddio VDDIO VDD VSS sky130_ioring_vddio
+XS3_2_vss VDDIO VDD VSS sky130_ioring_vss
+XS3_3_vdd VDDIO VDD VSS sky130_ioring_vdd
+XS3_4_gpio A7 OE7 IE7 PU7 PD7 Y7 PAD7 VDDIO VDD VSS sky130_ioring_gpio
+XS3_5_fill_20 VDDIO VDD VSS sky130_ioring_fill_20
+XS3_6_fill_10 VDDIO VDD VSS sky130_ioring_fill_10
+XS3_7_fill_5 VDDIO VDD VSS sky130_ioring_fill_5
+XS3_8_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+XS3_9_fill_1 VDDIO VDD VSS sky130_ioring_fill_1
+.ends
+
+* expanding   symbol:  sky130_ioring_corner.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_corner.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_corner.sch
+.subckt sky130_ioring_corner VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio.sym # of pins=10
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio.sch
+.subckt sky130_ioring_gpio A OE IE PU PD Y PAD VDDIO VDD VSS
+*.PININFO A:I OE:I IE:I PU:I PD:I Y:O PAD:B VDDIO:B VDD:B VSS:B
+X1 A OE PU PD PG_C NG_C PUN_C PD_C VDD VSS sky130_ioring_gpio_logic
+XL1 PG_C PG VDD VDDIO VSS sky130_ioring_gpio_ls
+XL2 NG_C NG VDD VDDIO VSS sky130_ioring_gpio_ls
+XL3 PUN_C PUN VDD VDDIO VSS sky130_ioring_gpio_ls
+XL4 PD_C PDP VDD VDDIO VSS sky130_ioring_gpio_ls
+X2 PG NG PAD VDDIO VSS sky130_ioring_gpio_drv
+X3 PUN PDP PAD VDDIO VSS sky130_ioring_gpio_pulls
+X4 PAD RXG VDDIO VSS sky130_ioring_gpio_esd
+X5 RXG IE Y VDD VDDIO VSS sky130_ioring_gpio_rcv
+.ends
+
+
+* expanding   symbol:  sky130_ioring_vddio.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vddio.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vddio.sch
+.subckt sky130_ioring_vddio VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+X1 VDDIO VSS sky130_ioring_clamp_io
+.ends
+
+
+* expanding   symbol:  sky130_ioring_vss.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vss.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vss.sch
+.subckt sky130_ioring_vss VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_vdd.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vdd.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_vdd.sch
+.subckt sky130_ioring_vdd VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+X1 VDD VSS sky130_ioring_clamp_core
+.ends
+
+
+* expanding   symbol:  sky130_ioring_fill_20.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_20.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_20.sch
+.subckt sky130_ioring_fill_20 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_fill_10.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_10.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_10.sch
+.subckt sky130_ioring_fill_10 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_fill_5.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_5.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_5.sch
+.subckt sky130_ioring_fill_5 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_fill_1.sym # of pins=3
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_1.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_1.sch
+.subckt sky130_ioring_fill_1 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_logic.sym # of pins=10
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_logic.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_logic.sch
+.subckt sky130_ioring_gpio_logic A OE PU PD PG_C NG_C PUN_C PD_C VDD VSS
+*.PININFO A:I OE:I PU:I PD:I PG_C:O NG_C:O PUN_C:O PD_C:O VDD:B VSS:B
+X1 OE OEB VDD VSS sky130_ioring_inv
+X2 PU PUB VDD VSS sky130_ioring_inv
+X3 PD PDB VDD VSS sky130_ioring_inv
+X4 A OE PG_C VDD VSS sky130_ioring_nand2
+X5 A OEB NG_C VDD VSS sky130_ioring_nor2
+X6 PU PDB OEB PUN_C VDD VSS sky130_ioring_nand3
+X7 PD PUB OEB PDN VDD VSS sky130_ioring_nand3
+X8 PDN PD_C VDD VSS sky130_ioring_inv
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_ls.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_ls.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_ls.sch
+.subckt sky130_ioring_gpio_ls IN OUT VDD VDDIO VSS
+*.PININFO IN:I OUT:O VDD:B VDDIO:B VSS:B
+X1 IN INB VDD VSS sky130_ioring_inv
+XMNA OUTB IN VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0
++ sd=0 mult=2 m=2
+XMNB OUT INB VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0
++ sd=0 mult=2 m=2
+XMPA OUTB OUT VDDIO VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=0.5 nf=1 ad=0.145 as=0.145 pd=1.58 ps=1.58 nrd=0.58 nrs=0.58 sa=0
++ sb=0 sd=0 mult=1 m=1
+XMPB OUT OUTB VDDIO VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=0.5 nf=1 ad=0.145 as=0.145 pd=1.58 ps=1.58 nrd=0.58 nrs=0.58 sa=0
++ sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_drv.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_drv.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_drv.sch
+.subckt sky130_ioring_gpio_drv PG NG PAD VDDIO VSS
+*.PININFO PG:I NG:I PAD:B VDDIO:B VSS:B
+XMP PAD PG VDDIO VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=20 m=20
+XMN PAD NG VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=10 m=10
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_pulls.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_pulls.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_pulls.sch
+.subckt sky130_ioring_gpio_pulls PUN PDP PAD VDDIO VSS
+*.PININFO PUN:I PDP:I PAD:B VDDIO:B VSS:B
+XMPU PAD PUN VDDIO VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=4 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0
++ sd=0 mult=1 m=1
+XMPD PAD PDP VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_esd.sym # of pins=4
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_esd.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_esd.sch
+.subckt sky130_ioring_gpio_esd PAD RXG VDDIO VSS
+*.PININFO PAD:B RXG:O VDDIO:B VSS:B
+XDP PAD VDDIO sky130_fd_pr__diode_pd2nw_05v5 area=2e14 perim=6e7
+XDN VSS PAD sky130_fd_pr__diode_pw2nd_05v5 area=2e14 perim=6e7
+XRS RXG PAD VSS sky130_fd_pr__res_high_po_1p41 L=1.0 mult=1 m=1
+XDLP RXG VDDIO sky130_fd_pr__diode_pd2nw_05v5 area=1e13 perim=1.4e7
+XDLN VSS RXG sky130_fd_pr__diode_pw2nd_05v5 area=1e13 perim=1.4e7
+.ends
+
+
+* expanding   symbol:  sky130_ioring_gpio_rcv.sym # of pins=6
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_rcv.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_rcv.sch
+.subckt sky130_ioring_gpio_rcv RXG IE Y VDD VDDIO VSS
+*.PININFO RXG:I IE:I Y:O VDD:B VDDIO:B VSS:B
+XMP1 p1 RXG VDDIO VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0
++ sd=0 mult=1 m=1
+XMP2 SCHN RXG p1 VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0
++ sd=0 mult=1 m=1
+XMN1 SCHN RXG n1 VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMN2 n1 RXG VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMN3 VDDIO SCHN n1 VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=0.5 nf=1 ad=0.145 as=0.145 pd=1.58 ps=1.58 nrd=0.58 nrs=0.58 sa=0 sb=0
++ sd=0 mult=1 m=1
+XMP3 VSS SCHN p1 VDDIO sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=0.5 nf=1 ad=0.145 as=0.145 pd=1.58 ps=1.58 nrd=0.58 nrs=0.58 sa=0 sb=0
++ sd=0 mult=1 m=1
+XMP4 RXL SCHN VDD VDD sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMN4 RXL SCHN VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=0.5 nf=1 ad=0.145 as=0.145 pd=1.58 ps=1.58 nrd=0.58 nrs=0.58 sa=0 sb=0
++ sd=0 mult=1 m=1
+X1 RXL IE RXN VDD VSS sky130_ioring_nand2
+X2 RXN Y VDD VSS sky130_ioring_inv
+.ends
+
+
+* expanding   symbol:  sky130_ioring_clamp_io.sym # of pins=2
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_clamp_io.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_clamp_io.sch
+.subckt sky130_ioring_clamp_io VP VSS
+*.PININFO VP:B VSS:B
+XR1 T1 VP VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XR2 T T1 VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XC1 T VSS sky130_fd_pr__cap_mim_m3_1 W=30 L=33 MF=2 m=2
+XMP1 G1 T VP VP sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMN1 G1 T VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMP2 G2 G1 VP VP sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0 sd=0
++ mult=4 m=4
+XMN2 G2 G1 VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=2 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=4 m=4
+XMP3 GATE G2 VP VP sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=20 m=20
+XMN3 GATE G2 VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=10 m=10
+XMCL VP GATE VSS VSS sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=400 m=400
+.ends
+
+
+* expanding   symbol:  sky130_ioring_clamp_core.sym # of pins=2
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_clamp_core.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_clamp_core.sch
+.subckt sky130_ioring_clamp_core VP VSS
+*.PININFO VP:B VSS:B
+XR1 T1 VP VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XR2 T T1 VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XC1 T VSS sky130_fd_pr__cap_mim_m3_1 W=30 L=33 MF=2 m=2
+XMP1 G1 T VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMN1 G1 T VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+XMP2 G2 G1 VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=3 nf=1 ad=0.87 as=0.87 pd=6.58 ps=6.58 nrd=0.0966666666666667
++ nrs=0.0966666666666667 sa=0 sb=0 sd=0 mult=4 m=4
+XMN2 G2 G1 VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=4
++ m=4
+XMP3 GATE G2 VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0 sd=0
++ mult=20 m=20
+XMN3 GATE G2 VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=3 nf=1 ad=0.87 as=0.87 pd=6.58 ps=6.58 nrd=0.0966666666666667
++ nrs=0.0966666666666667 sa=0 sb=0 sd=0 mult=10 m=10
+XMCL VP GATE VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0 sd=0
++ mult=800 m=800
+.ends
+
+
+* expanding   symbol:  sky130_ioring_inv.sym # of pins=4
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_inv.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_inv.sch
+.subckt sky130_ioring_inv A Y VDD VSS
+*.PININFO A:I Y:O VDD:B VSS:B
+XMP Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMN Y A VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nand2.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand2.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand2.sch
+.subckt sky130_ioring_nand2 A B Y VDD VSS
+*.PININFO A:I B:I Y:O VDD:B VSS:B
+XMPA Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPB Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNA Y A n1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNB n1 B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nor2.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nor2.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nor2.sch
+.subckt sky130_ioring_nor2 A B Y VDD VSS
+*.PININFO A:I B:I Y:O VDD:B VSS:B
+XMPA p1 A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2.0 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMPB Y B p1 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2.0 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMNA Y A VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+XMNB Y B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nand3.sym # of pins=6
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand3.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand3.sch
+.subckt sky130_ioring_nand3 A B C Y VDD VSS
+*.PININFO A:I B:I C:I Y:O VDD:B VSS:B
+XMPA Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPB Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPC Y C VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNA Y A n1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+XMNB n1 B n2 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+XMNC n2 C VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
