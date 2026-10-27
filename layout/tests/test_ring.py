@@ -50,6 +50,28 @@ class Spec(unittest.TestCase):
 
 
 class Good(unittest.TestCase):
+    def test_pad_connected_banks_are_ringed(self):
+        """LU.4: driver, pull pair and ESD diodes each sit in an n and a p annulus; the count is the tech's."""
+        for sub in ("gpio_drv", "gpio_pulls", "gpio_esd"):
+            self.assertEqual(sb.GUARDED["sky130_ioring_" + sub], {"n": "VSS", "p": "VDDIO"}, sub)
+        self.assertEqual(T.GUARD_RINGS["gpio"], 6)
+        p, layout, cells, *_ = build()
+        tap = db.Region(cells["gpio"].begin_shapes_rec(layout.layer(*T.LAYERS["tap"]))).merged()
+        self.assertEqual(len([r for r in tap.each() if r.holes() == 1]), T.GUARD_RINGS["gpio"])
+
+    def test_unringed_groups_have_a_tap_within_span(self):
+        """LU.2: consecutive taps of an unringed group are at most TAP_SPAN of unit width apart."""
+        units = [sb.dev.mos("n", False, 1.5, 0.15, 1, ("a", "b", "c", "VSS")) for _ in range(14)]
+        (grp,) = sb._make_groups("n", units, None)
+        span, taps = 0.0, 0
+        for u in grp.units:
+            if u.kind.startswith("tap"):
+                taps, span = taps + 1, 0.0
+            else:
+                span += u.w + sb.GAP_UNIT
+                self.assertLessEqual(span - sb.GAP_UNIT, sb.TAP_SPAN)
+        self.assertGreaterEqual(taps, 3)
+
     def test_clean_build_has_no_findings(self):
         self.assertEqual(check(*build()), [])
 
@@ -160,6 +182,20 @@ class Defects(unittest.TestCase):
             r = db.Region(drv.shapes(li)) - db.Region(cut)
             drv.shapes(li).clear()
             drv.shapes(li).insert(r)
+        self.assert_flags(open_ring, "LU.1")
+
+    def test_open_pad_side_guard_ring(self):
+        """A ring cut open in the ESD block (not only the driver) is named by LU.1."""
+        def open_ring(p, layout, cells, *_):
+            esd = layout.cell("sky130_ioring_gpio_esd")
+            li = layout.layer(*T.LAYERS["tap"])
+            ring = [r for r in db.Region(esd.shapes(li)).merged().each() if r.holes() == 1][0]
+            b = ring.bbox()
+            cut = g.box(b.left * g.DBU - 1, (b.bottom + b.top) / 2 * g.DBU - 0.3,
+                        b.left * g.DBU + 1, (b.bottom + b.top) / 2 * g.DBU + 0.3)
+            r = db.Region(esd.shapes(li)) - db.Region(cut)
+            esd.shapes(li).clear()
+            esd.shapes(li).insert(r)
         self.assert_flags(open_ring, "LU.1")
 
     def test_cell_too_deep(self):

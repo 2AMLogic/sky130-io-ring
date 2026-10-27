@@ -32,12 +32,12 @@
         "met3"
       ],
       "unlabelled_islands": 112,
-      "unlabelled_area_um2": 1854.912,
+      "unlabelled_area_um2": 2005.824,
       "unlabelled_bbox": {
-        "left": 68570,
-        "bottom": 68570,
-        "right": 758430,
-        "top": 758430
+        "left": 69070,
+        "bottom": 69070,
+        "right": 757930,
+        "top": 757930
       },
       "unlabelled_allowed_islands": 112
     },
@@ -122,15 +122,15 @@
   "ties_disclosure": null,
   "provenance": {
     "klt_version": "0.8.0",
-    "klayout_version": "0.30.10",
+    "klayout_version": "0.30.12",
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
+      "content_hash": "sha256:fda3d2e3ef59578ac5ca0e6c326c21b0fbd923cf276583832e244f6ed6ef51ba",
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:e638ef8124c0a1f44d7fb51845af36e044342b3e577f1c1fb43161bf8b872e7f"
+      "content_hash": "sha256:73d35eecece6fb56374ca021d2759301ac79e00b746e1d85c3d84ddbf24bcd07"
     },
     "devices": [
       {
@@ -146,55 +146,55 @@
         "boxes": [
           [
             62.5,
-            233.625,
-            164.46,
+            232.55,
+            173.32,
             310.5
           ],
           [
             62.5,
-            553.625,
-            164.46,
+            552.55,
+            173.32,
             630.5
           ],
           [
             196.5,
             62.5,
-            273.375,
-            164.46
+            274.45,
+            173.32
           ],
           [
-            233.625,
-            662.54,
+            232.55,
+            653.68,
             310.5,
             764.5
           ],
           [
             516.5,
             62.5,
-            593.375,
-            164.46
+            594.45,
+            173.32
           ],
           [
-            553.625,
-            662.54,
+            552.55,
+            653.68,
             630.5,
             764.5
           ],
           [
-            662.54,
+            653.68,
             196.5,
             764.5,
-            273.375
+            274.45
           ],
           [
-            662.54,
+            653.68,
             516.5,
             764.5,
-            593.375
+            594.45
           ]
         ],
         "excluded_islands": 112,
-        "excluded_area_um2": 1854.912
+        "excluded_area_um2": 2005.824
       }
     ],
     "label_layers": [

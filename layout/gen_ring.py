@@ -215,9 +215,10 @@ def self_check(tech, params, layout, cells, top, size, placed):
     gp = cells.get("gpio")
     if gp is not None:
         tap = db.Region(gp.begin_shapes_rec(layout.layer(*tech.LAYERS["tap"]))).merged()
-        rings = [p for p in tap.each() if p.holes() == 1 and p.bbox().width() > g.U(20)]
-        if len(rings) != 2:
-            bad.append(f"LU.1: expected 2 closed guard annuli in gpio, found {len(rings)}")
+        rings = [p for p in tap.each() if p.holes() == 1]
+        want = tech.GUARD_RINGS["gpio"]
+        if len(rings) != want:
+            bad.append(f"LU.1: expected {want} closed guard annuli in gpio, found {len(rings)}")
 
     if hasattr(tech, "device_checks"):          # drawn devices against the committed netlists
         bad += tech.device_checks(layout, cells, params)

@@ -25,9 +25,12 @@ NETLIST_DIR = Path(__file__).resolve().parent.parent / "design" / "netlists"
 NETLIST_FILES = ["sky130_ioring_gpio.spice", "sky130_ioring_inv.spice", "sky130_ioring_nand2.spice",
                  "sky130_ioring_nand3.spice", "sky130_ioring_nor2.spice"]
 
-# Guard rings (LU.1) around the output driver banks: subckt -> {row: ring net}.
-GUARDED = {"sky130_ioring_gpio_drv": {"n": "VSS", "p": "VDDIO"}}
-RING_MIN_OUTER = 21.0       # um; outer width of a guard ring around a driver bank
+# Guard rings (LU.1, LU.4) around every pad-connected bank: subckt -> {row: ring net}. The
+# output driver, the pull pair and the ESD diodes all hang on the pad net.
+GUARDED = {"sky130_ioring_gpio_drv": {"n": "VSS", "p": "VDDIO"},
+           "sky130_ioring_gpio_pulls": {"n": "VSS", "p": "VDDIO"},
+           "sky130_ioring_gpio_esd": {"n": "VSS", "p": "VDDIO"}}
+TAP_SPAN = 18.0             # um; most unit width between two taps of an unringed group (LU.2)
 
 Y_N0 = 0.7                  # bottom margin: n row base
 TRACK_PITCH = 0.5
@@ -36,7 +39,7 @@ SEP_LI = 0.6                # met1 drops: minimum column separation of distinct 
 SEP_M3 = 0.85               # met3 drops / exports
 GAP_UNIT = 0.6              # between units of one group
 GAP_GROUP = 2.5             # between groups (n-well spacing 1.27 + well margins)
-GAP_ITEM = 1.0
+GAP_ITEM = 1.1             # child cells: their wells sit 0.1 inside the cell edge (n-well spacing 1.27)
 WELL_MARGIN = 0.6
 HVI_MARGIN = 0.4
 RING_W = 0.5
@@ -47,6 +50,11 @@ Built = namedtuple("Built", "cell w h pin_x extra")
 # {cell name: [(body net, thick oxide, (x0, y0, x1, y1) um in the cell's frame)]}.
 # signoff/gen_erc_spec.py reads it to declare which wells the ERC ties must reach.
 WELLS = {}
+
+
+def guard_ring_count(subckts, top):
+    """Closed guard annuli the blocks called by subcircuit `top` draw (one per guarded row)."""
+    return sum(len(GUARDED.get(c.subckt, {})) for c in subckts[top].calls)
 
 
 def load_subckts():
@@ -70,8 +78,7 @@ class _Group:
         self.core_h = max(u.h for u in units)
         self.rh = self.rv = 0.0
         if ring_net:
-            self.rh = max(2.0, (RING_MIN_OUTER - self.core_w) / 2 - RING_W)
-            self.rv = 2.0
+            self.rh, self.rv = 1.0, 2.0
         self.pad_x = self.rh + (RING_W if ring_net else 0.0)
         self.pad_y = self.rv + (RING_W if ring_net else 0.0)
         self.w = self.core_w + 2 * self.pad_x
@@ -99,9 +106,19 @@ def _make_groups(row, units, ring_net):
         taps = []
         if not ring_net:
             taps = [_tap_for("n" if row == "n" else "p", body, thick)]
-        body_units = taps + us
+        body_units = list(taps)
+        if not ring_net:                       # a tap at each end and one at least every TAP_SPAN
+            span = 0.0
+            for u in us:
+                if span and span + u.w > TAP_SPAN:
+                    body_units.append(_tap_for("n" if row == "n" else "p", body, thick))
+                    span = 0.0
+                body_units.append(u)
+                span += u.w + GAP_UNIT
+        else:
+            body_units += us
         if not ring_net and sum(u.w for u in us) > 5.0:
-            body_units = body_units + [_tap_for("n" if row == "n" else "p", body, thick)]
+            body_units.append(_tap_for("n" if row == "n" else "p", body, thick))
         groups.append(_Group(row, (body, thick), body_units, ring_net=ring_net))
     return groups
 

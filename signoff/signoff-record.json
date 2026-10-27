@@ -70,7 +70,7 @@
         "command": null,
         "kind": "generic",
         "check_status": "pass",
-        "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
+        "content_hash": "sha256:fda3d2e3ef59578ac5ca0e6c326c21b0fbd923cf276583832e244f6ed6ef51ba",
         "input_verified": true,
         "exit_status": 0,
         "artifact_binding": {
@@ -79,13 +79,13 @@
             "path": "layout/gds/sky130_ioring_ring.gds",
             "scope": "repo"
           },
-          "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
+          "content_hash": "sha256:fda3d2e3ef59578ac5ca0e6c326c21b0fbd923cf276583832e244f6ed6ef51ba",
           "input_verified": true,
           "summary": "closed I/O ring stream generated from the proposed spec (status proposed - pending human ratification; reviewed 2026-10-22 (see spec/review-2026-10.md), nothing ratified, spec_version 0.1.0); generator self-checks passed (CELL.2/3/5/7/8/9, LU.1). Not DRC- or LVS-checked.",
           "source": "layout/gen_ring.py",
           "regeneration": {
             "generator": "python3 layout/gen_ring.py --out layout/gds",
-            "regenerated_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
+            "regenerated_hash": "sha256:fda3d2e3ef59578ac5ca0e6c326c21b0fbd923cf276583832e244f6ed6ef51ba",
             "executed_by_klt": false
           }
         }
@@ -106,7 +106,7 @@
         "command": null,
         "kind": "drc",
         "check_status": "clean",
-        "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
+        "content_hash": "sha256:fda3d2e3ef59578ac5ca0e6c326c21b0fbd923cf276583832e244f6ed6ef51ba",
         "input_verified": true,
         "exit_status": 0,
         "coverage": {
