@@ -1,0 +1,76 @@
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_gpio_logic.sch
+.subckt sky130_ioring_gpio_logic A OE PU PD PG_C NG_C PUN_C PD_C VDD VSS
+*.PININFO A:I OE:I PU:I PD:I PG_C:O NG_C:O PUN_C:O PD_C:O VDD:B VSS:B
+X1 OE OEB VDD VSS sky130_ioring_inv
+X2 PU PUB VDD VSS sky130_ioring_inv
+X3 PD PDB VDD VSS sky130_ioring_inv
+X4 A OE PG_C VDD VSS sky130_ioring_nand2
+X5 A OEB NG_C VDD VSS sky130_ioring_nor2
+X6 PU PDB OEB PUN_C VDD VSS sky130_ioring_nand3
+X7 PD PUB OEB PDN VDD VSS sky130_ioring_nand3
+X8 PDN PD_C VDD VSS sky130_ioring_inv
+.ends
+
+* expanding   symbol:  sky130_ioring_inv.sym # of pins=4
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_inv.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_inv.sch
+.subckt sky130_ioring_inv A Y VDD VSS
+*.PININFO A:I Y:O VDD:B VSS:B
+XMP Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMN Y A VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nand2.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand2.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand2.sch
+.subckt sky130_ioring_nand2 A B Y VDD VSS
+*.PININFO A:I B:I Y:O VDD:B VSS:B
+XMPA Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPB Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNA Y A n1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNB n1 B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0
++ mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nor2.sym # of pins=5
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nor2.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nor2.sch
+.subckt sky130_ioring_nor2 A B Y VDD VSS
+*.PININFO A:I B:I Y:O VDD:B VSS:B
+XMPA p1 A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2.0 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMPB Y B p1 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=2.0 nf=1 ad=0.58 as=0.58 pd=4.58 ps=4.58 nrd=0.145 nrs=0.145 sa=0 sb=0 sd=0
++ mult=1 m=1
+XMNA Y A VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+XMNB Y B VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  sky130_ioring_nand3.sym # of pins=6
+** sym_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand3.sym
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_nand3.sch
+.subckt sky130_ioring_nand3 A B C Y VDD VSS
+*.PININFO A:I B:I C:I Y:O VDD:B VSS:B
+XMPA Y A VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPB Y B VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMPC Y C VDD VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1.0 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMNA Y A n1 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+XMNB n1 B n2 VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+XMNC n2 C VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1.5 nf=1 ad=0.435 as=0.435 pd=3.58 ps=3.58 nrd=0.193333333333333
++ nrs=0.193333333333333 sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+

@@ -2,6 +2,7 @@
   "block": "sky130-io-ring",
   "kind": "analog",
   "evidence": {
+    "1": {"file": "signoff/evidence/item1.json", "content_hash": "sha256:c9e3c17390fc0465d60e8a5a664150ff15b52532c6a8f9d97f62dfdfb3dec4d3"},
     "2": {"file": "signoff/evidence/layout-attestation.json", "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d"}
   }
 }

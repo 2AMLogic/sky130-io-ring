@@ -2,16 +2,16 @@
 
 | File | Role |
 |---|---|
-| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites only the item-2 layout attestation today (`evidence/layout-attestation.json`, path relative to the repo root where `klt` runs); every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
+| `block-manifest.json` | Input to `klt signoff`: `block`, `kind`, and an `evidence` map. Cites the item-1 design-sources attestation (`evidence/item1.json`, from `design/attest-inventory.json`) and the item-2 layout attestation (`evidence/layout-attestation.json`); paths are relative to the repo root where `klt` runs. Every other T1 row is `unmet` / `no_evidence`, which is the honest statement. |
 | `signoff-record.json` | The verdict of record: the stdout of the pinned grader on the manifest. Never edited by hand. |
 
 ## Regenerate the record
 
 ```sh
-uvx --from "klayout-tools==0.7.0" klt signoff --manifest signoff/block-manifest.json --format json > signoff/signoff-record.json
+uvx --from "klayout-tools==0.8.0" klt signoff --manifest signoff/block-manifest.json --format json > signoff/signoff-record.json
 ```
 
-Redirect stdout; with 0.7.0 `-o` and `--repo-root` are not accepted. Exit code 3 (report produced, items unmet) is expected.
+Redirect stdout; `-o` and `--repo-root` are not used here. Exit code 3 (report produced, items unmet) is expected.
 
 The grader version is pinned in one place: `KLT_VERSION` in `.github/workflows/ci.yml`. The record embeds `source_doc_content_hash` and `grading_ruleset_id`, which change with the pin, so **a pin bump must regenerate the record in the same PR** (update the version in the command above too). Adding evidence to the manifest likewise requires regenerating.
 
@@ -19,6 +19,7 @@ The grader version is pinned in one place: `KLT_VERSION` in `.github/workflows/c
 
 - `scripts/ci/test_checkers.py`: the checkers reject seeded defects (run first).
 - `scripts/ci/check_evidence_format.py`: `design/ layout/ sim/ measurements/ spec/` each have a README; every sim record (`sim/<experiment>/record{,s}/*.json`) has `kind`, `pdk_revision` (40-hex), `pdk_variant`, `runs`, and only repo-relative paths (keys such as `log`, `netlist`, `path`, `file`). Passes trivially with no records.
+- `klt signoff --attest 1 --check` on the item-1 envelope (`--attest` needs klt >= 0.8.0, hence the pin): re-hashes every source and netlist in `design/attest-inventory.json`. The re-netlist freshness commands are `local_only`, so CI does not re-run xschem; they run locally via `design/regen.sh --check`.
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.
 - `layout/tests/test_ring.py` and `scripts/ci/check_layout_reproducible.py` (installs the pip `klayout` module, no PDK): the generator's spec/seam checks reject seeded defects, and a fresh regeneration of `layout/gds/` is byte-identical to what is committed and to the attestation's hashes.
 - `scripts/ci/check_append_only.py` (pull requests): files under `sim/` may be added, not modified, deleted or renamed.
@@ -26,6 +27,6 @@ The grader version is pinned in one place: `KLT_VERSION` in `.github/workflows/c
 ## What CI does not check
 
 - That any number in a record is correct, or that a record was produced by a real run.
-- DRC, LVS, simulation or ESD behaviour. Only T1 item 2 (layout) is `met`: it says a stream exists and is reproducibly generated, nothing about it being rule-clean.
+- DRC, LVS, simulation or ESD behaviour. Only T1 items 1 and 2 are `met`. Item 1 says schematics and freshness-checked netlists exist (CI does not re-netlist); item 2 says a stream exists and is reproducibly generated, nothing about it being rule-clean.
 - Append-only on direct pushes to `main` (branch protection covers that), or records outside `sim/`.
 - That the manifest's `evidence` is honest; the grader judges only what it cites.
