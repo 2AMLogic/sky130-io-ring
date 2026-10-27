@@ -81,3 +81,41 @@ decks and rule ids differ.
   `diff.width.1` row; whether the 5 V device uses a different value was not
   examined).
 - The native deck was read, not run: no layout exists yet.
+
+## Reconciliation with the first committed DRC report (2026-10-27)
+
+Source: `signoff/evidence/drc/ring.json`, `klt drc --deck sky130` by `klt`
+0.8.0 on `layout/gds/sky130_ioring_ring.gds` (input
+`sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d`).
+Deck `sky130`, `sha256:ba0f97887e3d231aec8b54f1f52f2941ded0228f0234b6759712bcaca0e942e6`,
+`released: true` (the `released: False` above is older than this deck).
+`status: clean`, `violation_count: 0`. The layout is placeholder drawing (no
+gates, clamp or level shifter), so this is clean on rails, pad openings and
+guard-ring geometry only.
+
+Quoted from the report's `coverage` block:
+
+- `layers_in_stream_without_rules` (3): `70/5`, `71/5`, `72/5` (in the stream, no rule applies).
+- `rules_skipped` (57, all `no_applicable_geometry`): 57 rule ids including
+  `nwell.enclosed.hvi.1`, the `hvi` / `hvntm` / `hvtp` / `hvtr` / `vhvi` / `uhvi`
+  `.angle.1` and `.ongrid.1` rules, `poly.*`, `npc.*`, `capm*`, `rpm.*`.
+- `deck_scope` (23): `cap2m capm ct difftap li licon m1 m2 m3 m4 m5 npc nsdm nwell poly psdm rpm urpm via via2 via3 via4 x`.
+- `unmodeled_rules` (33) include `hvi.1`, `hvi.2a`, `hvntm.1/2`, `hvtp.1/2`, `hvtr.1/2`, `pad.2`, `rdl.1/2`.
+
+Against the classes above:
+
+| Class | Effect of the clean report |
+|---|---|
+| Thick-oxide / high-voltage layers | **Still not checked.** `nwell.enclosed.hvi.1` was skipped (no geometry) and `hvi.1`, `hvi.2a`, `hvntm.*`, `hvtp.*`, `hvtr.*` are unmodeled. |
+| Latch-up distance | **Still not checked.** No rule in the deck. |
+| Guard ring | **Not checked for construction.** Only the metal / diffusion rules in `deck_scope` apply. |
+| ESD | **Still not checked.** |
+| Metal width / spacing on met3-met5 | Checked (`m3`, `m4`, `m5` in `deck_scope`). |
+
+The per-cell reports are standalone checks of each stream. `sky130_ioring_fill_1`
+reports one `met5.width.1` violation: the 1 µm filler's 12 µm-wide rail segment
+is 1 µm long, below the deck's met5 minimum width when the cell is checked on
+its own. Placed in the ring it merges with its neighbours and the ring report is
+clean. This is a stand-alone-versus-placed gap, not a waiver; see
+`signoff/README.md`.
+
