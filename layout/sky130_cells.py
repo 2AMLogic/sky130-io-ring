@@ -1,39 +1,32 @@
 """sky130 device-level half of the I/O ring generator.
 
-Layer numbers, rail bands, guard strips and the placeholder pad / driver
-geometry for the sky130 cells. The PDK-independent half (ring assembly, seam
-checks, stream writing) is gen_ring.py and never names a layer.
+Layer numbers, rail bands, guard strips, the bond pad, the GPIO core and its
+tie to rails and pad, and the device census. Device drawing is in
+sky130_devices.py, sub-block cells in sky130_blocks.py. The PDK-independent half
+(ring assembly, seam checks, stream writing, netlist reader, router) never
+names a layer.
 
-Provenance: every shape here is drawn from the proposed spec/io-ring.json
-rows and generic sky130 layer numbers. No geometry is taken from or traced
-against the foundry sky130_fd_io library (decision 0001); that library is a
-comparison point only.
+Provenance: every shape here is drawn from the proposed spec/io-ring.json rows,
+generic sky130 layer numbers and the committed design/netlists/. No geometry is
+taken from or traced against the foundry sky130_fd_io library (decision 0001);
+that library is a comparison point only.
 
-Honest scope of the cells: rails, continuous guard strips, a bond-pad
-stack and placeholder driver diffusions inside closed guard-ring annuli, plus
-the supply clamp devices in vddio / vdd (sky130_clamp.py). The GPIO has no
-gate wiring, level shifter or ESD device. Nothing here is ESD-rated.
+Honest scope of the cells: rails, continuous guard strips and a bond-pad stack
+on every pad cell; in the GPIO, every device of the GPIO netlists at its
+netlist W / L / m, wired, with guard rings round the output-driver banks; in
+vddio / vdd, the supply clamp devices (sky130_clamp.py). Nothing here is
+ESD-rated; DRC and LVS results are in signoff/ (LVS of the GPIO is a mismatch
+on the netlist's diode cards only).
 """
 import klayout.db as db
 
 import ringgeom as g
+import sky130_blocks as sb
 import sky130_clamp as clamp
+from sky130_devices import LAYERS  # noqa: F401  (LAYERS is part of this module's API)
 
 NAME = "sky130"
 PREFIX = "sky130_ioring_"
-
-# GDS layer/datatype. Drawing layers per the sky130A layer map; label
-# purposes use datatype 5.
-LAYERS = {
-    "nwell": (64, 20), "diff": (65, 20), "tap": (65, 44),
-    "licon1": (66, 44), "li1": (67, 20), "mcon": (67, 44),
-    "met1": (68, 20), "via": (68, 44), "met2": (69, 20), "via2": (69, 44),
-    "met3": (70, 20), "via3": (70, 44), "met4": (71, 20), "via4": (71, 44),
-    "met5": (72, 20), "nsdm": (93, 44), "psdm": (94, 20), "pad": (76, 20),
-    "poly": (66, 20), "hvi": (75, 20), "npc": (95, 20), "capm": (89, 44),
-    "urpm": (79, 20), "polyres": (66, 13),
-    "met1.label": (68, 5), "met2.label": (69, 5), "met3.label": (70, 5), "met4.label": (71, 5), "met5.label": (72, 5),
-}
 
 # Net -> routing layer is read from the spec (CELL.5); only the vertical
 # band each rail occupies is a sky130 layout choice. Distance from the die
@@ -151,49 +144,70 @@ def _supply_pad(ctx, cell, w, net):
     _label(ctx, cell, rl + ".label", net, cx, (b0 + b1) / 2)
 
 
-def _driver_blocks(ctx, cell):
-    """Placeholder pad-connected diffusions inside closed guard-ring annuli."""
-    ring_w = 1.5
-    # NMOS-side: n+ diffusion inside a p+ tap annulus tied to VSS
-    nx0, ny0, nx1, ny1 = 6, 70, 36, 100
-    ctx.add_region(cell, "tap", g.annulus(nx0, ny0, nx1, ny1, ring_w))
-    ctx.add_region(cell, "psdm", g.annulus(nx0 - 0.5, ny0 - 0.5, nx1 + 0.5, ny1 + 0.5, ring_w + 1.0))
-    ctx.add_region(cell, "li1", g.annulus(nx0, ny0, nx1, ny1, ring_w))
-    ctx.add(cell, "diff", g.box(12, 80, 30, 90))
-    ctx.add(cell, "nsdm", g.box(11, 79, 31, 91))
-    # PMOS-side: p+ diffusion in an n-well, inside an n+ tap annulus on VDDIO
-    px0, py0, px1, py1 = 44, 70, 74, 100
-    ctx.add(cell, "nwell", g.box(px0 - 4, py0 - 4, px1 + 4, py1 + 4))
-    ctx.add_region(cell, "tap", g.annulus(px0, py0, px1, py1, ring_w))
-    ctx.add_region(cell, "nsdm", g.annulus(px0 - 0.5, py0 - 0.5, px1 + 0.5, py1 + 0.5, ring_w + 1.0))
-    ctx.add_region(cell, "li1", g.annulus(px0, py0, px1, py1, ring_w))
-    ctx.add(cell, "diff", g.box(50, 80, 68, 90))
-    ctx.add(cell, "psdm", g.box(49, 79, 69, 91))
-    # contacts and li1 plates on both pad-connected diffusions
-    for (x0, x1) in ((12, 30), (50, 68)):
-        ctx.add(cell, "li1", g.box(x0, 80, x1, 90))
-        for b in g.row(x0 + 1, x1 - 1, 85, 0.17, 1.0):
-            ctx.add(cell, "licon1", b)
-            ctx.add(cell, "mcon", b)
-        ctx.add(cell, "met1", g.box(x0, 84, x1, 88))
-    # PAD net: met1 trunk from both plates to a stack under the bond pad
-    ctx.add(cell, "met1", g.box(30, 84, 50, 88))
-    ctx.add(cell, "met1", g.box(38, 84, 42, 128))
-    _stack(ctx, cell, 40, 126, "met1", "met5", patch=4.0)
-    # ring ties: annulus -> met1 landing -> met2 strap down/up to the strip stack
-    ps = (PSTRIP[0] + PSTRIP[1]) / 2
-    ns = (NSTRIP[0] + NSTRIP[1]) / 2
-    for b in g.row(7.0, 7.0, 85, 0.17, 1.0):
-        ctx.add(cell, "mcon", b)
-    ctx.add(cell, "met1", g.box(6, 82, 8, 88))
-    ctx.add(cell, "via", g.cbox(7.0, 85, 0.15))
-    ctx.add(cell, "met2", g.box(6, 13, 7.5, 88))
-    ctx.add(cell, "met2", g.box(6, 13, 10, 17))
-    ctx.add(cell, "mcon", g.cbox(73.0, 85, 0.17))
-    ctx.add(cell, "met1", g.box(72, 82, 74, 88))
-    ctx.add(cell, "via", g.cbox(73.0, 85, 0.15))
-    ctx.add(cell, "met2", g.box(72, 35, 74, 88))
-    ctx.add(cell, "met2", g.box(20, 35, 74, 37))
+# ---- GPIO devices: the core block and its connection to rails and pad ---
+CORE_Y0 = 63.0                 # core block bottom, distance from the die edge
+CORE_X_LEFT = 12.7             # rows start here; to the left: supply spines + pad landing
+SPINES = {"VSS": 10.0, "VDDIO": 6.0, "VDD": 2.0}
+PAD_LAND_X = 6.0
+PAD_JOIN_Y = 140.0             # where the met5 strap from the landing meets the pad metal
+# Placement of the gpio netlist's sub-blocks (instance names without the X): two
+# assemblies of two rows each.
+ASSEMBLY_A = {"1": ("n", 0), "3": ("n", 1), "L1": ("p", 0), "L2": ("p", 1), "L3": ("p", 2)}
+ASSEMBLY_B = {"L4": ("n", 0), "5": ("n", 1), "2": ("p", 0), "4": ("p", 1)}
+
+
+def _core_block(ctx):
+    """Build (once per layout) the GPIO core: every sub-block of the gpio netlist, wired.
+
+    The assemblies export only the nets they share with each other (and the
+    supplies / pad); a top-level pin used by one assembly is labelled inside it.
+    """
+    if "core" in ctx.__dict__:
+        return ctx.core
+    ctx.subckts = sb.load_subckts()
+    ctx.blocks = {}
+    ctx.block_args = {}
+    top = ctx.subckts[PREFIX + "gpio"]
+    by_name = {c.name: c for c in top.calls}
+    asm_calls = []
+    for tag, table in (("a", ASSEMBLY_A), ("b", ASSEMBLY_B)):
+        inside = [by_name[n] for n in table]
+        rest = [c for c in top.calls if c not in inside]
+        shared = {n for c in rest for n in c.nets}
+        name = f"{PREFIX}gpio_asm_{tag}"
+        sub = sb.assemble(ctx.subckts, name, inside, shared)
+        ctx.subckts[name] = sub
+        mine = {n for c in inside for n in c.nets}
+        ctx.block_args[name] = {
+            "inline": False, "assign": table,
+            "label_nets": [n for n in top.pins if n in mine and n not in shared]}
+        asm_calls.append(sb.nr.Call(tag.upper(), list(sub.pins), name))
+    core_name = f"{PREFIX}gpio_core"
+    ctx.subckts[core_name] = sb.nr.Subckt(core_name, [], [], asm_calls)
+    ctx.core = sb.build_block(
+        ctx, core_name, inline=False, assign={"A": ("n", 0), "B": ("p", 0)}, x_left=CORE_X_LEFT,
+        spines=SPINES, land=("PAD", PAD_LAND_X))
+    return ctx.core
+
+
+def _gpio_devices(ctx, cell, w):
+    """Instantiate the core above the rails and tie its supplies and pad net to them."""
+    core = _core_block(ctx)
+    cell.insert(db.CellInstArray(core.cell.cell_index(), db.Trans(0, False, 0, g.U(CORE_Y0))))
+    # supply spines continue as met2 down to a stack on the rail (VSS: the existing tie stack)
+    for net, x in SPINES.items():
+        ytie = {"VSS": (PSTRIP[0] + PSTRIP[1]) / 2, "VDDIO": (NSTRIP[0] + NSTRIP[1]) / 2,
+                "VDD": sum(RAIL_BANDS["VDD"]) / 2}[net]
+        ctx.add(cell, "met2", g.box(x - 0.5, ytie, x + 0.5, CORE_Y0))
+    _stack(ctx, cell, SPINES["VDDIO"], (NSTRIP[0] + NSTRIP[1]) / 2, "met2", "met4")
+    _stack(ctx, cell, SPINES["VDD"], sum(RAIL_BANDS["VDD"]) / 2, "met2", "met3", patch=3.0)
+    # pad landing: via stack on the core's pad track, met5 strap up to the pad metal
+    lx, ly = core.extra["land"]
+    ly += CORE_Y0
+    _stack(ctx, cell, lx, ly, "met2", "met5")
+    y0, y1 = sorted((ly, PAD_JOIN_Y))
+    ctx.add(cell, "met5", g.box(lx - 1.0, y0 - 1.0, lx + 1.0, y1 + 1.0))
+    ctx.add(cell, "met5", g.box(lx - 1.0, PAD_JOIN_Y - 1.0, w / 2 - ctx.p["pad_open"] / 2, PAD_JOIN_Y + 1.0))
 
 
 def build_edge(ctx, kind, w):
@@ -204,8 +218,11 @@ def build_edge(ctx, kind, w):
     _tie_stacks(ctx, cell)
     if kind == "gpio":
         cx, cy = _pad(ctx, cell, w)
-        _driver_blocks(ctx, cell)
+        _gpio_devices(ctx, cell, w)
         _label(ctx, cell, "met5.label", "PAD", cx, cy)
+        for net, (b0, b1) in RAIL_BANDS.items():      # name the rails, as the supply pads do
+            layer = ctx.rail_layer[net]
+            _label(ctx, cell, layer + ".label", net, w / 2, (b0 + b1) / 2)
     else:
         _supply_pad(ctx, cell, w, {"vddio": "VDDIO", "vdd": "VDD", "vss": "VSS"}[kind])
         if kind in ("vddio", "vdd"):
@@ -253,6 +270,60 @@ def build_cells(layout, params, kinds):
         else:
             out[k] = build_edge(ctx, k, params["pitch"])
     return out
+
+
+# ---- device census: the generator's own check that drawn devices are the netlist's ----
+def _expected_devices(subckts):
+    """(kind, thick, W, L) per extracted MOS finger of the gpio netlist, plus diode / resistor lists."""
+    mos, dio, res = [], [], []
+    for d in sb.flatten(subckts, subckts[PREFIX + "gpio"]):
+        if d.model in sb.dev.MOS_MODELS:
+            kind, thick = sb.dev.MOS_MODELS[d.model]
+            mos += [(kind, thick, round(d.params["W"], 3), round(d.params["L"], 3))] * int(d.params["m"])
+        elif d.model in sb.dev.DIODE_MODELS:
+            dio.append((sb.dev.DIODE_MODELS[d.model], round(d.params["area"] * 1e-12, 3)))
+        else:
+            res.append(round(d.params["L"], 3))
+    return sorted(mos), sorted(dio), sorted(res)
+
+
+def _drawn_devices(layout, cell):
+    """The same three lists read back from the drawn geometry of `cell` (hierarchy flattened)."""
+    def region(name):
+        return db.Region(cell.begin_shapes_rec(layout.layer(*LAYERS[name]))).merged()
+
+    poly, diff, nwell, hvi = region("poly"), region("diff"), region("nwell"), region("hvi")
+    mos = []
+    for gate in (poly & diff).each():
+        b = gate.bbox()
+        one = db.Region(gate)
+        kind = "p" if (one & nwell).count() else "n"
+        thick = bool((one & hvi).count())
+        mos.append((kind, thick, round(b.height() * g.DBU, 3), round(b.width() * g.DBU, 3)))
+    dio = []
+    nsdm = region("nsdm")
+    for m in region("diode.mark").each():
+        one = db.Region(m)
+        dio.append(("n" if (one & nsdm).count() else "p", round(m.area() * g.DBU * g.DBU, 3)))
+    res = [round(m.bbox().width() * g.DBU, 3) for m in region("res.mark").each()]
+    return sorted(mos), sorted(dio), sorted(res)
+
+
+def device_checks(layout, cells, params):
+    """Findings (strings) if the drawn gpio devices differ from design/netlists/ -- empty if equal."""
+    gp = cells.get("gpio")
+    if gp is None:
+        return []
+    want = _expected_devices(sb.load_subckts())
+    got = _drawn_devices(layout, gp)
+    bad = []
+    for name, w, d in zip(("MOS finger (kind, thick, W, L)", "diode (kind, area)", "resistor L"), want, got):
+        if w != d:
+            missing = [x for x in w if x not in d or w.count(x) > d.count(x)]
+            extra = [x for x in d if x not in w or d.count(x) > w.count(x)]
+            bad.append(f"DEV: gpio {name}: netlist has {len(w)}, drawn {len(d)}; "
+                       f"undrawn {sorted(set(missing))[:4]}, unexpected {sorted(set(extra))[:4]}")
+    return bad
 
 
 def mask_layers(params):

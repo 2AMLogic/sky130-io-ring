@@ -70,7 +70,7 @@
         "command": null,
         "kind": "generic",
         "check_status": "pass",
-        "content_hash": "sha256:e36cef1941c4250cdbd76cd77ba344dd7c6de97f56748506c0ef3e13f71e2ca2",
+        "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
         "input_verified": true,
         "exit_status": 0,
         "artifact_binding": {
@@ -79,13 +79,13 @@
             "path": "layout/gds/sky130_ioring_ring.gds",
             "scope": "repo"
           },
-          "content_hash": "sha256:e36cef1941c4250cdbd76cd77ba344dd7c6de97f56748506c0ef3e13f71e2ca2",
+          "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
           "input_verified": true,
           "summary": "closed I/O ring stream generated from the proposed spec (status proposed - pending human ratification; reviewed 2026-10-22 (see spec/review-2026-10.md), nothing ratified, spec_version 0.1.0); generator self-checks passed (CELL.2/3/5/7/8/9, LU.1). Not DRC- or LVS-checked.",
           "source": "layout/gen_ring.py",
           "regeneration": {
             "generator": "python3 layout/gen_ring.py --out layout/gds",
-            "regenerated_hash": "sha256:e36cef1941c4250cdbd76cd77ba344dd7c6de97f56748506c0ef3e13f71e2ca2",
+            "regenerated_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
             "executed_by_klt": false
           }
         }
@@ -106,15 +106,17 @@
         "command": null,
         "kind": "drc",
         "check_status": "clean",
-        "content_hash": "sha256:e36cef1941c4250cdbd76cd77ba344dd7c6de97f56748506c0ef3e13f71e2ca2",
+        "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
         "input_verified": true,
         "exit_status": 0,
         "coverage": {
           "layers_in_stream_without_rules": [
             "66/13",
+            "69/5",
             "70/5",
             "71/5",
-            "72/5"
+            "72/5",
+            "81/23"
           ],
           "rules_skipped": [
             "areaid_re.ongrid.1",
@@ -145,9 +147,6 @@
             "pwde.ongrid.1",
             "pwell_rs.angle.1",
             "pwell_rs.ongrid.1",
-            "rpm.angle.1",
-            "rpm.ongrid.1",
-            "rpm.width.1",
             "tunm.angle.1",
             "tunm.ongrid.1",
             "uhvi.angle.1",

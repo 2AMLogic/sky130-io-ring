@@ -8,7 +8,7 @@
   "pdk": null,
   "findings_only": true,
   "gate_role": "poly",
-  "gate_count": 28,
+  "gate_count": 260,
   "antenna_tables_omitted": true,
   "gates": [],
   "nets": [
@@ -31,10 +31,15 @@
       "roles": [
         "met3"
       ],
-      "unlabelled_islands": 0,
-      "unlabelled_area_um2": 0.0,
-      "unlabelled_bbox": null,
-      "unlabelled_allowed_islands": 0
+      "unlabelled_islands": 112,
+      "unlabelled_area_um2": 1854.912,
+      "unlabelled_bbox": {
+        "left": 68570,
+        "bottom": 68570,
+        "right": 758430,
+        "top": 758430
+      },
+      "unlabelled_allowed_islands": 112
     },
     {
       "name": "VSS",
@@ -70,7 +75,7 @@
             "top": 777000
           },
           "layer": "met3",
-          "shape_count": 863
+          "shape_count": 1171
         },
         {
           "bbox": {
@@ -80,7 +85,7 @@
             "top": 777000
           },
           "layer": "met3",
-          "shape_count": 863
+          "shape_count": 1171
         }
       ]
     },
@@ -106,7 +111,7 @@
             "top": 797000
           },
           "layer": "met4",
-          "shape_count": 496
+          "shape_count": 788
         },
         {
           "bbox": {
@@ -116,7 +121,7 @@
             "top": 797000
           },
           "layer": "met4",
-          "shape_count": 496
+          "shape_count": 788
         }
       ]
     },
@@ -142,7 +147,7 @@
             "top": 817000
           },
           "layer": "met5",
-          "shape_count": 138
+          "shape_count": 622
         },
         {
           "bbox": {
@@ -152,7 +157,7 @@
             "top": 817000
           },
           "layer": "met5",
-          "shape_count": 138
+          "shape_count": 622
         }
       ]
     }
@@ -211,9 +216,12 @@
     "layers_in_stream_without_declaration": [
       "65/20",
       "66/13",
+      "69/5",
       "75/20",
       "76/20",
       "79/20",
+      "81/23",
+      "86/20",
       "93/44",
       "94/20",
       "95/20"
@@ -223,15 +231,15 @@
   "ties_disclosure": null,
   "provenance": {
     "klt_version": "0.8.0",
-    "klayout_version": "0.30.12",
+    "klayout_version": "0.30.10",
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:fc7afce596d92b890d469e403337fdae71b6da9f8d656df5387c5404d7cfa7f3",
+      "content_hash": "sha256:e4c58c2262c54af35eb999173da5a61c4cd8c308cbad884f6a7afa8a69c631e2",
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:1e8526e79ec4cd4cb90fa0bd8419e837020eae1bd4758c3bfd0d1e79e99c2960"
+      "content_hash": "sha256:e638ef8124c0a1f44d7fb51845af36e044342b3e577f1c1fb43161bf8b872e7f"
     },
     "devices": [
       {
@@ -241,30 +249,86 @@
         "body_area_um2": 153.6
       }
     ],
-    "net_exclusions": [],
+    "net_exclusions": [
+      {
+        "net": "VDD",
+        "boxes": [
+          [
+            62.5,
+            233.625,
+            164.46,
+            310.5
+          ],
+          [
+            62.5,
+            553.625,
+            164.46,
+            630.5
+          ],
+          [
+            196.5,
+            62.5,
+            273.375,
+            164.46
+          ],
+          [
+            233.625,
+            662.54,
+            310.5,
+            764.5
+          ],
+          [
+            516.5,
+            62.5,
+            593.375,
+            164.46
+          ],
+          [
+            553.625,
+            662.54,
+            630.5,
+            764.5
+          ],
+          [
+            662.54,
+            196.5,
+            764.5,
+            273.375
+          ],
+          [
+            662.54,
+            516.5,
+            764.5,
+            593.375
+          ]
+        ],
+        "excluded_islands": 112,
+        "excluded_area_um2": 1854.912
+      }
+    ],
     "label_layers": [
       {
         "name": "met3",
         "label_layer": "70/5",
-        "label_text_count": 4
+        "label_text_count": 12
       },
       {
         "name": "met4",
         "label_layer": "71/5",
-        "label_text_count": 4
+        "label_text_count": 12
       },
       {
         "name": "met5",
         "label_layer": "72/5",
-        "label_text_count": 12
+        "label_text_count": 20
       }
     ]
   },
   "compact": {
-    "gate_count": 28,
-    "antenna_levels_skipped": 168,
-    "antenna_reference_levels": 28,
-    "floating_gate_checked": 28,
+    "gate_count": 260,
+    "antenna_levels_skipped": 1560,
+    "antenna_reference_levels": 260,
+    "floating_gate_checked": 260,
     "skipped_reason": "findings_only"
   }
 }

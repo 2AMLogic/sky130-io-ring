@@ -599,7 +599,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:b4e3b830db9b2edce4a3e413dbe1d93afb35c310910566c77356243d295c6801",
+      "content_hash": "sha256:18147d3df4d9153fae4584b09d32a4ca9020d5df5d79fb000fc28ace957021f8",
       "role": "layout"
     },
     "klayout_version_mismatch": false

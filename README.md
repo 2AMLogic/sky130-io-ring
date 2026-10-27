@@ -97,12 +97,15 @@ How to regenerate the record and the attestation is in
 [`signoff/README.md`](signoff/README.md). CI (`.github/workflows/ci.yml`) runs
 the same commands.
 
-**What exists, and what does not:** the only layout check is DRC of the ring
-against the curated `sky130` deck, which reports clean on placeholder drawing
-and does not cover every I/O rule (thick-oxide, latch-up and guard-ring rules
-among them); deck coverage is in [`signoff/README.md`](signoff/README.md).
-There is no LVS, ERC or ESD result and no PVT simulation of any cell. Nothing
-above claims one.
+**What exists, and what does not:** DRC of the ring against the curated
+`sky130` deck reports clean on drawing that includes every device of the GPIO
+netlists (but no supply clamp); the deck does not cover every I/O rule
+(thick-oxide, latch-up and guard-ring rules among them); deck coverage is in
+[`signoff/README.md`](signoff/README.md). LVS has run per cell: the GPIO is a
+`mismatch` on the reference's four diode cards only (2AMLogic/klayout-tools#4319),
+the corner, fillers and `vss` match with no devices, and the ring and the two
+other supply pads get no report. There is no ERC or ESD result and no PVT
+simulation of any cell. Nothing above claims one.
 
 ## Repo layout
 
