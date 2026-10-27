@@ -75,7 +75,7 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
   `sky130_cells.GUARD_RINGS`). The receiver, level shifters and logic have no
   ring.
 - LU.2: a group without a ring has a tap at each end and another at least every
-  `TAP_SPAN` (14 um) of unit width. A ringed group's taps are its annulus.
+  `TAP_SPAN` of unit width (`layout/sky130_blocks.py`). A ringed group's taps are its annulus.
 - Fit: the core ends at x = 79.45 um of the 80 um cell width and y = 173.3 um of
   the 195 um depth; the cell outline is unchanged. Rings use 1 um side and 2 um
   top/bottom clearance to keep the widest assembly inside the width.
