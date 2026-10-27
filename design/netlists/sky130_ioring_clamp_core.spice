@@ -1,0 +1,21 @@
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_clamp_core.sch
+.subckt sky130_ioring_clamp_core VP VSS
+*.PININFO VP:B VSS:B
+XR1 T1 VP VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XR2 T T1 VSS sky130_fd_pr__res_xhigh_po_0p69 L=43 mult=1 m=1
+XC1 T VSS sky130_fd_pr__cap_mim_m3_1 W=30 L=33 MF=2 m=2
+XMP1 G1 T VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=1
++ m=1
+XMN1 G1 T VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=0.65 nf=1 ad=0.1885 as=0.1885 pd=1.88 ps=1.88 nrd=0.446153846153846
++ nrs=0.446153846153846 sa=0 sb=0 sd=0 mult=1 m=1
+XMP2 G2 G1 VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=3 nf=1 ad=0.87 as=0.87 pd=6.58 ps=6.58 nrd=0.0966666666666667
++ nrs=0.0966666666666667 sa=0 sb=0 sd=0 mult=4 m=4
+XMN2 G2 G1 VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad=0.29 as=0.29 pd=2.58 ps=2.58 nrd=0.29 nrs=0.29 sa=0 sb=0 sd=0 mult=4
++ m=4
+XMP3 GATE G2 VP VP sky130_fd_pr__pfet_01v8 L=0.15 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0 sd=0
++ mult=20 m=20
+XMN3 GATE G2 VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=3 nf=1 ad=0.87 as=0.87 pd=6.58 ps=6.58 nrd=0.0966666666666667
++ nrs=0.0966666666666667 sa=0 sb=0 sd=0 mult=10 m=10
+XMCL VP GATE VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=5 nf=1 ad=1.45 as=1.45 pd=10.58 ps=10.58 nrd=0.058 nrs=0.058 sa=0 sb=0 sd=0
++ mult=800 m=800
+.ends

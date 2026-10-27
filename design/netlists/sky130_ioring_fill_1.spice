@@ -1,0 +1,4 @@
+** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-30/design/xschem/sky130_ioring_fill_1.sch
+.subckt sky130_ioring_fill_1 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends
