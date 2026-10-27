@@ -14,6 +14,8 @@ Exit 0 only if every report was written and every status is `match`; a
 exit 4. When `klt lvs` refuses a request (no report exists) the refusal is
 printed, no file is written, the remaining streams still run and the script
 exits 5. No hints, tolerances or ignored devices are passed: nothing is forced.
+`options.flatten_reference` is set for the streams whose reference nests the clamp subckt
+(hierarchy only; it does not change a device or a net).
 """
 import argparse
 import json
@@ -22,6 +24,9 @@ import shlex
 import subprocess
 import sys
 
+# Their reference netlists call a nested subckt (the clamp), which the layout
+# extracts flat; without options.flatten_reference the top circuits do not pair.
+FLATTEN = ["ring", "vddio", "vdd"]
 STREAMS = ["ring", "gpio", "vddio", "vdd", "vss", "corner",
            "fill_1", "fill_5", "fill_10", "fill_20"]
 
@@ -35,6 +40,8 @@ def main():
     ap.add_argument("--out-dir", default="signoff/evidence/lvs")
     ap.add_argument("--prefix", default="sky130_ioring_", help="cell/stream name prefix")
     ap.add_argument("--streams", nargs="*", default=STREAMS)
+    ap.add_argument("--flatten", nargs="*", default=FLATTEN,
+                    help="streams whose reference nests subcircuits (options.flatten_reference)")
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
     bad = refused = 0
@@ -43,6 +50,8 @@ def main():
         req = {"layout": {"file": f"{a.gds_dir}/{cell}.gds", "deck": a.deck, "top": cell},
                "reference": {"netlist": f"{a.netlist_dir}/{cell}.spice", "top": cell,
                          "form": "subckt-call", "deck": a.deck}}
+        if s in a.flatten:
+            req["options"] = {"flatten_reference": True}
         out = f"{a.out_dir}/{'ring' if s == 'ring' else cell}.json"
         p = subprocess.run(shlex.split(a.klt) + ["lvs", "--format", "json", json.dumps(req)],
                            capture_output=True, text=True)

@@ -55,6 +55,39 @@ class Good(unittest.TestCase):
         for k in ("gpio", "vddio", "vss"):
             self.assertIn(k, seq)
 
+    def test_clamp_devices_at_netlist_wlm(self):
+        """vddio / vdd draw every clamp device at netlist W / L / m (finger counts)."""
+        p, layout, cells, *_ = build()
+        poly, diff = layout.layer(*T.LAYERS["poly"]), layout.layer(*T.LAYERS["diff"])
+        for kind, fingers in (("vddio", 400 + 10 + 4 + 1 + 20 + 4 + 1),
+                              ("vdd", 800 + 10 + 4 + 1 + 20 + 4 + 1)):
+            reg = (db.Region(cells[kind].shapes(poly)).merged()
+                   & db.Region(cells[kind].shapes(diff)).merged())
+            self.assertEqual(reg.count(), fingers, kind)
+        capm = layout.layer(*T.LAYERS["capm"])
+        for kind in ("vddio", "vdd"):
+            plates = list(db.Region(cells[kind].shapes(capm)).merged().each())
+            self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
+                             [(g.U(30), g.U(33))] * 2, kind)
+
+    def test_erc_spec_lists_the_vdd_clamp_wells(self):
+        """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes."""
+        import json
+        spec = json.loads((HERE.parents[1] / "signoff" / "erc-supply-spec.json").read_text())
+        tie = {t["name"]: t for t in spec["ties"]}["ntap_vdd"]
+        p, layout, cells, top, *_ = build()
+        nwell = layout.layer(*T.LAYERS["nwell"])
+        got = set()
+        for inst in top.each_inst():
+            if inst.cell_index != cells["vdd"].cell_index():
+                continue
+            for q in db.Region(inst.cell.begin_shapes_rec(nwell)).merged().each():
+                b = q.bbox().transformed(inst.trans)
+                if max(b.width(), b.height()) < g.U(20):     # the clamp well, not the 80 x 24 guard well
+                    got.add(tuple(round(v * layout.dbu, 3) for v in (b.left, b.bottom, b.right, b.top)))
+        self.assertEqual(len(got), 4)
+        self.assertEqual(got, {tuple(round(v, 3) for v in b) for b in tie["well_requires_boxes"]})
+
     def test_reproducible_bytes(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
             ra, _, _ = G.generate(a, T)
