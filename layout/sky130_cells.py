@@ -10,13 +10,14 @@ against the foundry sky130_fd_io library (decision 0001); that library is a
 comparison point only.
 
 Honest scope of the cells: rails, continuous guard strips, a bond-pad
-stack and placeholder driver diffusions inside closed guard-ring annuli.
-There is no gate wiring, level shifter, clamp or ESD device. Nothing here is
-ESD-rated, and DRC / LVS have not been run on it (separate issues).
+stack and placeholder driver diffusions inside closed guard-ring annuli, plus
+the supply clamp devices in vddio / vdd (sky130_clamp.py). The GPIO has no
+gate wiring, level shifter or ESD device. Nothing here is ESD-rated.
 """
 import klayout.db as db
 
 import ringgeom as g
+import sky130_clamp as clamp
 
 NAME = "sky130"
 PREFIX = "sky130_ioring_"
@@ -29,7 +30,9 @@ LAYERS = {
     "met1": (68, 20), "via": (68, 44), "met2": (69, 20), "via2": (69, 44),
     "met3": (70, 20), "via3": (70, 44), "met4": (71, 20), "via4": (71, 44),
     "met5": (72, 20), "nsdm": (93, 44), "psdm": (94, 20), "pad": (76, 20),
-    "met3.label": (70, 5), "met4.label": (71, 5), "met5.label": (72, 5),
+    "poly": (66, 20), "hvi": (75, 20), "npc": (95, 20), "capm": (89, 44),
+    "urpm": (79, 20), "polyres": (66, 13),
+    "met1.label": (68, 5), "met2.label": (69, 5), "met3.label": (70, 5), "met4.label": (71, 5), "met5.label": (72, 5),
 }
 
 # Net -> routing layer is read from the spec (CELL.5); only the vertical
@@ -205,6 +208,11 @@ def build_edge(ctx, kind, w):
         _label(ctx, cell, "met5.label", "PAD", cx, cy)
     else:
         _supply_pad(ctx, cell, w, {"vddio": "VDDIO", "vdd": "VDD", "vss": "VSS"}[kind])
+        if kind in ("vddio", "vdd"):
+            net = "VDDIO" if kind == "vddio" else "VDD"
+            b0, b1 = RAIL_BANDS[net]
+            clamp.build_clamp(clamp.Draw(ctx, cell), kind == "vdd",
+                              (ctx.rail_layer[net], (b0 + b1) / 2), width=w)
     return cell
 
 

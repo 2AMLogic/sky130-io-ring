@@ -55,6 +55,21 @@ class Good(unittest.TestCase):
         for k in ("gpio", "vddio", "vss"):
             self.assertIn(k, seq)
 
+    def test_clamp_devices_at_netlist_wlm(self):
+        """vddio / vdd draw every clamp device at netlist W / L / m (finger counts)."""
+        p, layout, cells, *_ = build()
+        poly, diff = layout.layer(*T.LAYERS["poly"]), layout.layer(*T.LAYERS["diff"])
+        for kind, fingers in (("vddio", 400 + 10 + 4 + 1 + 20 + 4 + 1),
+                              ("vdd", 800 + 10 + 4 + 1 + 20 + 4 + 1)):
+            reg = (db.Region(cells[kind].shapes(poly)).merged()
+                   & db.Region(cells[kind].shapes(diff)).merged())
+            self.assertEqual(reg.count(), fingers, kind)
+        capm = layout.layer(*T.LAYERS["capm"])
+        for kind in ("vddio", "vdd"):
+            plates = list(db.Region(cells[kind].shapes(capm)).merged().each())
+            self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
+                             [(g.U(30), g.U(33))] * 2, kind)
+
     def test_reproducible_bytes(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
             ra, _, _ = G.generate(a, T)

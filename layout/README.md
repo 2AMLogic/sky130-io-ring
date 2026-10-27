@@ -24,7 +24,7 @@ Written without timestamps, so output is byte-identical across runs.
 | Cell | Role |
 |---|---|
 | `sky130_ioring_gpio` | pad + placeholder pad-connected diffusions in closed guard annuli (`PAD`) |
-| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`) |
+| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`); `_vddio` and `_vdd` also carry the supply clamp (below) |
 | `sky130_ioring_corner` | square corner, edge = cell depth, rails and strips turn 90 degrees with 45-degree chamfer/mitre, no pad |
 | `sky130_ioring_fill_{1,5,10,20}` | rails and guard strips only |
 | `sky130_ioring_ring` | closed ring: 4 corners + 4 identical sides (five pad cells, 37 um of filler) |
@@ -43,12 +43,29 @@ purposes and are the inputs to DRC/LVS/ERC; keep them stable.
 - Bond pad: 55 um opening on `pad`, met5 metal 61 um. 55 um is the provisional
   minimum (CELL.4 is OPEN).
 
+## Supply clamp (`sky130_clamp.py`, in `vddio` and `vdd`)
+
+Drawn from `design/netlists/sky130_ioring_clamp_{io,core}.spice` at netlist
+W / L / m, one finger per `m`: the big NMOS (400 fingers W=5 L=0.5 thick-oxide in
+`vddio`; 800 fingers W=5 L=0.15 in `vdd`), the three-stage inverter chain, two
+xhigh-poly 43 um resistors in series (`R1`, `R2`; the joint is an unrouted poly
+head) and the 2 x (30 x 33 um) MIM capacitor as two `capm` plates. Poly, hvi
+(thick-oxide cell only), diffusion, li1 and met1 build the devices; vertical
+met2 straps at the left of the cell carry `VSS`, `VDDIO`/`VDD`, the three gate
+nets and the RC node, and tie into the cell's own rail band. The MIM sits over
+the devices (met3/met4) and clear of the pad stub. `klt extract` finds 444
+(`vddio`) / 844 (`vdd`) devices.
+
+Finger pitch, bus widths and strap widths are drawing choices; no
+current-density, electromigration or snapback check was made.
+
 ## What is not claimed
 
-- Drivers are placeholder diffusions with no gates, level shifter, clamp or ESD
-  device. Nothing here is ESD-rated or qualified; ESD sizing is decision 0004.
-- DRC, LVS and ERC have not been run (separate issues). The generator checks
-  its own spec values and seam continuity, not foundry rules.
+- The clamp is a connectivity-correct drawing for extraction, LVS and the curated
+  DRC deck, not a sized ESD protection. GPIO drivers are still placeholder
+  diffusions with no gates, level shifter or ESD device. Nothing here is ESD-rated or qualified; ESD sizing is decision 0004.
+- ERC has not been run. DRC / LVS results are in `signoff/README.md`; the
+  generator itself checks only its own spec values and seam continuity.
 - The only layers, widths and spacings checked are the ones the spec states; the
   rest are unchecked drawing choices until a deck runs on them.
 - The spec is proposed, not ratified; re-check the CELL rows when it is.
