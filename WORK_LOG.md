@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-10-27
 
+- **PR #62**: docs(layout): drop stale TAP_SPAN literal from README
+- **Issue #60** (closed): layout/README.md states TAP_SPAN as 14 um; sky130_blocks.py sets 18.0 um
 - **PR #59**: feat(layout): ring every pad-connected GPIO bank and tap long groups for LU.2
 - **Issue #53** (closed): GPIO: tap distance (LU.2) fails and only the driver banks have guard rings (LU.4)
 - **PR #54**: feat: draw wired GPIO devices from the netlists, re-record DRC and LVS evidence
