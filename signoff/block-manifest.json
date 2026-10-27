@@ -8,7 +8,7 @@
     "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:8d55cff76a5b3bbb726b471bf15f3e71ab1b481a5d54a315760748d7c6278fdb"},
     "10": {"file": "signoff/evidence/item10.json", "content_hash": "sha256:963fcbc018ffa6696b203e4267b3e9becd6c247d76be7e253de90ed26d9d8ddb"},
     "11": [
-      {"file": "signoff/evidence/erc/ring.json", "content_hash": "sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d"},
+      {"file": "signoff/evidence/erc/ring.json", "content_hash": "sha256:e36cef1941c4250cdbd76cd77ba344dd7c6de97f56748506c0ef3e13f71e2ca2"},
       {"file": "signoff/evidence/lvs/sky130_ioring_gpio.json", "content_hash": "sha256:0f2f721bd0b2a71536dbd62ff50c74eb62cbdd64b80bd00efab7aaf1e1568668"}
     ]
   }
