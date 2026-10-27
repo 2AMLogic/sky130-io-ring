@@ -76,7 +76,9 @@
       "72/20",
       "75/20",
       "76/20",
+      "79/20",
       "86/20",
+      "89/44",
       "93/44",
       "94/20",
       "95/20"
@@ -90,6 +92,10 @@
       "81/23"
     ],
     "rules_checked": [
+      "capm.enclosing.via3.1",
+      "capm.separation.via3.1",
+      "capm.space.1",
+      "capm.width.1",
       "diff.angle.1",
       "diff.enclosing.licon.1",
       "diff.ongrid.1",
@@ -129,6 +135,7 @@
       "met2.width.1",
       "met3.angle.1",
       "met3.area.1",
+      "met3.enclosing.capm.1",
       "met3.enclosing.via2.1",
       "met3.enclosing.via3.1",
       "met3.enclosing_adjacent.via3.1",
@@ -182,6 +189,7 @@
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
       "tap.width.1",
+      "urpm.width.1",
       "via.angle.1",
       "via.ongrid.1",
       "via.space.1",
@@ -201,10 +209,6 @@
     ],
     "rules_skipped": [
       "areaid_re.ongrid.1",
-      "capm.enclosing.via3.1",
-      "capm.separation.via3.1",
-      "capm.space.1",
-      "capm.width.1",
       "capm2.enclosing.via4.1",
       "capm2.separation.via4.1",
       "capm2.space.1",
@@ -219,7 +223,6 @@
       "hvtr.ongrid.1",
       "lvtn.angle.1",
       "lvtn.ongrid.1",
-      "met3.enclosing.capm.1",
       "met4.enclosing.capm2.1",
       "mf.angle.1",
       "mf.ongrid.1",
@@ -237,7 +240,6 @@
       "tunm.ongrid.1",
       "uhvi.angle.1",
       "uhvi.ongrid.1",
-      "urpm.width.1",
       "vhvi.angle.1",
       "vhvi.ongrid.1",
       "vpp.angle.1",
@@ -314,6 +316,10 @@
     "schema_version": 1,
     "known": true,
     "checked": [
+      "capm.enclosing.via3.1",
+      "capm.separation.via3.1",
+      "capm.space.1",
+      "capm.width.1",
       "diff.angle.1",
       "diff.enclosing.licon.1",
       "diff.ongrid.1",
@@ -353,6 +359,7 @@
       "met2.width.1",
       "met3.angle.1",
       "met3.area.1",
+      "met3.enclosing.capm.1",
       "met3.enclosing.via2.1",
       "met3.enclosing.via3.1",
       "met3.enclosing_adjacent.via3.1",
@@ -406,6 +413,7 @@
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
       "tap.width.1",
+      "urpm.width.1",
       "via.angle.1",
       "via.ongrid.1",
       "via.space.1",
@@ -427,22 +435,6 @@
     "inapplicable": [
       {
         "id": "areaid_re.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "capm.enclosing.via3.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "capm.separation.via3.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "capm.space.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "capm.width.1",
         "reason": "no_applicable_geometry"
       },
       {
@@ -499,10 +491,6 @@
       },
       {
         "id": "lvtn.ongrid.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
-        "id": "met3.enclosing.capm.1",
         "reason": "no_applicable_geometry"
       },
       {
@@ -574,10 +562,6 @@
         "reason": "no_applicable_geometry"
       },
       {
-        "id": "urpm.width.1",
-        "reason": "no_applicable_geometry"
-      },
-      {
         "id": "vhvi.angle.1",
         "reason": "no_applicable_geometry"
       },
@@ -608,7 +592,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:a41d3b0783338de73bf69edbaa42e2b90ee5e096c38605dc812e195bcc6370d8",
+      "content_hash": "sha256:b465bfd96b72c16fbc95f259d8de6e7e09084ff50ea5ec202ec50f275c475a9d",
       "role": "layout"
     },
     "klayout_version_mismatch": false

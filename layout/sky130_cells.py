@@ -13,14 +13,16 @@ that library is a comparison point only.
 
 Honest scope of the cells: rails, continuous guard strips and a bond-pad stack
 on every pad cell; in the GPIO, every device of the GPIO netlists at its
-netlist W / L / m, wired, with guard rings round the output-driver banks. No
-supply clamp is drawn. Nothing here is ESD-rated; DRC and LVS results are in
-signoff/ (LVS of the GPIO is a mismatch on the netlist's diode cards only).
+netlist W / L / m, wired, with guard rings round the output-driver banks; in
+vddio / vdd, the supply clamp devices (sky130_clamp.py). Nothing here is
+ESD-rated; DRC and LVS results are in signoff/ (LVS of the GPIO is a mismatch
+on the netlist's diode cards only).
 """
 import klayout.db as db
 
 import ringgeom as g
 import sky130_blocks as sb
+import sky130_clamp as clamp
 from sky130_devices import LAYERS  # noqa: F401  (LAYERS is part of this module's API)
 
 NAME = "sky130"
@@ -223,6 +225,11 @@ def build_edge(ctx, kind, w):
             _label(ctx, cell, layer + ".label", net, w / 2, (b0 + b1) / 2)
     else:
         _supply_pad(ctx, cell, w, {"vddio": "VDDIO", "vdd": "VDD", "vss": "VSS"}[kind])
+        if kind in ("vddio", "vdd"):
+            net = "VDDIO" if kind == "vddio" else "VDD"
+            b0, b1 = RAIL_BANDS[net]
+            clamp.build_clamp(clamp.Draw(ctx, cell), kind == "vdd",
+                              (ctx.rail_layer[net], (b0 + b1) / 2), width=w)
     return cell
 
 

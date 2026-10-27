@@ -20,6 +20,7 @@ LAYERS = {
     "met5": (72, 20), "nsdm": (93, 44), "psdm": (94, 20), "pad": (76, 20),
     "npc": (95, 20), "hvi": (75, 20), "rpm": (86, 20),
     "res.mark": (66, 13), "diode.mark": (81, 23),
+    "capm": (89, 44), "urpm": (79, 20), "polyres": (66, 13),
     "li1.label": (67, 5), "met1.label": (68, 5), "met2.label": (69, 5),
     "met3.label": (70, 5), "met4.label": (71, 5), "met5.label": (72, 5),
 }

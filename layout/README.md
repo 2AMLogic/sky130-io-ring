@@ -29,7 +29,7 @@ Written without timestamps, so output is byte-identical across runs.
 | Cell | Role |
 |---|---|
 | `sky130_ioring_gpio` | pad (`PAD`) and every device of the GPIO netlists, wired: 106 MOS fingers, 4 junction diodes, 1 poly resistor (see below) |
-| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`) |
+| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`); `_vddio` and `_vdd` also carry the supply clamp (below) |
 | `sky130_ioring_corner` | square corner, edge = cell depth, rails and strips turn 90 degrees with 45-degree chamfer/mitre, no pad |
 | `sky130_ioring_fill_{1,5,10,20}` | rails and guard strips only |
 | `sky130_ioring_ring` | closed ring: 4 corners + 4 identical sides (five pad cells, 37 um of filler) |
@@ -78,11 +78,28 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
   signal pins by labels on their tracks.
 - Bank widths and strap widths are layout choices, not sized for ESD current.
 
+## Supply clamp (`sky130_clamp.py`, in `vddio` and `vdd`)
+
+Drawn from `design/netlists/sky130_ioring_clamp_{io,core}.spice` at netlist
+W / L / m, one finger per `m`: the big NMOS (400 fingers W=5 L=0.5 thick-oxide in
+`vddio`; 800 fingers W=5 L=0.15 in `vdd`), the three-stage inverter chain, two
+xhigh-poly 43 um resistors in series (`R1`, `R2`; the joint is an unrouted poly
+head) and the 2 x (30 x 33 um) MIM capacitor as two `capm` plates. Poly, hvi
+(thick-oxide cell only), diffusion, li1 and met1 build the devices; vertical
+met2 straps at the left of the cell carry `VSS`, `VDDIO`/`VDD`, the three gate
+nets and the RC node, and tie into the cell's own rail band. The MIM sits over
+the devices (met3/met4) and clear of the pad stub. `klt extract` finds 444
+(`vddio`) / 844 (`vdd`) devices.
+
+Finger pitch, bus widths and strap widths are drawing choices; no
+current-density, electromigration or snapback check was made.
+
 ## What is not claimed
 
 - Nothing here is ESD-rated or qualified. The diodes and the resistor are the
-  netlist's, drawn at its area / perimeter; no clamp is drawn (the supply clamp
-  is a separate issue) and ESD sizing is decision 0004.
+  netlist's, drawn at its area / perimeter. The supply clamp is a
+  connectivity-correct drawing for extraction, LVS and the curated DRC deck, not
+  a sized ESD protection. ESD sizing is decision 0004.
 - DRC passes the curated `sky130` deck (`signoff/README.md`); that deck has
   no rule for thick-oxide drawing beyond `nwell.enclosed.hvi.1` (the report's
   `voltage_domain_warnings`), none for latch-up, tap spacing or guard-ring
@@ -93,7 +110,7 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
   ESD diode on the pad have no ring. Both are tracked in #53.
 - LVS of this cell is `mismatch` only because `klt lvs` cannot read the
   reference's four diode cards (2AMLogic/klayout-tools#4319); all 107 other
-  reference devices match. ERC has not been run. The comparison is flat
+  reference devices match. ERC on the ring reports violations (`signoff/README.md`). The comparison is flat
   (`signoff/README.md`).
 - Metal and via widths, current density and electromigration are not
   checked; parasitics are not extracted.
