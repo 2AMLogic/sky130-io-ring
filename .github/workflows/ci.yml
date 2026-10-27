@@ -72,6 +72,12 @@ jobs:
         run: |
           klt signoff --attest 9 --inventory signoff/attest/item9.json --check signoff/evidence/item9.json
 
+      - name: Committed DRC reports must still match the streams and deck (provenance re-hash; DRC not re-run)
+        run: |
+          for r in signoff/evidence/drc/*.json; do
+            klt drc --check "$r"
+          done
+
   append-only:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
