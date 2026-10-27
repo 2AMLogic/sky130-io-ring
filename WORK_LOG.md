@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-10-27
 
+- **PR #50**: feat(signoff): klt erc supply spec, ring ERC report and split-seam negative check
+- **Issue #36** (closed): T1 item 11 (power delivery): klt erc supply spec for VDDIO/VDD/VSS ring continuity
 - **PR #45**: feat(signoff): add klt lvs report generator and per-cell LVS evidence
 - **Issue #33** (closed): T1 item 4 (LVS clean): klt lvs match of each cell and the ring against the item-1 netlists
 - **Issue #47** (closed): x

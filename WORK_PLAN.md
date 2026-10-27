@@ -33,8 +33,8 @@ _None._
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#30**: T1 item 1 (design sources): xschem schematics and derived netlists for the GPIO, VDDIO/VDD/VSS pads, corner, fillers and the demonstration ring
-- **#35**: T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section
+- **#46**: Draw device-bearing GPIO sub-block layout so klt lvs matches sky130_ioring_gpio
+- **#48**: Draw supply clamp layout and get klt lvs past the MIM m=2 refusal for vddio, vdd and ring
 
 ## PRs Awaiting Review
 
@@ -46,7 +46,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#39**: feat(signoff): attest T1 item 10 repo hygiene, bump klt to 0.8.0
+- **#51**: feat(layout): draw supply clamp devices in vddio and vdd at netlist W/L/m
 
 ## Proposed
 
@@ -55,8 +55,8 @@ Issues carrying `loom:curated`.
 - **#2**: Draft and ratify the target spec *(curated)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
-- **#30**: T1 item 1 (design sources): xschem schematics and derived netlists for the GPIO, VDDIO/VDD/VSS pads, corner, fillers and the demonstration ring *(curated)*
-- **#35**: T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section *(curated)*
+- **#46**: Draw device-bearing GPIO sub-block layout so klt lvs matches sky130_ioring_gpio *(curated)*
+- **#48**: Draw supply clamp layout and get klt lvs past the MIM m=2 refusal for vddio, vdd and ring *(curated)*
 
 ## Proposed (Architect / Hermit)
 
