@@ -3,6 +3,13 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-27
+
+- **PR #38**: feat(signoff): attest T1 item 9 testbenches and check the attestation in CI
+- **PR #37**: feat(layout): generate closed sky130 I/O ring stream and cite it for T1 item 2
+- **Issue #34** (closed): T1 item 9 (testbenches shipped): testbench inventory over the PDK smoke and the cell benches, attested with klt signoff --attest 9
+- **Issue #31** (closed): T1 item 2 (layout): drawn GDS for every ring cell and the assembled ring, generated and abutment-clean by construction
+
 ### 2026-10-24
 
 - **PR #25**: docs: install ee-key and market-key reviewer trees; route spec review before ratification
