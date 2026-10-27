@@ -67,6 +67,36 @@ Maturity ladder: spec ratified → GPIO cell simulated across PVT → cells
 DRC/LVS-clean → ring assembled, DRC/LVS/ERC-clean → shuttle seat → measured
 silicon. **Current position: spec proposed, awaiting EE-key and market-key review, then operator ratification.**
 
+## Reproduce every result
+
+Every result in this repo is a command. From the repo root:
+
+```sh
+# The four CI checkers, the PDK resolver self-test (no PDK needed)
+python3 scripts/ci/test_checkers.py
+python3 -I scripts/ci/check_evidence_format.py .
+python3 -I spec/check_spec.py
+bash sim/lib/test_pdk_env.sh
+
+# Layout generator and stream reproducibility (needs: pip install "klayout==0.30.10")
+python3 layout/tests/test_ring.py
+python3 scripts/ci/check_layout_reproducible.py .
+
+# PDK smoke: models load and converge. Needs the pinned PDK (sim/pdk.json) and ngspice.
+bash sim/pdk-smoke/run.sh /tmp/pdk-smoke-out
+
+# Signoff verdict of record and the item-10 hygiene attestation, with the pinned grader
+uvx --from "klayout-tools==0.8.0" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
+uvx --from "klayout-tools==0.8.0" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+```
+
+How to regenerate the record and the attestation is in
+[`signoff/README.md`](signoff/README.md). CI (`.github/workflows/ci.yml`) runs
+the same commands.
+
+**What does not exist yet:** there is no ESD, DRC, LVS or ERC result and no
+PVT simulation of any cell. Nothing above claims one.
+
 ## Repo layout
 
 ```
