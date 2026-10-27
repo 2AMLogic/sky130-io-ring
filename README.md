@@ -85,6 +85,9 @@ python3 scripts/ci/check_layout_reproducible.py .
 # PDK smoke: models load and converge. Needs the pinned PDK (sim/pdk.json) and ngspice.
 bash sim/pdk-smoke/run.sh /tmp/pdk-smoke-out
 
+# Ring DRC report against the curated sky130 deck: stream and deck hashes still match (DRC is not re-run)
+uvx --from "klayout-tools==0.8.0" klt drc --check signoff/evidence/drc/ring.json
+
 # Signoff verdict of record and the item-10 hygiene attestation, with the pinned grader
 uvx --from "klayout-tools==0.8.0" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
 uvx --from "klayout-tools==0.8.0" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
@@ -94,8 +97,12 @@ How to regenerate the record and the attestation is in
 [`signoff/README.md`](signoff/README.md). CI (`.github/workflows/ci.yml`) runs
 the same commands.
 
-**What does not exist yet:** there is no ESD, DRC, LVS or ERC result and no
-PVT simulation of any cell. Nothing above claims one.
+**What exists, and what does not:** the only layout check is DRC of the ring
+against the curated `sky130` deck, which reports clean on placeholder drawing
+and does not cover every I/O rule (thick-oxide, latch-up and guard-ring rules
+among them); deck coverage is in [`signoff/README.md`](signoff/README.md).
+There is no LVS, ERC or ESD result and no PVT simulation of any cell. Nothing
+above claims one.
 
 ## Repo layout
 
