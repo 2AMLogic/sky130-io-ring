@@ -160,7 +160,8 @@ def _core_block(ctx):
     """Build (once per layout) the GPIO core: every sub-block of the gpio netlist, wired.
 
     The assemblies export only the nets they share with each other (and the
-    supplies / pad); a top-level pin used by one assembly is labelled inside it.
+    supplies / pad); every other net of one assembly (a top-level pin or an
+    internal node) is labelled on its track inside it.
     """
     if "core" in ctx.__dict__:
         return ctx.core
@@ -180,13 +181,16 @@ def _core_block(ctx):
         mine = {n for c in inside for n in c.nets}
         ctx.block_args[name] = {
             "inline": False, "assign": table,
-            "label_nets": [n for n in top.pins if n in mine and n not in shared]}
+            "label_nets": sorted(n for n in mine if n not in shared)}
         asm_calls.append(sb.nr.Call(tag.upper(), list(sub.pins), name))
     core_name = f"{PREFIX}gpio_core"
     ctx.subckts[core_name] = sb.nr.Subckt(core_name, [], [], asm_calls)
+    # nets that only cross between the two assemblies: named on their tracks so the
+    # ERC does not read their met3 drops as unlabelled conductor
+    crossing = sorted({n for c in asm_calls for n in c.nets if n not in top.pins})
     ctx.core = sb.build_block(
         ctx, core_name, inline=False, assign={"A": ("n", 0), "B": ("p", 0)}, x_left=CORE_X_LEFT,
-        spines=SPINES, land=("PAD", PAD_LAND_X))
+        spines=SPINES, land=("PAD", PAD_LAND_X), label_nets=crossing)
     return ctx.core
 
 

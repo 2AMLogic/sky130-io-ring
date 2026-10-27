@@ -79,11 +79,38 @@ uvx --from klayout-tools==0.8.0 klt erc --check signoff/evidence/erc/ring.json
 
 `--negative` needs the pip `klayout` module. Exit 4: the ring has findings, or the cut ring was not reported as split.
 
-Result on the current ring stream (with the GPIO devices, the guard rings, the supply clamps and the met2/met5 straps; re-run after merging the clamp drawing and its `devices[]` / `ntap_vdd` ERC spec entries, which did not change it): `erc_status` is **`violations`**, 57 findings. The connectivity half holds: one island each for `VDDIO`, `VDD` and `VSS`, no `erc.unconnected_net` / `erc.supply_short`. The findings are 56 `erc.missing_tie` on layer `ntap_vddio` ("well/tub tap is not connected to declared net 'VDDIO'": the n+ taps the guard rings draw are not reached from the `VDDIO` label through the declared stackup) and 1 `erc.unlabelled_conductor` on `VDD` (met3: 112 unlabelled islands, 1854.9 um^2, reachable from no label, so the strap geometry on met3 is not all connected to the `VDD` rail). Not diagnosed here: whether the taps are truly floating in the drawing or the spec's stackup/`ties[]` does not model the path the drawing uses. Neither is waived and the spec was not edited to make them pass. The cut copy (2 um slab through every stackup conductor at the south and north edges) still splits all three supplies into two islands each (`erc.unconnected_net` x3), on top of the same 57 findings. `--findings-only` skips antenna accumulation (the ring has no gates), so the envelope's `status` is `not_checked`; `erc_status` is the verdict. `layers_in_stream_without_declaration` is `65/20`, `66/13`, `69/5`, `75/20`, `76/20`, `81/23`, `86/20`, `93/44`, `94/20`, `95/20`; the spec declares none of them as conductors. The previous result on the placeholder rails (`clean`, no findings) no longer describes the ring; the generator exits 4 on this report.
+Result on the current ring stream: `erc_status` is **`clean`**, no findings; one island each for `VDDIO`, `VDD` and `VSS`. The cut copy (2 um slab through every stackup conductor at the south and north edges) still splits all three supplies into two islands each (`erc.unconnected_net` x3). `--findings-only` skips antenna accumulation (the ring has no gates), so the envelope's `status` is `not_checked`; `erc_status` is the verdict. It says nothing about final geometry, ESD or IR drop.
 
-What this shows: the supply nets are still each one island through the abutment seams, and a cut still splits them, so the seam check can fail. It also shows the tie check failing on the new guard-ring taps. It says nothing about final geometry, ESD or IR drop.
+How the 57 earlier findings (56 `erc.missing_tie` on `ntap_vddio`, 1 `erc.unlabelled_conductor` on `VDD` / met3, 112 islands) were resolved. Neither rule was relaxed and `unlabelled_allowed_islands` was not used.
 
-Item 11 stays `unmet`, now with reason `check_failed`: the manifest's ERC and `gpio` LVS hashes point at the current streams (they were stale), and the ERC part itself fails. It is a compound item (`klt signoff` needs an `erc` part and an `lvs` part), and the ring has no LVS report (2AMLogic/klayout-tools#4318), so item 4 cannot be `met` either. The manifest cites the ERC report plus the only LVS report that exists for a supply-carrying cell, `gpio` (`mismatch`). That `gpio` report is not the ring's LVS and is cited only so the grader treats item 11 as a compound item. Swap it for the ring report once #4318 is fixed and the compare matches, and fix or explain the tie findings. Related tool gap: 2AMLogic/klayout-tools#4193.
+- **`missing_tie` (spec gap, no drawing defect).** Seven of the GPIO's 16 n-wells have their body on `VDD`, not `VDDIO`, per the pfet body nodes in `design/netlists/`. `ntap_vddio` demanded every tap reach `VDDIO`. They are now listed in `erc-well-supply.json` and placed by `gen_erc_spec.py` into `ntap_vdd` `well_requires_boxes` / `ntap_vddio` `well_excludes_boxes`, so each must independently reach `VDD`, and does (the clamp wells of the `vdd` cell are generated the same way; the four boxes are unchanged). Selection by box is the caller's word: klt records such ties as checked by well assertion in a `met` item-11 citation (item 11 is not `met` yet), and `layout/tests/test_ring.py` checks every box is the bbox of a drawn n-well and that the count matches the placement.
+- **`unlabelled_conductor` (spec gap + missing labels).** The met2 pin labels (`A`, `OE`, `PU`, `PD`, `IE`, `Y`, on 69/5) were invisible because the spec declared no label layer for met2: `label_layer` added. The other 8 nets per GPIO (`PG`, `NG`, `PUN`, `PDP`, `PG_C`, `NG_C`, `PUN_C`, `PD_C`) are internal signal nets that no pin names; they are now labelled on their tracks by the layout generator (`layout/sky130_cells.py`). Resolved to 0 unlabelled islands; the labels name nets and move no geometry.
+
+Per-well disposition of the GPIO (`sky130_ioring_gpio`; the indices are the n-well polygons in stream order; `hvi` is whether the well is inside the thick-oxide implant; fingers are poly-over-diff gates in the well):
+
+| Well | `hvi` | Taps | Fingers | Holds | Supply | Verdict |
+|---|---|---|---|---|---|---|
+| 0 | no | strip | 0 | edge guard band | `VDDIO` | ties, none |
+| 1 | yes | 2 | 1 | pull-up PMOS | `VDDIO` | ties, none |
+| 2 | no | 2 | 14 | logic gates (inv, nand2, nand3, nor2) | `VDD` | spec gap |
+| 3, 4, 5, 14 | yes | 2 | 2 each | level-shifter cross-coupled PMOS pairs | `VDDIO` | ties, none |
+| 6, 7, 8, 15 | no | 1 | 1 each | level-shifter input inverter PMOS | `VDD` | spec gap |
+| 9 | no | 2 | 0 | pad and receiver-gate `pd2nw` diodes | `VDDIO` | ties, none |
+| 10 | yes | ring | 20 | driver PMOS (LU.1 ring) | `VDDIO` | ties, none |
+| 11 | yes | 1 | 1 | receiver `XMP4` (5 V PMOS, body `VDD`) | `VDD` | spec gap |
+| 12 | no | 2 | 3 | receiver nand2 + inverter PMOS | `VDD` | spec gap |
+| 13 | yes | 2 | 3 | receiver `XMP1`-`XMP3` (body `VDDIO`) | `VDDIO` | ties, none |
+
+The supply column comes from the netlist body node; "ties, none" wells were never flagged, which confirms their taps reach `VDDIO`. Device-to-well assignment is by finger count and position, not an LVS result (the `gpio` LVS is `mismatch`, below). No drawing defect was found: every flagged tap reaches `VDD` once the spec names the well.
+
+Regenerate the spec boxes after any placement or well change (needs the pip `klayout` module), then the report:
+
+```sh
+python3 signoff/gen_erc_spec.py          # --check exits 1 if signoff/erc-supply-spec.json is stale
+python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.8.0 klt" --negative
+```
+
+Item 11 stays `unmet`, now with reason `lvs_did_not_pass` (was `check_failed`): the ERC part passes, and the `gpio` LVS part is `mismatch`. It is a compound item (`klt signoff` needs an `erc` part and an `lvs` part), and the ring has no LVS report (2AMLogic/klayout-tools#4318), so item 4 cannot be `met` either. The manifest cites the ERC report plus the only LVS report that exists for a supply-carrying cell, `gpio`. That `gpio` report is not the ring's LVS and is cited only so the grader treats item 11 as a compound item. Swap it for the ring report once #4318 is fixed and the compare matches. Related tool gaps: 2AMLogic/klayout-tools#4193 (LVS), #4373 (well class selection for repeated cells needs per-placement boxes), #4374 (unlabelled-conductor cannot tell internal signal nets from stray fragments).
 
 ## Regenerate the item-9 envelope
 

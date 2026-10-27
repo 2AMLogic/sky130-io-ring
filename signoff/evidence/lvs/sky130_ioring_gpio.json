@@ -90,20 +90,20 @@
       ]
     }
   ],
-  "mismatch_count": 15,
-  "error_count": 11,
+  "mismatch_count": 14,
+  "error_count": 10,
   "category_counts": {
     "device.geometry_not_compared": 1,
     "device.placeholder_value": 1,
     "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 4,
+    "topology": 3,
     "topology.flattened": 1
   },
   "category_error_counts": {
     "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 3
+    "topology": 2
   },
   "counts": {
     "nets": {
@@ -117,9 +117,9 @@
       "matched": 107
     },
     "pins": {
-      "layout": 10,
+      "layout": 19,
       "reference": 10,
-      "matched": 10
+      "matched": 19
     }
   },
   "device_classes": [
@@ -142,7 +142,7 @@
     "engine": "klayout",
     "engine_version": "0.30.12",
     "netgen_binary": null,
-    "layout_sha256": "699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
+    "layout_sha256": "6c40b3164028c511d6d4b206fa329a7b109dc11a809ca154834fbc81862efc4a",
     "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
     "extracted_netlist": null
   },
@@ -156,7 +156,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
+      "content_hash": "sha256:6c40b3164028c511d6d4b206fa329a7b109dc11a809ca154834fbc81862efc4a",
       "role": "layout"
     },
     "klayout_version_mismatch": false
@@ -389,22 +389,6 @@
     },
     {
       "category": "topology",
-      "severity": "error",
-      "description": "nets were paired despite a name/identity conflict",
-      "side": "both",
-      "net": {
-        "layout": "\\$31",
-        "reference": "RXG"
-      },
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": null,
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
       "severity": "warning",
       "description": "device class has no counterpart on the other side, but no devices of this class were extracted either -- not a real topology mismatch: 'pnp'",
       "side": "layout",
@@ -560,32 +544,32 @@
       "pin": true
     },
     {
-      "layout": "\\$25",
+      "layout": "\\$26",
       "reference": "L1_INB",
       "pin": false
     },
     {
-      "layout": "\\$28",
+      "layout": "\\$25",
       "reference": "L1_OUTB",
       "pin": false
     },
     {
-      "layout": "\\$26",
+      "layout": "\\$28",
       "reference": "L2_INB",
       "pin": false
     },
     {
-      "layout": "\\$29",
+      "layout": "\\$27",
       "reference": "L2_OUTB",
       "pin": false
     },
     {
-      "layout": "\\$27",
+      "layout": "\\$30",
       "reference": "L3_INB",
       "pin": false
     },
     {
-      "layout": "\\$30",
+      "layout": "\\$29",
       "reference": "L3_OUTB",
       "pin": false
     },
@@ -600,14 +584,14 @@
       "pin": false
     },
     {
-      "layout": "\\$24",
+      "layout": "NG",
       "reference": "NG",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$17",
+      "layout": "NG_C",
       "reference": "NG_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "OE",
@@ -620,24 +604,24 @@
       "pin": true
     },
     {
-      "layout": "\\$12",
+      "layout": "PDP",
       "reference": "PDP",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$20",
+      "layout": "PD_C",
       "reference": "PD_C",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$33",
+      "layout": "PG",
       "reference": "PG",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$16",
+      "layout": "PG_C",
       "reference": "PG_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "PU",
@@ -645,14 +629,14 @@
       "pin": true
     },
     {
-      "layout": "\\$21",
+      "layout": "PUN",
       "reference": "PUN",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$18",
+      "layout": "PUN_C",
       "reference": "PUN_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "VDD",

@@ -73,23 +73,28 @@ class Good(unittest.TestCase):
             self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
                              [(g.U(30), g.U(33))] * 2, kind)
 
-    def test_erc_spec_lists_the_vdd_clamp_wells(self):
-        """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes."""
+    def test_erc_spec_lists_the_vdd_bodied_wells(self):
+        """erc-supply-spec.json names every VDD-bodied n-well (4 clamp wells, 7 per GPIO) as boxes.
+
+        Each box must be the bbox of a drawn n-well in the placed stream, the VDD tie requires
+        exactly them and the VDDIO tie excludes exactly them.
+        """
         import json
-        spec = json.loads((HERE.parents[1] / "signoff" / "erc-supply-spec.json").read_text())
-        tie = {t["name"]: t for t in spec["ties"]}["ntap_vdd"]
+        root = HERE.parents[1] / "signoff"
+        spec = json.loads((root / "erc-supply-spec.json").read_text())
+        supply = json.loads((root / "erc-well-supply.json").read_text())
+        ties = {t["name"]: t for t in spec["ties"]}
         p, layout, cells, top, *_ = build()
         nwell = layout.layer(*T.LAYERS["nwell"])
-        got = set()
-        for inst in top.each_inst():
-            if inst.cell_index != cells["vdd"].cell_index():
-                continue
-            for q in db.Region(inst.cell.begin_shapes_rec(nwell)).merged().each():
-                b = q.bbox().transformed(inst.trans)
-                if max(b.width(), b.height()) < g.U(20):     # the clamp well, not the 80 x 24 guard well
-                    got.add(tuple(round(v * layout.dbu, 3) for v in (b.left, b.bottom, b.right, b.top)))
-        self.assertEqual(len(got), 4)
-        self.assertEqual(got, {tuple(round(v, 3) for v in b) for b in tie["well_requires_boxes"]})
+        drawn = {tuple(round(v * layout.dbu, 3) for v in (q.bbox().left, q.bbox().bottom,
+                                                          q.bbox().right, q.bbox().top))
+                 for q in db.Region(top.begin_shapes_rec(nwell)).merged().each()}
+        want = {tuple(b) for b in ties["ntap_vdd"]["well_requires_boxes"]}
+        self.assertEqual(want, {tuple(b) for b in ties["ntap_vddio"]["well_excludes_boxes"]})
+        self.assertLessEqual(want, drawn)
+        placed = {c: sum(1 for i in top.each_inst() if i.cell.name == c) for c in supply["cells"]}
+        self.assertEqual(len(want), sum(n * len(supply["cells"][c]) for c, n in placed.items()))
+        self.assertEqual(placed["sky130_ioring_vdd"], 4)
 
     def test_reproducible_bytes(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:

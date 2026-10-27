@@ -75,7 +75,8 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
   the existing tie stack, VDDIO and VDD get a stack on their rail. `PAD` goes
   through a stack on the core's pad track and a met5 strap to the pad metal.
   Rails and pad are named by labels (`VSS`, `VDDIO`, `VDD`, `PAD`), the six
-  signal pins by labels on their tracks.
+  signal pins and the eight internal signal nets (`PG`, `NG`, `PUN`, `PDP` and their `_C` sources)
+  by labels on their tracks.
 - Bank widths and strap widths are layout choices, not sized for ESD current.
 
 ## Supply clamp (`sky130_clamp.py`, in `vddio` and `vdd`)
@@ -110,7 +111,7 @@ current-density, electromigration or snapback check was made.
   ESD diode on the pad have no ring. Both are tracked in #53.
 - LVS of this cell is `mismatch` only because `klt lvs` cannot read the
   reference's four diode cards (2AMLogic/klayout-tools#4319); all 107 other
-  reference devices match. ERC on the ring reports violations (`signoff/README.md`). The comparison is flat
+  reference devices match. ERC on the ring is clean (`signoff/README.md`). The comparison is flat
   (`signoff/README.md`).
 - Metal and via widths, current density and electromigration are not
   checked; parasitics are not extracted.
