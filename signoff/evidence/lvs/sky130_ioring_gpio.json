@@ -142,7 +142,7 @@
     "engine": "klayout",
     "engine_version": "0.30.12",
     "netgen_binary": null,
-    "layout_sha256": "699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
+    "layout_sha256": "a1b22cb17db5ab2a4ecc35c0696d11a44e8400779d12c6a4001c206352aa1473",
     "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
     "extracted_netlist": null
   },
@@ -156,7 +156,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:699e40c6eb8907029d03f5baf898b2586876daade7d89504be477d3b3d04194b",
+      "content_hash": "sha256:a1b22cb17db5ab2a4ecc35c0696d11a44e8400779d12c6a4001c206352aa1473",
       "role": "layout"
     },
     "klayout_version_mismatch": false
@@ -475,7 +475,7 @@
       "pin": false
     },
     {
-      "layout": "\\$22",
+      "layout": "\\$21",
       "reference": "1_5_P1",
       "pin": false
     },
@@ -500,12 +500,12 @@
       "pin": false
     },
     {
-      "layout": "\\$13",
+      "layout": "\\$9",
       "reference": "1_OEB",
       "pin": false
     },
     {
-      "layout": "\\$15",
+      "layout": "\\$13",
       "reference": "1_PDB",
       "pin": false
     },
@@ -515,7 +515,7 @@
       "pin": false
     },
     {
-      "layout": "\\$14",
+      "layout": "\\$11",
       "reference": "1_PUB",
       "pin": false
     },
@@ -560,32 +560,32 @@
       "pin": true
     },
     {
-      "layout": "\\$25",
+      "layout": "\\$26",
       "reference": "L1_INB",
       "pin": false
     },
     {
-      "layout": "\\$28",
+      "layout": "\\$25",
       "reference": "L1_OUTB",
       "pin": false
     },
     {
-      "layout": "\\$26",
+      "layout": "\\$28",
       "reference": "L2_INB",
       "pin": false
     },
     {
-      "layout": "\\$29",
+      "layout": "\\$27",
       "reference": "L2_OUTB",
       "pin": false
     },
     {
-      "layout": "\\$27",
+      "layout": "\\$30",
       "reference": "L3_INB",
       "pin": false
     },
     {
-      "layout": "\\$30",
+      "layout": "\\$29",
       "reference": "L3_OUTB",
       "pin": false
     },
@@ -605,7 +605,7 @@
       "pin": false
     },
     {
-      "layout": "\\$17",
+      "layout": "\\$16",
       "reference": "NG_C",
       "pin": false
     },
@@ -620,12 +620,12 @@
       "pin": true
     },
     {
-      "layout": "\\$12",
+      "layout": "\\$20",
       "reference": "PDP",
       "pin": false
     },
     {
-      "layout": "\\$20",
+      "layout": "\\$17",
       "reference": "PD_C",
       "pin": false
     },
@@ -635,7 +635,7 @@
       "pin": false
     },
     {
-      "layout": "\\$16",
+      "layout": "\\$15",
       "reference": "PG_C",
       "pin": false
     },
@@ -645,7 +645,7 @@
       "pin": true
     },
     {
-      "layout": "\\$21",
+      "layout": "\\$22",
       "reference": "PUN",
       "pin": false
     },
