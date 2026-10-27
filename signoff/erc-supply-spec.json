@@ -1,0 +1,132 @@
+{
+  "_comment": [
+    "klt erc supply spec for the assembled ring (T1 item 11). Layer numbers are the sky130A GDS map used by layout/sky130_cells.py.",
+    "Rails per spec CELL.5: VSS met5, VDDIO met4, VDD met3. Guard taps per CELL.8: p+ strip (VSS) and n-well/n+ strip (VDDIO).",
+    "poly is declared only because stackup[0] must be the gate role; the ring draws no poly."
+  ],
+  "stackup": [
+    {
+      "name": "poly",
+      "layer": "66/20",
+      "role": "gate"
+    },
+    {
+      "name": "li1",
+      "layer": "67/20"
+    },
+    {
+      "name": "met1",
+      "layer": "68/20"
+    },
+    {
+      "name": "met2",
+      "layer": "69/20"
+    },
+    {
+      "name": "met3",
+      "layer": "70/20",
+      "label_layer": "70/5"
+    },
+    {
+      "name": "met4",
+      "layer": "71/20",
+      "label_layer": "71/5"
+    },
+    {
+      "name": "met5",
+      "layer": "72/20",
+      "label_layer": "72/5"
+    }
+  ],
+  "vias": [
+    {
+      "name": "licon1",
+      "layer": "66/44",
+      "between": [
+        "poly",
+        "li1"
+      ]
+    },
+    {
+      "name": "mcon",
+      "layer": "67/44",
+      "between": [
+        "li1",
+        "met1"
+      ]
+    },
+    {
+      "name": "via",
+      "layer": "68/44",
+      "between": [
+        "met1",
+        "met2"
+      ]
+    },
+    {
+      "name": "via2",
+      "layer": "69/44",
+      "between": [
+        "met2",
+        "met3"
+      ]
+    },
+    {
+      "name": "via3",
+      "layer": "70/44",
+      "between": [
+        "met3",
+        "met4"
+      ]
+    },
+    {
+      "name": "via4",
+      "layer": "71/44",
+      "between": [
+        "met4",
+        "met5"
+      ]
+    }
+  ],
+  "nets": [
+    {
+      "name": "VDDIO",
+      "kind": "supply",
+      "roles": [
+        "met4"
+      ]
+    },
+    {
+      "name": "VDD",
+      "kind": "supply",
+      "roles": [
+        "met3"
+      ]
+    },
+    {
+      "name": "VSS",
+      "kind": "supply"
+    }
+  ],
+  "ties": [
+    {
+      "name": "ntap_vddio",
+      "well_layer": "64/20",
+      "tap_layer": "65/44",
+      "connect_to": "li1",
+      "net": "VDDIO",
+      "tap_is_dedicated": true
+    },
+    {
+      "name": "ptap_vss",
+      "well_layer": null,
+      "well_complement_of": [
+        "64/20"
+      ],
+      "tap_layer": "65/44",
+      "connect_to": "li1",
+      "net": "VSS",
+      "tap_is_dedicated": true
+    }
+  ]
+}
