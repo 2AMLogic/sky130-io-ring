@@ -5,7 +5,7 @@
     "poly is declared only because stackup[0] must be the gate role; the ring draws no poly.",
     "devices[]: the supply clamp's MIM cap draws a via3 array on capm (89/44) between its met3 bottom plate and met4 top plate. Without the marker the stackup reads that array as a met3-met4 via and shorts the cap's two plates, which shorts VDD, VDDIO and VSS. The carve-out removes the array under capm from via3; it is a connectivity declaration, not a claim about the cap.",
     "The xhigh poly resistor bodies (66/13) are not carved out: they stay conducting, which is not a short between declared supplies, and carving them leaves each bar's floating T1 poly node as an erc.floating_gate.",
-    "ties[]: the VDD-body n-wells are listed as boxes in ring coordinates (um): the four clamp n-wells in the vdd cells (core PFETs, body on VDD) and 7 wells in every GPIO core (1.8 V logic and the receiver's thick-oxide VDD pfet). ntap_vddio excludes them, ntap_vdd requires them. No layer separates the classes (the ESD diode wells carry no hvi), so the GPIO boxes come from the generator's record of each well's body net, not from the drawing: run python3 signoff/gen_erc_spec.py (--check for drift) when the GPIO cell or the ring placement moves. nets[VDD].unlabelled_allowed_boxes: the GPIO core footprints, where met3 carries signal routing between blocks; an island is allowed only if all of it lies inside one."
+    "ties[]: the VDD-body n-wells are listed as boxes in ring coordinates (um): the four clamp n-wells in the vdd cells (core PFETs, body on VDD) and 7 wells in every GPIO core (1.8 V logic and the receiver's thick-oxide VDD pfet). ntap_vddio excludes them, ntap_vdd requires them. No layer separates the classes (the ESD diode wells carry no hvi), so the GPIO boxes come from the generator's record of each well's body net, not from the drawing: run python3 signoff/gen_erc_spec.py (--check for drift) when the GPIO cell or the ring placement moves. The GPIO core's internal signal nets are labelled on their met2 tracks (stackup met2 label_layer 69/5), so VDD needs no unlabelled_allowed_boxes."
   ],
   "stackup": [
     {
@@ -23,7 +23,8 @@
     },
     {
       "name": "met2",
-      "layer": "69/20"
+      "layer": "69/20",
+      "label_layer": "69/5"
     },
     {
       "name": "met3",
@@ -104,56 +105,6 @@
       "kind": "supply",
       "roles": [
         "met3"
-      ],
-      "unlabelled_allowed_boxes": [
-        [
-          62.5,
-          232.55,
-          173.32,
-          310.5
-        ],
-        [
-          62.5,
-          552.55,
-          173.32,
-          630.5
-        ],
-        [
-          196.5,
-          62.5,
-          274.45,
-          173.32
-        ],
-        [
-          232.55,
-          653.68,
-          310.5,
-          764.5
-        ],
-        [
-          516.5,
-          62.5,
-          594.45,
-          173.32
-        ],
-        [
-          552.55,
-          653.68,
-          630.5,
-          764.5
-        ],
-        [
-          653.68,
-          196.5,
-          764.5,
-          274.45
-        ],
-        [
-          653.68,
-          516.5,
-          764.5,
-          594.45
-        ]
       ]
     },
     {

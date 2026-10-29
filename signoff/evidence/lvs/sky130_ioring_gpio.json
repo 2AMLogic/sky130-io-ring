@@ -90,20 +90,20 @@
       ]
     }
   ],
-  "mismatch_count": 15,
-  "error_count": 11,
+  "mismatch_count": 14,
+  "error_count": 10,
   "category_counts": {
     "device.geometry_not_compared": 1,
     "device.placeholder_value": 1,
     "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 4,
+    "topology": 3,
     "topology.flattened": 1
   },
   "category_error_counts": {
     "device.unmatched": 4,
     "reference.unresolved_subckt_call": 4,
-    "topology": 3
+    "topology": 2
   },
   "counts": {
     "nets": {
@@ -117,9 +117,9 @@
       "matched": 107
     },
     "pins": {
-      "layout": 10,
+      "layout": 19,
       "reference": 10,
-      "matched": 10
+      "matched": 19
     }
   },
   "device_classes": [
@@ -142,7 +142,7 @@
     "engine": "klayout",
     "engine_version": "0.30.12",
     "netgen_binary": null,
-    "layout_sha256": "a1b22cb17db5ab2a4ecc35c0696d11a44e8400779d12c6a4001c206352aa1473",
+    "layout_sha256": "1e2860e85193e6d71b8de7b73115587f193e98122762691261d4a155ad8855a5",
     "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
     "extracted_netlist": null
   },
@@ -156,7 +156,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:a1b22cb17db5ab2a4ecc35c0696d11a44e8400779d12c6a4001c206352aa1473",
+      "content_hash": "sha256:1e2860e85193e6d71b8de7b73115587f193e98122762691261d4a155ad8855a5",
       "role": "layout"
     },
     "klayout_version_mismatch": false
@@ -389,22 +389,6 @@
     },
     {
       "category": "topology",
-      "severity": "error",
-      "description": "nets were paired despite a name/identity conflict",
-      "side": "both",
-      "net": {
-        "layout": "\\$31",
-        "reference": "RXG"
-      },
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": null,
-      "instance": null,
-      "subcircuit": null
-    },
-    {
-      "category": "topology",
       "severity": "warning",
       "description": "device class has no counterpart on the other side, but no devices of this class were extracted either -- not a real topology mismatch: 'pnp'",
       "side": "layout",
@@ -600,14 +584,14 @@
       "pin": false
     },
     {
-      "layout": "\\$24",
+      "layout": "NG",
       "reference": "NG",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$16",
+      "layout": "NG_C",
       "reference": "NG_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "OE",
@@ -620,24 +604,24 @@
       "pin": true
     },
     {
-      "layout": "\\$20",
+      "layout": "PDP",
       "reference": "PDP",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$17",
+      "layout": "PD_C",
       "reference": "PD_C",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$33",
+      "layout": "PG",
       "reference": "PG",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$15",
+      "layout": "PG_C",
       "reference": "PG_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "PU",
@@ -645,14 +629,14 @@
       "pin": true
     },
     {
-      "layout": "\\$22",
+      "layout": "PUN",
       "reference": "PUN",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": "\\$18",
+      "layout": "PUN_C",
       "reference": "PUN_C",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "VDD",

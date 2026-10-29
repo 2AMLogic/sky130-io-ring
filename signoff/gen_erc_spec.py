@@ -15,10 +15,9 @@ tap that is not on the net its well was drawn for must still fail the tie.
 
 Rewritten: `ties[ntap_vddio].well_excludes_boxes` and
 `ties[ntap_vdd].well_requires_boxes` (VDD-body wells; the clamp-well boxes that
-are not inside a GPIO core are kept as they are), and
-`nets[VDD].unlabelled_allowed_boxes` (the GPIO core footprints, where the met3
-signal routing between blocks is expected and is not a rail). Needs the pip
-`klayout` module. Run it again whenever the GPIO cell or the ring placement moves.
+are not inside a GPIO core are kept as they are). The met3 signal routing inside
+a GPIO core needs no box: its nets are labelled on their tracks in the layout.
+Needs the pip `klayout` module. Run it again whenever the GPIO cell or the ring placement moves.
 """
 import argparse
 import json
@@ -90,8 +89,7 @@ def refreshed(spec, wells, cores):
         elif t["name"] == "ntap_vdd":
             t["well_requires_boxes"] = keep + wells
     for n in new["nets"]:
-        if n["name"] == "VDD":
-            n["unlabelled_allowed_boxes"] = cores
+        n.pop("unlabelled_allowed_boxes", None)
     return new
 
 
