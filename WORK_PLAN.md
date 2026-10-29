@@ -21,6 +21,7 @@ _None._
 `loom:important`; taken before unlabelled work.
 
 - **#2**: Draft and ratify the target spec
+- **#56**: ERC: 56 missing_tie + 1 unlabelled_conductor on the ring with GPIO devices (PR #54)
 
 ## Ready
 
@@ -33,8 +34,7 @@ _None._
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#30**: T1 item 1 (design sources): xschem schematics and derived netlists for the GPIO, VDDIO/VDD/VSS pads, corner, fillers and the demonstration ring
-- **#35**: T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section
+- **#56**: ERC: 56 missing_tie + 1 unlabelled_conductor on the ring with GPIO devices (PR #54)
 
 ## PRs Awaiting Review
 
@@ -46,7 +46,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#39**: feat(signoff): attest T1 item 10 repo hygiene, bump klt to 0.8.0
+_None._
 
 ## Proposed
 
@@ -55,8 +55,7 @@ Issues carrying `loom:curated`.
 - **#2**: Draft and ratify the target spec *(curated)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
-- **#30**: T1 item 1 (design sources): xschem schematics and derived netlists for the GPIO, VDDIO/VDD/VSS pads, corner, fillers and the demonstration ring *(curated)*
-- **#35**: T1 item 10 (repo hygiene): hygiene inventory attested with klt signoff --attest 10, README reproduction section *(curated)*
+- **#56**: ERC: 56 missing_tie + 1 unlabelled_conductor on the ring with GPIO devices (PR #54) *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -72,12 +71,12 @@ _None._
 |------|-------|
 | Operator merge-risk holds | 0 |
 | Very important | 0 |
-| Important | 1 |
+| Important | 2 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 3 |
+| In Progress (`loom:building`) | 2 |
 | PRs awaiting review | 0 |
-| Approved PRs awaiting merge | 1 |
-| Curated | 5 |
+| Approved PRs awaiting merge | 0 |
+| Curated | 4 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->

@@ -5,6 +5,17 @@ triage role. Newest first.
 
 ### 2026-10-27
 
+- **PR #62**: docs(layout): drop stale TAP_SPAN literal from README
+- **Issue #60** (closed): layout/README.md states TAP_SPAN as 14 um; sky130_blocks.py sets 18.0 um
+- **PR #59**: feat(layout): ring every pad-connected GPIO bank and tap long groups for LU.2
+- **Issue #53** (closed): GPIO: tap distance (LU.2) fails and only the driver banks have guard rings (LU.4)
+- **PR #54**: feat: draw wired GPIO devices from the netlists, re-record DRC and LVS evidence
+- **Issue #46** (closed): Draw device-bearing GPIO sub-block layout so klt lvs matches sky130_ioring_gpio
+- **Issue #52** (closed): Clamp drawing shorts VDDIO, VDD and VSS in the ring (erc.supply_short)
+- **PR #51**: feat(layout): draw supply clamp devices in vddio and vdd at netlist W/L/m
+- **Issue #48** (closed): Draw supply clamp layout and get klt lvs past the MIM m=2 refusal for vddio, vdd and ring
+- **PR #50**: feat(signoff): klt erc supply spec, ring ERC report and split-seam negative check
+- **Issue #36** (closed): T1 item 11 (power delivery): klt erc supply spec for VDDIO/VDD/VSS ring continuity
 - **PR #45**: feat(signoff): add klt lvs report generator and per-cell LVS evidence
 - **Issue #33** (closed): T1 item 4 (LVS clean): klt lvs match of each cell and the ring against the item-1 netlists
 - **Issue #47** (closed): x

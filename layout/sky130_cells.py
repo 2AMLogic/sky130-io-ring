@@ -13,7 +13,7 @@ that library is a comparison point only.
 
 Honest scope of the cells: rails, continuous guard strips and a bond-pad stack
 on every pad cell; in the GPIO, every device of the GPIO netlists at its
-netlist W / L / m, wired, with guard rings round the output-driver banks; in
+netlist W / L / m, wired, with guard rings round the pad-connected banks (driver, pulls, ESD); in
 vddio / vdd, the supply clamp devices (sky130_clamp.py). Nothing here is
 ESD-rated; DRC and LVS results are in signoff/ (LVS of the GPIO is a mismatch
 on the netlist's diode cards only).
@@ -148,7 +148,7 @@ def _supply_pad(ctx, cell, w, net):
 CORE_Y0 = 63.0                 # core block bottom, distance from the die edge
 CORE_X_LEFT = 12.7             # rows start here; to the left: supply spines + pad landing
 SPINES = {"VSS": 10.0, "VDDIO": 6.0, "VDD": 2.0}
-PAD_LAND_X = 6.0
+PAD_LAND_X = 5.0
 PAD_JOIN_Y = 140.0             # where the met5 strap from the landing meets the pad metal
 # Placement of the gpio netlist's sub-blocks (instance names without the X): two
 # assemblies of two rows each.
@@ -212,6 +212,15 @@ def _gpio_devices(ctx, cell, w):
     y0, y1 = sorted((ly, PAD_JOIN_Y))
     ctx.add(cell, "met5", g.box(lx - 1.0, y0 - 1.0, lx + 1.0, y1 + 1.0))
     ctx.add(cell, "met5", g.box(lx - 1.0, PAD_JOIN_Y - 1.0, w / 2 - ctx.p["pad_open"] / 2, PAD_JOIN_Y + 1.0))
+
+
+def _guard_rings():
+    """Closed guard annuli per cell kind: one per guarded row of each block the netlist calls."""
+    subckts = sb.load_subckts()
+    return {"gpio": sb.guard_ring_count(subckts, PREFIX + "gpio")}
+
+
+GUARD_RINGS = _guard_rings()
 
 
 def build_edge(ctx, kind, w):

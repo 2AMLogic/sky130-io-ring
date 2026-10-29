@@ -50,6 +50,28 @@ class Spec(unittest.TestCase):
 
 
 class Good(unittest.TestCase):
+    def test_pad_connected_banks_are_ringed(self):
+        """LU.4: driver, pull pair and ESD diodes each sit in an n and a p annulus; the count is the tech's."""
+        for sub in ("gpio_drv", "gpio_pulls", "gpio_esd"):
+            self.assertEqual(sb.GUARDED["sky130_ioring_" + sub], {"n": "VSS", "p": "VDDIO"}, sub)
+        self.assertEqual(T.GUARD_RINGS["gpio"], 6)
+        p, layout, cells, *_ = build()
+        tap = db.Region(cells["gpio"].begin_shapes_rec(layout.layer(*T.LAYERS["tap"]))).merged()
+        self.assertEqual(len([r for r in tap.each() if r.holes() == 1]), T.GUARD_RINGS["gpio"])
+
+    def test_unringed_groups_have_a_tap_within_span(self):
+        """LU.2: consecutive taps of an unringed group are at most TAP_SPAN of unit width apart."""
+        units = [sb.dev.mos("n", False, 1.5, 0.15, 1, ("a", "b", "c", "VSS")) for _ in range(14)]
+        (grp,) = sb._make_groups("n", units, None)
+        span, taps = 0.0, 0
+        for u in grp.units:
+            if u.kind.startswith("tap"):
+                taps, span = taps + 1, 0.0
+            else:
+                span += u.w + sb.GAP_UNIT
+                self.assertLessEqual(span - sb.GAP_UNIT, sb.TAP_SPAN)
+        self.assertGreaterEqual(taps, 3)
+
     def test_clean_build_has_no_findings(self):
         self.assertEqual(check(*build()), [])
 
@@ -73,28 +95,34 @@ class Good(unittest.TestCase):
             self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
                              [(g.U(30), g.U(33))] * 2, kind)
 
-    def test_erc_spec_lists_the_vdd_bodied_wells(self):
-        """erc-supply-spec.json names every VDD-bodied n-well (4 clamp wells, 7 per GPIO) as boxes.
-
-        Each box must be the bbox of a drawn n-well in the placed stream, the VDD tie requires
-        exactly them and the VDDIO tie excludes exactly them.
-        """
+    def test_erc_spec_lists_the_vdd_clamp_wells(self):
+        """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes (among others)."""
         import json
-        root = HERE.parents[1] / "signoff"
-        spec = json.loads((root / "erc-supply-spec.json").read_text())
-        supply = json.loads((root / "erc-well-supply.json").read_text())
-        ties = {t["name"]: t for t in spec["ties"]}
+        spec = json.loads((HERE.parents[1] / "signoff" / "erc-supply-spec.json").read_text())
+        tie = {t["name"]: t for t in spec["ties"]}["ntap_vdd"]
         p, layout, cells, top, *_ = build()
         nwell = layout.layer(*T.LAYERS["nwell"])
-        drawn = {tuple(round(v * layout.dbu, 3) for v in (q.bbox().left, q.bbox().bottom,
-                                                          q.bbox().right, q.bbox().top))
-                 for q in db.Region(top.begin_shapes_rec(nwell)).merged().each()}
-        want = {tuple(b) for b in ties["ntap_vdd"]["well_requires_boxes"]}
-        self.assertEqual(want, {tuple(b) for b in ties["ntap_vddio"]["well_excludes_boxes"]})
-        self.assertLessEqual(want, drawn)
-        placed = {c: sum(1 for i in top.each_inst() if i.cell.name == c) for c in supply["cells"]}
-        self.assertEqual(len(want), sum(n * len(supply["cells"][c]) for c, n in placed.items()))
-        self.assertEqual(placed["sky130_ioring_vdd"], 4)
+        got = set()
+        for inst in top.each_inst():
+            if inst.cell_index != cells["vdd"].cell_index():
+                continue
+            for q in db.Region(inst.cell.begin_shapes_rec(nwell)).merged().each():
+                b = q.bbox().transformed(inst.trans)
+                if max(b.width(), b.height()) < g.U(20):     # the clamp well, not the 80 x 24 guard well
+                    got.add(tuple(round(v * layout.dbu, 3) for v in (b.left, b.bottom, b.right, b.top)))
+        self.assertEqual(len(got), 4)
+        self.assertLessEqual(got, {tuple(round(v, 3) for v in b) for b in tie["well_requires_boxes"]})
+
+    def test_erc_spec_matches_the_generator_record(self):
+        """The spec's VDD-well / GPIO-core boxes are what signoff/gen_erc_spec.py derives now."""
+        import json
+        sys.path.insert(0, str(HERE.parents[1] / "signoff"))
+        import gen_erc_spec
+        path = HERE.parents[1] / "signoff" / "erc-supply-spec.json"
+        spec = json.loads(path.read_text())
+        wells, cores = gen_erc_spec.ring_boxes()
+        self.assertEqual(len(wells), 7 * len(cores))
+        self.assertEqual(gen_erc_spec.refreshed(spec, wells, cores), spec)
 
     def test_reproducible_bytes(self):
         with tempfile.TemporaryDirectory() as a, tempfile.TemporaryDirectory() as b:
@@ -154,6 +182,20 @@ class Defects(unittest.TestCase):
             r = db.Region(drv.shapes(li)) - db.Region(cut)
             drv.shapes(li).clear()
             drv.shapes(li).insert(r)
+        self.assert_flags(open_ring, "LU.1")
+
+    def test_open_pad_side_guard_ring(self):
+        """A ring cut open in the ESD block (not only the driver) is named by LU.1."""
+        def open_ring(p, layout, cells, *_):
+            esd = layout.cell("sky130_ioring_gpio_esd")
+            li = layout.layer(*T.LAYERS["tap"])
+            ring = [r for r in db.Region(esd.shapes(li)).merged().each() if r.holes() == 1][0]
+            b = ring.bbox()
+            cut = g.box(b.left * g.DBU - 1, (b.bottom + b.top) / 2 * g.DBU - 0.3,
+                        b.left * g.DBU + 1, (b.bottom + b.top) / 2 * g.DBU + 0.3)
+            r = db.Region(esd.shapes(li)) - db.Region(cut)
+            esd.shapes(li).clear()
+            esd.shapes(li).insert(r)
         self.assert_flags(open_ring, "LU.1")
 
     def test_cell_too_deep(self):

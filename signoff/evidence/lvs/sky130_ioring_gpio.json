@@ -142,7 +142,7 @@
     "engine": "klayout",
     "engine_version": "0.30.12",
     "netgen_binary": null,
-    "layout_sha256": "6c40b3164028c511d6d4b206fa329a7b109dc11a809ca154834fbc81862efc4a",
+    "layout_sha256": "1e2860e85193e6d71b8de7b73115587f193e98122762691261d4a155ad8855a5",
     "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
     "extracted_netlist": null
   },
@@ -156,7 +156,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:6c40b3164028c511d6d4b206fa329a7b109dc11a809ca154834fbc81862efc4a",
+      "content_hash": "sha256:1e2860e85193e6d71b8de7b73115587f193e98122762691261d4a155ad8855a5",
       "role": "layout"
     },
     "klayout_version_mismatch": false
@@ -459,7 +459,7 @@
       "pin": false
     },
     {
-      "layout": "\\$22",
+      "layout": "\\$21",
       "reference": "1_5_P1",
       "pin": false
     },
@@ -484,12 +484,12 @@
       "pin": false
     },
     {
-      "layout": "\\$13",
+      "layout": "\\$9",
       "reference": "1_OEB",
       "pin": false
     },
     {
-      "layout": "\\$15",
+      "layout": "\\$13",
       "reference": "1_PDB",
       "pin": false
     },
@@ -499,7 +499,7 @@
       "pin": false
     },
     {
-      "layout": "\\$14",
+      "layout": "\\$11",
       "reference": "1_PUB",
       "pin": false
     },

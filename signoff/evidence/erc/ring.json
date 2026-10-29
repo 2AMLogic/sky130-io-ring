@@ -120,11 +120,11 @@
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:8478351131b72d657a9552470736d513a219907e0c05d1cae8604ab81e8b746f",
+      "content_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c",
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:f17775aa8274abb8abe5acef3e35ceee387df67c2ac8d46daa0a7ac46493bc6d"
+      "content_hash": "sha256:18a9ba526439abead9a7411fc390d41c95a3be8037e26e231eb227a626359663"
     },
     "devices": [
       {
