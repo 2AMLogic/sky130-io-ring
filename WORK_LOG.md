@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-29
+
+- **PR #57**: fix(signoff): model VDD-bodied GPIO wells and label internal nets for clean ring ERC
+- **Issue #56** (closed): ERC: 56 missing_tie + 1 unlabelled_conductor on the ring with GPIO devices (PR #54)
+
 ### 2026-10-27
 
 - **PR #62**: docs(layout): drop stale TAP_SPAN literal from README
