@@ -6,49 +6,13 @@
   },
   "deck": "sky130",
   "dbu_um": 0.001,
-  "status": "violations",
-  "violation_count": 1,
-  "rule_counts": {
-    "met5.width.1": 1
-  },
+  "status": "clean",
+  "violation_count": 0,
+  "rule_counts": {},
   "metrics": {
-    "drc__error__count": 1
+    "drc__error__count": 0
   },
-  "violations": [
-    {
-      "rule": "met5.width.1",
-      "description": "minimum met5 width",
-      "check": "width",
-      "layer": "met5.drawing",
-      "cell": "sky130_ioring_fill_1",
-      "source_cell": null,
-      "source_path": null,
-      "bbox": {
-        "left": 0,
-        "bottom": 10000,
-        "right": 1000,
-        "top": 22000
-      },
-      "polygon": [
-        [
-          0,
-          10000
-        ],
-        [
-          0,
-          22000
-        ],
-        [
-          1000,
-          22000
-        ],
-        [
-          1000,
-          10000
-        ]
-      ]
-    }
-  ],
+  "violations": [],
   "coverage": {
     "deck_layers": [
       "18/20",
@@ -147,6 +111,7 @@
       "tap.angle.1",
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
+      "tap.space.1",
       "tap.width.1"
     ],
     "rules_skipped": [
@@ -162,6 +127,7 @@
       "diff.angle.1",
       "diff.enclosing.licon.1",
       "diff.ongrid.1",
+      "diff.space.1",
       "diff.width.1",
       "dnwell.angle.1",
       "dnwell.ongrid.1",
@@ -223,6 +189,7 @@
       "poly.enclosing.licon.1",
       "poly.endcap.diff.1",
       "poly.ongrid.1",
+      "poly.space.1",
       "poly.width.1",
       "pwbm.angle.1",
       "pwbm.ongrid.1",
@@ -288,10 +255,20 @@
       "x"
     ],
     "unmodeled_rules": [
+      "MR_licon.SP.1",
+      "cap2m.11",
+      "cap2m.2b",
+      "cap2m.2b_a",
+      "cap2m.5",
+      "capm.11",
+      "capm.2b",
+      "capm.2b_a",
+      "capm.5",
       "difftap.10",
       "difftap.11",
       "difftap.8",
       "difftap.9",
+      "dnwell.2",
       "hvi.1",
       "hvi.2a",
       "hvntm.1",
@@ -301,6 +278,10 @@
       "hvtr.1",
       "hvtr.2",
       "hvtr.2_a",
+      "ldntm.2",
+      "li.7",
+      "licon.13",
+      "lvtn.2",
       "m1.3ab",
       "m1.5",
       "m2.3ab",
@@ -314,10 +295,17 @@
       "n/psdm.6",
       "n/psdm.7",
       "n/psdm.8",
+      "ncm.2a",
       "npc.4",
+      "nsm.1",
       "pad.2",
+      "poly.3",
       "rdl.1",
       "rdl.2",
+      "rpm.2",
+      "thkox.2",
+      "tunm.2",
+      "urpm.2",
       "via.5a",
       "via2.5",
       "via3.5"
@@ -366,6 +354,7 @@
       "tap.angle.1",
       "tap.enclosing.licon.1",
       "tap.ongrid.1",
+      "tap.space.1",
       "tap.width.1"
     ],
     "skipped": [],
@@ -416,6 +405,10 @@
       },
       {
         "id": "diff.ongrid.1",
+        "reason": "no_applicable_geometry"
+      },
+      {
+        "id": "diff.space.1",
         "reason": "no_applicable_geometry"
       },
       {
@@ -663,6 +656,10 @@
         "reason": "no_applicable_geometry"
       },
       {
+        "id": "poly.space.1",
+        "reason": "no_applicable_geometry"
+      },
+      {
         "id": "poly.width.1",
         "reason": "no_applicable_geometry"
       },
@@ -807,14 +804,20 @@
     "nothing_checked": false,
     "nothing_checked_reasons": []
   },
+  "tile": {
+    "columns": 3,
+    "rows": 1
+  },
   "provenance": {
-    "klt_version": "0.8.0",
+    "klt_version": "0.8.1.dev396+g79cf5959db9f",
+    "klt_git_commit": "79cf5959db9f1365eaf19ac4f25d6d9df5683323",
+    "klt_reinstall_spec": "klayout-tools @ git+https://github.com/2AMLogic/klayout-tools@79cf5959db9f1365eaf19ac4f25d6d9df5683323",
     "klayout_version": "0.30.12",
     "pdk": null,
     "deck": {
       "name": "sky130",
-      "content_hash": "sha256:ba0f97887e3d231aec8b54f1f52f2941ded0228f0234b6759712bcaca0e942e6",
-      "released": true
+      "content_hash": "sha256:072b456a6c867ff7244bfc287908a960c265628b3c26a64db5506c4bb124d267",
+      "released": false
     },
     "input": {
       "content_hash": "sha256:7afe99e5c687372fce5d196867e53a56f322703d4080eb0e4a309506f2fadf6c",

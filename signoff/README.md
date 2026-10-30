@@ -38,7 +38,14 @@ No PDK or standalone klayout is needed (curated deck). Exit 4 means a report is 
 
 What item 3 claims: the closed ring stream is clean against the curated `sky130` deck's modeled rules (`deck_scope` in the report), on drawing that includes the GPIO's transistors, diodes and resistor and the supply clamps in `vddio` / `vdd` (`layout/README.md`), with the spec still proposed (the CELL rows are re-checked on ratification). `coverage.layers_in_stream_without_rules` is `66/13`, `69/5`, `70/5`, `71/5`, `72/5`, `81/23` (the resistor marker, the diode marker and the label purposes); `coverage.rules_skipped` is 36 rule ids, all `no_applicable_geometry` (the clamp's poly, hvi, npc, capm and implant shapes now exercise the rest); `deck_scope` is 23 layers/groups (m1-m5, via-via4, nwell, difftap, poly, licon, li, npc, nsdm, psdm, capm, cap2m, rpm, urpm, ct, x); deck hash `sha256:ba0f9788...942e6`. It does **not** claim thick-oxide, latch-up, guard-ring-construction or ESD compliance: the deck does not check them (`spec/klt-rule-coverage.md`, "Reconciliation"; the report's `voltage_domain_warnings` says no rule but `nwell.enclosed.hvi.1` reads `hvi`, so the 5 V devices are held only to the general-case thresholds). `sky130_ioring_gpio.json` is `clean` too.
 
-Known per-cell finding, not waived: `sky130_ioring_fill_1.json` is `violations` (one `met5.width.1`): checked alone, the 1 µm filler's met5 rail segment is 1 µm wide in the short direction. The placed ring is clean. The generator cannot widen it without overlapping neighbours (CELL.8); tool gap filed as 2AMLogic/klayout-tools#4226; left for spec review rather than relaxed here.
+`sky130_ioring_fill_1.json` is judged in abutment context: `--tile 3x1`, the 1 µm filler as the centre of three copies along the rail (`status: clean`; `1x3` stacked across the rail is not an abutment and does flag `met5.width.1`). Checked alone without `--tile` it reported one `met5.width.1` (the 12 µm-wide rail is 1 µm long); that was the tool gap 2AMLogic/klayout-tools#4226, fixed by klayout-tools#4253, and the operator ruled (2026-10-30, #32) to close the criterion on the tiled report, with no waiver and no spec change. `--tile` is on klayout-tools `main` after 0.8.0 and in no tagged release yet, so this one report is produced and CI-checked with klt commit `79cf5959db9f1365eaf19ac4f25d6d9df5683323` (`KLT_TILE_COMMIT` in `ci.yml`; its deck hash is `sha256:072b456a...4d267`, `released: false`, so differs from the other nine). Regenerate it with:
+
+```sh
+python3 signoff/gen_drc_reports.py --streams fill_1 --tile fill_1=3x1 \
+  --klt "uvx --from git+https://github.com/2AMLogic/klayout-tools@79cf5959db9f1365eaf19ac4f25d6d9df5683323 klt"
+```
+
+When a tagged release carries `--tile`, bump `KLT_VERSION`, regenerate all ten reports and the record, and drop `KLT_TILE_COMMIT`.
 
 ## Regenerate the LVS reports (item 4)
 
@@ -112,7 +119,7 @@ The pin moved 0.7.0 -> 0.8.0 because `--attest` first ships in 0.8.0; the record
 - `scripts/ci/test_checkers.py`: the checkers reject seeded defects (run first).
 - `scripts/ci/check_evidence_format.py`: `design/ layout/ sim/ measurements/ spec/` each have a README; every sim record (`sim/<experiment>/record{,s}/*.json`) has `kind`, `pdk_revision` (40-hex), `pdk_variant`, `runs`, and only repo-relative paths (keys such as `log`, `netlist`, `path`, `file`). Passes trivially with no records.
 - `klt signoff --attest 1 --check` on the item-1 envelope (`--attest` needs klt >= 0.8.0, hence the pin): re-hashes every source and netlist in `design/attest-inventory.json`. The re-netlist freshness commands are `local_only`, so CI does not re-run xschem; they run locally via `design/regen.sh --check`.
-- `klt drc --check` on every `evidence/drc/*.json`: the input stream and deck still hash as recorded (cheap mode; the DRC is not re-run, so a stale report after a stream edit fails).
+- `klt drc --check` on every `evidence/drc/*.json` (the `fill_1` tile report with the pinned `KLT_TILE_COMMIT` build instead): the input stream and deck still hash as recorded (cheap mode; the DRC is not re-run, so a stale report after a stream edit fails).
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.
 - `layout/tests/test_ring.py` and `scripts/ci/check_layout_reproducible.py` (installs the pip `klayout` module, no PDK): the generator's spec/seam checks reject seeded defects, and a fresh regeneration of `layout/gds/` is byte-identical to what is committed and to the attestation's hashes.
 - Item-10 attestation: `klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json` must match (the hygiene files are unchanged since attested and the inventory's commands exit 0).

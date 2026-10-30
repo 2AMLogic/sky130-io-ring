@@ -12,6 +12,10 @@ env:
   # The one place the signoff grader is pinned. A bump must regenerate
   # signoff/signoff-record.json in the same PR (signoff/README.md).
   KLT_VERSION: "0.8.0"
+  # `klt drc --tile` (abutment context, klayout-tools#4226/#4253) is on main
+  # after 0.8.0 and in no tagged release yet. Only the fill_1 DRC report uses
+  # it; retire this pin when a tagged release carries --tile.
+  KLT_TILE_COMMIT: "79cf5959db9f1365eaf19ac4f25d6d9df5683323"
 
 jobs:
   signoff:
@@ -75,8 +79,14 @@ jobs:
       - name: Committed DRC reports must still match the streams and deck (provenance re-hash; DRC not re-run)
         run: |
           for r in signoff/evidence/drc/*.json; do
+            case "$r" in
+              */sky130_ioring_fill_1.json) continue ;;  # --tile report, checked below
+            esac
             klt drc --check "$r"
           done
+          # fill_1 is judged in abutment context, so it needs the klt build that has --tile.
+          pipx run --spec "git+https://github.com/2AMLogic/klayout-tools@${KLT_TILE_COMMIT}" \
+            klt drc --check signoff/evidence/drc/sky130_ioring_fill_1.json
 
       - name: T1 item 10 hygiene attestation must reproduce (README, LICENSE, CI commands)
         run: |
