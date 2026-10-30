@@ -9,6 +9,10 @@ manifest cites for T1 item 3); the others as <cell>.json.
 
     python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.8.0 klt"
 
+A tileable cell (a filler cut at its pitch) is judged in abutment context with
+`--tile COLSxROWS` (`--tile fill_1=3x1`, repeatable): the cell is checked as the
+centre of an array of itself and only the centre instance's markers are reported.
+
 Exit 0 only if every report was written; a non-clean report is still written
 (it is the evidence) but makes the script exit 4. Nothing is waived.
 """
@@ -30,15 +34,19 @@ def main():
     ap.add_argument("--out-dir", default="signoff/evidence/drc")
     ap.add_argument("--prefix", default="sky130_ioring_", help="cell/stream name prefix")
     ap.add_argument("--streams", nargs="*", default=STREAMS)
+    ap.add_argument("--tile", action="append", default=[], metavar="STREAM=COLSxROWS",
+                    help="abutment context for one stream, e.g. fill_1=3x1 (klt drc --tile)")
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
+    tiles = dict(t.split("=", 1) for t in a.tile)
     bad = 0
     for s in a.streams:
         cell = a.prefix + s
         gds = f"{a.gds_dir}/{cell}.gds"
         out = f"{a.out_dir}/{'ring' if s == 'ring' else cell}.json"
-        p = subprocess.run(shlex.split(a.klt) + ["drc", "--deck", a.deck, "--top", cell,
-                                                 "--format", "json", gds],
+        extra = ["--tile", tiles[s]] if s in tiles else []
+        p = subprocess.run(shlex.split(a.klt) + ["drc", "--deck", a.deck, "--top", cell]
+                           + extra + ["--format", "json", gds],
                            capture_output=True, text=True)
         if p.returncode not in (0, 2) and not p.stdout.strip():
             sys.exit(f"klt drc failed on {gds} (rc={p.returncode}): {p.stderr.strip()}")

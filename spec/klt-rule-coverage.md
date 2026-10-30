@@ -112,10 +112,11 @@ Against the classes above:
 | ESD | **Still not checked.** |
 | Metal width / spacing on met3-met5 | Checked (`m3`, `m4`, `m5` in `deck_scope`). |
 
-The per-cell reports are standalone checks of each stream. `sky130_ioring_fill_1`
-reports one `met5.width.1` violation: the 1 µm filler's 12 µm-wide rail segment
-is 1 µm long, below the deck's met5 minimum width when the cell is checked on
-its own. Placed in the ring it merges with its neighbours and the ring report is
-clean. This is a stand-alone-versus-placed gap, not a waiver; see
+The per-cell reports are standalone checks of each stream, except
+`sky130_ioring_fill_1`, which is checked with `klt drc --tile 3x1` (abutment
+context, klayout-tools#4253). Checked alone it reported one `met5.width.1`
+(the 12 µm-wide rail is 1 µm long); judged among identical neighbours, as it is
+placed, it is clean. Placed in the ring it was already clean. No waiver and no
+spec change; the tiled report comes from a klt build on `main` after 0.8.0, see
 `signoff/README.md`.
 
