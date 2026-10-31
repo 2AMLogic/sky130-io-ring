@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-10-30
+
+- **PR #66**: feat: check fill_1 DRC in abutment context with klt --tile
+- **Issue #32** (closed): T1 item 3 (DRC clean): klt drc clean on every cell and the assembled ring, coverage quoted against spec/klt-rule-coverage.md
+
 ### 2026-10-29
 
 - **PR #57**: fix(signoff): model VDD-bodied GPIO wells and label internal nets for clean ring ERC
