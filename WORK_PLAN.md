@@ -33,6 +33,7 @@ _None._
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
+- **#44**: Draw device-bearing GPIO and clamp layout so klt lvs can match the cells and the ring
 
 ## PRs Awaiting Review
 
@@ -53,6 +54,7 @@ Issues carrying `loom:curated`.
 - **#2**: Draft and ratify the target spec *(curated)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
+- **#44**: Draw device-bearing GPIO and clamp layout so klt lvs can match the cells and the ring *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -70,10 +72,10 @@ _None._
 | Very important | 0 |
 | Important | 1 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 1 |
+| In Progress (`loom:building`) | 2 |
 | PRs awaiting review | 0 |
 | Approved PRs awaiting merge | 0 |
-| Curated | 3 |
+| Curated | 4 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->
