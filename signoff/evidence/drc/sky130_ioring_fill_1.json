@@ -809,15 +809,15 @@
     "rows": 1
   },
   "provenance": {
-    "klt_version": "0.8.1.dev396+g79cf5959db9f",
-    "klt_git_commit": "79cf5959db9f1365eaf19ac4f25d6d9df5683323",
-    "klt_reinstall_spec": "klayout-tools @ git+https://github.com/2AMLogic/klayout-tools@79cf5959db9f1365eaf19ac4f25d6d9df5683323",
+    "klt_version": "0.9.0",
+    "klt_git_commit": "5dbbad05ff42265c92a6f3d2f20d1bbcd2957d49",
+    "klt_reinstall_spec": "klayout-tools==0.9.0",
     "klayout_version": "0.30.12",
     "pdk": null,
     "deck": {
       "name": "sky130",
-      "content_hash": "sha256:072b456a6c867ff7244bfc287908a960c265628b3c26a64db5506c4bb124d267",
-      "released": false
+      "content_hash": "sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c",
+      "released": true
     },
     "input": {
       "content_hash": "sha256:7afe99e5c687372fce5d196867e53a56f322703d4080eb0e4a309506f2fadf6c",

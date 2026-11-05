@@ -198,10 +198,16 @@
       "erc.net_connectivity:[\"VSS\"]"
     ],
     "skipped": [],
-    "inapplicable": [],
+    "inapplicable": [
+      {
+        "id": "erc.supply_short",
+        "reason": "substrate_continuity_not_modelled"
+      }
+    ],
     "unknown": [],
     "nothing_checked": false,
     "nothing_checked_reasons": [],
+    "missing_tie_checked": true,
     "checked_by_assertion": [],
     "checked_by_well_assertion": [
       "erc.missing_tie:[\"ntap_vdd\"]",
@@ -224,12 +230,14 @@
   },
   "ties_disclosure": null,
   "provenance": {
-    "klt_version": "0.8.0",
+    "klt_version": "0.9.0",
+    "klt_git_commit": "5dbbad05ff42265c92a6f3d2f20d1bbcd2957d49",
+    "klt_reinstall_spec": "klayout-tools==0.9.0",
     "klayout_version": "0.30.12",
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:fadae85047f09df5a0e4639d1a5a186d1cc0d0106c4d6dd350c96b657ef5835c",
+      "content_hash": "sha256:5eee5961caf1f334d3ebe2f8591c8b7db794cd3033ff499aa96568e78df13417",
       "role": "layout"
     },
     "spec": {

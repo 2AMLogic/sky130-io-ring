@@ -6,7 +6,7 @@ PDK-independent half: takes a stream, a top cell and a spec path, runs
 repo-relative) and writes the report. The spec (`signoff/erc-supply-spec.json`)
 holds every layer number; this script names none for the report itself.
 
-    python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.8.0 klt"
+    python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.9.0 klt"
 
 `--negative` also proves the spec can fail: it copies the ring stream into a
 scratch directory, deletes a 2 um slab of every conductor layer on two opposite sides

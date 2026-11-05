@@ -21,7 +21,7 @@
 ## Regenerate the record
 
 ```sh
-uvx --from "klayout-tools==0.8.0" klt signoff --manifest signoff/block-manifest.json --format json > signoff/signoff-record.json
+uvx --from "klayout-tools==0.9.0" klt signoff --manifest signoff/block-manifest.json --format json > signoff/signoff-record.json
 ```
 
 Redirect stdout (`-o` is only for `--attest`, below; `--repo-root` is not used here). Exit code 3 (report produced, items unmet) is expected.
@@ -31,27 +31,24 @@ The grader version is pinned in one place: `KLT_VERSION` in `.github/workflows/c
 ## Regenerate the DRC reports (item 3)
 
 ```sh
-python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.8.0 klt"
+python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.9.0 klt"
 ```
 
 No PDK or standalone klayout is needed (curated deck). Exit 4 means a report is not clean; it is still written. If `ring.json` changes, update the item-3 `content_hash` in `block-manifest.json` (the input stream hash, equal to the item-2 hash) and regenerate the record. The manifest holds one file per item, so only `ring.json` is cited; the per-cell reports sit beside it.
 
 What item 3 claims: the closed ring stream is clean against the curated `sky130` deck's modeled rules (`deck_scope` in the report), on drawing that includes the GPIO's transistors, diodes and resistor and the supply clamps in `vddio` / `vdd` (`layout/README.md`), with the spec still proposed (the CELL rows are re-checked on ratification). `coverage.layers_in_stream_without_rules` is `66/13`, `69/5`, `70/5`, `71/5`, `72/5`, `81/23` (the resistor marker, the diode marker and the label purposes); `coverage.rules_skipped` is 36 rule ids, all `no_applicable_geometry` (the clamp's poly, hvi, npc, capm and implant shapes now exercise the rest); `deck_scope` is 23 layers/groups (m1-m5, via-via4, nwell, difftap, poly, licon, li, npc, nsdm, psdm, capm, cap2m, rpm, urpm, ct, x); deck hash `sha256:ba0f9788...942e6`. It does **not** claim thick-oxide, latch-up, guard-ring-construction or ESD compliance: the deck does not check them (`spec/klt-rule-coverage.md`, "Reconciliation"; the report's `voltage_domain_warnings` says no rule but `nwell.enclosed.hvi.1` reads `hvi`, so the 5 V devices are held only to the general-case thresholds). `sky130_ioring_gpio.json` is `clean` too.
 
-`sky130_ioring_fill_1.json` is judged in abutment context: `--tile 3x1`, the 1 µm filler as the centre of three copies along the rail (`status: clean`; `1x3` stacked across the rail is not an abutment and does flag `met5.width.1`). Checked alone without `--tile` it reported one `met5.width.1` (the 12 µm-wide rail is 1 µm long); that was the tool gap 2AMLogic/klayout-tools#4226, fixed by klayout-tools#4253, and the operator ruled (2026-10-30, #32) to close the criterion on the tiled report, with no waiver and no spec change. `--tile` is on klayout-tools `main` after 0.8.0 and in no tagged release yet, so this one report is produced and CI-checked with klt commit `79cf5959db9f1365eaf19ac4f25d6d9df5683323` (`KLT_TILE_COMMIT` in `ci.yml`; its deck hash is `sha256:072b456a...4d267`, `released: false`, so differs from the other nine). Regenerate it with:
+`sky130_ioring_fill_1.json` is judged in abutment context: `--tile 3x1`, the 1 µm filler as the centre of three copies along the rail (`status: clean`; `1x3` stacked across the rail is not an abutment and does flag `met5.width.1`). Checked alone without `--tile` it reported one `met5.width.1` (the 12 µm-wide rail is 1 µm long); that was the tool gap 2AMLogic/klayout-tools#4226, fixed by klayout-tools#4253, and the operator ruled (2026-10-30, #32) to close the criterion on the tiled report, with no waiver and no spec change. `--tile` ships in klt 0.9.0, so this report is produced and CI-checked with the same pin as the other nine (its earlier unreleased-commit pin, `KLT_TILE_COMMIT`, is retired). Regenerate all ten with:
 
 ```sh
-python3 signoff/gen_drc_reports.py --streams fill_1 --tile fill_1=3x1 \
-  --klt "uvx --from git+https://github.com/2AMLogic/klayout-tools@79cf5959db9f1365eaf19ac4f25d6d9df5683323 klt"
+python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.9.0 klt" --tile fill_1=3x1
 ```
-
-When a tagged release carries `--tile`, bump `KLT_VERSION`, regenerate all ten reports and the record, and drop `KLT_TILE_COMMIT`.
 
 ## Regenerate the LVS reports (item 4)
 
 ```sh
-python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.8.0 klt"
-for f in signoff/evidence/lvs/*.json; do uvx --from klayout-tools==0.8.0 klt lvs --check "$f"; done
+python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.9.0 klt"
+for f in signoff/evidence/lvs/*.json; do uvx --from klayout-tools==0.9.0 klt lvs --check "$f"; done
 ```
 
 No hints, tolerances, `device_map` or ignored devices are passed. Exit 4: a report is `mismatch` (still written). Exit 5: `klt lvs` refused a request, so no report exists for that cell (the refusal is printed).
@@ -65,24 +62,24 @@ Body ties: `body_verification` is `verified` for `gpio` because the three rails 
 | Cell | `status` | `power_connectivity` | Note |
 |---|---|---|---|
 | `corner`, `fill_1`, `fill_5`, `fill_10`, `fill_20`, `vss` | `match` | `unchecked` | Vacuous: schematic and layout both have zero devices; the layout has 1 net against 3 reference pins, and the pins were paired by the comparer (a `warning`, "paired ambiguously"). This shows the flow runs, not that supply wiring is right. |
-| `gpio` | `mismatch` | `unchecked` | 11 errors, all from the four diode cards of the reference (2AMLogic/klayout-tools#4319): 4 `reference.unresolved_subckt_call` (the cards become empty placeholders), the 4 diodes the layout extracts are `device.unmatched`, and 3 `topology` (the two diode classes cannot be mapped; net `RXG`, which carries diodes, is paired despite a name conflict). Everything else compares: 107 of 107 reference devices (106 MOS fingers, 1 resistor) and 10 of 10 pins match, 39 of 43 nets (layout 111 devices, reference 107); `body_verification` is `verified`. Not compared: the resistor `L`/`W`/`A`/`P` (`device.geometry_not_compared`), and its `R` is a placeholder (`device.placeholder_value`). With the diodes taken out of both sides (`diag_lvs_without_diodes.py`, below; a diagnostic, not evidence) the same stream reports `match` on 43 nets, 107 devices and 10 pins, so the diode cards are the only difference the tool found. |
-| `vddio`, `vdd`, `ring` | no report | n/a | `klt lvs` refuses the reference: `sky130_fd_pr__cap_mim_m3_1` with `m=2` cannot be converted (2AMLogic/klayout-tools#4318, open). The netlist was not edited to get past it. The clamp subckt nests in these references, so the generator flattens them (`--flatten-reference auto`). |
+| `gpio` | `match` | `unchecked` | With klt 0.9.0 the four diode cards resolve (2AMLogic/klayout-tools#4319): all devices, pins and nets compare, `body_verification` is `verified`. Under 0.8.0 this stream was `mismatch` with 11 errors, all from the diode cards. Not compared: the resistor `L`/`W`/`A`/`P` (`device.geometry_not_compared`), and its `R` is a placeholder (`device.placeholder_value`). |
+| `vddio`, `vdd`, `ring` | no report | n/a | `klt lvs` 0.9.0 still refuses the reference: `sky130_fd_pr__cap_mim_m3_1` carries `MF=2 m=2` and the converter now expands `m` (2AMLogic/klayout-tools#4318, fixed) but rejects `mf=2` (2AMLogic/klayout-tools#4951) ("mf=2 describes a multi-finger/multiplied device the curated plain-element form cannot represent"). The netlist was not edited to get past it. The clamp subckt nests in these references, so the generator flattens them (`--flatten-reference auto`). |
 
 ### Diagnostic: the same comparison without the diodes
 
 ```sh
-python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.8.0 klt"
+python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.9.0 klt"
 ```
 
-Deletes the diode marker layer from a scratch copy of the `gpio` stream and the four diode cards from a scratch copy of its netlist, runs `klt lvs` (reference flattened) and prints the result; nothing is written under `signoff/`. Exit 0 = `match`. It narrows the `mismatch` to the diodes; it does not make item 4 met, because the diodes are exactly what it leaves out.
+Deletes the diode marker layer from a scratch copy of the `gpio` stream and the four diode cards from a scratch copy of its netlist, runs `klt lvs` (reference flattened) and prints the result; nothing is written under `signoff/`. Exit 0 = `match`. Kept as a diagnostic: with klt 0.9.0 the full `gpio` comparison matches on its own, so it is only useful if the diode cards regress.
 
-Item 4 stays `unmet`: the ring has no report, and `gpio` is `mismatch`. The manifest cites the `gpio` LVS report only as the `lvs` part of item 11 (see "Regenerate the ERC report"); it is not the ring's LVS and does not make item 4 met. `net_correspondence` for VDDIO/VDD/VSS (needed by item 11) does not exist yet.
+Item 4 stays `unmet`: the ring has no report (the `MF=2` MIM card above), so there is nothing to cite. The manifest cites the `gpio` LVS report as the `lvs` part of item 11 (see "Regenerate the ERC report"); it is not the ring's LVS and does not make item 4 met. `net_correspondence` for VDDIO/VDD/VSS does not exist yet.
 
 ## Regenerate the ERC report (item 11)
 
 ```sh
-python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.8.0 klt" --negative
-uvx --from klayout-tools==0.8.0 klt erc --check signoff/evidence/erc/ring.json
+python3 signoff/gen_erc_report.py --klt "uvx --from klayout-tools==0.9.0 klt" --negative
+uvx --from klayout-tools==0.9.0 klt erc --check signoff/evidence/erc/ring.json
 ```
 
 `--negative` needs the pip `klayout` module. Exit 4: the ring has findings, or the cut ring was not reported as split.
@@ -91,12 +88,12 @@ Result on the current ring stream (with the GPIO devices, the guard rings, the s
 
 What this shows: the supply nets are still each one island through the abutment seams, a cut still splits them, so the seam check can fail, and the well-tap ties pass on the drawn GPIO guard rings and logic wells. It says nothing about final geometry, latch-up sufficiency, ESD or IR drop.
 
-Item 11 stays `unmet`, now with reason `lvs_did_not_pass`: the ERC part passes, but it is a compound item (`klt signoff` needs an `erc` part and an `lvs` part) and the only LVS report cited, `gpio`, is `mismatch` (diode cards, 2AMLogic/klayout-tools#4319). The ring has no LVS report (2AMLogic/klayout-tools#4318), so item 4 cannot be `met` either. That `gpio` report is not the ring's LVS and is cited only so the grader treats item 11 as a compound item. Swap it for the ring report once #4318 is fixed and the compare matches. Related tool gap: 2AMLogic/klayout-tools#4193.
+Item 11 is `met` with klt 0.9.0: the ERC part is clean and the `lvs` part cited, `gpio`, is `match` (it was `mismatch` under 0.8.0, `lvs_did_not_pass`, because of the diode cards, 2AMLogic/klayout-tools#4319). That `gpio` report is not the ring's LVS and is cited only so the grader treats item 11 as a compound item. Swap it for the ring report once the ring reference converts (the `MF=2` MIM card, above) and the compare matches. Related tool gap: 2AMLogic/klayout-tools#4193.
 
 ## Regenerate the item-9 envelope
 
 ```sh
-uvx --from "klayout-tools==0.8.0" klt signoff --attest 9 --inventory signoff/attest/item9.json -o signoff/evidence/item9.json
+uvx --from "klayout-tools==0.9.0" klt signoff --attest 9 --inventory signoff/attest/item9.json -o signoff/evidence/item9.json
 ```
 
 Needs the pinned PDK and ngspice (`sim/pdk.json`): it runs `sim/pdk-smoke/cold-start.sh` (one smoke run, about a minute) into a temporary directory. Then update the `content_hash` for item 9 in `block-manifest.json` (the inventory's `sha256`, printed as `inventory:`) and regenerate the record. `klt` 0.8.0 is the first release with `--attest`; CI's 0.7.0 pin did not have it, hence the bump. Any edit to the inventory, or to a listed file, requires re-attesting.
@@ -106,7 +103,7 @@ The cold start is declared `local_only`: CI's `--attest 9 --check` re-checks fil
 ## Re-attest item 10
 
 ```sh
-uvx --from "klayout-tools==0.8.0" klt signoff --attest 10 --inventory signoff/attest/item10.json -o signoff/evidence/item10.json
+uvx --from "klayout-tools==0.9.0" klt signoff --attest 10 --inventory signoff/attest/item10.json -o signoff/evidence/item10.json
 ```
 
 Then copy the envelope's `provenance.input.content_hash` into the `10` entry of `block-manifest.json` and regenerate the record (above). The envelope pins the raw-byte hash of `README.md`, `LICENSE` and `.github/workflows/ci.yml`, so **any later edit to those files is drift and fails CI's `--check`** (exit 3) until you re-attest. Make all edits to them first, attest last. Do not list the signoff freshness step or the `--attest --check` step itself in the inventory (circular).

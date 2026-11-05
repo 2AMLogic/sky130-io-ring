@@ -86,11 +86,11 @@ python3 scripts/ci/check_layout_reproducible.py .
 bash sim/pdk-smoke/run.sh /tmp/pdk-smoke-out
 
 # Ring DRC report against the curated sky130 deck: stream and deck hashes still match (DRC is not re-run)
-uvx --from "klayout-tools==0.8.0" klt drc --check signoff/evidence/drc/ring.json
+uvx --from "klayout-tools==0.9.0" klt drc --check signoff/evidence/drc/ring.json
 
 # Signoff verdict of record and the item-10 hygiene attestation, with the pinned grader
-uvx --from "klayout-tools==0.8.0" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
-uvx --from "klayout-tools==0.8.0" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+uvx --from "klayout-tools==0.9.0" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
+uvx --from "klayout-tools==0.9.0" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
 ```
 
 How to regenerate the record and the attestation is in
