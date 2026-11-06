@@ -11,7 +11,7 @@ on:
 env:
   # The one place the signoff grader is pinned. A bump must regenerate
   # signoff/signoff-record.json in the same PR (signoff/README.md).
-  KLT_VERSION: "0.9.0"
+  KLT_VERSION: "0.9.1"
 
 jobs:
   signoff:

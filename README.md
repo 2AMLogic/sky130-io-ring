@@ -86,11 +86,11 @@ python3 scripts/ci/check_layout_reproducible.py .
 bash sim/pdk-smoke/run.sh /tmp/pdk-smoke-out
 
 # Ring DRC report against the curated sky130 deck: stream and deck hashes still match (DRC is not re-run)
-uvx --from "klayout-tools==0.9.0" klt drc --check signoff/evidence/drc/ring.json
+uvx --from "klayout-tools==0.9.1" klt drc --check signoff/evidence/drc/ring.json
 
 # Signoff verdict of record and the item-10 hygiene attestation, with the pinned grader
-uvx --from "klayout-tools==0.9.0" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
-uvx --from "klayout-tools==0.9.0" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+uvx --from "klayout-tools==0.9.1" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
+uvx --from "klayout-tools==0.9.1" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
 ```
 
 How to regenerate the record and the attestation is in
@@ -101,10 +101,9 @@ the same commands.
 `sky130` deck reports clean on drawing that includes every device of the GPIO
 netlists (but no supply clamp); the deck does not cover every I/O rule
 (thick-oxide, latch-up and guard-ring rules among them); deck coverage is in
-[`signoff/README.md`](signoff/README.md). LVS has run per cell: the GPIO is a
-`mismatch` on the reference's four diode cards only (2AMLogic/klayout-tools#4319),
-the corner, fillers and `vss` match with no devices, and the ring and the two
-other supply pads get no report. There is no ERC or ESD result and no PVT
+[`signoff/README.md`](signoff/README.md). LVS has run per cell and on the ring: with klt 0.9.1 the GPIO, the two supply clamps, the ring,
+the corner, fillers and `vss` are `match` against their reference netlists (flat comparison; the
+resistor geometry is not compared). There is no ERC or ESD result and no PVT
 simulation of any cell. Nothing above claims one.
 
 ## Repo layout
