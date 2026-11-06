@@ -10,7 +10,7 @@ scratch directory, and prints the result. Nothing is written under signoff/.
     the stream, so the diffusions stay and are wired but extract as no device;
   - reference: every card whose line mentions `--card` is dropped.
 
-    python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.8.0 klt"
+    python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.9.0 klt"
 
 Exit 0 if the masked comparison is `match`, 4 if it is not. A `match` here does
 not make item 4 met: the diodes are the part of the cell this does not compare.
