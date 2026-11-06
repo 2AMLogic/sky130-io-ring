@@ -1,0 +1,358 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * clamp-probe: g6 single-corner probe, tt, 27 c
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vr_io                                        0
+xrio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t1                                      0
+xrio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t                                       0
+xrio.xc1.a                                   0
+xrio.xc1.b1                                  0
+xrio.g1                            1.29427e-18
+xrio.g2                           -2.23716e-18
+xrio.gate                         -8.50819e-18
+ch_io                                     2000
+vh_io                                        0
+xhio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t1                                      0
+xhio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t                                       0
+xhio.xc1.a                                   0
+xhio.xc1.b1                                  0
+xhio.g1                            7.12916e-19
+xhio.g2                           -2.78988e-19
+xhio.gate                           3.3702e-18
+ia05_io                                      0
+ia10_io                                      0
+vr_core                                      0
+xrcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t1                                    0
+xrcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t                                     0
+xrcore.xc1.a                                 0
+xrcore.xc1.b1                                0
+xrcore.g1                          8.39973e-24
+xrcore.g2                         -4.62991e-23
+xrcore.gate                       -1.28681e-18
+ch_core                                   2000
+vh_core                                      0
+xhcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t1                                    0
+xhcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t                                     0
+xhcore.xc1.a                                 0
+xhcore.xc1.b1                                0
+xhcore.g1                         -2.63767e-23
+xhcore.g2                         -9.79437e-23
+xhcore.gate                        8.53296e-19
+ia05_core                                    0
+ia10_core                                    0
+bi10_core#branch                             0
+bi05_core#branch                             0
+bi10_io#branch                               0
+bi05_io#branch                               0
+vr_core#branch                     1.08494e-29
+vr_io#branch                      -1.79386e-28
+
+
+No. of Data Rows : 1029
+RESULT ramp_io_1u vnom=5.0 tr_s=1u id_xmcl_pk_A=1.24892 gate_pk_V=5.00007 isup_pk_A=1.25778 ileak_end_A=-7.18256E-05
+RESULT esd7_ramp_io_1u_mp1 vds_pk_V=5.00091 vgs_pk_V=3.16342 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mn1 vds_pk_V=4.47036 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mp2 vds_pk_V=5.00002 vgs_pk_V=5.00091 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mn2 vds_pk_V=5.00653 vgs_pk_V=4.47036 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mp3 vds_pk_V=5.02068 vgs_pk_V=5.00002 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mn3 vds_pk_V=5.00007 vgs_pk_V=5.00653 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1u_mcl vds_pk_V=5 vgs_pk_V=5.00007 validity=within_esd7_model_range
+RESULT ramp_core_1u vnom=1.8 tr_s=1u id_xmcl_pk_A=2.11472 gate_pk_V=1.80001 isup_pk_A=2.11496 ileak_end_A=-3.04047E-05
+RESULT esd7_ramp_core_1u_mp1 vds_pk_V=1.80012 vgs_pk_V=1.13928 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mn1 vds_pk_V=1.78368 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mp2 vds_pk_V=1.8 vgs_pk_V=1.80012 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mn2 vds_pk_V=1.80338 vgs_pk_V=1.78368 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mp3 vds_pk_V=1.80816 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mn3 vds_pk_V=1.80001 vgs_pk_V=1.80338 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1u_mcl vds_pk_V=1.8 vgs_pk_V=1.80001 validity=no_validity_range_on_record
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vr_io                                        0
+xrio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t1                                      0
+xrio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t                                       0
+xrio.xc1.a                                   0
+xrio.xc1.b1                                  0
+xrio.g1                            1.29427e-18
+xrio.g2                           -2.23716e-18
+xrio.gate                         -8.50819e-18
+ch_io                                     2000
+vh_io                                        0
+xhio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t1                                      0
+xhio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t                                       0
+xhio.xc1.a                                   0
+xhio.xc1.b1                                  0
+xhio.g1                            7.12916e-19
+xhio.g2                           -2.78988e-19
+xhio.gate                           3.3702e-18
+ia05_io                                      0
+ia10_io                                      0
+vr_core                                      0
+xrcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t1                                    0
+xrcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t                                     0
+xrcore.xc1.a                                 0
+xrcore.xc1.b1                                0
+xrcore.g1                          8.39973e-24
+xrcore.g2                         -4.62991e-23
+xrcore.gate                       -1.28681e-18
+ch_core                                   2000
+vh_core                                      0
+xhcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t1                                    0
+xhcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t                                     0
+xhcore.xc1.a                                 0
+xhcore.xc1.b1                                0
+xhcore.g1                         -2.63767e-23
+xhcore.g2                         -9.79437e-23
+xhcore.gate                        8.53296e-19
+ia05_core                                    0
+ia10_core                                    0
+bi10_core#branch                             0
+bi05_core#branch                             0
+bi10_io#branch                               0
+bi05_io#branch                               0
+vr_core#branch                     1.08494e-29
+vr_io#branch                      -1.79386e-28
+
+
+No. of Data Rows : 1024
+RESULT ramp_io_10u vnom=5.0 tr_s=10u id_xmcl_pk_A=3.48782E-07 gate_pk_V=0.328407 isup_pk_A=1.09936E-05 ileak_end_A=6.03019E-09
+RESULT esd7_ramp_io_10u_mp1 vds_pk_V=5 vgs_pk_V=0.501515 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mn1 vds_pk_V=0.54533 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mp2 vds_pk_V=0.655759 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mn2 vds_pk_V=5.00001 vgs_pk_V=0.54533 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mp3 vds_pk_V=5 vgs_pk_V=0.655759 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mn3 vds_pk_V=0.328407 vgs_pk_V=5.00001 validity=within_esd7_model_range
+RESULT esd7_ramp_io_10u_mcl vds_pk_V=5 vgs_pk_V=0.328407 validity=within_esd7_model_range
+RESULT ramp_core_10u vnom=1.8 tr_s=10u id_xmcl_pk_A=1.25217E-07 gate_pk_V=0.193193 isup_pk_A=5.30454E-06 ileak_end_A=1.48021E-08
+RESULT esd7_ramp_core_10u_mp1 vds_pk_V=1.8 vgs_pk_V=0.180523 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mn1 vds_pk_V=0.410841 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mp2 vds_pk_V=0.236867 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mn2 vds_pk_V=1.8 vgs_pk_V=0.410841 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mp3 vds_pk_V=1.8 vgs_pk_V=0.236867 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mn3 vds_pk_V=0.193193 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_10u_mcl vds_pk_V=1.8 vgs_pk_V=0.193193 validity=no_validity_range_on_record
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vr_io                                        0
+xrio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t1                                      0
+xrio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t                                       0
+xrio.xc1.a                                   0
+xrio.xc1.b1                                  0
+xrio.g1                            1.29427e-18
+xrio.g2                           -2.23716e-18
+xrio.gate                         -8.50819e-18
+ch_io                                     2000
+vh_io                                        0
+xhio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t1                                      0
+xhio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t                                       0
+xhio.xc1.a                                   0
+xhio.xc1.b1                                  0
+xhio.g1                            7.12916e-19
+xhio.g2                           -2.78988e-19
+xhio.gate                           3.3702e-18
+ia05_io                                      0
+ia10_io                                      0
+vr_core                                      0
+xrcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t1                                    0
+xrcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t                                     0
+xrcore.xc1.a                                 0
+xrcore.xc1.b1                                0
+xrcore.g1                          8.39973e-24
+xrcore.g2                         -4.62991e-23
+xrcore.gate                       -1.28681e-18
+ch_core                                   2000
+vh_core                                      0
+xhcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t1                                    0
+xhcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t                                     0
+xhcore.xc1.a                                 0
+xhcore.xc1.b1                                0
+xhcore.g1                         -2.63767e-23
+xhcore.g2                         -9.79437e-23
+xhcore.gate                        8.53296e-19
+ia05_core                                    0
+ia10_core                                    0
+bi10_core#branch                             0
+bi05_core#branch                             0
+bi10_io#branch                               0
+bi05_io#branch                               0
+vr_core#branch                     1.08494e-29
+vr_io#branch                      -1.79386e-28
+
+
+No. of Data Rows : 1200
+RESULT ramp_io_100u vnom=5.0 tr_s=100u id_xmcl_pk_A=2.58889E-08 gate_pk_V=0.200205 isup_pk_A=6.13261E-07 ileak_end_A=6.44704E-09
+RESULT esd7_ramp_io_100u_mp1 vds_pk_V=5 vgs_pk_V=0.0501857 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mn1 vds_pk_V=0.276017 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mp2 vds_pk_V=0.302286 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mn2 vds_pk_V=5 vgs_pk_V=0.276017 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mp3 vds_pk_V=5 vgs_pk_V=0.302286 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mn3 vds_pk_V=0.200205 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_100u_mcl vds_pk_V=5 vgs_pk_V=0.200205 validity=within_esd7_model_range
+RESULT ramp_core_100u vnom=1.8 tr_s=100u id_xmcl_pk_A=1.61317E-08 gate_pk_V=0.126539 isup_pk_A=1.92681E-07 ileak_end_A=1.48748E-08
+RESULT esd7_ramp_core_100u_mp1 vds_pk_V=1.8 vgs_pk_V=0.0180569 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mn1 vds_pk_V=0.239119 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mp2 vds_pk_V=0.107699 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mn2 vds_pk_V=1.8 vgs_pk_V=0.239119 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mp3 vds_pk_V=1.8 vgs_pk_V=0.107699 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mn3 vds_pk_V=0.126539 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_100u_mcl vds_pk_V=1.8 vgs_pk_V=0.126539 validity=no_validity_range_on_record
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vr_io                                        0
+xrio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t1                                      0
+xrio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrio.t                                       0
+xrio.xc1.a                                   0
+xrio.xc1.b1                                  0
+xrio.g1                            1.29427e-18
+xrio.g2                           -2.23716e-18
+xrio.gate                         -8.50819e-18
+ch_io                                     2000
+vh_io                                        0
+xhio.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t1                                      0
+xhio.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhio.t                                       0
+xhio.xc1.a                                   0
+xhio.xc1.b1                                  0
+xhio.g1                            7.12916e-19
+xhio.g2                           -2.78988e-19
+xhio.gate                           3.3702e-18
+ia05_io                                      0
+ia10_io                                      0
+vr_core                                      0
+xrcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t1                                    0
+xrcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xrcore.t                                     0
+xrcore.xc1.a                                 0
+xrcore.xc1.b1                                0
+xrcore.g1                          8.39973e-24
+xrcore.g2                         -4.62991e-23
+xrcore.gate                       -1.28681e-18
+ch_core                                   2000
+vh_core                                      0
+xhcore.xr1.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t1                                    0
+xhcore.xr2.xsky130_fd_pr__res_xhigh_po_0p69.ra               0
+xhcore.t                                     0
+xhcore.xc1.a                                 0
+xhcore.xc1.b1                                0
+xhcore.g1                         -2.63767e-23
+xhcore.g2                         -9.79437e-23
+xhcore.gate                        8.53296e-19
+ia05_core                                    0
+ia10_core                                    0
+bi10_core#branch                             0
+bi05_core#branch                             0
+bi10_io#branch                               0
+bi05_io#branch                               0
+vr_core#branch                     1.08494e-29
+vr_io#branch                      -1.79386e-28
+
+
+No. of Data Rows : 1179
+RESULT ramp_io_1m vnom=5.0 tr_s=1m id_xmcl_pk_A=9.50844E-09 gate_pk_V=0.150665 isup_pk_A=5.0191E-08 ileak_end_A=6.49052E-09
+RESULT esd7_ramp_io_1m_mp1 vds_pk_V=5 vgs_pk_V=0.00501817 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mn1 vds_pk_V=0.162688 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mp2 vds_pk_V=0.237722 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mn2 vds_pk_V=5 vgs_pk_V=0.162688 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mp3 vds_pk_V=5 vgs_pk_V=0.237722 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mn3 vds_pk_V=0.150665 vgs_pk_V=5 validity=within_esd7_model_range
+RESULT esd7_ramp_io_1m_mcl vds_pk_V=5 vgs_pk_V=0.150665 validity=within_esd7_model_range
+RESULT ramp_core_1m vnom=1.8 tr_s=1m id_xmcl_pk_A=5.57956E-09 gate_pk_V=0.0939127 isup_pk_A=2.67294E-08 ileak_end_A=1.48915E-08
+RESULT esd7_ramp_core_1m_mp1 vds_pk_V=1.8 vgs_pk_V=0.0018057 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mn1 vds_pk_V=0.18585 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mp2 vds_pk_V=0.0558976 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mn2 vds_pk_V=1.8 vgs_pk_V=0.18585 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mp3 vds_pk_V=1.8 vgs_pk_V=0.0558976 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mn3 vds_pk_V=0.0939127 vgs_pk_V=1.8 validity=no_validity_range_on_record
+RESULT esd7_ramp_core_1m_mcl vds_pk_V=1.8 vgs_pk_V=0.0939127 validity=no_validity_range_on_record
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Operating point simulation skipped by 'uic',
+  now using transient initial conditions.
+
+No. of Data Rows : 50024
+gend_io             =  5.08078e-01
+vpend_io            =  1.50713e-04
+tab05_io            =  1.00000e-05 from=  2.00000e-12 to=  1.00000e-05
+tab10_io            =  6.61921e-07 from=  2.00000e-12 to=  1.00000e-05
+RESULT hbm_io vhbm_V=2000 c_F=100p r_ohm=1500 vp_pk_V=8.59329 id_xmcl_pk_A=1.31144 ipulse_pk_A=1.33161 gate_pk_V=5.19049 gate_at_9p9us_V=0.508078 vp_at_9p9us_V=0.000150713 gate_above_0p5V_s=1E-05 gate_above_1p0V_s=6.61921E-07 decay_tau_s=1.5e-7
+RESULT esd7_hbm_io_mp1 vds_pk_V=3.05243 vgs_pk_V=8.58748 validity=outside_model_validity
+RESULT esd7_hbm_io_mn1 vds_pk_V=6.86519 vgs_pk_V=0.897117 validity=within_esd7_model_range
+RESULT esd7_hbm_io_mp2 vds_pk_V=6.86241 vgs_pk_V=3.05243 validity=within_esd7_model_range
+RESULT esd7_hbm_io_mn2 vds_pk_V=4.79149 vgs_pk_V=6.86519 validity=outside_model_validity
+RESULT esd7_hbm_io_mp3 vds_pk_V=6.66307 vgs_pk_V=6.86241 validity=outside_model_validity
+RESULT esd7_hbm_io_mn3 vds_pk_V=5.19049 vgs_pk_V=4.79149 validity=within_esd7_model_range
+RESULT esd7_hbm_io_mcl vds_pk_V=8.59329 vgs_pk_V=5.19049 validity=within_esd7_model_range
+gend_core           =  2.76546e-01
+vpend_core          =  9.53020e-02
+tab05_core          =  1.39838e-06 from=  2.00000e-12 to=  1.00000e-05
+tab10_core          =  1.94503e-07 from=  2.00000e-12 to=  1.00000e-05
+RESULT hbm_core vhbm_V=2000 c_F=100p r_ohm=1500 vp_pk_V=4.7784 id_xmcl_pk_A=1.34893 ipulse_pk_A=1.33268 gate_pk_V=1.44864 gate_at_9p9us_V=0.276546 vp_at_9p9us_V=0.095302 gate_above_0p5V_s=1.39838E-06 gate_above_1p0V_s=1.94503E-07 decay_tau_s=1.5e-7
+RESULT esd7_hbm_core_mp1 vds_pk_V=1.32958 vgs_pk_V=4.77689 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mn1 vds_pk_V=3.66371 vgs_pk_V=0.505773 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mp2 vds_pk_V=3.29955 vgs_pk_V=1.32958 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mn2 vds_pk_V=3.15879 vgs_pk_V=3.66371 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mp3 vds_pk_V=3.68793 vgs_pk_V=3.29955 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mn3 vds_pk_V=1.44864 vgs_pk_V=3.15879 validity=no_validity_range_on_record
+RESULT esd7_hbm_core_mcl vds_pk_V=4.7784 vgs_pk_V=1.44864 validity=no_validity_range_on_record
+ngspice-46 done
