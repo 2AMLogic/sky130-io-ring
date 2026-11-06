@@ -3,15 +3,22 @@
   "kind": "generic",
   "status": "pass",
   "t1_item": 9,
-  "summary": "T1 item 9 (Testbenches shipped): 5/5 attestation checks passed (klt signoff --attest)",
+  "summary": "T1 item 9 (Testbenches shipped): 6/6 attestation checks passed (klt signoff --attest)",
   "source": "signoff/attest/item9.json",
   "attestation": {
     "producer": "klt signoff --attest",
     "inventory_schema_version": 1,
     "hash_algorithm": "sha256-raw-bytes",
-    "check_count": 5,
-    "passed_count": 5,
+    "check_count": 6,
+    "passed_count": 6,
     "checks": [
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/clamp-probe/run.sh",
+        "passed": true,
+        "content_hash": "sha256:8f3e9d2098cf9b653ecaa0267c8879a74278611d234b81464dc5516a41ebe0a9"
+      },
       {
         "check": "present",
         "role": "testbench",
@@ -61,7 +68,7 @@
     ]
   },
   "provenance": {
-    "klt_version": "0.8.0",
+    "klt_version": "0.9.0",
     "klayout_version": null,
     "pdk": null,
     "deck": null,
@@ -70,7 +77,7 @@
         "path": "signoff/attest/item9.json",
         "scope": "repo"
       },
-      "content_hash": "sha256:8d55cff76a5b3bbb726b471bf15f3e71ab1b481a5d54a315760748d7c6278fdb"
+      "content_hash": "sha256:a1f5af152371316e5e002dbbe38208fd9f79dd900f4a0ddf8cf6f058fb24569f"
     }
   }
 }
