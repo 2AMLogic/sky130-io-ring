@@ -7,7 +7,7 @@ root (so recorded paths are repo-relative) and writes one report per stream
 under the output directory. The ring report is written as ring.json; the others
 as <cell>.json.
 
-    python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.9.0 klt"
+    python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.9.1 klt"
 
 Exit 0 only if every report was written and every status is `match`; a
 `mismatch` report is still written (it is the evidence) but makes the script

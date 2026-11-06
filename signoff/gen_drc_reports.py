@@ -7,7 +7,7 @@ PDK-independent half: takes a stream list and a deck name, runs
 the output directory. The ring report is written as ring.json (the one the
 manifest cites for T1 item 3); the others as <cell>.json.
 
-    python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.9.0 klt"
+    python3 signoff/gen_drc_reports.py --klt "uvx --from klayout-tools==0.9.1 klt"
 
 A tileable cell (a filler cut at its pitch) is judged in abutment context with
 `--tile COLSxROWS` (`--tile fill_1=3x1`, repeatable): the cell is checked as the

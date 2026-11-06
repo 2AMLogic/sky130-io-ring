@@ -1,0 +1,2476 @@
+{
+  "schema_version": 3,
+  "engine": "klayout",
+  "layout": {
+    "path": "layout/gds/sky130_ioring_ring.gds",
+    "scope": "repo"
+  },
+  "reference": {
+    "path": "design/netlists/sky130_ioring_ring.spice",
+    "scope": "repo"
+  },
+  "top": "sky130_ioring_ring",
+  "reference_top": "SKY130_IORING_RING",
+  "reference_conversion": {
+    "form": "subckt-call",
+    "deck": "sky130",
+    "device_map": null
+  },
+  "parameter_tolerance": null,
+  "options": {
+    "combine_devices": false,
+    "combine_devices_per_circuit": null,
+    "combine_devices_max_attempts": 5,
+    "flatten_layout": false,
+    "flatten_reference": true,
+    "netgen_setup": null,
+    "parameter_tolerance": null,
+    "compare_parameters": null,
+    "power_connectivity": null,
+    "anchor_top_level_pins": null,
+    "strict_top_level_pin_count": false,
+    "compare_mos_flavour": true,
+    "supply_nets": [
+      "GND",
+      "VCC",
+      "VDD",
+      "VGND",
+      "VPWR",
+      "VSS"
+    ],
+    "finfet_bulk": null
+  },
+  "hints_applied": null,
+  "constant_nets_applied": null,
+  "status": "match",
+  "power_connectivity": {
+    "status": "unchecked",
+    "reason": "reference.form is 'subckt-call', whose reference netlist carries its own power/ground pins and nets -- they take part in the ordinary compare, so this check (which exists to cover the signal-only 'gate-level-verilog' form) does not apply",
+    "power_pins": [],
+    "power_pins_derivation": null,
+    "instance_count": 0,
+    "expected_nets": null,
+    "unchecked_expected_pins": [],
+    "excluded_pins": [],
+    "findings": [],
+    "finding_count": 0
+  },
+  "body_verification": {
+    "status": "verified",
+    "reason": null,
+    "device_classes": [],
+    "device_count": 0,
+    "findings": [],
+    "finding_count": 0
+  },
+  "device_parameter_coverage": [
+    {
+      "class": "res_high_po",
+      "device_kind": "resistor",
+      "layout_devices": 8,
+      "reference_devices": 8,
+      "compared": [],
+      "not_compared": [
+        {
+          "parameter": "R",
+          "reason": "placeholder_value"
+        },
+        {
+          "parameter": "L",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "W",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "A",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "P",
+          "reason": "secondary"
+        }
+      ]
+    },
+    {
+      "class": "res_xhigh_po",
+      "device_kind": "resistor",
+      "layout_devices": 16,
+      "reference_devices": 16,
+      "compared": [],
+      "not_compared": [
+        {
+          "parameter": "R",
+          "reason": "placeholder_value"
+        },
+        {
+          "parameter": "L",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "W",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "A",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "P",
+          "reason": "secondary"
+        }
+      ]
+    },
+    {
+      "class": "sky130_fd_pr__model__cap_mim",
+      "device_kind": "capacitor",
+      "layout_devices": 16,
+      "reference_devices": 16,
+      "compared": [],
+      "not_compared": [
+        {
+          "parameter": "C",
+          "reason": "placeholder_value"
+        },
+        {
+          "parameter": "A",
+          "reason": "secondary"
+        },
+        {
+          "parameter": "P",
+          "reason": "secondary"
+        }
+      ]
+    }
+  ],
+  "mismatch_count": 24,
+  "error_count": 0,
+  "category_counts": {
+    "device.geometry_not_compared": 3,
+    "device.placeholder_value": 3,
+    "topology": 17,
+    "topology.flattened": 1
+  },
+  "category_error_counts": {},
+  "counts": {
+    "nets": {
+      "layout": 363,
+      "reference": 363,
+      "matched": 363
+    },
+    "devices": {
+      "layout": 6040,
+      "reference": 6040,
+      "matched": 6040
+    },
+    "pins": {
+      "layout": 131,
+      "reference": 59,
+      "matched": 131
+    }
+  },
+  "device_classes": [
+    "nfet",
+    "pfet",
+    "pnp",
+    "sky130_fd_pr__model__cap_mim",
+    "sky130_fd_pr__model__cap_mim_m4",
+    "resistor",
+    "diode_pw2nd_05v5",
+    "diode_pw2nd_05v5_lvt",
+    "diode_pw2nd_05v5_nvt",
+    "diode_pw2nd_11v0",
+    "diode_pd2nw_05v5",
+    "diode_pd2nw_05v5_lvt",
+    "diode_pd2nw_05v5_hvt",
+    "diode_pd2nw_11v0"
+  ],
+  "environment": {
+    "engine": "klayout",
+    "engine_version": "0.30.13",
+    "netgen_binary": null,
+    "layout_sha256": "ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c",
+    "reference_sha256": "d900e66ab967bd4ce749108a2170dcd0870bf4d42dbdd40eb9ec9e8d73a77517",
+    "extracted_netlist": null
+  },
+  "provenance": {
+    "klt_version": "0.9.1",
+    "klt_git_commit": "4d0d29be4fd991f499d59e783a908082d5e24c56",
+    "klt_reinstall_spec": "klayout-tools==0.9.1",
+    "klayout_version": "0.30.13",
+    "pdk": null,
+    "deck": {
+      "name": "sky130",
+      "content_hash": "sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c",
+      "released": true
+    },
+    "input": {
+      "content_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c",
+      "role": "layout"
+    },
+    "klayout_version_mismatch": true
+  },
+  "mismatches": [
+    {
+      "category": "device.geometry_not_compared",
+      "severity": "warning",
+      "description": "device class 'res_high_po' is a resistor class, whose ['A', 'L', 'P', 'W'] parameter(s) KLayout declares *secondary*: kdb.NetlistComparer compares primary parameters only, so none of them took part in this compare and each is NOT verified -- this resistor's geometry could differ between the two sides by any amount and this run would still report 'match'. No parameter of this class was compared at all: the remaining parameter(s) were separately excluded from this run (see the device.placeholder_value/device.parameter_excluded entries), so the two sides were paired on topology alone. Name them in options.compare_parameters to compare them (see docs/cli/lvs.md, 'device.geometry_not_compared')",
+      "side": "both",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "res_high_po"
+      },
+      "property": null,
+      "details": {
+        "device_kind": "resistor",
+        "compared_parameters": [],
+        "not_compared_parameters": [
+          "A",
+          "L",
+          "P",
+          "W"
+        ],
+        "layout_devices": 8,
+        "reference_devices": 8
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.geometry_not_compared",
+      "severity": "warning",
+      "description": "device class 'res_xhigh_po' is a resistor class, whose ['A', 'L', 'P', 'W'] parameter(s) KLayout declares *secondary*: kdb.NetlistComparer compares primary parameters only, so none of them took part in this compare and each is NOT verified -- this resistor's geometry could differ between the two sides by any amount and this run would still report 'match'. No parameter of this class was compared at all: the remaining parameter(s) were separately excluded from this run (see the device.placeholder_value/device.parameter_excluded entries), so the two sides were paired on topology alone. Name them in options.compare_parameters to compare them (see docs/cli/lvs.md, 'device.geometry_not_compared')",
+      "side": "both",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "res_xhigh_po"
+      },
+      "property": null,
+      "details": {
+        "device_kind": "resistor",
+        "compared_parameters": [],
+        "not_compared_parameters": [
+          "A",
+          "L",
+          "P",
+          "W"
+        ],
+        "layout_devices": 16,
+        "reference_devices": 16
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.geometry_not_compared",
+      "severity": "warning",
+      "description": "device class 'sky130_fd_pr__model__cap_mim' is a capacitor class, whose ['A', 'P'] parameter(s) KLayout declares *secondary*: kdb.NetlistComparer compares primary parameters only, so none of them took part in this compare and each is NOT verified -- this capacitor's geometry could differ between the two sides by any amount and this run would still report 'match'. No parameter of this class was compared at all: the remaining parameter(s) were separately excluded from this run (see the device.placeholder_value/device.parameter_excluded entries), so the two sides were paired on topology alone. Name them in options.compare_parameters to compare them (see docs/cli/lvs.md, 'device.geometry_not_compared')",
+      "side": "both",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "sky130_fd_pr__model__cap_mim"
+      },
+      "property": null,
+      "details": {
+        "device_kind": "capacitor",
+        "compared_parameters": [],
+        "not_compared_parameters": [
+          "A",
+          "P"
+        ],
+        "layout_devices": 16,
+        "reference_devices": 16
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.placeholder_value",
+      "severity": "warning",
+      "description": "reference device class 'RES_HIGH_PO' was converted from a subcircuit call (request.reference.form: \"subckt-call\"), so its 'R' value is the literal 0 placeholder on all 8 reference instance(s) -- klt lvs has no PDK sheet-resistance/capacitance-per-area data to compute a real one. 'R' was therefore excluded from this compare on both sides (layout: 8 instance(s), R 502.3118074609929) and the two sides were paired on topology alone -- that dimension of the compare is not independently verified. Supply a reference in the plain-element form carrying real 'R' values to compare it (see docs/cli/lvs.md, 'device.placeholder_value')",
+      "side": "reference",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "RES_HIGH_PO"
+      },
+      "property": null,
+      "details": {
+        "parameter": "R",
+        "device_kind": "resistor",
+        "reference_devices": 8,
+        "layout_devices": 8,
+        "layout_values": [
+          502.3118074609929
+        ]
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.placeholder_value",
+      "severity": "warning",
+      "description": "reference device class 'RES_XHIGH_PO' was converted from a subcircuit call (request.reference.form: \"subckt-call\"), so its 'R' value is the literal 0 placeholder on all 16 reference instance(s) -- klt lvs has no PDK sheet-resistance/capacitance-per-area data to compute a real one. 'R' was therefore excluded from this compare on both sides (layout: 16 instance(s), R 124637.68115942029) and the two sides were paired on topology alone -- that dimension of the compare is not independently verified. Supply a reference in the plain-element form carrying real 'R' values to compare it (see docs/cli/lvs.md, 'device.placeholder_value')",
+      "side": "reference",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "RES_XHIGH_PO"
+      },
+      "property": null,
+      "details": {
+        "parameter": "R",
+        "device_kind": "resistor",
+        "reference_devices": 16,
+        "layout_devices": 16,
+        "layout_values": [
+          124637.68115942029
+        ]
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "device.placeholder_value",
+      "severity": "warning",
+      "description": "reference device class 'SKY130_FD_PR__MODEL__CAP_MIM' was converted from a subcircuit call (request.reference.form: \"subckt-call\"), so its 'C' value is the literal 0 placeholder on all 16 reference instance(s) -- klt lvs has no PDK sheet-resistance/capacitance-per-area data to compute a real one. 'C' was therefore excluded from this compare on both sides (layout: 16 instance(s), C 2.00394e-12) and the two sides were paired on topology alone -- that dimension of the compare is not independently verified. Supply a reference in the plain-element form carrying real 'C' values to compare it (see docs/cli/lvs.md, 'device.placeholder_value')",
+      "side": "reference",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "SKY130_FD_PR__MODEL__CAP_MIM"
+      },
+      "property": null,
+      "details": {
+        "parameter": "C",
+        "device_kind": "capacitor",
+        "reference_devices": 16,
+        "layout_devices": 16,
+        "layout_values": [
+          2.00394e-12
+        ]
+      },
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S0_0_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S0_4_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S1_0_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S1_4_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S2_0_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S2_4_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S3_0_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "RXG",
+        "reference": "S3_4_GPIO_RXG"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$178",
+        "reference": "S1_3_VDD_1_GATE"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$179",
+        "reference": "S1_1_VDDIO_1_T1"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$184",
+        "reference": "S2_3_VDD_1_GATE"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$190",
+        "reference": "S2_1_VDDIO_1_T1"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$307",
+        "reference": "S3_1_VDDIO_1_T1"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$315",
+        "reference": "S3_3_VDD_1_GATE"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$39",
+        "reference": "S0_3_VDD_1_GATE"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
+      "side": "both",
+      "net": {
+        "layout": "\\$76",
+        "reference": "S0_1_VDDIO_1_T1"
+      },
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology",
+      "severity": "warning",
+      "description": "device class has no counterpart on the other side, but no devices of this class were extracted either -- not a real topology mismatch: 'pnp'",
+      "side": "layout",
+      "net": null,
+      "device": {
+        "layout": null,
+        "reference": null,
+        "class": "pnp"
+      },
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    },
+    {
+      "category": "topology.flattened",
+      "severity": "warning",
+      "description": "options.flatten_reference flattened the reference netlist before comparing: 22 circuit(s) were collapsed into 1 top-level circuit(s), substituting every subcircuit-call instance in place -- this compare verified topology only after removing the original hierarchy boundaries on this side (see docs/cli/lvs.md, \"topology.flattened\")",
+      "side": "reference",
+      "net": null,
+      "device": null,
+      "property": null,
+      "details": null,
+      "circuit": null,
+      "instance": null,
+      "subcircuit": null
+    }
+  ],
+  "net_correspondence": [
+    {
+      "layout": "A",
+      "reference": "A0",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A1",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A2",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A3",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A4",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A5",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A6",
+      "pin": true
+    },
+    {
+      "layout": "A",
+      "reference": "A7",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE0",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE1",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE2",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE3",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE4",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE5",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE6",
+      "pin": true
+    },
+    {
+      "layout": "IE",
+      "reference": "IE7",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE0",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE1",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE2",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE3",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE4",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE5",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE6",
+      "pin": true
+    },
+    {
+      "layout": "OE",
+      "reference": "OE7",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD0",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD1",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD2",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD3",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD4",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD5",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD6",
+      "pin": true
+    },
+    {
+      "layout": "PAD",
+      "reference": "PAD7",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD0",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD1",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD2",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD3",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD4",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD5",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD6",
+      "pin": true
+    },
+    {
+      "layout": "PD",
+      "reference": "PD7",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU0",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU1",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU2",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU3",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU4",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU5",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU6",
+      "pin": true
+    },
+    {
+      "layout": "PU",
+      "reference": "PU7",
+      "pin": true
+    },
+    {
+      "layout": "\\$10",
+      "reference": "S0_0_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$42",
+      "reference": "S0_0_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$14",
+      "reference": "S0_0_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$16",
+      "reference": "S0_0_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$17",
+      "reference": "S0_0_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$19",
+      "reference": "S0_0_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$5",
+      "reference": "S0_0_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$9",
+      "reference": "S0_0_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$18",
+      "reference": "S0_0_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$7",
+      "reference": "S0_0_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$90",
+      "reference": "S0_0_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$92",
+      "reference": "S0_0_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$78",
+      "reference": "S0_0_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$80",
+      "reference": "S0_0_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$81",
+      "reference": "S0_0_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$79",
+      "reference": "S0_0_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$49",
+      "reference": "S0_0_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$48",
+      "reference": "S0_0_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$51",
+      "reference": "S0_0_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$50",
+      "reference": "S0_0_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$53",
+      "reference": "S0_0_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$52",
+      "reference": "S0_0_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$87",
+      "reference": "S0_0_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$86",
+      "reference": "S0_0_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S0_0_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S0_0_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S0_0_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S0_0_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S0_0_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S0_0_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S0_0_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S0_0_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S0_0_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$61",
+      "reference": "S0_1_VDDIO_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$60",
+      "reference": "S0_1_VDDIO_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$38",
+      "reference": "S0_1_VDDIO_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$66",
+      "reference": "S0_1_VDDIO_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$76",
+      "reference": "S0_1_VDDIO_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$68",
+      "reference": "S0_3_VDD_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$62",
+      "reference": "S0_3_VDD_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$39",
+      "reference": "S0_3_VDD_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$69",
+      "reference": "S0_3_VDD_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$77",
+      "reference": "S0_3_VDD_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$27",
+      "reference": "S0_4_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$44",
+      "reference": "S0_4_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$31",
+      "reference": "S0_4_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$33",
+      "reference": "S0_4_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$34",
+      "reference": "S0_4_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$36",
+      "reference": "S0_4_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$22",
+      "reference": "S0_4_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$26",
+      "reference": "S0_4_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$35",
+      "reference": "S0_4_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$24",
+      "reference": "S0_4_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$91",
+      "reference": "S0_4_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$93",
+      "reference": "S0_4_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$82",
+      "reference": "S0_4_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$84",
+      "reference": "S0_4_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$85",
+      "reference": "S0_4_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$83",
+      "reference": "S0_4_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$55",
+      "reference": "S0_4_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$54",
+      "reference": "S0_4_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$57",
+      "reference": "S0_4_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$56",
+      "reference": "S0_4_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$59",
+      "reference": "S0_4_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$58",
+      "reference": "S0_4_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$89",
+      "reference": "S0_4_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$88",
+      "reference": "S0_4_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S0_4_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S0_4_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S0_4_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S0_4_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S0_4_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S0_4_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S0_4_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S0_4_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S0_4_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$111",
+      "reference": "S1_0_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$115",
+      "reference": "S1_0_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$120",
+      "reference": "S1_0_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$125",
+      "reference": "S1_0_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$134",
+      "reference": "S1_0_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$139",
+      "reference": "S1_0_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$101",
+      "reference": "S1_0_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$110",
+      "reference": "S1_0_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$136",
+      "reference": "S1_0_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$106",
+      "reference": "S1_0_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$141",
+      "reference": "S1_0_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$114",
+      "reference": "S1_0_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$118",
+      "reference": "S1_0_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$128",
+      "reference": "S1_0_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$143",
+      "reference": "S1_0_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$117",
+      "reference": "S1_0_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$108",
+      "reference": "S1_0_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$103",
+      "reference": "S1_0_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$122",
+      "reference": "S1_0_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$119",
+      "reference": "S1_0_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$151",
+      "reference": "S1_0_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$147",
+      "reference": "S1_0_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$107",
+      "reference": "S1_0_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$102",
+      "reference": "S1_0_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S1_0_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S1_0_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S1_0_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S1_0_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S1_0_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S1_0_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S1_0_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S1_0_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S1_0_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$168",
+      "reference": "S1_1_VDDIO_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$165",
+      "reference": "S1_1_VDDIO_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$166",
+      "reference": "S1_1_VDDIO_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$167",
+      "reference": "S1_1_VDDIO_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$179",
+      "reference": "S1_1_VDDIO_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$182",
+      "reference": "S1_3_VDD_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$181",
+      "reference": "S1_3_VDD_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$178",
+      "reference": "S1_3_VDD_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$183",
+      "reference": "S1_3_VDD_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$180",
+      "reference": "S1_3_VDD_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$173",
+      "reference": "S1_4_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$163",
+      "reference": "S1_4_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$160",
+      "reference": "S1_4_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$155",
+      "reference": "S1_4_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$150",
+      "reference": "S1_4_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$145",
+      "reference": "S1_4_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$138",
+      "reference": "S1_4_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$174",
+      "reference": "S1_4_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$132",
+      "reference": "S1_4_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$144",
+      "reference": "S1_4_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$137",
+      "reference": "S1_4_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$156",
+      "reference": "S1_4_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$159",
+      "reference": "S1_4_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$133",
+      "reference": "S1_4_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$129",
+      "reference": "S1_4_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$146",
+      "reference": "S1_4_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$170",
+      "reference": "S1_4_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$176",
+      "reference": "S1_4_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$152",
+      "reference": "S1_4_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$161",
+      "reference": "S1_4_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$124",
+      "reference": "S1_4_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$140",
+      "reference": "S1_4_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$171",
+      "reference": "S1_4_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$177",
+      "reference": "S1_4_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S1_4_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S1_4_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S1_4_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S1_4_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S1_4_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S1_4_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S1_4_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S1_4_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S1_4_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$208",
+      "reference": "S2_0_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$215",
+      "reference": "S2_0_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$220",
+      "reference": "S2_0_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$225",
+      "reference": "S2_0_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$234",
+      "reference": "S2_0_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$239",
+      "reference": "S2_0_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$199",
+      "reference": "S2_0_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$207",
+      "reference": "S2_0_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$236",
+      "reference": "S2_0_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$203",
+      "reference": "S2_0_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$241",
+      "reference": "S2_0_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$214",
+      "reference": "S2_0_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$219",
+      "reference": "S2_0_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$228",
+      "reference": "S2_0_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$243",
+      "reference": "S2_0_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$216",
+      "reference": "S2_0_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$212",
+      "reference": "S2_0_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$198",
+      "reference": "S2_0_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$223",
+      "reference": "S2_0_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$217",
+      "reference": "S2_0_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$251",
+      "reference": "S2_0_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$247",
+      "reference": "S2_0_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$205",
+      "reference": "S2_0_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$196",
+      "reference": "S2_0_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S2_0_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S2_0_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S2_0_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S2_0_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S2_0_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S2_0_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S2_0_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S2_0_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S2_0_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$209",
+      "reference": "S2_1_VDDIO_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$204",
+      "reference": "S2_1_VDDIO_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$188",
+      "reference": "S2_1_VDDIO_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$211",
+      "reference": "S2_1_VDDIO_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$190",
+      "reference": "S2_1_VDDIO_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$186",
+      "reference": "S2_3_VDD_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$187",
+      "reference": "S2_3_VDD_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$184",
+      "reference": "S2_3_VDD_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$185",
+      "reference": "S2_3_VDD_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$189",
+      "reference": "S2_3_VDD_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$269",
+      "reference": "S2_4_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$264",
+      "reference": "S2_4_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$261",
+      "reference": "S2_4_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$256",
+      "reference": "S2_4_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$250",
+      "reference": "S2_4_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$245",
+      "reference": "S2_4_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$238",
+      "reference": "S2_4_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$255",
+      "reference": "S2_4_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$232",
+      "reference": "S2_4_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$244",
+      "reference": "S2_4_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$237",
+      "reference": "S2_4_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$257",
+      "reference": "S2_4_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$260",
+      "reference": "S2_4_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$233",
+      "reference": "S2_4_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$229",
+      "reference": "S2_4_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$246",
+      "reference": "S2_4_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$267",
+      "reference": "S2_4_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$272",
+      "reference": "S2_4_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$252",
+      "reference": "S2_4_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$262",
+      "reference": "S2_4_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$224",
+      "reference": "S2_4_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$240",
+      "reference": "S2_4_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$268",
+      "reference": "S2_4_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$273",
+      "reference": "S2_4_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S2_4_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S2_4_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S2_4_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S2_4_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S2_4_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S2_4_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S2_4_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S2_4_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S2_4_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$360",
+      "reference": "S3_0_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$336",
+      "reference": "S3_0_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$359",
+      "reference": "S3_0_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$358",
+      "reference": "S3_0_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$355",
+      "reference": "S3_0_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$354",
+      "reference": "S3_0_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$339",
+      "reference": "S3_0_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$342",
+      "reference": "S3_0_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$338",
+      "reference": "S3_0_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$340",
+      "reference": "S3_0_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$283",
+      "reference": "S3_0_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$276",
+      "reference": "S3_0_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$300",
+      "reference": "S3_0_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$294",
+      "reference": "S3_0_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$292",
+      "reference": "S3_0_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$278",
+      "reference": "S3_0_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$332",
+      "reference": "S3_0_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$322",
+      "reference": "S3_0_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$331",
+      "reference": "S3_0_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$320",
+      "reference": "S3_0_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$330",
+      "reference": "S3_0_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$318",
+      "reference": "S3_0_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$284",
+      "reference": "S3_0_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$286",
+      "reference": "S3_0_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S3_0_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S3_0_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S3_0_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S3_0_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S3_0_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S3_0_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S3_0_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S3_0_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S3_0_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "\\$309",
+      "reference": "S3_1_VDDIO_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$313",
+      "reference": "S3_1_VDDIO_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$314",
+      "reference": "S3_1_VDDIO_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$275",
+      "reference": "S3_1_VDDIO_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$307",
+      "reference": "S3_1_VDDIO_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$308",
+      "reference": "S3_3_VDD_1_G1",
+      "pin": false
+    },
+    {
+      "layout": "\\$311",
+      "reference": "S3_3_VDD_1_G2",
+      "pin": false
+    },
+    {
+      "layout": "\\$315",
+      "reference": "S3_3_VDD_1_GATE",
+      "pin": false
+    },
+    {
+      "layout": "\\$274",
+      "reference": "S3_3_VDD_1_T",
+      "pin": false
+    },
+    {
+      "layout": "\\$306",
+      "reference": "S3_3_VDD_1_T1",
+      "pin": false
+    },
+    {
+      "layout": "\\$363",
+      "reference": "S3_4_GPIO_1_4_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$337",
+      "reference": "S3_4_GPIO_1_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$362",
+      "reference": "S3_4_GPIO_1_6_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$361",
+      "reference": "S3_4_GPIO_1_6_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$357",
+      "reference": "S3_4_GPIO_1_7_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$356",
+      "reference": "S3_4_GPIO_1_7_N2",
+      "pin": false
+    },
+    {
+      "layout": "\\$346",
+      "reference": "S3_4_GPIO_1_OEB",
+      "pin": false
+    },
+    {
+      "layout": "\\$349",
+      "reference": "S3_4_GPIO_1_PDB",
+      "pin": false
+    },
+    {
+      "layout": "\\$345",
+      "reference": "S3_4_GPIO_1_PDN",
+      "pin": false
+    },
+    {
+      "layout": "\\$347",
+      "reference": "S3_4_GPIO_1_PUB",
+      "pin": false
+    },
+    {
+      "layout": "\\$288",
+      "reference": "S3_4_GPIO_5_1_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$277",
+      "reference": "S3_4_GPIO_5_N1",
+      "pin": false
+    },
+    {
+      "layout": "\\$301",
+      "reference": "S3_4_GPIO_5_P1",
+      "pin": false
+    },
+    {
+      "layout": "\\$298",
+      "reference": "S3_4_GPIO_5_RXL",
+      "pin": false
+    },
+    {
+      "layout": "\\$296",
+      "reference": "S3_4_GPIO_5_RXN",
+      "pin": false
+    },
+    {
+      "layout": "\\$280",
+      "reference": "S3_4_GPIO_5_SCHN",
+      "pin": false
+    },
+    {
+      "layout": "\\$335",
+      "reference": "S3_4_GPIO_L1_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$329",
+      "reference": "S3_4_GPIO_L1_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$334",
+      "reference": "S3_4_GPIO_L2_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$327",
+      "reference": "S3_4_GPIO_L2_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$333",
+      "reference": "S3_4_GPIO_L3_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$325",
+      "reference": "S3_4_GPIO_L3_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "\\$289",
+      "reference": "S3_4_GPIO_L4_INB",
+      "pin": false
+    },
+    {
+      "layout": "\\$291",
+      "reference": "S3_4_GPIO_L4_OUTB",
+      "pin": false
+    },
+    {
+      "layout": "NG",
+      "reference": "S3_4_GPIO_NG",
+      "pin": true
+    },
+    {
+      "layout": "NG_C",
+      "reference": "S3_4_GPIO_NG_C",
+      "pin": true
+    },
+    {
+      "layout": "PDP",
+      "reference": "S3_4_GPIO_PDP",
+      "pin": true
+    },
+    {
+      "layout": "PD_C",
+      "reference": "S3_4_GPIO_PD_C",
+      "pin": true
+    },
+    {
+      "layout": "PG",
+      "reference": "S3_4_GPIO_PG",
+      "pin": true
+    },
+    {
+      "layout": "PG_C",
+      "reference": "S3_4_GPIO_PG_C",
+      "pin": true
+    },
+    {
+      "layout": "PUN",
+      "reference": "S3_4_GPIO_PUN",
+      "pin": true
+    },
+    {
+      "layout": "PUN_C",
+      "reference": "S3_4_GPIO_PUN_C",
+      "pin": true
+    },
+    {
+      "layout": "RXG",
+      "reference": "S3_4_GPIO_RXG",
+      "pin": true
+    },
+    {
+      "layout": "VDD",
+      "reference": "VDD",
+      "pin": true
+    },
+    {
+      "layout": "VDDIO",
+      "reference": "VDDIO",
+      "pin": true
+    },
+    {
+      "layout": "VSS",
+      "reference": "VSS",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y0",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y1",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y2",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y3",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y4",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y5",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y6",
+      "pin": true
+    },
+    {
+      "layout": "Y",
+      "reference": "Y7",
+      "pin": true
+    }
+  ]
+}
