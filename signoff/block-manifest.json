@@ -2,7 +2,7 @@
   "block": "sky130-io-ring",
   "kind": "analog",
   "evidence": {
-    "1": {"file": "signoff/evidence/item1.json", "content_hash": "sha256:c9e3c17390fc0465d60e8a5a664150ff15b52532c6a8f9d97f62dfdfb3dec4d3"},
+    "1": {"file": "signoff/evidence/item1.json", "content_hash": "sha256:75d7ca68782e98d71dc882e5d0d467ecd687367015ff48173d4995a962f4ccc4"},
     "2": {"file": "signoff/evidence/layout-attestation.json", "content_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c"},
     "3": {"file": "signoff/evidence/drc/ring.json", "content_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c"},
     "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:8d55cff76a5b3bbb726b471bf15f3e71ab1b481a5d54a315760748d7c6278fdb"},
