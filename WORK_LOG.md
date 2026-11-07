@@ -3,6 +3,14 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-06
+
+- **PR #74**: feat(sim): add G6 single-corner RC clamp probe
+- **Issue #72** (closed): Add the G6 single-corner probe: RC supply clamps under a power-up ramp and an HBM pulse
+- **PR #73**: feat(signoff): bump klt to 0.9.1 and cite ring LVS match for item 4
+- **PR #70**: chore(signoff): bump klt to 0.9.0 and regenerate evidence; gpio LVS matches
+- **Issue #44** (closed): Draw device-bearing GPIO and clamp layout so klt lvs can match the cells and the ring
+
 ### 2026-10-31
 
 - **PR #68**: Bump Repo Skills 0.24.7 -> 0.25.1
