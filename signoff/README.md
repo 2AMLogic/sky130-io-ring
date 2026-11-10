@@ -10,7 +10,6 @@
 | `gen_drc_reports.py` | Runs `klt drc --deck sky130` on the ring and each cell stream in `layout/gds/` and writes the envelopes under `evidence/drc/`. |
 | `evidence/drc/*.json` | `klt drc` envelopes, never hand-written: `ring.json` (cited for item 3) and one per cell stream beside it. |
 | `gen_lvs_reports.py` | Runs `klt lvs` (sky130 deck, `reference.form: "subckt-call"`) on each stream in `layout/gds/` against `design/netlists/<cell>.spice` and writes the reports under `evidence/lvs/`. |
-| `diag_lvs_without_diodes.py` | Diagnostic only: the `gpio` LVS comparison with the diodes removed from both sides (see the LVS section). Writes nothing under `evidence/`. |
 | `evidence/lvs/*.json` | `klt lvs --format json` reports, never hand-written. One per stream (table below); `ring.json` is the report cited for item 4. |
 | `erc-supply-spec.json` | The `klt erc` supply spec for the assembled ring: `VDDIO`, `VDD`, `VSS` as `"kind": "supply"` nets, a poly-li1-met5 stackup with labels on met3/met4/met5, three checked `ties[]` (n+ tap in n-well on VDDIO, n+ tap in the VDD-body wells on VDD, p+ tap in the substrate on VSS; the VDD-body wells are the four `vdd`-cell clamp wells and 7 wells per GPIO core, listed as boxes by `gen_erc_spec.py`) and a `devices[]` carve-out for the MIM cap body. `VDDIO` and `VDD` declare `roles` (met4, met3) so a severed rail shows as unlabelled conductor (the GPIO core's internal signal nets are labelled on their met2 tracks, `label_layer` `69/5`, so no `VDD` met3 island needs an allowance). `VSS` does not: met5 also carries the pad metal. |
 | `gen_erc_spec.py` | Rewrites the ring-coordinate boxes of `erc-supply-spec.json` (VDD-body wells) from the generator's record of each well's body net; `--check` exits 1 if the committed spec is out of date. Needs the pip `klayout` module. |
@@ -64,14 +63,6 @@ Body ties: `body_verification` is `verified` for `gpio` because the three rails 
 | `corner`, `fill_1`, `fill_5`, `fill_10`, `fill_20`, `vss` | `match` | `unchecked` | Vacuous: schematic and layout both have zero devices; the layout has 1 net against 3 reference pins, and the pins were paired by the comparer (a `warning`, "paired ambiguously"). This shows the flow runs, not that supply wiring is right. |
 | `gpio` | `match` | `unchecked` | With klt 0.9.0 and later the four diode cards resolve (2AMLogic/klayout-tools#4319): all devices, pins and nets compare, `body_verification` is `verified`. Under 0.8.0 this stream was `mismatch` with 11 errors, all from the diode cards. Not compared: the resistor `L`/`W`/`A`/`P` (`device.geometry_not_compared`), and its `R` is a placeholder (`device.placeholder_value`). |
 | `vddio`, `vdd`, `ring` | `match` | `unchecked` | With klt 0.9.1 the reference converts (under 0.9.0 it was refused: `sky130_fd_pr__cap_mim_m3_1` carries `MF=2 m=2`; `m` expanded since 2AMLogic/klayout-tools#4318, `mf=2` rejected until 2AMLogic/klayout-tools#4951 was fixed). The reference nests the clamp subckt, so the generator flattens it (`--flatten-reference auto`). No `device_map`, ignored devices or netlist edits. `ring`: `body_verification` `verified`; `net_correspondence` pairs `VDDIO`, `VDD` and `VSS` and every pad/signal pin. `vdd`: `body_verification` is `unverified` (815 `nfet` bodies; device, pin and net compare still `match`), not investigated here. `power_connectivity` is `unchecked` for all: with `reference.form: "subckt-call"` the supply pins take part in the ordinary compare, so klt does not run that check. |
-
-### Diagnostic: the same comparison without the diodes
-
-```sh
-python3 signoff/diag_lvs_without_diodes.py --klt "uvx --from klayout-tools==0.9.1 klt"
-```
-
-Deletes the diode marker layer from a scratch copy of the `gpio` stream and the four diode cards from a scratch copy of its netlist, runs `klt lvs` (reference flattened) and prints the result; nothing is written under `signoff/`. Exit 0 = `match`. Kept as a diagnostic: with klt 0.9.1 the full `gpio` comparison matches on its own, so it is only useful if the diode cards regress.
 
 Item 4 is `met` with klt 0.9.1, citing `evidence/lvs/ring.json` (`match`, `content_hash` of the ring stream). The manifest also cites it as the `lvs` part of item 11 (see "Regenerate the ERC report"). `match` here covers the flat device, pin and net comparison only: the resistor `L`/`W`/`A`/`P` are not compared and its `R` is a placeholder, and the netlist's sub-circuit boundaries are not compared (flattened).
 
