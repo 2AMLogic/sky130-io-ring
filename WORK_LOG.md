@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-10
+
+- **PR #80**: chore: remove diag_lvs_without_diodes.py and fix stale gpio LVS note
+- **Issue #75** (closed): Remove diag_lvs_without_diodes.py: klt 0.9.x resolves the diode cards it works around
+
 ### 2026-11-07
 
 - **PR #77**: Bump Repo Skills 0.25.1 -> 0.25.10
