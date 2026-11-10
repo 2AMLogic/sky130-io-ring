@@ -131,10 +131,11 @@ current-density, electromigration or snapback check was made.
   annulus. The deck does not check ring construction, so that is the
   generator's own self-check plus the tap-distance result, not a deck result.
   Nothing here is an ESD rating.
-- LVS of this cell is `mismatch` only because `klt lvs` cannot read the
-  reference's four diode cards (2AMLogic/klayout-tools#4319); all 107 other
-  reference devices match. ERC on the ring is clean (`signoff/README.md`). The comparison is flat
-  (`signoff/README.md`).
+- LVS of this cell is `match` with klt 0.9.1: the four diode cards resolve
+  (2AMLogic/klayout-tools#4319), so all devices, pins and nets compare. Not
+  compared: the resistor `L`/`W`/`A`/`P`, and its `R` is a placeholder
+  (`signoff/README.md`). ERC on the ring is clean (`signoff/README.md`). The
+  comparison is flat (`signoff/README.md`).
 - Metal and via widths, current density and electromigration are not
   checked; parasitics are not extracted.
 - The spec is proposed, not ratified; re-check the CELL rows when it is.
