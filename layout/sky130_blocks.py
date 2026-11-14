@@ -93,10 +93,6 @@ class _Inst:
         self.pins = list(zip(sub_pins, call.nets))
 
 
-def _tap_for(kind, net, thick):
-    return dev.tap(kind, net, thick)
-
-
 def _make_groups(row, units, ring_net):
     by_key = {}
     for u in units:
@@ -105,20 +101,20 @@ def _make_groups(row, units, ring_net):
     for (body, thick), us in by_key.items():
         taps = []
         if not ring_net:
-            taps = [_tap_for("n" if row == "n" else "p", body, thick)]
+            taps = [dev.tap("n" if row == "n" else "p", body, thick)]
         body_units = list(taps)
         if not ring_net:                       # a tap at each end and one at least every TAP_SPAN
             span = 0.0
             for u in us:
                 if span and span + u.w > TAP_SPAN:
-                    body_units.append(_tap_for("n" if row == "n" else "p", body, thick))
+                    body_units.append(dev.tap("n" if row == "n" else "p", body, thick))
                     span = 0.0
                 body_units.append(u)
                 span += u.w + GAP_UNIT
         else:
             body_units += us
         if not ring_net and sum(u.w for u in us) > 5.0:
-            body_units.append(_tap_for("n" if row == "n" else "p", body, thick))
+            body_units.append(dev.tap("n" if row == "n" else "p", body, thick))
         groups.append(_Group(row, (body, thick), body_units, ring_net=ring_net))
     return groups
 

@@ -44,8 +44,6 @@ PAD_METAL_MARGIN = 3.0      # met5 pad metal beyond the pad opening
 PAD_CENTRE_Y = 147.5        # centre of the bond pad, distance from die edge
 DEPTH = 195.0              # um, die edge to core side (spec CELL.3: <= 200)
 CHAMFER = 4.0               # 45-degree chamfer / mitre leg at the corner
-FILL_KINDS = "fill_{}"
-KINDS = ("gpio", "vddio", "vdd", "vss", "corner")
 
 # Via cuts: (cut layer, lower metal, upper metal, size, pitch). The lowest
 # step starts at li1 via mcon.
