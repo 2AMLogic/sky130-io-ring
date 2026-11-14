@@ -20,25 +20,30 @@ _None._
 
 `loom:important`; taken before unlabelled work.
 
-_None._
+- **#94**: Gate G2 probe: do the sky130 skew corners move the 5 V devices?
+- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current
 
 ## Ready
 
 Human-approved issues ready for implementation (`loom:issue`).
 
-_None._
+- **#88**: Remove the never-used KINDS and FILL_KINDS constants from layout/sky130_cells.py
+- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current
+- **#98**: Collapse the duplicated open-guard-ring tests into one loop over GUARDED (and cover gpio_pulls)
+- **#99**: Remove dead state, a passthrough wrapper and 7 ignored parameters from the layout generator
 
 ## In Progress
 
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
+- **#97**: Remove duplicated licon rule math: sky130_clamp._licons is sky130_devices._contacts
 
 ## PRs Awaiting Review
 
 PRs waiting on Judge (`loom:review-requested`).
 
-_None._
+- **#101**: refactor(layout): draw clamp contact columns from the one sky130_devices rule
 
 ## Approved (Awaiting Merge)
 
@@ -53,10 +58,15 @@ Issues carrying `loom:curated`.
 - **#2**: Draft and ratify the target spec *(curated)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
+- **#90**: README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs *(curated)*
+- **#93**: README attributes the four unmet T1 items to spec ratification; the record says no_evidence *(curated)*
+- **#94**: Gate G2 probe: do the sky130 skew corners move the 5 V devices? *(curated)*
+- **#95**: vdd LVS report has body_verification "unverified" for 815 nfet bodies; find the cause *(curated)*
+- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current *(curated)*
 
 ## Proposed (Architect / Hermit)
 
-_None._
+- **#100**: Remove dead code in clamp-probe emit_validity: shadowed node() definition and unused locals *(hermit)*
 
 ## Epics
 
@@ -68,12 +78,12 @@ _None._
 |------|-------|
 | Operator merge-risk holds | 0 |
 | Very important | 1 |
-| Important | 0 |
-| Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 1 |
-| PRs awaiting review | 0 |
+| Important | 2 |
+| Ready (`loom:issue`) | 4 |
+| In Progress (`loom:building`) | 2 |
+| PRs awaiting review | 1 |
 | Approved PRs awaiting merge | 0 |
-| Curated | 3 |
-| Architect / Hermit proposals | 0 |
+| Curated | 8 |
+| Architect / Hermit proposals | 1 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->
