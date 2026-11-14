@@ -14,13 +14,13 @@ _None._
 
 `loom:very-important` (one counts per workspace); every stage takes these first.
 
-_None._
+- **#2**: Draft and ratify the target spec
 
 ## Important
 
 `loom:important`; taken before unlabelled work.
 
-- **#2**: Draft and ratify the target spec
+_None._
 
 ## Ready
 
@@ -67,8 +67,8 @@ _None._
 | Bucket | Count |
 |------|-------|
 | Operator merge-risk holds | 0 |
-| Very important | 0 |
-| Important | 1 |
+| Very important | 1 |
+| Important | 0 |
 | Ready (`loom:issue`) | 0 |
 | In Progress (`loom:building`) | 1 |
 | PRs awaiting review | 0 |
