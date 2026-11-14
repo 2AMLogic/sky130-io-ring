@@ -126,7 +126,7 @@
   "category_error_counts": {},
   "counts": {
     "nets": {
-      "layout": 7,
+      "layout": 8,
       "reference": 8,
       "matched": 8
     },
@@ -136,7 +136,7 @@
       "matched": 444
     },
     "pins": {
-      "layout": 2,
+      "layout": 3,
       "reference": 3,
       "matched": 3
     }
@@ -161,7 +161,7 @@
     "engine": "klayout",
     "engine_version": "0.30.13",
     "netgen_binary": null,
-    "layout_sha256": "6aa89b92870f453419b5038c509da601bc9e681c23c31e390314efed09dcd4b0",
+    "layout_sha256": "ea8fb1e59891fc4e36c1594c6c3ad512853cdd670fa8df9fea9d2e1d58d4656a",
     "reference_sha256": "549a20019c899f608d060998bdb6c8b99eafcea60c7e040ab57728f412e02d1a",
     "extracted_netlist": null
   },
@@ -177,7 +177,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:6aa89b92870f453419b5038c509da601bc9e681c23c31e390314efed09dcd4b0",
+      "content_hash": "sha256:ea8fb1e59891fc4e36c1594c6c3ad512853cdd670fa8df9fea9d2e1d58d4656a",
       "role": "layout"
     },
     "klayout_version_mismatch": true
@@ -379,9 +379,9 @@
       "pin": false
     },
     {
-      "layout": null,
+      "layout": "VDD",
       "reference": "VDD",
-      "pin": false
+      "pin": true
     },
     {
       "layout": "VDDIO",
@@ -389,7 +389,7 @@
       "pin": true
     },
     {
-      "layout": "vsubs",
+      "layout": "VSS",
       "reference": "VSS",
       "pin": true
     }

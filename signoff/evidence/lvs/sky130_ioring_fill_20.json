@@ -1,11 +1,14 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "engine": "klayout",
   "layout": {
     "path": "layout/gds/sky130_ioring_fill_20.gds",
     "scope": "repo"
   },
-  "reference": "design/netlists/sky130_ioring_fill_20.spice",
+  "reference": {
+    "path": "design/netlists/sky130_ioring_fill_20.spice",
+    "scope": "repo"
+  },
   "top": "sky130_ioring_fill_20",
   "reference_top": "SKY130_IORING_FILL_20",
   "reference_conversion": {
@@ -61,17 +64,17 @@
     "finding_count": 0
   },
   "device_parameter_coverage": [],
-  "mismatch_count": 4,
+  "mismatch_count": 3,
   "error_count": 0,
   "category_counts": {
-    "topology": 4
+    "topology": 3
   },
   "category_error_counts": {},
   "counts": {
     "nets": {
-      "layout": 1,
+      "layout": 4,
       "reference": 3,
-      "matched": 3
+      "matched": 4
     },
     "devices": {
       "layout": 0,
@@ -79,9 +82,9 @@
       "matched": 0
     },
     "pins": {
-      "layout": 1,
+      "layout": 4,
       "reference": 3,
-      "matched": 3
+      "matched": 4
     }
   },
   "device_classes": [
@@ -102,17 +105,17 @@
   ],
   "environment": {
     "engine": "klayout",
-    "engine_version": "0.30.12",
+    "engine_version": "0.30.13",
     "netgen_binary": null,
-    "layout_sha256": "3e7f8d5c85349c2ca5cc57d8e7c96c45ba5c2f5521b4f9a04cad0eb1110907c0",
+    "layout_sha256": "3a092bfb61932072d22798d1df581f80829a066240705e2e496e43d88558b348",
     "reference_sha256": "e0bc40527743def93312722875592aaf48fec82cf7ee4d12d191346469116042",
     "extracted_netlist": null
   },
   "provenance": {
-    "klt_version": "0.9.0",
-    "klt_git_commit": "5dbbad05ff42265c92a6f3d2f20d1bbcd2957d49",
-    "klt_reinstall_spec": "klayout-tools==0.9.0",
-    "klayout_version": "0.30.12",
+    "klt_version": "0.9.1",
+    "klt_git_commit": "4d0d29be4fd991f499d59e783a908082d5e24c56",
+    "klt_reinstall_spec": "klayout-tools==0.9.1",
+    "klayout_version": "0.30.13",
     "pdk": null,
     "deck": {
       "name": "sky130",
@@ -120,28 +123,12 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:3e7f8d5c85349c2ca5cc57d8e7c96c45ba5c2f5521b4f9a04cad0eb1110907c0",
+      "content_hash": "sha256:3a092bfb61932072d22798d1df581f80829a066240705e2e496e43d88558b348",
       "role": "layout"
     },
-    "klayout_version_mismatch": false
+    "klayout_version_mismatch": true
   },
   "mismatches": [
-    {
-      "category": "topology",
-      "severity": "warning",
-      "description": "nets were paired ambiguously; the comparer resolved it structurally (consider a hints.same_nets entry to pin this down)",
-      "side": "both",
-      "net": {
-        "layout": "vsubs",
-        "reference": "VDD"
-      },
-      "device": null,
-      "property": null,
-      "details": null,
-      "circuit": null,
-      "instance": null,
-      "subcircuit": null
-    },
     {
       "category": "topology",
       "severity": "warning",
@@ -197,18 +184,23 @@
   "net_correspondence": [
     {
       "layout": "vsubs",
+      "reference": null,
+      "pin": true
+    },
+    {
+      "layout": "VDD",
       "reference": "VDD",
       "pin": true
     },
     {
-      "layout": null,
+      "layout": "VDDIO",
       "reference": "VDDIO",
-      "pin": false
+      "pin": true
     },
     {
-      "layout": null,
+      "layout": "VSS",
       "reference": "VSS",
-      "pin": false
+      "pin": true
     }
   ]
 }
