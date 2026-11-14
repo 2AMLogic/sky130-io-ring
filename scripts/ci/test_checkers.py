@@ -71,6 +71,62 @@ class EvidenceFormat(unittest.TestCase):
             errors, _ = ef.check_tree(t)
             self.assertEqual(len(errors), len(ef.EVIDENCE_DIRS))
 
+    def test_dangling_log_rejected_with_base(self):
+        # With a base, a path-shaped value must resolve; without one, the
+        # check stays shape-only (the contrast between the two asserts is
+        # what pins the existence behaviour).
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            rec.mkdir()
+            self.assertEqual(ef.check_record(json.dumps(GOOD), "r"), [])
+            errors = ef.check_record(json.dumps(GOOD), "r", base=rec)
+            self.assertTrue(any("no such file" in e for e in errors))
+            # shape errors still take precedence over the existence check
+            shape = ef.check_record(bad(runs={"s": {"log": "/abs/x.log"}}), "r", base=rec)
+            self.assertTrue(any("absolute path" in e for e in shape))
+
+    def test_resolvable_log_passes_with_base(self):
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            (rec / "logs").mkdir(parents=True)
+            (rec / "logs" / "smoke.log").write_text("x\n")
+            self.assertEqual(ef.check_record(json.dumps(GOOD), "r", base=rec), [])
+
+    def test_dir_shaped_value_passes_with_base(self):
+        # PATH_KEY_RE matches `dir`/`dirs` too; a directory is a valid target.
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            (rec / "logs").mkdir(parents=True)
+            (rec / "logs" / "smoke.log").write_text("x\n")
+            rec2 = dict(GOOD, runs={"smoke": {"log": "logs/smoke.log", "dir": "logs"}})
+            self.assertEqual(ef.check_record(json.dumps(rec2), "r", base=rec), [])
+
+    def test_no_path_value_passes_with_base(self):
+        rec = copy.deepcopy(GOOD)
+        del rec["runs"]["smoke"]["log"]
+        with tempfile.TemporaryDirectory() as t:
+            self.assertEqual(ef.check_record(json.dumps(rec), "r", base=Path(t)), [])
+
+    def test_tree_dangling_log_fails_and_created_log_passes(self):
+        # End-to-end, mirroring the real record/record.json + record/logs/
+        # layout: the base is the record's own directory, NOT the repo root.
+        with tempfile.TemporaryDirectory() as t:
+            root = Path(t)
+            for d in ef.EVIDENCE_DIRS:
+                (root / d).mkdir()
+                (root / d / "README.md").write_text("x\n")
+            rec = root / "sim" / "probe" / "record"
+            rec.mkdir(parents=True)
+            (rec / "record.json").write_text(json.dumps(GOOD))
+            errors, n = ef.check_tree(root)
+            self.assertEqual(n, 1)
+            self.assertTrue(any("no such file" in e for e in errors))
+            (rec / "logs").mkdir()
+            (rec / "logs" / "smoke.log").write_text("x\n")
+            errors, n = ef.check_tree(root)
+            self.assertEqual(errors, [])
+            self.assertEqual(n, 1)
+
 
 class AppendOnly(unittest.TestCase):
     def test_add_passes(self):
