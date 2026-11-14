@@ -17,10 +17,10 @@ ESD-rated or qualified, and metal widths were not checked against a foundry
 electromigration or snapback rule (decision 0004).
 """
 import ringgeom as g
+import sky130_devices as dev
 
 # ------------------------------------------------------------ constants ----
 SDW = 0.34          # source/drain region width between gates (licon + 2 x 0.085)
-LICON = 0.17
 LI_W = 0.17
 BUS_H = 0.30        # met1 bus height (via1 enclosure 0.055 each side)
 STRAP_W = 0.40      # met2 strap width
@@ -56,14 +56,6 @@ class Draw:
         self.ctx.add_region(self.cell, layer, region)
 
 
-def _licons(W):
-    """Centre y offsets (from the diffusion bottom) of a contact column."""
-    n = int((W - 0.12 - LICON) / 0.34) + 1
-    span = (n - 1) * 0.34 + LICON
-    y0 = (W - span) / 2 + LICON / 2
-    return [y0 + i * 0.34 for i in range(n)]
-
-
 def _via1(d, x, y):
     d("via", g.cbox(x, y, 0.15))
 
@@ -84,7 +76,8 @@ def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net, tap_net):
     timp = "psdm" if kind == "n" else "nsdm"     # implant over the body tap
 
     d("diff", g.box(x0, yd0, xend, yd1))
-    d(imp, g.box(x0 - 0.125, yd0 - 0.125, xend + 0.125, yd1 + 0.125))
+    d(imp, g.box(x0 - dev.SDM_EXT, yd0 - dev.SDM_EXT,
+                 xend + dev.SDM_EXT, yd1 + dev.SDM_EXT))
     if hv:
         d("hvi", g.box(x0 - 0.3, yd0 - 0.3, xend + 0.3, yd1 + 0.3))
     # fingers and gate poly bus
@@ -94,25 +87,26 @@ def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net, tap_net):
         xa = x0 + i * pitch + SDW
         d("poly", g.box(xa, ry + 0.9, xa + L, yd1 + ENDCAP))
     # source / drain contacts, li1 strips
-    cys = _licons(W)
-    s_top = yd0 + cys[-1] + LICON / 2 + 0.08
-    d_bot = yd0 + cys[0] - LICON / 2 - 0.08
+    cys = dev.contacts(0.0, W)
+    s_top = yd0 + cys[-1] + dev.LICON / 2 + 0.08
+    d_bot = yd0 + cys[0] - dev.LICON / 2 - 0.08
     for i in range(nf + 1):
         xc = x0 + i * pitch + SDW / 2
         for cy in cys:
-            d("licon1", g.cbox(xc, yd0 + cy, LICON))
+            d("licon1", g.cbox(xc, yd0 + cy, dev.LICON))
         if i % 2 == 0:   # source: li1 down to the tap band
             d("li1", g.box(xc - LI_W / 2, ys - LI_W / 2, xc + LI_W / 2, s_top))
         else:            # drain: li1 up to the drain bus
             d("li1", g.box(xc - LI_W / 2, d_bot, xc + LI_W / 2, yd + LI_W / 2))
-            d("mcon", g.cbox(xc, yd, LICON))
+            d("mcon", g.cbox(xc, yd, dev.LICON))
     # body tap strip (p+ in p-sub for n rows, n+ in the well for p rows)
     d("tap", g.box(x0, ry + TAP_Y[0], xend, ry + TAP_Y[1]))
-    d(timp, g.box(x0 - 0.125, ry + TAP_Y[0] - 0.125, xend + 0.125, ry + TAP_Y[1] + 0.125))
+    d(timp, g.box(x0 - dev.SDM_EXT, ry + TAP_Y[0] - dev.SDM_EXT,
+                  xend + dev.SDM_EXT, ry + TAP_Y[1] + dev.SDM_EXT))
     d("li1", g.box(x0, ys - LI_W / 2, xend, ys + LI_W / 2))
     xc = x0 + 0.2
     while xc <= xend - 0.2:
-        d("licon1", g.cbox(xc, ys, LICON))
+        d("licon1", g.cbox(xc, ys, dev.LICON))
         xc += 0.68
     # met1 buses: source/tap (mcon every 3 um) and drain
     xs0 = STRAP_X[s_net] - 0.2
@@ -120,15 +114,15 @@ def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net, tap_net):
     d("met1", g.box(xs0, ys - BUS_H / 2, xend, ys + BUS_H / 2))
     x = x0 + 0.2
     while x <= xend - 0.2:
-        d("mcon", g.cbox(x, ys, LICON))
+        d("mcon", g.cbox(x, ys, dev.LICON))
         x += 3.0
     d("met1", g.box(xd0, yd - BUS_H / 2, xend, yd + BUS_H / 2))
     # gate pad on the poly bus, left of the array
     gxc, gyc = x0 - 0.5, ry + (POLYBUS_Y[0] + POLYBUS_Y[1]) / 2
-    d("licon1", g.cbox(gxc, gyc, LICON))
+    d("licon1", g.cbox(gxc, gyc, dev.LICON))
     d("npc", g.cbox(gxc, gyc, 0.4))
     d("li1", g.cbox(gxc, gyc, LI_W, 0.34))
-    d("mcon", g.cbox(gxc, gyc, LICON))
+    d("mcon", g.cbox(gxc, gyc, dev.LICON))
     xg0 = STRAP_X[g_net] - 0.2
     d("met1", g.box(xg0, gyc - BUS_H / 2, gxc + 0.15, gyc + BUS_H / 2))
     # vias from the buses up to their straps
@@ -147,10 +141,10 @@ RES_PITCH = 3.2     # bar to bar
 def _head(d, x, y):
     """Poly head contact: licon pair, npc, li1, mcon, met1 pad centred near x."""
     for dx in (0.4, 1.0):
-        d("licon1", g.cbox(x + dx, y, LICON))
+        d("licon1", g.cbox(x + dx, y, dev.LICON))
     d("npc", g.box(x - 0.1, y - 0.3, x + 1.4, y + 0.3))
     d("li1", g.box(x + 0.235, y - LI_W / 2, x + 1.165, y + LI_W / 2))
-    d("mcon", g.cbox(x + 0.7, y, LICON))
+    d("mcon", g.cbox(x + 0.7, y, dev.LICON))
     d("met1", g.cbox(x + 0.7, y, 0.3))
 
 
