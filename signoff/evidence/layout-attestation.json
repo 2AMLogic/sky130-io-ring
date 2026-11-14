@@ -3,18 +3,18 @@
   "provenance": {
     "deck": null,
     "input": {
-      "content_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c",
+      "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc",
       "path": {
         "path": "layout/gds/sky130_ioring_ring.gds",
         "scope": "repo"
       }
     },
-    "klayout_version": "0.30.10",
+    "klayout_version": "0.30.13",
     "klt_version": "n/a (written by layout/gen_ring.py)",
     "pdk": null,
     "regeneration": {
       "generator": "python3 layout/gen_ring.py --out layout/gds",
-      "regenerated_hash": "sha256:ab39ef3c440f0367dd70099eb546af0bdb9b0896fe040166a1e731c3902d319c"
+      "regenerated_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"
     }
   },
   "schema_version": 1,

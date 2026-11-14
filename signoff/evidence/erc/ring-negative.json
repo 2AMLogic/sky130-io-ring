@@ -230,14 +230,14 @@
   },
   "ties_disclosure": null,
   "provenance": {
-    "klt_version": "0.9.0",
-    "klt_git_commit": "5dbbad05ff42265c92a6f3d2f20d1bbcd2957d49",
-    "klt_reinstall_spec": "klayout-tools==0.9.0",
-    "klayout_version": "0.30.12",
+    "klt_version": "0.9.1",
+    "klt_git_commit": "4d0d29be4fd991f499d59e783a908082d5e24c56",
+    "klt_reinstall_spec": "klayout-tools==0.9.1",
+    "klayout_version": "0.30.13",
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:5eee5961caf1f334d3ebe2f8591c8b7db794cd3033ff499aa96568e78df13417",
+      "content_hash": "sha256:15680df67a72aa078a1f47f7d4dd56204df983b8e37b6b26b4d8bc9528a17a95",
       "role": "layout"
     },
     "spec": {
@@ -261,17 +261,17 @@
       {
         "name": "met3",
         "label_layer": "70/5",
-        "label_text_count": 12
+        "label_text_count": 40
       },
       {
         "name": "met4",
         "label_layer": "71/5",
-        "label_text_count": 12
+        "label_text_count": 40
       },
       {
         "name": "met5",
         "label_layer": "72/5",
-        "label_text_count": 20
+        "label_text_count": 48
       }
     ]
   },

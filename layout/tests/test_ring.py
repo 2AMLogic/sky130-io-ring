@@ -95,6 +95,25 @@ class Good(unittest.TestCase):
             self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
                              [(g.U(30), g.U(33))] * 2, kind)
 
+    def test_every_cell_labels_each_rail_band(self):
+        """Every edge cell names each rail band on the rail's label layer.
+
+        A device body resolves only to a named net: with the gpio cell's rails
+        unlabelled klt reported 106 bodies unverified (klayout-tools#4361), and
+        the supply cells still drew only their own pad net, leaving the vdd
+        clamp's 815 bodies unverified.
+        """
+        p, layout, cells, *_ = build()
+        for kind, cell in cells.items():
+            if kind == "corner":
+                continue
+            for net, (b0, b1) in T.RAIL_BANDS.items():
+                layer = layout.layer(*T.LAYERS[p["rail_layers"][net] + ".label"])
+                hits = [s.text for s in cell.shapes(layer).each()
+                        if s.is_text() and s.text.string == net
+                        and g.U(b0) <= s.text.y <= g.U(b1)]
+                self.assertTrue(hits, f"{kind}: no {net} label inside its rail band")
+
     def test_erc_spec_lists_the_vdd_clamp_wells(self):
         """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes (among others)."""
         import json

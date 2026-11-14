@@ -29,13 +29,17 @@ Written without timestamps, so output is byte-identical across runs.
 | Cell | Role |
 |---|---|
 | `sky130_ioring_gpio` | pad (`PAD`) and every device of the GPIO netlists, wired: 106 MOS fingers, 4 junction diodes, 1 poly resistor (see below) |
-| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`); `_vddio` and `_vdd` also carry the supply clamp (below) |
+| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail; `_vddio` and `_vdd` also carry the supply clamp (below) |
 | `sky130_ioring_corner` | square corner, edge = cell depth, rails and strips turn 90 degrees with 45-degree chamfer/mitre, no pad |
 | `sky130_ioring_fill_{1,5,10,20}` | rails and guard strips only |
 | `sky130_ioring_ring` | closed ring: 4 corners + 4 identical sides (five pad cells, 37 um of filler) |
 
 Pin/net names (`PAD`, `VSS`, `VDDIO`, `VDD`) are labels on met5/met4/met3 label
-purposes and are the inputs to DRC/LVS/ERC; keep them stable.
+purposes and are the inputs to DRC/LVS/ERC; keep them stable. Every edge cell
+labels all three rail bands where it draws them (`_edge_common`): a device body
+resolves only to a named net, so an unnamed rail conductor leaves device bodies
+`unverified` in LVS. The corner labels none — its bands continue the
+neighbours'.
 
 ## What is drawn (die edge at y = 0, local frame of an edge cell)
 

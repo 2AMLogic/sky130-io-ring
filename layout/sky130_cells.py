@@ -97,6 +97,9 @@ def _edge_common(ctx, cell, w):
     """Rails and continuous guard strips spanning the full cell width [0, w]."""
     for net, (b0, b1) in RAIL_BANDS.items():
         ctx.add(cell, ctx.rail_layer[net], g.box(0, b0, w, b1))
+        # name every rail band, in every cell: a device body resolves only to a
+        # named net, and an unnamed tap conductor leaves bodies "unverified"
+        _label(ctx, cell, ctx.rail_layer[net] + ".label", net, w / 2, (b0 + b1) / 2)
     ctx.add(cell, "tap", g.box(0, PSTRIP[0], w, PSTRIP[1]))
     ctx.add(cell, "psdm", g.box(0, PSTRIP[0] - 1, w, PSTRIP[1] + 1))
     ctx.add(cell, "li1", g.box(0, PSTRIP[0], w, PSTRIP[1]))
@@ -134,12 +137,10 @@ def _supply_pad(ctx, cell, w, net):
     sx0, sx1 = cx - 5, cx + 5
     if net == "VSS":
         ctx.add(cell, "met5", g.box(sx0, b0, sx1, cy))
-        _label(ctx, cell, "met5.label", "VSS", cx, (b0 + b1) / 2)
         return
     # stub on the rail's own layer up to the pad, then a stack to met5
     ctx.add(cell, rl, g.box(sx0, b0, sx1, cy + 5))
     _stack(ctx, cell, cx, cy, rl, "met5", patch=10.0)
-    _label(ctx, cell, rl + ".label", net, cx, (b0 + b1) / 2)
 
 
 # ---- GPIO devices: the core block and its connection to rails and pad ---
@@ -231,9 +232,6 @@ def build_edge(ctx, kind, w):
         cx, cy = _pad(ctx, cell, w)
         _gpio_devices(ctx, cell, w)
         _label(ctx, cell, "met5.label", "PAD", cx, cy)
-        for net, (b0, b1) in RAIL_BANDS.items():      # name the rails, as the supply pads do
-            layer = ctx.rail_layer[net]
-            _label(ctx, cell, layer + ".label", net, w / 2, (b0 + b1) / 2)
     else:
         _supply_pad(ctx, cell, w, {"vddio": "VDDIO", "vdd": "VDD", "vss": "VSS"}[kind])
         if kind in ("vddio", "vdd"):
