@@ -292,7 +292,7 @@ def generate(out_dir, tech):
     return ring, params, size
 
 
-def attestation(tech, params, ring_rel, ring_hash, size):
+def attestation(params, ring_rel, ring_hash):
     return {
         "schema_version": 1,
         "kind": "generic",
@@ -330,7 +330,7 @@ def main(argv=None):
     if a.attest:
         rel = ring.resolve().relative_to(REPO).as_posix()
         Path(a.attest).write_text(json.dumps(
-            attestation(tech, params, rel, h, size), indent=2, sort_keys=True) + "\n")
+            attestation(params, rel, h), indent=2, sort_keys=True) + "\n")
     return 0
 
 
