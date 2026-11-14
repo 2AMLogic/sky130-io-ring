@@ -4,7 +4,8 @@ An I/O ring on SkyWater sky130 (GPIO, supply pads with ESD clamps, corner and
 filler cells, closed into a demonstration ring), drawn by a generator and
 checked with klayout-tools (`klt`), xschem and ngspice.
 
-Status as of 2026-11-13, `main` @ `3042d4c`. Tracker read the same day.
+Status as of 2026-11-13, re-verified 2026-11-14 against `main` @ `7234630`.
+Tracker read 2026-11-13.
 The verdict of record is [`signoff/signoff-record.json`](signoff/signoff-record.json);
 this file explains it and orders the work, and never overrides it.
 
@@ -42,10 +43,16 @@ What "met" does and does not cover is stated in
 - The spec ([`spec/io-ring.md`](spec/io-ring.md), 59 rows, four decision
   records) is **proposed, not ratified**. Nine gates G1 to G9 remain open
   ([`spec/review-2026-10.md`](spec/review-2026-10.md) section 5).
+- Items 5 to 8 are `no_evidence` in the record, which is what the Status column
+  above states; the "waits on #2" reasons are this file's ordering, not the
+  record's grading. Open #93 asks the same question of the README's wording —
+  however it lands, this table should read the same way.
 
 The layout rungs of the README's maturity ladder are evidenced ahead of its
-first rung (spec ratified); the remaining T1 work is on the analog side. The
-README status lines and the 2026-10-17 checklist in tracker #3 lag this state.
+first rung (spec ratified); the remaining T1 work is on the analog side. PR #89
+(`aa9dfff`, 2026-11-14) brought the README's status lines in line with the
+record; what still lags is the DRC drawing parenthetical (#90), the unmet-item
+attribution (#93) and the 2026-10-17 checklist in tracker #3.
 
 ## Now
 
@@ -55,31 +62,39 @@ Can start today; each is one PR.
    43 rows in scope, 16 held out by gate) carries `loom:changes-requested`
    from the EE-key review and has not moved since 2026-10-25. Done when the
    required changes in that review are addressed on the PR head and it is back
-   at `loom:review-requested`. Issue #24. Blocks: nothing.
-2. **Bring the README in line with the committed evidence.** It still says
-   "nothing is designed yet", "no supply clamp" in the DRC drawing and "no ERC
-   result". Done when those lines match `signoff/README.md`, the item-10
-   attestation is re-made (README is hash-pinned) and CI is green. No issue
-   yet (seed 1).
+   at `loom:review-requested`. Issue #24, now `loom:building`, so this one is
+   already in flight. Blocks: nothing.
+2. **Clear the README line that understates the ring DRC coverage.** PR #89
+   (`aa9dfff`, closing #86) already replaced "nothing is designed yet" and the
+   ERC sentence and re-made the item-10 attestation. What remains on `main` is
+   the DRC drawing parenthetical at `README.md:108`, "(but no supply clamp)",
+   which contradicts `layout/README.md` and `signoff/README.md`. Done when that
+   parenthetical matches the committed drawing, the item-10 attestation is
+   re-made (README is hash-pinned) and CI is green. Issue #90. The other live
+   README edit is #93 (the unmet-item attribution); both need the same
+   re-attestation, so they are cheapest together. #92 restates closed #86's
+   scope and is parked `loom:blocked` for disposition — the residuals are #90
+   and #93, not #92; do not build #92 as filed.
 3. **Close the read-only half of gate G2.** Read the 5 V device corner files
    of the pinned PDK and run one single-corner probe per skew corner showing
    whether `ff ss sf fs` move the 5 V NMOS. Done when a `kind: probe` record
    and README exist under a new `sim/` directory and the finding is stated.
-   No issue yet (seed 2).
+   Issue #94.
 4. **Explain `body_verification: unverified` on the `vdd` LVS report** (815
    `nfet` bodies; `gpio` and `ring` are `verified`). Done when the report
    reads `verified` after a generator or label fix, or the cause is written
-   in `signoff/README.md` with the upstream klayout-tools issue linked. No
-   issue yet (seed 3).
+   in `signoff/README.md` with the upstream klayout-tools issue linked. Issue
+   #95.
 5. **Diode forward-drop probe at the ESD.2 current** (review section 7,
    item 2). Done when a `kind: probe` record reports the forward drop of the
    pad diodes at the HBM peak current and labels anything beyond the diode
-   model's stated range as outside model validity. No issue yet (seed 4).
+   model's stated range as outside model validity. Issue #96.
 6. **Resolve where the clamp trigger stops false-triggering.** The G6 probe
-   has points at 1 us (fully on) and 10 us (off) only, and the post-ramp
-   supply current had not settled. Done when a new probe record brackets the
-   transition rise time for both clamps and reports a settled leakage. No
-   issue yet.
+   swept four rise times (1 us, 10 us, 100 us, 1 ms) and so brackets the
+   transition only between its 1 us (fully on) and 10 us (off) points; the
+   post-ramp supply current had also not settled. Done when a new probe record
+   narrows the transition rise time for both clamps and reports a settled
+   leakage. No issue yet.
 
 ## Next
 
@@ -97,6 +112,9 @@ Can start today; each is one PR.
   aggregated characterization report.
 - **Point tracker #3 at the record.** Its own acceptance criterion says it
   closes with a pointer once a manifest and committed record exist; both do.
+- **Link this file from the README's repo-layout block.** It is an orphan root
+  doc otherwise. The edit is another hash-pinned README change, so it should
+  ride with #90 or #93 rather than spend a re-attestation of its own.
 
 ## Later
 
