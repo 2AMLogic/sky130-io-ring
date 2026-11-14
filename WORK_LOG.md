@@ -3,6 +3,11 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-14
+
+- **PR #89**: docs: align README status, evidence and layout block with the signoff record
+- **Issue #86** (closed): README overstates and understates repo state: four claims contradicted by signoff evidence (fix requires re-pinning the item-10 attestation)
+
 ### 2026-11-12
 
 - **PR #83**: Bump Repo Skills 0.25.10 -> 0.26.1
