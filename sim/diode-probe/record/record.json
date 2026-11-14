@@ -1,0 +1,2522 @@
+{
+  "all_converged": true,
+  "corner": "tt",
+  "kind": "probe",
+  "note": "Single-corner probe, not item-5 evidence; no corner or temperature set, no failure current, no ESD rating. The diode areas in design/netlists/sky130_ioring_gpio_esd.spice are explicit placeholders (gate G1, decision 0004), so every voltage here is the drop of a placeholder at a placeholder area. The diode models carry a stated |V| 0 to 5.0 V validity range and NO current validity range at all: current_validity=no_current_validity_range_on_record sits on every diode line, and a within_esd7_model_range voltage verdict is not a pass on ESD.3.",
+  "pdk_revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "pdk_variant": "sky130A",
+  "probe": "G1/ESD.3 single-corner pad-diode forward-drop probe at the ESD.2 current",
+  "runs": {
+    "probe": {
+      "converged": true,
+      "errors": [],
+      "log": "logs/probe.log",
+      "results": {
+        "dcop_sn_i0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.0,
+          "i_kcl_A": -7.01901e-09,
+          "i_kcl_err_A": -7.01901e-09,
+          "vddio_V": 3.3,
+          "vpad_V": 0.00026054,
+          "vrxg_V": 0.00026055
+        },
+        "dcop_sn_i0.3": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.3,
+          "i_kcl_A": -0.3,
+          "i_kcl_err_A": 2.97811e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.018673,
+          "vrxg_V": 0.000200197
+        },
+        "dcop_sn_i0.38": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.38,
+          "i_kcl_A": -0.38,
+          "i_kcl_err_A": 2.62541e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0223217,
+          "vrxg_V": 0.000188568
+        },
+        "dcop_sn_i0.38_XDLN": {
+          "cd_F": 0.013396,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000111608,
+          "vabs_V": 0.000188568,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000188568
+        },
+        "dcop_sn_i0.38_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29981,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29981
+        },
+        "dcop_sn_i0.38_XDN": {
+          "cd_F": 0.271641,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.376876,
+          "vabs_V": 0.0223217,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0223217
+        },
+        "dcop_sn_i0.38_XDP": {
+          "cd_F": 0.0791661,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32232,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32232
+        },
+        "dcop_sn_i0.38_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0225102,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.39": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.39,
+          "i_kcl_A": -0.389999,
+          "i_kcl_err_A": 6.93346e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.022751,
+          "vrxg_V": 0.0001872
+        },
+        "dcop_sn_i0.395": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.395,
+          "i_kcl_A": -0.395,
+          "i_kcl_err_A": 2.96643e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0229636,
+          "vrxg_V": 0.000186522
+        },
+        "dcop_sn_i0.395_XDLN": {
+          "cd_F": 0.013396,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000110401,
+          "vabs_V": 0.000186522,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000186522
+        },
+        "dcop_sn_i0.395_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29981,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29981
+        },
+        "dcop_sn_i0.395_XDN": {
+          "cd_F": 0.27175,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.391875,
+          "vabs_V": 0.0229636,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0229636
+        },
+        "dcop_sn_i0.395_XDP": {
+          "cd_F": 0.0791616,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32296,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32296
+        },
+        "dcop_sn_i0.395_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0231501,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.39_XDLN": {
+          "cd_F": 0.013396,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000110801,
+          "vabs_V": 0.0001872,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0001872
+        },
+        "dcop_sn_i0.39_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29981,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29981
+        },
+        "dcop_sn_i0.39_XDN": {
+          "cd_F": 0.271714,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.386875,
+          "vabs_V": 0.022751,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.022751
+        },
+        "dcop_sn_i0.39_XDP": {
+          "cd_F": 0.0791631,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32275,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32275
+        },
+        "dcop_sn_i0.39_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0229382,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.3_XDLN": {
+          "cd_F": 0.0133959,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00011847,
+          "vabs_V": 0.000200197,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000200197
+        },
+        "dcop_sn_i0.3_XDLP": {
+          "cd_F": 0.00396609,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.2998,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.2998
+        },
+        "dcop_sn_i0.3_XDN": {
+          "cd_F": 0.271027,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.296883,
+          "vabs_V": 0.018673,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.018673
+        },
+        "dcop_sn_i0.3_XDP": {
+          "cd_F": 0.0791912,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.31867,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.31867
+        },
+        "dcop_sn_i0.3_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0188732,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.4": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.4,
+          "i_kcl_A": -0.4,
+          "i_kcl_err_A": 1.5221e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0231749,
+          "vrxg_V": 0.000185849
+        },
+        "dcop_sn_i0.42": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.42,
+          "i_kcl_A": -0.42,
+          "i_kcl_err_A": -9.84712e-08,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0240068,
+          "vrxg_V": 0.000183197
+        },
+        "dcop_sn_i0.42_XDLN": {
+          "cd_F": 0.013396,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000108438,
+          "vabs_V": 0.000183197,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000183197
+        },
+        "dcop_sn_i0.42_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29982,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29982
+        },
+        "dcop_sn_i0.42_XDN": {
+          "cd_F": 0.271927,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.416874,
+          "vabs_V": 0.0240068,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0240068
+        },
+        "dcop_sn_i0.42_XDP": {
+          "cd_F": 0.0791545,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32401,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32401
+        },
+        "dcop_sn_i0.42_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.02419,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.4_XDLN": {
+          "cd_F": 0.013396,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000110003,
+          "vabs_V": 0.000185849,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000185849
+        },
+        "dcop_sn_i0.4_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29981,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29981
+        },
+        "dcop_sn_i0.4_XDN": {
+          "cd_F": 0.271786,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.396875,
+          "vabs_V": 0.0231749,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0231749
+        },
+        "dcop_sn_i0.4_XDP": {
+          "cd_F": 0.0791602,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32317,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32317
+        },
+        "dcop_sn_i0.4_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0233607,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0.5": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.5,
+          "i_kcl_A": -0.499999,
+          "i_kcl_err_A": 7.28294e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.027142,
+          "vrxg_V": 0.000173206
+        },
+        "dcop_sn_i0.5_XDLN": {
+          "cd_F": 0.0133961,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000102539,
+          "vabs_V": 0.000173206,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000173206
+        },
+        "dcop_sn_i0.5_XDLP": {
+          "cd_F": 0.00396608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29983,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29983
+        },
+        "dcop_sn_i0.5_XDN": {
+          "cd_F": 0.272461,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.496867,
+          "vabs_V": 0.027142,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.027142
+        },
+        "dcop_sn_i0.5_XDP": {
+          "cd_F": 0.0791329,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.32714,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.32714
+        },
+        "dcop_sn_i0.5_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0273152,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i0_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00026055
+        },
+        "dcop_sn_i0_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sn_i0_XDN": {
+          "cd_F": 0.267908,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 0.00026054,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00026054
+        },
+        "dcop_sn_i0_XDP": {
+          "cd_F": 0.0793222,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sn_i0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 1.03796e-08,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i1.0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -1.0,
+          "i_kcl_A": -1.0,
+          "i_kcl_err_A": 3.34686e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.041998,
+          "vrxg_V": 0.000125863
+        },
+        "dcop_sn_i1.0_XDLN": {
+          "cd_F": 0.0133965,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -7.45647e-05,
+          "vabs_V": 0.000125863,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000125863
+        },
+        "dcop_sn_i1.0_XDLP": {
+          "cd_F": 0.00396606,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29987,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29987
+        },
+        "dcop_sn_i1.0_XDN": {
+          "cd_F": 0.275038,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.996839,
+          "vabs_V": 0.041998,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.041998
+        },
+        "dcop_sn_i1.0_XDP": {
+          "cd_F": 0.079031,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.342,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.342
+        },
+        "dcop_sn_i1.0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0421239,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i1.33333": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -1.33333,
+          "i_kcl_A": -1.33333,
+          "i_kcl_err_A": -8.07552e-07,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0491679,
+          "vrxg_V": 0.000103016
+        },
+        "dcop_sn_i1.33333_XDLN": {
+          "cd_F": 0.0133967,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -6.10501e-05,
+          "vabs_V": 0.000103016,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000103016
+        },
+        "dcop_sn_i1.33333_XDLP": {
+          "cd_F": 0.00396605,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.2999,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.2999
+        },
+        "dcop_sn_i1.33333_XDN": {
+          "cd_F": 0.27631,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 1.33016,
+          "vabs_V": 0.0491679,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0491679
+        },
+        "dcop_sn_i1.33333_XDP": {
+          "cd_F": 0.078982,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.34917,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.34917
+        },
+        "dcop_sn_i1.33333_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.049271,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i1.33333e-1": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.133333,
+          "i_kcl_A": -0.133333,
+          "i_kcl_err_A": 4.9994e-08,
+          "vddio_V": 3.3,
+          "vpad_V": -0.00948794,
+          "vrxg_V": 0.000229473
+        },
+        "dcop_sn_i1.33333e-1_XDLN": {
+          "cd_F": 0.0133956,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000135736,
+          "vabs_V": 0.000229473,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000229473
+        },
+        "dcop_sn_i1.33333e-1_XDLP": {
+          "cd_F": 0.0039661,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29977,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29977
+        },
+        "dcop_sn_i1.33333e-1_XDN": {
+          "cd_F": 0.269499,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.130234,
+          "vabs_V": 0.00948794,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.00948794
+        },
+        "dcop_sn_i1.33333e-1_XDP": {
+          "cd_F": 0.0792546,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.30949,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.30949
+        },
+        "dcop_sn_i1.33333e-1_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.00971741,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i1.33333e-2": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.0133333,
+          "i_kcl_A": -0.0133333,
+          "i_kcl_err_A": 2.36438e-08,
+          "vddio_V": 3.3,
+          "vpad_V": -0.000852531,
+          "vrxg_V": 0.000257001
+        },
+        "dcop_sn_i1.33333e-2_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000151956,
+          "vabs_V": 0.000257001,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000257001
+        },
+        "dcop_sn_i1.33333e-2_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sn_i1.33333e-2_XDN": {
+          "cd_F": 0.268088,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.0102504,
+          "vabs_V": 0.000852531,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.000852531
+        },
+        "dcop_sn_i1.33333e-2_XDP": {
+          "cd_F": 0.0793144,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.30085,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.30085
+        },
+        "dcop_sn_i1.33333e-2_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.00110953,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i1.33333e-3": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.00133333,
+          "i_kcl_A": -0.00133333,
+          "i_kcl_err_A": -2.40473e-09,
+          "vddio_V": 3.3,
+          "vpad_V": 0.000147551,
+          "vrxg_V": 0.000260189
+        },
+        "dcop_sn_i1.33333e-3_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000153834,
+          "vabs_V": 0.000260189,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000260189
+        },
+        "dcop_sn_i1.33333e-3_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sn_i1.33333e-3_XDN": {
+          "cd_F": 0.267926,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00174769,
+          "vabs_V": 0.000147551,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000147551
+        },
+        "dcop_sn_i1.33333e-3_XDP": {
+          "cd_F": 0.0793214,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.29985,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29985
+        },
+        "dcop_sn_i1.33333e-3_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.000112638,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sn_i6.66667e-1": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -0.666667,
+          "i_kcl_A": -0.666667,
+          "i_kcl_err_A": -4.00648e-08,
+          "vddio_V": 3.3,
+          "vpad_V": -0.0328589,
+          "vrxg_V": 0.000154987
+        },
+        "dcop_sn_i6.66667e-1_XDLN": {
+          "cd_F": 0.0133962,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -9.17783e-05,
+          "vabs_V": 0.000154987,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000154987
+        },
+        "dcop_sn_i6.66667e-1_XDLP": {
+          "cd_F": 0.00396607,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29985,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29985
+        },
+        "dcop_sn_i6.66667e-1_XDN": {
+          "cd_F": 0.273443,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.663524,
+          "vabs_V": 0.0328589,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0328589
+        },
+        "dcop_sn_i6.66667e-1_XDP": {
+          "cd_F": 0.0790936,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.33286,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.33286
+        },
+        "dcop_sn_i6.66667e-1_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0330139,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.0,
+          "i_kcl_A": -7.01901e-09,
+          "i_kcl_err_A": -7.01901e-09,
+          "vddio_V": 3.3,
+          "vpad_V": 0.00026054,
+          "vrxg_V": 0.00026055
+        },
+        "dcop_sp_i0.3": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.3,
+          "i_kcl_A": 0.299999,
+          "i_kcl_err_A": -1.03813e-06,
+          "vddio_V": 3.3,
+          "vpad_V": 0.0481852,
+          "vrxg_V": 0.000413991
+        },
+        "dcop_sp_i0.38": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.38,
+          "i_kcl_A": 0.379998,
+          "i_kcl_err_A": -2.26477e-06,
+          "vddio_V": 3.3,
+          "vpad_V": 0.112337,
+          "vrxg_V": 0.000621591
+        },
+        "dcop_sp_i0.38_XDLN": {
+          "cd_F": 0.0133925,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000365533,
+          "vabs_V": 0.000621591,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000621591
+        },
+        "dcop_sp_i0.38_XDLP": {
+          "cd_F": 0.00396623,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29938,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29938
+        },
+        "dcop_sp_i0.38_XDN": {
+          "cd_F": 0.251575,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.382867,
+          "vabs_V": 0.112337,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.112337
+        },
+        "dcop_sp_i0.38_XDP": {
+          "cd_F": 0.0801151,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.18766,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.18766
+        },
+        "dcop_sp_i0.38_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.111716,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.39": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.39,
+          "i_kcl_A": 0.389998,
+          "i_kcl_err_A": -1.9977e-06,
+          "vddio_V": 3.3,
+          "vpad_V": 0.168385,
+          "vrxg_V": 0.000805255
+        },
+        "dcop_sp_i0.395": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.395,
+          "i_kcl_A": 0.394991,
+          "i_kcl_err_A": -8.68397e-06,
+          "vddio_V": 3.3,
+          "vpad_V": 0.622358,
+          "vrxg_V": 0.00239134
+        },
+        "dcop_sp_i0.395_XDLN": {
+          "cd_F": 0.0133782,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00136979,
+          "vabs_V": 0.00239134,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00239134
+        },
+        "dcop_sp_i0.395_XDLP": {
+          "cd_F": 0.00396685,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29761,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29761
+        },
+        "dcop_sp_i0.395_XDN": {
+          "cd_F": 0.204228,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396856,
+          "vabs_V": 0.622358,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.622358
+        },
+        "dcop_sp_i0.395_XDP": {
+          "cd_F": 0.0841604,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 2.67764,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -2.67764
+        },
+        "dcop_sp_i0.395_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.619967,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.39_XDLN": {
+          "cd_F": 0.013391,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000472243,
+          "vabs_V": 0.000805255,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000805255
+        },
+        "dcop_sp_i0.39_XDLP": {
+          "cd_F": 0.0039663,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29919,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29919
+        },
+        "dcop_sp_i0.39_XDN": {
+          "cd_F": 0.244536,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.392761,
+          "vabs_V": 0.168385,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.168385
+        },
+        "dcop_sp_i0.39_XDP": {
+          "cd_F": 0.0805233,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.13162,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.13162
+        },
+        "dcop_sp_i0.39_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.16758,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.3_XDLN": {
+          "cd_F": 0.0133941,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000244206,
+          "vabs_V": 0.000413991,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000413991
+        },
+        "dcop_sp_i0.3_XDLP": {
+          "cd_F": 0.00396616,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29959,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29959
+        },
+        "dcop_sp_i0.3_XDN": {
+          "cd_F": 0.260509,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.30299,
+          "vabs_V": 0.0481852,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0481852
+        },
+        "dcop_sp_i0.3_XDP": {
+          "cd_F": 0.0796575,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.25181,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.25181
+        },
+        "dcop_sp_i0.3_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0477713,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.4": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.4,
+          "i_kcl_A": 0.400012,
+          "i_kcl_err_A": 1.20025e-05,
+          "vddio_V": 3.3,
+          "vpad_V": 3.0438,
+          "vrxg_V": 0.0127638
+        },
+        "dcop_sp_i0.42": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.42,
+          "i_kcl_A": 0.420005,
+          "i_kcl_err_A": 4.99785e-06,
+          "vddio_V": 3.3,
+          "vpad_V": 3.3648,
+          "vrxg_V": 0.0143971
+        },
+        "dcop_sp_i0.42_XDLN": {
+          "cd_F": 0.0132827,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00694356,
+          "vabs_V": 0.0143971,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0143971
+        },
+        "dcop_sp_i0.42_XDLP": {
+          "cd_F": 0.00397103,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.2856,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.2856
+        },
+        "dcop_sp_i0.42_XDN": {
+          "cd_F": 0.125406,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.3648,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.3648
+        },
+        "dcop_sp_i0.42_XDP": {
+          "cd_F": 0.152993,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.0162769,
+          "vabs_V": 0.0648024,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0648024
+        },
+        "dcop_sp_i0.42_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.35041,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.4_XDLN": {
+          "cd_F": 0.0132956,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00629765,
+          "vabs_V": 0.0127638,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0127638
+        },
+        "dcop_sp_i0.4_XDLP": {
+          "cd_F": 0.00397046,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.28724,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.28724
+        },
+        "dcop_sp_i0.4_XDN": {
+          "cd_F": 0.129994,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396938,
+          "vabs_V": 3.0438,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.0438
+        },
+        "dcop_sp_i0.4_XDP": {
+          "cd_F": 0.131731,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00307002,
+          "vabs_V": 0.256203,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.256203
+        },
+        "dcop_sp_i0.4_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.03103,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0.5": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.5,
+          "i_kcl_A": 0.499905,
+          "i_kcl_err_A": -9.52092e-05,
+          "vddio_V": 3.3,
+          "vpad_V": 3.4224,
+          "vrxg_V": 0.0146987
+        },
+        "dcop_sp_i0.5_XDLN": {
+          "cd_F": 0.0132803,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00705939,
+          "vabs_V": 0.0146987,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0146987
+        },
+        "dcop_sp_i0.5_XDLP": {
+          "cd_F": 0.00397113,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.2853,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.2853
+        },
+        "dcop_sp_i0.5_XDN": {
+          "cd_F": 0.124637,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.4224,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.4224
+        },
+        "dcop_sp_i0.5_XDP": {
+          "cd_F": 0.158494,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.0960608,
+          "vabs_V": 0.122397,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.122397
+        },
+        "dcop_sp_i0.5_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.4077,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i0_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00026055
+        },
+        "dcop_sp_i0_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sp_i0_XDN": {
+          "cd_F": 0.267908,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 0.00026054,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00026054
+        },
+        "dcop_sp_i0_XDP": {
+          "cd_F": 0.0793222,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sp_i0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 1.03796e-08,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i1.0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 1.0,
+          "i_kcl_A": 0.999832,
+          "i_kcl_err_A": -0.000167579,
+          "vddio_V": 3.3,
+          "vpad_V": 3.48581,
+          "vrxg_V": 0.0150337
+        },
+        "dcop_sp_i1.0_XDLN": {
+          "cd_F": 0.0132777,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00718688,
+          "vabs_V": 0.0150337,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0150337
+        },
+        "dcop_sp_i1.0_XDLP": {
+          "cd_F": 0.00397125,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.28497,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.28497
+        },
+        "dcop_sp_i1.0_XDN": {
+          "cd_F": 0.123809,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.48581,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.48581
+        },
+        "dcop_sp_i1.0_XDP": {
+          "cd_F": 0.165554,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.595861,
+          "vabs_V": 0.185814,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.185814
+        },
+        "dcop_sp_i1.0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.47078,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i1.33333": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 1.33333,
+          "i_kcl_A": 1.33311,
+          "i_kcl_err_A": -0.000216611,
+          "vddio_V": 3.3,
+          "vpad_V": 3.50141,
+          "vrxg_V": 0.0151166
+        },
+        "dcop_sp_i1.33333_XDLN": {
+          "cd_F": 0.0132771,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00721825,
+          "vabs_V": 0.0151166,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0151166
+        },
+        "dcop_sp_i1.33333_XDLP": {
+          "cd_F": 0.00397128,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.28488,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.28488
+        },
+        "dcop_sp_i1.33333_XDN": {
+          "cd_F": 0.123608,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.50141,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.50141
+        },
+        "dcop_sp_i1.33333_XDP": {
+          "cd_F": 0.167488,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.929111,
+          "vabs_V": 0.201412,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.201412
+        },
+        "dcop_sp_i1.33333_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.4863,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i1.33333e-1": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.133333,
+          "i_kcl_A": 0.133333,
+          "i_kcl_err_A": -6.96808e-09,
+          "vddio_V": 3.3,
+          "vpad_V": 0.0140769,
+          "vrxg_V": 0.000304651
+        },
+        "dcop_sp_i1.33333e-1_XDLN": {
+          "cd_F": 0.013395,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000180002,
+          "vabs_V": 0.000304651,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000304651
+        },
+        "dcop_sp_i1.33333e-1_XDLP": {
+          "cd_F": 0.00396612,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.2997,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.2997
+        },
+        "dcop_sp_i1.33333e-1_XDN": {
+          "cd_F": 0.265704,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.136388,
+          "vabs_V": 0.0140769,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0140769
+        },
+        "dcop_sp_i1.33333e-1_XDP": {
+          "cd_F": 0.0794183,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.28592,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.28592
+        },
+        "dcop_sp_i1.33333e-1_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0137723,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i1.33333e-2": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.0133333,
+          "i_kcl_A": 0.0133333,
+          "i_kcl_err_A": -3.56937e-08,
+          "vddio_V": 3.3,
+          "vpad_V": 0.00141193,
+          "vrxg_V": 0.000264221
+        },
+        "dcop_sp_i1.33333e-2_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000156208,
+          "vabs_V": 0.000264221,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000264221
+        },
+        "dcop_sp_i1.33333e-2_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sp_i1.33333e-2_XDN": {
+          "cd_F": 0.267722,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.0164119,
+          "vabs_V": 0.00141193,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.00141193
+        },
+        "dcop_sp_i1.33333e-2_XDP": {
+          "cd_F": 0.0793302,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.29859,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29859
+        },
+        "dcop_sp_i1.33333e-2_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.00114771,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i1.33333e-3": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.00133333,
+          "i_kcl_A": 0.00133334,
+          "i_kcl_err_A": 7.8278e-09,
+          "vddio_V": 3.3,
+          "vpad_V": 0.000373913,
+          "vrxg_V": 0.000260911
+        },
+        "dcop_sp_i1.33333e-3_XDLN": {
+          "cd_F": 0.0133954,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154259,
+          "vabs_V": 0.000260911,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000260911
+        },
+        "dcop_sp_i1.33333e-3_XDLP": {
+          "cd_F": 0.00396611,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29974
+        },
+        "dcop_sp_i1.33333e-3_XDN": {
+          "cd_F": 0.267889,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00441394,
+          "vabs_V": 0.000373913,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000373913
+        },
+        "dcop_sp_i1.33333e-3_XDP": {
+          "cd_F": 0.079323,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.29963,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.29963
+        },
+        "dcop_sp_i1.33333e-3_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.000113002,
+          "validity": "no_validity_range_on_record"
+        },
+        "dcop_sp_i6.66667e-1": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 0.666667,
+          "i_kcl_A": 0.666652,
+          "i_kcl_err_A": -1.47106e-05,
+          "vddio_V": 3.3,
+          "vpad_V": 3.45717,
+          "vrxg_V": 0.014882
+        },
+        "dcop_sp_i6.66667e-1_XDLN": {
+          "cd_F": 0.0132789,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.0071293,
+          "vabs_V": 0.014882,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.014882
+        },
+        "dcop_sp_i6.66667e-1_XDLP": {
+          "cd_F": 0.00397119,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.28512,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.28512
+        },
+        "dcop_sp_i6.66667e-1_XDN": {
+          "cd_F": 0.124181,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.45717,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.45717
+        },
+        "dcop_sp_i6.66667e-1_XDP": {
+          "cd_F": 0.162217,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.262738,
+          "vabs_V": 0.157172,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.157172
+        },
+        "dcop_sp_i6.66667e-1_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.44229,
+          "validity": "no_validity_range_on_record"
+        },
+        "model_limits_XDLN": {
+          "area_inst": 10000000000000.0,
+          "bv_V": 11.7,
+          "current_validity": "no_current_validity_range_on_record",
+          "esd7_abs_v_limit_V": 5.0,
+          "i_esd2_pk_A": 1.33333,
+          "ik_density_A_per_m2": 1300.0,
+          "ik_times_area_A": 1.3e+16,
+          "isat_A": 0.0275,
+          "js_A_per_m2": 2.75e-15,
+          "jsw_A_per_m": 6e-16,
+          "model": "sky130_fd_pr__diode_pw2nd_05v5",
+          "n": 1.2928,
+          "perim_inst": 14000000.0,
+          "rs_ohm_per_area": 981.0
+        },
+        "model_limits_XDLP": {
+          "area_inst": 10000000000000.0,
+          "bv_V": 12.69,
+          "current_validity": "no_current_validity_range_on_record",
+          "esd7_abs_v_limit_V": 5.0,
+          "i_esd2_pk_A": 1.33333,
+          "ik_density_A_per_m2": 47600.0,
+          "ik_times_area_A": 4.76e+17,
+          "isat_A": 0.000214841,
+          "js_A_per_m2": 2.1483e-17,
+          "jsw_A_per_m": 8.04e-16,
+          "model": "sky130_fd_pr__diode_pd2nw_05v5",
+          "n": 1.3632,
+          "perim_inst": 14000000.0,
+          "rs_ohm_per_area": 600.0
+        },
+        "model_limits_XDN": {
+          "area_inst": 200000000000000.0,
+          "bv_V": 11.7,
+          "current_validity": "no_current_validity_range_on_record",
+          "esd7_abs_v_limit_V": 5.0,
+          "i_esd2_pk_A": 1.33333,
+          "ik_density_A_per_m2": 1300.0,
+          "ik_times_area_A": 2.6e+17,
+          "isat_A": 0.55,
+          "js_A_per_m2": 2.75e-15,
+          "jsw_A_per_m": 6e-16,
+          "model": "sky130_fd_pr__diode_pw2nd_05v5",
+          "n": 1.2928,
+          "perim_inst": 60000000.0,
+          "rs_ohm_per_area": 981.0
+        },
+        "model_limits_XDP": {
+          "area_inst": 200000000000000.0,
+          "bv_V": 12.69,
+          "current_validity": "no_current_validity_range_on_record",
+          "esd7_abs_v_limit_V": 5.0,
+          "i_esd2_pk_A": 1.33333,
+          "ik_density_A_per_m2": 47600.0,
+          "ik_times_area_A": 9.52e+18,
+          "isat_A": 0.00429665,
+          "js_A_per_m2": 2.1483e-17,
+          "jsw_A_per_m": 8.04e-16,
+          "model": "sky130_fd_pr__diode_pd2nw_05v5",
+          "n": 1.3632,
+          "perim_inst": 60000000.0,
+          "rs_ohm_per_area": 600.0
+        },
+        "pulse_na": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -0.000260539,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 5.7595e-07,
+          "vpad_max_V": 0.000260539,
+          "vpad_min_V": 0.000259964
+        },
+        "pulse_na_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154494,
+          "id_max_A": -0.000142806,
+          "id_min_A": -0.000163961,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_na_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154591,
+          "id_max_A": -0.000140724,
+          "id_min_A": -0.00017181,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_na_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 1.02271,
+          "id_max_A": 1.02534,
+          "id_min_A": -0.0032723,
+          "vabs_max_V": 0.000260539,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.000260539,
+          "vfwd_max_V": -0.000259964,
+          "vrev_max_V": 0.000260539
+        },
+        "pulse_na_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.310183,
+          "id_max_A": -0.00286765,
+          "id_min_A": -0.310183,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_na_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.86433e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_nb": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point_fired_at_500ns",
+          "t_fire_s": "500n",
+          "t_ipk_s": 5.001e-07,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -0.000260539,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 5.75933e-07,
+          "vpad_max_V": 0.00026054,
+          "vpad_min_V": 0.000259964
+        },
+        "pulse_nb_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154253,
+          "id_max_A": -0.000144132,
+          "id_min_A": -0.000159003,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_nb_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154046,
+          "id_max_A": -0.000145165,
+          "id_min_A": -0.000158487,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_nb_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 1.02292,
+          "id_max_A": 1.02535,
+          "id_min_A": -0.0030948,
+          "vabs_max_V": 0.00026054,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.000260539,
+          "vfwd_max_V": -0.000259964,
+          "vrev_max_V": 0.00026054
+        },
+        "pulse_nb_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.309969,
+          "id_max_A": -0.00259253,
+          "id_min_A": -0.309969,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_nb_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.86313e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_nc": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 1.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point_plus_1Gohm_pad_bleed",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -0.000260539,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 5.7595e-07,
+          "vpad_max_V": 0.00026054,
+          "vpad_min_V": 0.000259964
+        },
+        "pulse_nc_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154666,
+          "id_max_A": -0.000144132,
+          "id_min_A": -0.000159003,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_nc_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154046,
+          "id_max_A": -0.000145165,
+          "id_min_A": -0.000158487,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_nc_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 1.02269,
+          "id_max_A": 1.02535,
+          "id_min_A": -0.0032723,
+          "vabs_max_V": 0.00026054,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.000260539,
+          "vfwd_max_V": -0.000259964,
+          "vrev_max_V": 0.00026054
+        },
+        "pulse_nc_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.310191,
+          "id_max_A": -0.00295874,
+          "id_min_A": -0.310191,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_nc_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.8633e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_nd": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": 5.0,
+          "ipulse_pk_A": 1.33238,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "forced_ic_diagnostic_not_a_result",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -3.94399,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 1.18839,
+          "vpad_max_V": 5.0,
+          "vpad_min_V": 3.81161
+        },
+        "pulse_nd_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 4235.73,
+          "id_max_A": 3091250000.0,
+          "id_min_A": -1431070.0,
+          "vabs_max_V": 5.0,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.94399,
+          "vfwd_max_V": -3.81161,
+          "vrev_max_V": 5.0
+        },
+        "pulse_nd_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 4235.73,
+          "id_max_A": 9663640000.0,
+          "id_min_A": -1429810.0,
+          "vabs_max_V": 1.7,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.643986,
+          "vfwd_max_V": 1.7,
+          "vrev_max_V": -0.511606
+        },
+        "pulse_nd_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 84715.0,
+          "id_max_A": 61824900000.0,
+          "id_min_A": -28621300.0,
+          "vabs_max_V": 5.0,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.94399,
+          "vfwd_max_V": -3.81161,
+          "vrev_max_V": 5.0
+        },
+        "pulse_nd_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 84713.7,
+          "id_max_A": 193272000000.0,
+          "id_min_A": -28596200.0,
+          "vabs_max_V": 1.7,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.643987,
+          "vfwd_max_V": 1.7,
+          "vrev_max_V": -0.511607
+        },
+        "pulse_nd_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 1.30532e-06,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_ne": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "positive",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": -0.05,
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "forced_ic_diagnostic_not_a_result",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": 0.0499998,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 7.18318e-06,
+          "vpad_max_V": -0.0499928,
+          "vpad_min_V": -0.05
+        },
+        "pulse_ne_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.01514,
+          "id_max_A": 0.0686836,
+          "id_min_A": 0.0149684,
+          "vabs_max_V": 0.05,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.0499998,
+          "vfwd_max_V": 0.05,
+          "vrev_max_V": -0.0499923
+        },
+        "pulse_ne_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.0151398,
+          "id_max_A": 0.034575,
+          "id_min_A": -0.000154046,
+          "vabs_max_V": 3.35,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.35,
+          "vfwd_max_V": -3.34999,
+          "vrev_max_V": 3.35
+        },
+        "pulse_ne_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 1.3369,
+          "id_max_A": 1.37367,
+          "id_min_A": 0.299347,
+          "vabs_max_V": 0.05,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.0499998,
+          "vfwd_max_V": 0.05,
+          "vrev_max_V": -0.0499928
+        },
+        "pulse_ne_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.0040175,
+          "id_max_A": 0.691255,
+          "id_min_A": -0.00308081,
+          "vabs_max_V": 3.35,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.35,
+          "vfwd_max_V": -3.34999,
+          "vrev_max_V": 3.35
+        },
+        "pulse_ne_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.62558e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_pa": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -3.29974,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 5.75953e-07,
+          "vpad_max_V": 0.000261115,
+          "vpad_min_V": 0.000260539
+        },
+        "pulse_pa_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000153612,
+          "id_max_A": -0.000142806,
+          "id_min_A": -0.000163958,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_pa_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154523,
+          "id_max_A": -0.000145165,
+          "id_min_A": -0.000171394,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pa_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -1.03124,
+          "id_max_A": -0.00288931,
+          "id_min_A": -1.03153,
+          "vabs_max_V": 0.000261115,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026054,
+          "vfwd_max_V": -0.000260539,
+          "vrev_max_V": 0.000261115
+        },
+        "pulse_pa_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.301591,
+          "id_max_A": 0.304016,
+          "id_min_A": -0.00332495,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pa_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.6547e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_pb": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point_fired_at_500ns",
+          "t_fire_s": "500n",
+          "t_ipk_s": 5.001e-07,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -3.29974,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 5.75936e-07,
+          "vpad_max_V": 0.000261115,
+          "vpad_min_V": 0.000260539
+        },
+        "pulse_pb_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000153378,
+          "id_max_A": -0.000142806,
+          "id_min_A": -0.000163961,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_pb_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154046,
+          "id_max_A": -0.000140724,
+          "id_min_A": -0.00017181,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pb_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -1.03126,
+          "id_max_A": -0.00295688,
+          "id_min_A": -1.03151,
+          "vabs_max_V": 0.000261115,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026054,
+          "vfwd_max_V": -0.000260539,
+          "vrev_max_V": 0.000261115
+        },
+        "pulse_pb_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.301576,
+          "id_max_A": 0.303841,
+          "id_min_A": -0.00325845,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pb_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.65453e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_pc": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 1.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "natural_operating_point_plus_1Gohm_pad_bleed",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -3.29974,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 5.75953e-07,
+          "vpad_max_V": 0.000261115,
+          "vpad_min_V": 0.000260539
+        },
+        "pulse_pc_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154494,
+          "id_max_A": -0.000142806,
+          "id_min_A": -0.000163961,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_pc_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154591,
+          "id_max_A": -0.000140724,
+          "id_min_A": -0.00017181,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pc_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -1.03124,
+          "id_max_A": -0.00288931,
+          "id_min_A": -1.03153,
+          "vabs_max_V": 0.000261115,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026054,
+          "vfwd_max_V": -0.000260539,
+          "vrev_max_V": 0.000261115
+        },
+        "pulse_pc_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.301591,
+          "id_max_A": 0.304016,
+          "id_min_A": -0.00332495,
+          "vabs_max_V": 3.29974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.29974,
+          "vfwd_max_V": -3.29974,
+          "vrev_max_V": 3.29974
+        },
+        "pulse_pc_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.6547e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_pd": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "positive",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": 5.0,
+          "ipulse_pk_A": 1.3334,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "forced_ic_diagnostic_not_a_result",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": 0.643987,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 1.18839,
+          "vpad_max_V": 5.0,
+          "vpad_min_V": 3.81161
+        },
+        "pulse_pd_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 4235.73,
+          "id_max_A": 3091250000.0,
+          "id_min_A": -1431070.0,
+          "vabs_max_V": 5.0,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.94399,
+          "vfwd_max_V": -3.81161,
+          "vrev_max_V": 5.0
+        },
+        "pulse_pd_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 4235.73,
+          "id_max_A": 9663640000.0,
+          "id_min_A": -1429810.0,
+          "vabs_max_V": 1.7,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.643986,
+          "vfwd_max_V": 1.7,
+          "vrev_max_V": -0.511606
+        },
+        "pulse_pd_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 84714.1,
+          "id_max_A": 61824900000.0,
+          "id_min_A": -28621300.0,
+          "vabs_max_V": 5.0,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.94399,
+          "vfwd_max_V": -3.81161,
+          "vrev_max_V": 5.0
+        },
+        "pulse_pd_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 84715.5,
+          "id_max_A": 193272000000.0,
+          "id_min_A": -28596200.0,
+          "vabs_max_V": 1.7,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.643987,
+          "vfwd_max_V": 1.7,
+          "vrev_max_V": -0.511608
+        },
+        "pulse_pd_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 1.519e-06,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_pe": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": -0.05,
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio",
+          "state": "forced_ic_diagnostic_not_a_result",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 3.3,
+          "vfwd_cond_at_ipk_V": -3.35,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 8.30826e-06,
+          "vpad_max_V": -0.0499917,
+          "vpad_min_V": -0.05
+        },
+        "pulse_pe_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.01514,
+          "id_max_A": 0.0686836,
+          "id_min_A": 0.0149684,
+          "vabs_max_V": 0.05,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.0499998,
+          "vfwd_max_V": 0.05,
+          "vrev_max_V": -0.0499923
+        },
+        "pulse_pe_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.0151398,
+          "id_max_A": 0.034575,
+          "id_min_A": -0.000154046,
+          "vabs_max_V": 3.35,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.35,
+          "vfwd_max_V": -3.34999,
+          "vrev_max_V": 3.35
+        },
+        "pulse_pe_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.733657,
+          "id_max_A": 1.37367,
+          "id_min_A": -0.733942,
+          "vabs_max_V": 0.05,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": 0.0499998,
+          "vfwd_max_V": 0.05,
+          "vrev_max_V": -0.0499917
+        },
+        "pulse_pe_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.599176,
+          "id_max_A": 0.691255,
+          "id_min_A": -0.00308081,
+          "vabs_max_V": 3.35,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -3.35,
+          "vfwd_max_V": -3.34999,
+          "vrev_max_V": 3.35
+        },
+        "pulse_pe_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.62556e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_qn": {
+          "c_F": "100p",
+          "conducting": "XDN",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio5",
+          "state": "natural_operating_point",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 5.0,
+          "vfwd_cond_at_ipk_V": -0.00026054,
+          "vhbm_V": -2000.0,
+          "vpad_excursion_V": 5.91684e-07,
+          "vpad_max_V": 0.00026054,
+          "vpad_min_V": 0.000259948
+        },
+        "pulse_qn_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154666,
+          "id_max_A": -0.000134683,
+          "id_min_A": -0.000165284,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_qn_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154046,
+          "id_max_A": -0.000146417,
+          "id_min_A": -0.000161676,
+          "vabs_max_V": 4.99974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -4.99974,
+          "vfwd_max_V": -4.99974,
+          "vrev_max_V": 4.99974
+        },
+        "pulse_qn_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 1.05092,
+          "id_max_A": 1.05342,
+          "id_min_A": -0.00327215,
+          "vabs_max_V": 0.00026054,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026054,
+          "vfwd_max_V": -0.000259948,
+          "vrev_max_V": 0.00026054
+        },
+        "pulse_qn_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.28198,
+          "id_max_A": -0.00259254,
+          "id_min_A": -0.28198,
+          "vabs_max_V": 4.99974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -4.99974,
+          "vfwd_max_V": -4.99974,
+          "vrev_max_V": 4.99974
+        },
+        "pulse_qn_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 6.02066e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "pulse_qp": {
+          "c_F": "100p",
+          "conducting": "XDP",
+          "decay_tau_s": 1.5e-07,
+          "fwd_sign": "not_forward_biased",
+          "i_esd2_pk_A": 1.33333,
+          "ic_pad_rxg_V": "none",
+          "ipulse_pk_A": 1.33289,
+          "pad_bleed_1Gohm": 0.0,
+          "pulse_forward_drop": "not_developed",
+          "r_ohm": 1500.0,
+          "rail": "vddio5",
+          "state": "natural_operating_point",
+          "t_fire_s": "50n",
+          "t_ipk_s": 5.01e-08,
+          "vddio_V": 5.0,
+          "vfwd_cond_at_ipk_V": -4.99974,
+          "vhbm_V": 2000.0,
+          "vpad_excursion_V": 5.91679e-07,
+          "vpad_max_V": 0.000261132,
+          "vpad_min_V": 0.00026054
+        },
+        "pulse_qp_XDLN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154666,
+          "id_max_A": -0.000134683,
+          "id_min_A": -0.000165284,
+          "vabs_max_V": 0.00026055,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026055,
+          "vfwd_max_V": -0.00026055,
+          "vrev_max_V": 0.00026055
+        },
+        "pulse_qp_XDLP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -0.000154046,
+          "id_max_A": -0.000146417,
+          "id_min_A": -0.000161676,
+          "vabs_max_V": 4.99974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -4.99974,
+          "vfwd_max_V": -4.99974,
+          "vrev_max_V": 4.99974
+        },
+        "pulse_qp_XDN": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": -1.05939,
+          "id_max_A": -0.0028895,
+          "id_min_A": -1.05952,
+          "vabs_max_V": 0.000261132,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -0.00026054,
+          "vfwd_max_V": -0.00026054,
+          "vrev_max_V": 0.000261132
+        },
+        "pulse_qp_XDP": {
+          "current_validity": "no_current_validity_range_on_record",
+          "id_at_ipk_A": 0.273439,
+          "id_max_A": 0.275766,
+          "id_min_A": -0.00322293,
+          "vabs_max_V": 4.99974,
+          "validity": "within_esd7_model_range",
+          "vfwd_at_ipk_V": -4.99974,
+          "vfwd_max_V": -4.99974,
+          "vrev_max_V": 4.99974
+        },
+        "pulse_qp_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.81296e-07,
+          "validity": "no_validity_range_on_record"
+        },
+        "selftest_gun_1uF": {
+          "c_load_F": 1e-06,
+          "q_delivered_C": 1.9998e-07,
+          "q_expected_C": 2e-07,
+          "v_load_final_V": 0.19998
+        },
+        "selftest_gun_short": {
+          "c_F": "100p",
+          "decay_tau_s": 1.5e-07,
+          "i_at_1tau_A": 0.490342,
+          "i_at_1tau_over_ipk": 0.367879,
+          "i_expected_A": 1.33333,
+          "ipulse_pk_A": 1.33289,
+          "one_over_e": 0.367879,
+          "r_ohm": 1500.0,
+          "vhbm_V": 2000.0
+        },
+        "supply_sn_vddio2.97": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -1.33333,
+          "i_kcl_A": -1.33333,
+          "i_kcl_err_A": -1.89382e-07,
+          "vddio_V": 2.97,
+          "vpad_V": -0.0491679,
+          "vrxg_V": 0.000103016
+        },
+        "supply_sn_vddio2.97_XDLN": {
+          "cd_F": 0.0133967,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -6.10501e-05,
+          "vabs_V": 0.000103016,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000103016
+        },
+        "supply_sn_vddio2.97_XDLP": {
+          "cd_F": 0.00408742,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 2.9699,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -2.9699
+        },
+        "supply_sn_vddio2.97_XDN": {
+          "cd_F": 0.27631,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 1.33016,
+          "vabs_V": 0.0491679,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0491679
+        },
+        "supply_sn_vddio2.97_XDP": {
+          "cd_F": 0.0813675,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.01917,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.01917
+        },
+        "supply_sn_vddio2.97_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0492709,
+          "validity": "no_validity_range_on_record"
+        },
+        "supply_sn_vddio3.63": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -1.33333,
+          "i_kcl_A": -1.33333,
+          "i_kcl_err_A": 8.60236e-07,
+          "vddio_V": 3.63,
+          "vpad_V": -0.0491679,
+          "vrxg_V": 0.000103016
+        },
+        "supply_sn_vddio3.63_XDLN": {
+          "cd_F": 0.0133967,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -6.10503e-05,
+          "vabs_V": 0.000103016,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000103016
+        },
+        "supply_sn_vddio3.63_XDLP": {
+          "cd_F": 0.0038576,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.6299,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.6299
+        },
+        "supply_sn_vddio3.63_XDN": {
+          "cd_F": 0.27631,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 1.33016,
+          "vabs_V": 0.0491679,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0491679
+        },
+        "supply_sn_vddio3.63_XDP": {
+          "cd_F": 0.0768473,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308081,
+          "vabs_V": 3.67917,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.67917
+        },
+        "supply_sn_vddio3.63_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0492709,
+          "validity": "no_validity_range_on_record"
+        },
+        "supply_sn_vddio5.0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": -1.33333,
+          "i_kcl_A": -1.33333,
+          "i_kcl_err_A": 4.04606e-07,
+          "vddio_V": 5.0,
+          "vpad_V": -0.0491679,
+          "vrxg_V": 0.000103016
+        },
+        "supply_sn_vddio5.0_XDLN": {
+          "cd_F": 0.0133967,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -6.10504e-05,
+          "vabs_V": 0.000103016,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.000103016
+        },
+        "supply_sn_vddio5.0_XDLP": {
+          "cd_F": 0.0035045,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 4.9999,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -4.9999
+        },
+        "supply_sn_vddio5.0_XDN": {
+          "cd_F": 0.27631,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 1.33016,
+          "vabs_V": 0.0491679,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.0491679
+        },
+        "supply_sn_vddio5.0_XDP": {
+          "cd_F": 0.0698798,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00308082,
+          "vabs_V": 5.04917,
+          "validity": "outside_model_validity",
+          "vfwd_V": -5.04917
+        },
+        "supply_sn_vddio5.0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 0.0492709,
+          "validity": "no_validity_range_on_record"
+        },
+        "supply_sp_vddio2.97": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 1.33333,
+          "i_kcl_A": 1.33323,
+          "i_kcl_err_A": -9.88112e-05,
+          "vddio_V": 2.97,
+          "vpad_V": 3.17144,
+          "vrxg_V": 0.013404
+        },
+        "supply_sp_vddio2.97_XDLN": {
+          "cd_F": 0.0132905,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00655456,
+          "vabs_V": 0.013404,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.013404
+        },
+        "supply_sp_vddio2.97_XDLP": {
+          "cd_F": 0.00409262,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 2.9566,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -2.9566
+        },
+        "supply_sp_vddio2.97_XDN": {
+          "cd_F": 0.128104,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.17144,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.17144
+        },
+        "supply_sp_vddio2.97_XDP": {
+          "cd_F": 0.167492,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.929892,
+          "vabs_V": 0.201441,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.201441
+        },
+        "supply_sp_vddio2.97_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.15804,
+          "validity": "no_validity_range_on_record"
+        },
+        "supply_sp_vddio3.63": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 1.33333,
+          "i_kcl_A": 1.33331,
+          "i_kcl_err_A": -2.25096e-05,
+          "vddio_V": 3.63,
+          "vpad_V": 3.83139,
+          "vrxg_V": 0.01692
+        },
+        "supply_sp_vddio3.63_XDLN": {
+          "cd_F": 0.0132629,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.00788129,
+          "vabs_V": 0.01692,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.01692
+        },
+        "supply_sp_vddio3.63_XDLP": {
+          "cd_F": 0.00386285,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 3.61308,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.61308
+        },
+        "supply_sp_vddio3.63_XDN": {
+          "cd_F": 0.119589,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 3.83139,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -3.83139
+        },
+        "supply_sp_vddio3.63_XDP": {
+          "cd_F": 0.167486,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.928641,
+          "vabs_V": 0.201394,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.201394
+        },
+        "supply_sp_vddio3.63_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 3.81447,
+          "validity": "no_validity_range_on_record"
+        },
+        "supply_sp_vddio5.0": {
+          "i_esd2_pk_A": 1.33333,
+          "i_forced_A": 1.33333,
+          "i_kcl_A": 1.33358,
+          "i_kcl_err_A": 0.000253267,
+          "vddio_V": 5.0,
+          "vpad_V": 5.2013,
+          "vrxg_V": 0.0256299
+        },
+        "supply_sp_vddio5.0_XDLN": {
+          "cd_F": 0.0131953,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.0106252,
+          "vabs_V": 0.0256299,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -0.0256299
+        },
+        "supply_sp_vddio5.0_XDLP": {
+          "cd_F": 0.00350999,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.000154046,
+          "vabs_V": 4.97437,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": -4.97437
+        },
+        "supply_sp_vddio5.0_XDN": {
+          "cd_F": 0.106537,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": -0.396939,
+          "vabs_V": 5.2013,
+          "validity": "outside_model_validity",
+          "vfwd_V": -5.2013
+        },
+        "supply_sp_vddio5.0_XDP": {
+          "cd_F": 0.167474,
+          "current_validity": "no_current_validity_range_on_record",
+          "id_A": 0.926173,
+          "vabs_V": 0.201301,
+          "validity": "within_esd7_model_range",
+          "vfwd_V": 0.201301
+        },
+        "supply_sp_vddio5.0_XRS": {
+          "current_validity": "no_current_validity_range_on_record",
+          "vabs_V": 5.17567,
+          "validity": "no_validity_range_on_record"
+        }
+      }
+    }
+  },
+  "temp_c": 27,
+  "tools": {
+    "ciel": "unavailable",
+    "ngspice": "47",
+    "xschem": "3.4.7"
+  },
+  "vddio_nominal_V": 3.3
+}
