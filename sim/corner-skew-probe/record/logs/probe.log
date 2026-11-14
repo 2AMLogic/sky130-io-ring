@@ -1,0 +1,16 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * corner-skew-probe: g2 measured anchor, dc operating point, tt, 27 c
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+RESULT op_nfet_01v8 corner=tt temp_c=27 vsup=1.8 w_um=1.0 l_um=0.15 id_A=0.000501046 id_model_A=0.000500994 vth_op_V=0.769267 vdsat_op_V=0.362182 gm_S=0.000532224
+RESULT op_pfet_01v8 corner=tt temp_c=27 vsup=1.8 w_um=1.0 l_um=0.15 id_A=0.000200748 id_model_A=0.000200748 vth_op_V=0.510025 vdsat_op_V=0.840514 gm_S=0.000238196
+RESULT op_nfet_g5v0d10v5 corner=tt temp_c=27 vsup=5.0 w_um=1.0 l_um=0.5 id_A=0.000654509 id_model_A=0.00065076 vth_op_V=0.832891 vdsat_op_V=1.37743 gm_S=0.000171318
+RESULT op_pfet_g5v0d10v5 corner=tt temp_c=27 vsup=5.0 w_um=1.0 l_um=0.5 id_A=0.000351682 id_model_A=0.000351671 vth_op_V=0.750316 vdsat_op_V=2.22142 gm_S=0.000104537
+ngspice-47 done
