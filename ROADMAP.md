@@ -4,8 +4,8 @@ An I/O ring on SkyWater sky130 (GPIO, supply pads with ESD clamps, corner and
 filler cells, closed into a demonstration ring), drawn by a generator and
 checked with klayout-tools (`klt`), xschem and ngspice.
 
-Status as of 2026-11-13, re-verified 2026-11-14 against `main` @ `7234630`.
-Tracker read 2026-11-13.
+Status as of 2026-11-13, re-verified 2026-11-15 against `main` @ `c770b89`.
+Tracker read 2026-11-15.
 The verdict of record is [`signoff/signoff-record.json`](signoff/signoff-record.json);
 this file explains it and orders the work, and never overrides it.
 
@@ -35,11 +35,13 @@ What "met" does and does not cover is stated in
   distance, guard-ring construction and ESD rules are **not checked by any klt
   sky130 deck** ([`spec/klt-rule-coverage.md`](spec/klt-rule-coverage.md)).
 - LVS is a flat comparison. The GPIO resistor's geometry is not compared and
-  its `R` is a placeholder; `vdd` reports `body_verification: unverified`.
-- The only analog results are two single-corner records: the PDK smoke
-  (`sim/pdk-smoke/`) and the RC clamp probe (`sim/clamp-probe/`, #72). The
-  probe is `kind: probe`, not item-5 evidence, and it found that both clamps
-  turn fully on during a 1 us supply ramp.
+  its `R` is a placeholder; per-cell `body_verification` states are read from
+  [`signoff/evidence/lvs/`](signoff/evidence/lvs/) and are not restated here
+  (the one gap there, the `vdd` report, was closed by #95, PR #110).
+- The analog results so far are single-corner records under `sim/` — a PDK
+  smoke and `kind: probe` records; none is item-5 evidence. The RC clamp
+  probe (`sim/clamp-probe/`, #72) found that both clamps turn fully on
+  during a 1 us supply ramp.
 - The spec ([`spec/io-ring.md`](spec/io-ring.md), 59 rows, four decision
   records) is **proposed, not ratified**. Nine gates G1 to G9 remain open
   ([`spec/review-2026-10.md`](spec/review-2026-10.md) section 5).
@@ -56,7 +58,10 @@ attribution (#93) and the 2026-10-17 checklist in tracker #3.
 
 ## Now
 
-Can start today; each is one PR.
+Can start today; each is one PR. Delivered since the last pin and struck
+from this list: the G2 skew probe (#94, PR #108), the `vdd`
+`body_verification` fix (#95, PR #110) and the diode forward-drop probe
+(#96, PR #105).
 
 1. **Revise the ratification-scope PR.** PR #27 (`spec/ratification-scope.md`,
    43 rows in scope, 16 held out by gate) carries `loom:changes-requested`
@@ -75,21 +80,7 @@ Can start today; each is one PR.
    re-attestation, so they are cheapest together. #92 restates closed #86's
    scope and is parked `loom:blocked` for disposition — the residuals are #90
    and #93, not #92; do not build #92 as filed.
-3. **Close the read-only half of gate G2.** Read the 5 V device corner files
-   of the pinned PDK and run one single-corner probe per skew corner showing
-   whether `ff ss sf fs` move the 5 V NMOS. Done when a `kind: probe` record
-   and README exist under a new `sim/` directory and the finding is stated.
-   Issue #94.
-4. **Explain `body_verification: unverified` on the `vdd` LVS report** (815
-   `nfet` bodies; `gpio` and `ring` are `verified`). Done when the report
-   reads `verified` after a generator or label fix, or the cause is written
-   in `signoff/README.md` with the upstream klayout-tools issue linked. Issue
-   #95.
-5. **Diode forward-drop probe at the ESD.2 current** (review section 7,
-   item 2). Done when a `kind: probe` record reports the forward drop of the
-   pad diodes at the HBM peak current and labels anything beyond the diode
-   model's stated range as outside model validity. Issue #96.
-6. **Resolve where the clamp trigger stops false-triggering.** The G6 probe
+3. **Resolve where the clamp trigger stops false-triggering.** The G6 probe
    swept four rise times (1 us, 10 us, 100 us, 1 ms) and so brackets the
    transition only between its 1 us (fully on) and 10 us (off) points; the
    post-ramp supply current had also not settled. Done when a new probe record
