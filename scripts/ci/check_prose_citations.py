@@ -24,6 +24,16 @@ region the checker extracts and asserts — it never regenerates narrative:
     in the wrong role (the input-stream hash cited where the deck hash
     belongs) would pass; the pinned form closes that. Pinning is opt-in per
     citation; abbreviated hash forms match the pinned value the same way.
+  - a near-miss pin is an error too (#146): a backticked path name that
+    resolves to a hash in the source, on a line that also carries a hash
+    token, but which is not written in the pinned form — a phrasing edit
+    ("is now", "=", backticks dropped around the hash) silently de-pins the
+    role and the citation degrades to set-membership. The error names the
+    canonical form so the fix is mechanical. A path name on a line with no
+    hash is prose about the path, not a citation, and stays silent;
+    cite:historical does not excuse a near-miss (the escape excuses hashes
+    absent from the source, and a near-miss path resolves in it by
+    definition).
 
 Set-membership also cannot see an *omitted* citation (the other half of
 #130), so a begin marker may declare the coverage fields the region must
@@ -58,8 +68,10 @@ citations of contents or of predecessor reports, not of this source's counts.
 
 Missing/unreadable source, nested or unterminated regions, cite:end without
 begin, count fields absent from the source, a requires= field the region
-never count-cites, a role path absent from the source, and a role-pinned
-hash that disagrees with the path's value are hard errors.
+never count-cites, a role path absent from the source, a role-pinned hash
+that disagrees with the path's value, and a near-miss pin (a backticked
+path name that resolves to a hash on a hash-carrying line but is not
+written in the pinned form) are hard errors.
 
 Usage:
     python3 -I scripts/ci/check_prose_citations.py .    # exit 1 on any
@@ -81,6 +93,7 @@ PATH_HASH = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is `(sha256:[^`]+)`")
 COUNT_IS = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is (\d+)\b")
 COUNT_PAREN = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` \((\d+)[,)]")
 FIELD_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_.]*")
+BACKTICKED = re.compile(r"`([^`]+)`")
 HEX64 = re.compile(r"[0-9a-f]{64}")
 FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})")
 SKIP_PARTS = {"node_modules", "target", "__pycache__"}
@@ -214,6 +227,22 @@ def assert_count(region, where, field, cited, errors):
                       f"coverage.{name} is {expected}")
 
 
+MISSING = object()
+
+
+def resolve_path(data, path):
+    """Follow a dotted JSON path from the loaded source; return the node,
+    or MISSING when a step is absent or passes through a non-object. A
+    sentinel rather than None keeps "absent" distinguishable from a JSON
+    null value."""
+    node = data
+    for part in path.split("."):
+        if not isinstance(node, dict) or part not in node:
+            return MISSING
+        node = node[part]
+    return node
+
+
 def assert_path_hash(region, where, path, token, errors):
     """A role-pinned hash: the value at that dotted JSON path in the source
     must equal the cited hash (abbreviated forms matched against it). The
@@ -223,13 +252,11 @@ def assert_path_hash(region, where, path, token, errors):
     source, data = region["source"], region["data"]
     if data is None:          # source failed to load; already reported
         return
-    node = data
-    for part in path.split("."):
-        if not isinstance(node, dict) or part not in node:
-            errors.append(f"{where}: `{path}` names a path absent from "
-                          f"{source}")
-            return
-        node = node[part]
+    node = resolve_path(data, path)
+    if node is MISSING:
+        errors.append(f"{where}: `{path}` names a path absent from "
+                      f"{source}")
+        return
     if not isinstance(node, str):
         errors.append(f"{where}: `{path}` is not a hash value in {source}")
         return
@@ -237,6 +264,44 @@ def assert_path_hash(region, where, path, token, errors):
     if not m or not hash_matches(m, set(HEX64.findall(node))):
         errors.append(f"{where}: `{path}` is cited as {token} but {source} "
                       f"{path} is {node}")
+
+
+def resolves_to_hash(region, path):
+    """Near-miss condition 2: does this dotted path resolve to a string
+    carrying a hash in the region's source?"""
+    data = region["data"]
+    if data is None:
+        return False
+    node = resolve_path(data, path)
+    return isinstance(node, str) and bool(HEX64.search(node))
+
+
+def check_near_miss_pin(region, where, line, pinned, errors):
+    """A de-pinned citation made loud (#146): a backticked name that
+    (1) matches FIELD_NAME, (2) resolves to a hash value in the region's
+    source, and (3) shares its line with a hash-shaped token, but is not
+    itself part of a recognised PATH_HASH pin (4), is a phrasing edit away
+    from a role pin — "is now", "=", or backticks dropped around the hash —
+    and the citation has silently degraded to set-membership. The error
+    names the canonical form so the fix is mechanical from the CI log. A
+    field name on a hash-free line is prose about the path, not a citation,
+    and stays quiet; cite:historical does not excuse a near-miss (the
+    escape excuses hashes absent from the source, and a near-miss path
+    resolves in it by definition)."""
+    if region["data"] is None or not HASH_RE.search(line):
+        return
+    for m in BACKTICKED.finditer(line):
+        name = m.group(1)
+        if not FIELD_NAME.fullmatch(name):
+            continue
+        if any(s <= m.start() and m.end() <= e for s, e in pinned):
+            continue
+        if resolves_to_hash(region, name):
+            errors.append(
+                f"{where}: `{name}` resolves to a hash in "
+                f"{region['source']} but this line does not write it as a "
+                f"role pin, so the citation asserts set-membership only — "
+                f"write `{name}` is `sha256:...` to pin it")
 
 
 def check_requires(region, where, errors):
@@ -268,8 +333,10 @@ def check_line(region, where, line, errors):
         elif not hit and not historical:
             errors.append(f"{where}: {token} does not match any hash in "
                           f"{region['source']}")
+    pinned = [p.span() for p in PATH_HASH.finditer(line)]
     for m in PATH_HASH.finditer(line):
         assert_path_hash(region, where, m.group(1), m.group(2), errors)
+    check_near_miss_pin(region, where, line, pinned, errors)
     for m in COUNT_IS.finditer(line):
         region["asserted"].add(count_name(m.group(1)))
         assert_count(region, where, m.group(1), int(m.group(2)), errors)

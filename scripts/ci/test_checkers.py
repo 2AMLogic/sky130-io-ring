@@ -717,6 +717,140 @@ class ProseCitations(unittest.TestCase):
         self.assertTrue(any("names a path absent from" in e for e in errors),
                         errors)
 
+    # --- near-miss pins (#146): a de-pinned role must be loud, not a ---
+    # --- silent fall-back to set-membership                        ---
+
+    def test_unbackticked_hash_pin_rejected(self):
+        # Variant 1: backticks dropped around the hash. The cited hash is
+        # the input hash — present in the source — so bare set-membership
+        # passes and only the near-miss catches the de-pinned deck role.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is "
+                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "spec/klt-rule-coverage.md" in e
+                            and "role pin" in e for e in errors), errors)
+
+    def test_inserted_word_pin_rejected(self):
+        # Variant 2: one inserted word ("is now") un-recognises the pin even
+        # though the hash is still the correct deck hash — the pin stopped
+        # being *asserted*, which is exactly the rot this guards.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is now "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "role pin" in e for e in errors), errors)
+
+    def test_equals_separator_pin_rejected(self):
+        # Variant 3: "=" in place of "is".
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` = "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "role pin" in e for e in errors), errors)
+
+    def test_error_names_canonical_pin_form(self):
+        # The near-miss message must carry the fix: the canonical `path` is
+        # `sha256:...` spelling, readable straight off the CI log.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` = "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("`provenance.deck.content_hash` is `sha256:...`"
+                            in e for e in errors), errors)
+
+    def test_resolving_path_on_hash_free_line_passes(self):
+        # Condition 3: a path name on a line carrying no hash token is
+        # prose about the path, not a citation — it must stay silent.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "Deck `sky130`,",
+                  "Deck hash `provenance.deck.content_hash`,")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_non_hash_resolving_path_beside_hash_passes(self):
+        # Condition 2: a path resolving to a list (`coverage.rules_skipped`)
+        # or an int (`deck_scope`) is not a hash value, so the near-miss
+        # must not trip when a hash shares the line; the count paths behave
+        # exactly as before.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "Deck `sky130`,",
+                  "Deck `sky130` (`coverage.rules_skipped` enumerates 36 "
+                  "and `deck_scope` counts 23; ref "
+                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc),")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_correct_pin_and_near_miss_on_one_line_rejected(self):
+        # The documented two-paths shape: a correct canonical pin for one
+        # path and a bare mention of a second path that also resolves to a
+        # hash. This is intended to fire, not a defect: suppressing a
+        # near-miss on a line that already carries a recognised pin would
+        # re-open the hole for a line that pins one path and de-pins the
+        # next on the same line. The fix is to pin both canonically.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.input.content_hash` is "
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`,",
+                  "`provenance.input.content_hash` is "
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc` and "
+                  "`provenance.deck.content_hash` differs,")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "role pin" in e for e in errors), errors)
+
+    def test_historical_escape_does_not_excuse_near_miss(self):
+        # Edge case the issue leaves open, decided here: cite:historical
+        # excuses hashes *absent from the source*; a near-miss path resolves
+        # in the source by definition, so the escape cannot re-canonise an
+        # unrecognised pin and the near-miss still errors.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`released: true` (newer content than the `ba0f9788…` "
+                  "pinned",
+                  "`provenance.deck.content_hash` was `released: true` "
+                  "(newer content than the `ba0f9788…` pinned")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "role pin" in e for e in errors), errors)
+
+    def test_fenced_near_miss_syntax_is_inert(self):
+        # Scope: inside a region a fence is inert, so near-miss syntax
+        # written as example documentation inside it asserts nothing.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "Quoted from the report's `coverage` block:",
+                  "Quoted from the report's `coverage` block:\n\n"
+                  "```\n`provenance.deck.content_hash` = sha256:"
+                  + "f" * 64 + "\n```\n")
+        self.assertEqual(pc.check_root(root), [])
+
     def test_fenced_marker_example_is_inert(self):
         # Issue #144 gap 3: a fenced example of the convention opens no
         # region and asserts nothing. It used to fail closed with a loud
