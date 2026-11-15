@@ -52,15 +52,12 @@ class Draw:
     def __call__(self, layer, shape):
         self.ctx.add(self.cell, layer, shape)
 
-    def region(self, layer, region):
-        self.ctx.add_region(self.cell, layer, region)
-
 
 def _via1(d, x, y):
     d("via", g.cbox(x, y, 0.15))
 
 
-def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net, tap_net):
+def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net):
     """One finger row at (x0, ry): nf fingers of W x L sharing S/D regions.
 
     kind 'n' or 'p'. Returns a dict of attachment points: bus y centres, x
@@ -231,7 +228,7 @@ def build_clamp(d, core, vp_rail, y_start=66.0, y_vss_tie=16.0, mim_y=156.2,
     rows = []
 
     def add_row(kind, W, nf, s, dn, gn, ry):
-        r = mos_row(d, ARRAY_X0, ry, nf, W, L, kind, hv, s, dn, gn, s)
+        r = mos_row(d, ARRAY_X0, ry, nf, W, L, kind, hv, s, dn, gn)
         use[s].append(r["ys"]); use[dn].append(r["yd"]); use[gn].append(r["yg"])
         rows.append((kind, W, nf))
         return r

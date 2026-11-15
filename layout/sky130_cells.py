@@ -66,9 +66,6 @@ class Ctx:
     def add(self, cell, name, shape):
         cell.shapes(self.li[name]).insert(shape)
 
-    def add_region(self, cell, name, region):
-        cell.shapes(self.li[name]).insert(region)
-
 
 def _stack(ctx, cell, cx, cy, bottom, top, patch=4.0):
     """Via stack at (cx, cy) from layer `bottom` up to `top` with landing patches."""
@@ -175,7 +172,7 @@ def _core_block(ctx):
         rest = [c for c in top.calls if c not in inside]
         shared = {n for c in rest for n in c.nets}
         name = f"{PREFIX}gpio_asm_{tag}"
-        sub = sb.assemble(ctx.subckts, name, inside, shared)
+        sub = sb.assemble(name, inside, shared)
         ctx.subckts[name] = sub
         mine = {n for c in inside for n in c.nets}
         ctx.block_args[name] = {
