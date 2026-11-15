@@ -111,7 +111,7 @@ The pin moved 0.7.0 -> 0.8.0 because `--attest` first ships in 0.8.0; the record
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.
 - `layout/tests/test_ring.py` and `scripts/ci/check_layout_reproducible.py` (installs the pip `klayout` module, no PDK): the generator's spec/seam checks reject seeded defects, and a fresh regeneration of `layout/gds/` is byte-identical to what is committed and to the attestation's hashes.
 - Item-10 attestation: `klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json` must match (the hygiene files are unchanged since attested and the inventory's commands exit 0).
-- `scripts/ci/check_append_only.py` (pull requests): files under `sim/` may be added, not modified, deleted or renamed.
+- `scripts/ci/check_append_only.py` (pull requests): files under a `record`/`records` directory inside `sim/` may be added, not modified, deleted or renamed (the evidence: `record.json`, logs, netlists). The harness and index files around the records (`sim/README.md`, each probe's `README.md` and `run.sh`, `sim/lib/*`, `sim/pdk.json`) stay modifiable.
 
 ## What CI does not check
 

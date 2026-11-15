@@ -35,6 +35,21 @@ diff -r sim/pdk-smoke/record /tmp/smoke # should differ only if tool versions do
 Loading the sky130 model library takes about a minute per ngspice run on
 ngspice-46, so the smoke runs one netlist.
 
+## Probes
+
+Each probe directory carries a `README.md` (what and why), a `run.sh`
+(reproduce) and a `record/` with the append-only evidence (`record.json` plus
+the logs and netlists that back it). All records are single-corner `kind:
+probe` runs unless the row says otherwise; none is item-5 evidence.
+
+| Probe | Gate | Question |
+|---|---|---|
+| `pdk-smoke` | — | do the pinned models load and converge? DC op + Id-Vgs of the 1.8 V core and 5 V thick-oxide families |
+| `clamp-probe` | G6 | do the RC supply clamps turn on? `clamp_io` (ESD.4, 5 V) and `clamp_core` (ESD.5, 1.8 V), power-up ramps + HBM pulses |
+| `corner-skew-probe` | G2 | does the sky130 skew set (`ff ss sf fs`) move the 5 V thick-oxide devices, or only the 1.8 V core? |
+| `diode-probe` | G1 / ESD.3 | what do the GPIO pad diodes do at the ESD.2 current? (diode areas are unsized placeholders) |
+| `diode-unit-probe` | G1 | what unit is the diode instance `area` / `perim` parameter in? measured at 27 C and 30 C |
+
 ## Smoke record (`pdk-smoke/record/`)
 
 DC operating point and Id-Vgs sweep at `tt`, 27 C, of one NMOS and one PMOS from
