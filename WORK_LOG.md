@@ -3,6 +3,24 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-15
+
+- **PR #125**: ci: scope the append-only guard to sim/ record directories
+- **PR #123**: fix: carry diode area/perim in instance units (um2/um), drop refuted x1e12 conversion
+- **PR #121**: fix: attribute the four unmet T1 items to the recorded no_evidence reason
+- **PR #117**: Add diode-unit-probe: settle sky130 diode area/perim unit as um2/um
+- **PR #115**: docs: count the supply clamps in the ring DRC envelope
+- **PR #114**: refactor(layout): drop dead state, the region wrapper and seven ignored parameters
+- **PR #111**: ci: commit sim probe logs without -f and reject dangling log references
+- **PR #91**: docs: roadmap as of 2026-11-13
+- **Issue #116** (closed): Layout generator converts diode area/perim by the refuted x1e12 convention; drawn and simulated diode geometry disagree by 1e12
+- **Issue #109** (closed): The append-only guard freezes sim/README.md, so the sim index cannot be updated and is stale
+- **Issue #107** (closed): Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point
+- **Issue #106** (closed): A new sim probe's record/logs/*.log is gitignored, and a dangling log reference passes CI
+- **Issue #99** (closed): Remove dead state, a passthrough wrapper and 7 ignored parameters from the layout generator
+- **Issue #93** (closed): README attributes the four unmet T1 items to spec ratification; the record says no_evidence
+- **Issue #90** (closed): README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs
+
 ### 2026-11-14
 
 - **PR #110**: fix(layout): name every rail band in every edge cell so clamp bodies resolve to VSS
