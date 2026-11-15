@@ -34,6 +34,21 @@ region the checker extracts and asserts — it never regenerates narrative:
     cite:historical does not excuse a near-miss (the escape excuses hashes
     absent from the source, and a near-miss path resolves in it by
     definition).
+  - a split pin is an error too (#148): the pinned form is single-line by
+    convention, so a backticked path name that resolves to a hash and ends
+    its line carrying no hash — only a pin connector (`is`, `is now`, `=`,
+    `:`) or whitespace after the name — is checked against the next
+    non-blank line of the same region; a hash token there means the hash
+    reflowed off the pin line and the citation silently degraded to
+    set-membership (even when the reflowed hash is the correct value — a
+    split pin asserts membership either way). The error names the canonical
+    single-line form so the fix is mechanical. Sentence punctuation after
+    the name — a resolving name ending a sentence above an unrelated hash
+    — is prose and stays quiet; the lookahead is region-bounded and never
+    crosses cite:end, cite:begin, a fence, or end of file. A path name
+    written without backticks is not scanned at all: the canonical grammar
+    has always required them, so a bare name is prose by definition (#148
+    row 3, out of scope).
 
 Set-membership also cannot see an *omitted* citation (the other half of
 #130), so a begin marker may declare the coverage fields the region must
@@ -69,9 +84,11 @@ citations of contents or of predecessor reports, not of this source's counts.
 Missing/unreadable source, nested or unterminated regions, cite:end without
 begin, count fields absent from the source, a requires= field the region
 never count-cites, a role path absent from the source, a role-pinned hash
-that disagrees with the path's value, and a near-miss pin (a backticked
+that disagrees with the path's value, a near-miss pin (a backticked
 path name that resolves to a hash on a hash-carrying line but is not
-written in the pinned form) are hard errors.
+written in the pinned form), and a split pin (a resolving name ending its
+line hash-free with a hash token reflowed onto the region's next
+non-blank line) are hard errors.
 
 Usage:
     python3 -I scripts/ci/check_prose_citations.py .    # exit 1 on any
@@ -92,6 +109,7 @@ HASH_RE = re.compile(
 PATH_HASH = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is `(sha256:[^`]+)`")
 COUNT_IS = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is (\d+)\b")
 COUNT_PAREN = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` \((\d+)[,)]")
+SPLIT_TAIL = re.compile(r"^(?:\s*(?:is now|is|=|:))?\s*$")
 FIELD_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_.]*")
 BACKTICKED = re.compile(r"`([^`]+)`")
 HEX64 = re.compile(r"[0-9a-f]{64}")
@@ -285,7 +303,10 @@ def check_near_miss_pin(region, where, line, pinned, errors):
     and the citation has silently degraded to set-membership. The error
     names the canonical form so the fix is mechanical from the CI log. A
     field name on a hash-free line is prose about the path, not a citation,
-    and stays quiet; cite:historical does not excuse a near-miss (the
+    and stays quiet here — a hash-free name ending its line with a pin
+    connector is #148's split-pin candidate instead, completed across
+    lines by check_split_pin; cite:historical does not excuse a near-miss
+    (the
     escape excuses hashes absent from the source, and a near-miss path
     resolves in it by definition)."""
     if region["data"] is None or not HASH_RE.search(line):
@@ -302,6 +323,49 @@ def check_near_miss_pin(region, where, line, pinned, errors):
                 f"{region['source']} but this line does not write it as a "
                 f"role pin, so the citation asserts set-membership only — "
                 f"write `{name}` is `sha256:...` to pin it")
+
+
+def split_pin_candidate(region, line):
+    """#148's split-pin candidate rule: on a hash-free line, a backticked
+    name that matches FIELD_NAME, resolves to a hash value in the region's
+    source, and ends the line — apart from a pin connector (`is`, `is now`,
+    `=`, `:`) or whitespace — is a pin whose hash may have reflowed onto
+    the next line. The narrowing is measured, not guessed: sentence
+    punctuation after the name (a resolving name ending a sentence above an
+    unrelated hash) disqualifies the candidate and keeps that prose shape
+    quiet. A path name written without backticks is never scanned — the
+    canonical grammar has always required them, so a bare name is prose by
+    definition (#148 row 3, out of scope)."""
+    if HASH_RE.search(line):
+        return None
+    for m in BACKTICKED.finditer(line):
+        name = m.group(1)
+        if not FIELD_NAME.fullmatch(name):
+            continue
+        if not resolves_to_hash(region, name):
+            continue
+        if SPLIT_TAIL.match(line[m.end():]):
+            return name
+    return None
+
+
+def check_split_pin(region, pending, where, line, errors):
+    """#148's one-line lookahead: a hash token on this line completes the
+    previous line's split-pin candidate. The pin is de-pinned whether the
+    reflowed hash is right or wrong — a split pin asserts set-membership
+    only — so the value is never consulted and the error names the
+    canonical single-line form. cite:historical on the hash line does not
+    excuse the split (consistent with #146: the escape excuses hashes
+    absent from the source, and a split-pin path resolves in it by
+    definition)."""
+    if pending is None or not HASH_RE.search(line):
+        return
+    name, name_where = pending
+    errors.append(
+        f"{name_where}: `{name}` resolves to a hash in "
+        f"{region['source']} but its role pin is split across lines, so "
+        f"the citation asserts set-membership only — write `{name}` is "
+        f"`sha256:...` on one line to pin it")
 
 
 def check_requires(region, where, errors):
@@ -350,16 +414,21 @@ def check_file(root, rel, text, errors):
         return
     region = None
     fence = None
+    pending = None          # (name, where) from #148's split-pin lookahead
     for n, line in enumerate(text.splitlines(), 1):
         new_fence = fence_state(line, fence)
         if new_fence is not fence:
             fence = new_fence
+            pending = None  # fenced syntax never completes a pin
             continue          # the fence delimiter line itself is inert
         if fence is not None:
             continue          # fenced code is example syntax, never asserted
         where = f"{rel}:{n}"
         b = find_marker(BEGIN, line)
         e = find_marker(END, line)
+        if b or e:
+            pending = None    # a marker line bounds the region: the
+                              # lookahead never crosses one (#148)
         if b and e:
             errors.append(f"{where}: cite:begin and cite:end on one line")
             continue
@@ -391,6 +460,12 @@ def check_file(root, rel, text, errors):
             region = None
             continue
         if region is not None and region["hashes"] is not None:
+            check_split_pin(region, pending, where, line, errors)
+            if line.strip():
+                pending = None
+                name = split_pin_candidate(region, line)
+                if name is not None:
+                    pending = (name, where)
             check_line(region, where, line, errors)
     if region is not None:
         errors.append(f"{rel}:{region['line']}: unterminated cite region "

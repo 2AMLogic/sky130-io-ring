@@ -877,6 +877,146 @@ class ProseCitations(unittest.TestCase):
                   "```\nsha256:" + "f" * 64 + "\n```\n")
         self.assertEqual(pc.check_root(root), [])
 
+    # --- split pins (#148): the hash reflowed off the pin line ---------
+
+    def test_split_reflow_wrong_hash_rejected(self):
+        # Row 4: the pin reflowed — the name ends its line carrying no
+        # hash, and the hash (here the input hash, present in the source,
+        # so bare set-membership passes) landed on the next line. The role
+        # pin stopped being asserted; the one-line lookahead must be loud.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "split across lines" in e
+                            and "spec/klt-rule-coverage.md" in e
+                            for e in errors), errors)
+
+    def test_split_reflow_correct_hash_still_rejected(self):
+        # Even with the reflowed hash still the correct deck value, the
+        # split pin asserts set-membership only — the de-pin is the
+        # defect, so the value is never consulted and this stays an error.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "split across lines" in e for e in errors),
+                        errors)
+
+    def test_split_reflow_without_connector_rejected(self):
+        # A reflow that drops the connector entirely leaves the bare name
+        # as the line's last token; the lookahead still completes it. (A
+        # connector is optional; sentence punctuation is not.)
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash`\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("split across lines", errors[0])
+
+    def test_split_reflow_error_names_canonical_single_line_form(self):
+        # The split-pin message must carry the fix — the canonical
+        # single-line spelling — readable straight off the CI log.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("`provenance.deck.content_hash` is `sha256:...`"
+                            " on one line" in e for e in errors), errors)
+
+    def test_adversarial_sentence_name_passes(self):
+        # The measured false positive the narrowing exists for: a
+        # resolving name ending a sentence (punctuation after the closing
+        # backtick), with an unrelated hash opening the next line. Prose,
+        # not a pin — the naive lookahead fires here, the narrowed rule
+        # must stay quiet.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "The deck is named by `provenance.deck.content_hash`.\n"
+                  "The input stream is "
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_split_candidate_without_following_hash_passes(self):
+        # The lookahead alone asserts nothing: a candidate line whose next
+        # non-blank line carries no hash stays prose.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "asserted against the curated deck's provenance.")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_split_lookahead_never_crosses_region_end(self):
+        # A candidate on the region's last line must not complete against
+        # a hash sitting after cite:end — the lookahead is region-bounded.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md", self.END,
+                  "`provenance.deck.content_hash`\n"
+                  + self.END + "\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_split_candidate_as_final_line_does_not_crash(self):
+        # An unterminated region whose final line is a candidate: only the
+        # unterminated error fires — the lookahead never runs past EOF.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md", self.END,
+                  "`provenance.deck.content_hash` is")
+        errors = pc.check_root(root)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("unterminated cite region", errors[0])
+
+    def test_historical_escape_on_split_hash_yields_two_errors(self):
+        # cite:historical on the reflowed hash line: the escape excuses
+        # hashes absent from the source, and this one (the input hash) is
+        # present, so escape-but-matches fires on the hash line AND the
+        # split-pin error fires on the name line — the escape does not
+        # re-canonise the split pin (consistent with #146).
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`" + self.ESCAPE)
+        errors = pc.check_root(root)
+        self.assertEqual(len(errors), 2, errors)
+        self.assertTrue(any("split across lines" in e for e in errors),
+                        errors)
+        self.assertTrue(any("matches the source" in e for e in errors),
+                        errors)
+
 
 if __name__ == "__main__":
     unittest.main()
