@@ -11,6 +11,7 @@ from pathlib import Path
 
 import check_append_only as ao
 import check_evidence_format as ef
+import check_lvs_reports as lr
 
 GOOD = {
     "kind": "pdk-smoke",
@@ -154,6 +155,156 @@ class AppendOnly(unittest.TestCase):
         # over the is_record() shape.
         self.assertTrue(ao.violations("M\tsim/clamp-probe/record/logs/probe.log\n"))
         self.assertTrue(ao.violations("D\tsim/pdk-smoke/record/netlists/smoke.sp\n"))
+
+
+class LvsReports(unittest.TestCase):
+    NAME = "sky130_ioring_gpio.json"
+
+    def good(self, name=None):
+        name = name or self.NAME
+        exp = lr.EXPECTATIONS[name]
+        return json.dumps({
+            "status": "match",
+            "mismatch_count": 0,
+            "counts": {"devices": dict(exp["devices"])},
+            "body_verification": {"status": "verified", "device_classes": [],
+                                  "device_count": exp["body_device_count"],
+                                  "finding_count": 0},
+        })
+
+    def expect(self, name=None):
+        return lr.EXPECTATIONS[name or self.NAME]
+
+    def mutated(self, fn, name=None):
+        rep = json.loads(self.good(name))
+        fn(rep)
+        return json.dumps(rep)
+
+    def populate(self, root, skip=None, extra=None):
+        d = Path(root) / "signoff" / "evidence" / "lvs"
+        d.mkdir(parents=True)
+        for name in lr.EXPECTATIONS:
+            if name != skip:
+                (d / name).write_text(self.good(name))
+        if extra:
+            (d / extra).write_text(self.good())
+        return d
+
+    def test_good_report_passes(self):
+        self.assertEqual(lr.check_report(self.good(), "r", self.expect()), [])
+
+    def test_mismatch_status_rejected(self):
+        errors = lr.check_report(
+            self.mutated(lambda r: r.update(status="mismatch")), "r", self.expect())
+        self.assertTrue(any("'mismatch'" in e and "status" in e for e in errors))
+
+    def test_body_verification_unverified_rejected(self):
+        # the pre-#110 shape: the compare matched, the bodies did not resolve
+        def seed(r):
+            r["body_verification"] = {"status": "unverified", "device_classes": ["nfet"],
+                                      "device_count": 815, "finding_count": 1}
+        errors = lr.check_report(self.mutated(seed), "r", self.expect())
+        self.assertTrue(any("body_verification.status" in e for e in errors))
+        self.assertTrue(any("body_verification.device_count" in e for e in errors))
+
+    def test_missing_body_verification_rejected(self):
+        # a missing key must never read as satisfied
+        errors = lr.check_report(
+            self.mutated(lambda r: r.pop("body_verification")), "r", self.expect())
+        self.assertTrue(any("missing body_verification" in e for e in errors))
+
+    def test_missing_counts_devices_rejected(self):
+        errors = lr.check_report(
+            self.mutated(lambda r: r.pop("counts")), "r", self.expect())
+        self.assertTrue(any("counts.devices" in e for e in errors))
+
+    def test_devices_count_drift_rejected(self):
+        def seed(r):
+            r["counts"]["devices"]["matched"] = 110
+        errors = lr.check_report(self.mutated(seed), "r", self.expect())
+        self.assertTrue(any("counts.devices.matched" in e for e in errors))
+
+    def test_device_count_drift_rejected(self):
+        def seed(r):
+            r["body_verification"]["device_count"] = 2
+        errors = lr.check_report(self.mutated(seed), "r", self.expect())
+        self.assertTrue(any("body_verification.device_count" in e for e in errors))
+
+    def test_zero_device_count_is_not_a_coverage_floor(self):
+        # device_count counts unresolved bodies, not inspected ones (klt#5749):
+        # the vacuous and empty-inspection streams carry 0 and must pass
+        for name in ("sky130_ioring_vss.json", "sky130_ioring_vddio.json"):
+            self.assertEqual(lr.check_report(self.good(name), "r", self.expect(name)), [])
+
+    def test_unknown_report_rejected(self):
+        errors = lr.check_report(self.good(), "r", None)
+        self.assertTrue(any("no pinned expectation" in e for e in errors))
+
+    def test_invalid_json_rejected(self):
+        self.assertTrue(lr.check_report("{not json", "r", self.expect()))
+
+    def test_non_object_top_level_rejected(self):
+        self.assertTrue(lr.check_report("[]", "r", self.expect()))
+
+    def test_vacuous_stream_with_devices_rejected(self):
+        # the body_inspection declaration is load-bearing, not prose
+        name = "sky130_ioring_corner.json"
+
+        def seed(r):
+            r["counts"]["devices"] = {"layout": 3, "reference": 3, "matched": 3}
+        errors = lr.check_report(self.mutated(seed, name), "r", self.expect(name))
+        self.assertTrue(any("body_inspection" in e for e in errors))
+
+    def test_honest_stream_with_no_devices_rejected(self):
+        def seed(r):
+            r["counts"]["devices"] = {"layout": 0, "reference": 0, "matched": 0}
+        errors = lr.check_report(self.mutated(seed), "r", self.expect())
+        self.assertTrue(any("body_inspection" in e for e in errors))
+
+    def test_tree_all_reports_pass(self):
+        with tempfile.TemporaryDirectory() as t:
+            self.populate(t)
+            errors, n = lr.check_tree(t)
+            self.assertEqual(errors, [])
+            self.assertEqual(n, len(lr.EXPECTATIONS))
+
+    def test_tree_absent_report_rejected(self):
+        with tempfile.TemporaryDirectory() as t:
+            self.populate(t, skip="sky130_ioring_vdd.json")
+            errors, _ = lr.check_tree(t)
+            self.assertTrue(any("report file absent" in e and "sky130_ioring_vdd.json" in e
+                                for e in errors))
+
+    def test_tree_unexpected_report_rejected(self):
+        with tempfile.TemporaryDirectory() as t:
+            self.populate(t, extra="sky130_ioring_extra.json")
+            errors, n = lr.check_tree(t)
+            self.assertEqual(n, len(lr.EXPECTATIONS) + 1)
+            self.assertTrue(any("no pinned expectation" in e for e in errors))
+
+    def test_tree_tampered_status_rejected(self):
+        with tempfile.TemporaryDirectory() as t:
+            d = self.populate(t)
+            rep = json.loads((d / "ring.json").read_text())
+            rep["status"] = "mismatch"
+            (d / "ring.json").write_text(json.dumps(rep))
+            errors, _ = lr.check_tree(t)
+            self.assertTrue(any("ring.json" in e and "'mismatch'" in e for e in errors))
+
+    def test_tree_invalid_json_rejected(self):
+        with tempfile.TemporaryDirectory() as t:
+            d = self.populate(t)
+            (d / "sky130_ioring_gpio.json").write_text("{broken")
+            errors, _ = lr.check_tree(t)
+            self.assertTrue(any("not valid JSON" in e for e in errors))
+
+    def test_tree_empty_directory_rejected(self):
+        # nothing on disk must not read as ten passing streams
+        with tempfile.TemporaryDirectory() as t:
+            (Path(t) / "signoff" / "evidence" / "lvs").mkdir(parents=True)
+            errors, n = lr.check_tree(t)
+            self.assertEqual(n, 0)
+            self.assertEqual(len(errors), len(lr.EXPECTATIONS))
 
 
 if __name__ == "__main__":
