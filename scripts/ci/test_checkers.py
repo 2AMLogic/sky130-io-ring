@@ -132,7 +132,7 @@ class EvidenceFormat(unittest.TestCase):
         # A bare-suffix key (`logdir`, `logfile`, `basedir`) is NOT path-shaped:
         # PATH_KEY_RE requires the path word to be the whole key or follow an
         # underscore, and that separator anchor is a documented convention
-        # (issue #134), not an oversight. A record carrying a dangling
+        # (2AMLogic/sky130-io-ring#134), not an oversight. A record carrying a dangling
         # bare-suffix value is therefore accepted — this asserts the skip as
         # a decision, so a future pass that widens the regex has to confront
         # it deliberately. Widening was measured and rejected: a bare-suffix

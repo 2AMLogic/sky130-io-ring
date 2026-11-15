@@ -56,9 +56,9 @@ none is item-5 evidence.
 
 ## Record field conventions
 
-Two rules for any new probe's record fields (both violated by
+Three rules for any new probe's record fields. The first two are violated by
 `diode-unit-probe`, whose record predates them and is append-only — its README
-carries the erratum):
+carries the erratum:
 
 - **R1 — a field name states the unit domain of the number it holds.** A card
   figure in its source domain and the same figure after the card's own
@@ -75,6 +75,14 @@ carries the erratum):
   units, so it cannot contradict the record's own `conclusion`. (The
   `diode-unit-probe` record's bare `units_comment` asserts exactly the C2
   reading its `conclusion` refutes.)
+- **R3 — a path key's separator is load-bearing.** A key counts as
+  path-shaped only when the path word is the whole key or follows an
+  underscore (`log`, `log_dir`, `out_file`); a bare-suffix spelling
+  (`logdir`, `logfile`, `basedir`) is malformed by convention and
+  **silently unchecked** — its value is never inspected, so a dangling or
+  absolute path under it passes CI. The canonical full statement lives in
+  the `check_evidence_format.py` bullet of `signoff/README.md`'s signoff
+  CI-checks list and in that checker's module docstring.
 
 ## Smoke record (`pdk-smoke/record/`)
 
