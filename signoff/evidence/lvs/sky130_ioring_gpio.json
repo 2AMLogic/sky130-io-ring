@@ -141,7 +141,7 @@
     "engine_version": "0.30.13",
     "netgen_binary": null,
     "layout_sha256": "7431dd7662e74a5a58ae470830f38565e9bcff3eeac53ddd1bc27a22b9b9fb42",
-    "reference_sha256": "e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e",
+    "reference_sha256": "d8d33d66639967b4a45c5abe8e981946500138d5a9a502a3a6d720353b4aa6ef",
     "extracted_netlist": null
   },
   "provenance": {
