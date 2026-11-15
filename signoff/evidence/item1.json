@@ -17,7 +17,7 @@
         "role": "source",
         "path": "design/netlist.sh",
         "passed": true,
-        "content_hash": "sha256:a57ddc7e40ce6ec3d1e798eb9da2dda439325ee282755ea8f0060f12bf7e9db5"
+        "content_hash": "sha256:5476ea5fef92e95bb2e0807634452daccbc38627d6c873b91007ebd99873d02a"
       },
       {
         "check": "present",
@@ -346,154 +346,154 @@
         "role": "derived",
         "path": "design/netlists/sky130_ioring_clamp_core.spice",
         "passed": true,
-        "content_hash": "sha256:73ae030710c843d4d9f7572d571e7cd21bd9f6e635de9521ebac77d974ac3229"
+        "content_hash": "sha256:cddfe25bdfb367144e9ac1381eaaf1a2a686857d22b1d66c97d93aef1b681c2d"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_clamp_io.spice",
         "passed": true,
-        "content_hash": "sha256:c12c71ae501180afaf1ee4a4806382e8bfd27c5294d768eeca77d0d1dd7e1124"
+        "content_hash": "sha256:13383ebb57cca49a165c4b20ebd12227c28063c0de72a2b147e6c3b53f4938e4"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_corner.spice",
         "passed": true,
-        "content_hash": "sha256:97102068d144559dabb0c13ba634d520d1df9ba619df354252907673102b6c54"
+        "content_hash": "sha256:6e249ec50676a129d693c354d3f87bb0f439b1f4e89f487199957a35b4f268b8"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_fill_1.spice",
         "passed": true,
-        "content_hash": "sha256:7c0eb024314f59d9d30d4020047bc8f0a5452e7f8a5f878a39964fa83f682f00"
+        "content_hash": "sha256:f91405a5eb00991aa0847711f0efb704f15443c390a713b5ab3b63d36529c4b7"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_fill_10.spice",
         "passed": true,
-        "content_hash": "sha256:31512bc823342efb1384abc9245abbc4279ec90f9554235ca5da01b1b4706d63"
+        "content_hash": "sha256:a9645c89f016aeb54c716eae47c0dab2f52db1e12567153b8e27c271ff157410"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_fill_20.spice",
         "passed": true,
-        "content_hash": "sha256:e0bc40527743def93312722875592aaf48fec82cf7ee4d12d191346469116042"
+        "content_hash": "sha256:094a05a863aa5e084f56080b3e5d4151a07fc64bc54c29ddb14d5032631dad66"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_fill_5.spice",
         "passed": true,
-        "content_hash": "sha256:542e7d9a8c8c3f4c382e3979701a643cc64decbe1b131be71c308ce3b419f15b"
+        "content_hash": "sha256:30ba1153df56a64c0284f57a90c5a5e0a74022264ecc8feea80f62ed5b585204"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio.spice",
         "passed": true,
-        "content_hash": "sha256:8157cf0f9194056483cb09f0e782a127f1f6d38c63ef74c960b8d91a73257f05"
+        "content_hash": "sha256:d8d33d66639967b4a45c5abe8e981946500138d5a9a502a3a6d720353b4aa6ef"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_drv.spice",
         "passed": true,
-        "content_hash": "sha256:b2077d5310c0935be197744fcc4240c549df96e38849feec509ecf5427c70e0b"
+        "content_hash": "sha256:897caf3b58c27c76fa46885e11a2c6a1c842b371f318bb7d738bea27ff9aca88"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_esd.spice",
         "passed": true,
-        "content_hash": "sha256:c2492588daa3c7c5bed70d107a1673a20f3602fa2404541586556b2e765397f9"
+        "content_hash": "sha256:953e268ab9047d835b563333416f105349f82afc71edb14b7f4253e572d5464f"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_logic.spice",
         "passed": true,
-        "content_hash": "sha256:3d947c2b085fa673578d8d8e5bb27e30770fca8492b580ef3fafddfb319c8551"
+        "content_hash": "sha256:0437c9b997d6d1457fba8a71d3e262c23c228238d5cab7a3941404e82fafd19d"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_ls.spice",
         "passed": true,
-        "content_hash": "sha256:0fbfa1c1a07aec2d84770b8fea668c652c80fcea38f5dc4b56b49fe8926b5a96"
+        "content_hash": "sha256:a2e529339600ef290665399acae3c211a61d47b3de7b0be90a933ebe1426fb91"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_pulls.spice",
         "passed": true,
-        "content_hash": "sha256:412c2634fac3552cffd19d3bae21b0399fe6e75924ef6f0fa424d50bb1d7c362"
+        "content_hash": "sha256:05059629e034376b5689c43b38eb0366cc17c4d5ddd5c35602441418c3030beb"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_rcv.spice",
         "passed": true,
-        "content_hash": "sha256:f07e4f6e408d1080e862bba22b0484da65315dcc294cd89c78959a1a7a75b52b"
+        "content_hash": "sha256:67b03a94af6fa6456ca50fb7a251b7f14a1779b8cc52c5bc23dda8f224631f0b"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_inv.spice",
         "passed": true,
-        "content_hash": "sha256:b3a57fd8477d1556872ce3fec33096ebafab177b71720f9a9d942e36010c5c5d"
+        "content_hash": "sha256:f9d422c56f8459d8acb5e23b372f8d664c368b7a0af4432b03915dd255458d68"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_nand2.spice",
         "passed": true,
-        "content_hash": "sha256:dc9a5e578376ff77b6a4106dc5ae885def3640e8ea38f389eb696cfec1c27e48"
+        "content_hash": "sha256:9e1e6f0d9437e85b216dc6ba82d741706c105a7d7a84a66e4f7f4ae3e06b3e74"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_nand3.spice",
         "passed": true,
-        "content_hash": "sha256:d13773fe6dff30b290dc445b425e5ac56aeeca6b2b5a3da9b341bc47c4c80308"
+        "content_hash": "sha256:3146937944139cd1cae1fb8721c056090a8560cd2dde78e8a18f1d51ab620463"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_nor2.spice",
         "passed": true,
-        "content_hash": "sha256:900399a0f8519aae86511587de56df5d2abc6b789e7a38daaaf9e8d27fecc24f"
+        "content_hash": "sha256:0274b376c8c849b6d5ae448b424baa7eadf03cfe7e2197f59bd39e043fc09a04"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_ring.spice",
         "passed": true,
-        "content_hash": "sha256:2950dbbd8b0eb15c118e19b02d27d6ad61f2d4d91da93dd056a86b99106153a2"
+        "content_hash": "sha256:146df4362b9bbf5bc6e7bb050cce0a70f0d5d0b1dcea281aecb37658c59879b8"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_vdd.spice",
         "passed": true,
-        "content_hash": "sha256:eae9601db590ca392fbc82dd83e95c4107c9c548b1f259d5fa1eb87728fd333f"
+        "content_hash": "sha256:abe1be7186650fa548fa62bab02fe290ebba478aac1197f9c5929555d34057f7"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_vddio.spice",
         "passed": true,
-        "content_hash": "sha256:549a20019c899f608d060998bdb6c8b99eafcea60c7e040ab57728f412e02d1a"
+        "content_hash": "sha256:7ec3e3b311562048ccd0ca9c645ae81344919c7fe530fa375fa37f5d76ed12a9"
       },
       {
         "check": "present",
         "role": "derived",
         "path": "design/netlists/sky130_ioring_vss.spice",
         "passed": true,
-        "content_hash": "sha256:cb3b34bdfc11bb9f00aff5212cc0454d7fc7c03c88126bd7d4a9081ee7245c1d"
+        "content_hash": "sha256:462cba6e6625b82b2db6e1d327a2e9be3e78c38ec42496e588a14fef277359ec"
       },
       {
         "check": "command",
@@ -868,161 +868,161 @@
             "path": "design/netlist.sh",
             "scope": "repo"
           },
-          "content_hash": "sha256:a57ddc7e40ce6ec3d1e798eb9da2dda439325ee282755ea8f0060f12bf7e9db5"
+          "content_hash": "sha256:5476ea5fef92e95bb2e0807634452daccbc38627d6c873b91007ebd99873d02a"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_clamp_core.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:73ae030710c843d4d9f7572d571e7cd21bd9f6e635de9521ebac77d974ac3229"
+          "content_hash": "sha256:cddfe25bdfb367144e9ac1381eaaf1a2a686857d22b1d66c97d93aef1b681c2d"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_clamp_io.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:c12c71ae501180afaf1ee4a4806382e8bfd27c5294d768eeca77d0d1dd7e1124"
+          "content_hash": "sha256:13383ebb57cca49a165c4b20ebd12227c28063c0de72a2b147e6c3b53f4938e4"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_corner.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:97102068d144559dabb0c13ba634d520d1df9ba619df354252907673102b6c54"
+          "content_hash": "sha256:6e249ec50676a129d693c354d3f87bb0f439b1f4e89f487199957a35b4f268b8"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_fill_1.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:7c0eb024314f59d9d30d4020047bc8f0a5452e7f8a5f878a39964fa83f682f00"
+          "content_hash": "sha256:f91405a5eb00991aa0847711f0efb704f15443c390a713b5ab3b63d36529c4b7"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_fill_10.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:31512bc823342efb1384abc9245abbc4279ec90f9554235ca5da01b1b4706d63"
+          "content_hash": "sha256:a9645c89f016aeb54c716eae47c0dab2f52db1e12567153b8e27c271ff157410"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_fill_20.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:e0bc40527743def93312722875592aaf48fec82cf7ee4d12d191346469116042"
+          "content_hash": "sha256:094a05a863aa5e084f56080b3e5d4151a07fc64bc54c29ddb14d5032631dad66"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_fill_5.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:542e7d9a8c8c3f4c382e3979701a643cc64decbe1b131be71c308ce3b419f15b"
+          "content_hash": "sha256:30ba1153df56a64c0284f57a90c5a5e0a74022264ecc8feea80f62ed5b585204"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:8157cf0f9194056483cb09f0e782a127f1f6d38c63ef74c960b8d91a73257f05"
+          "content_hash": "sha256:d8d33d66639967b4a45c5abe8e981946500138d5a9a502a3a6d720353b4aa6ef"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_drv.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:b2077d5310c0935be197744fcc4240c549df96e38849feec509ecf5427c70e0b"
+          "content_hash": "sha256:897caf3b58c27c76fa46885e11a2c6a1c842b371f318bb7d738bea27ff9aca88"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_esd.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:c2492588daa3c7c5bed70d107a1673a20f3602fa2404541586556b2e765397f9"
+          "content_hash": "sha256:953e268ab9047d835b563333416f105349f82afc71edb14b7f4253e572d5464f"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_logic.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:3d947c2b085fa673578d8d8e5bb27e30770fca8492b580ef3fafddfb319c8551"
+          "content_hash": "sha256:0437c9b997d6d1457fba8a71d3e262c23c228238d5cab7a3941404e82fafd19d"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_ls.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:0fbfa1c1a07aec2d84770b8fea668c652c80fcea38f5dc4b56b49fe8926b5a96"
+          "content_hash": "sha256:a2e529339600ef290665399acae3c211a61d47b3de7b0be90a933ebe1426fb91"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_pulls.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:412c2634fac3552cffd19d3bae21b0399fe6e75924ef6f0fa424d50bb1d7c362"
+          "content_hash": "sha256:05059629e034376b5689c43b38eb0366cc17c4d5ddd5c35602441418c3030beb"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_gpio_rcv.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:f07e4f6e408d1080e862bba22b0484da65315dcc294cd89c78959a1a7a75b52b"
+          "content_hash": "sha256:67b03a94af6fa6456ca50fb7a251b7f14a1779b8cc52c5bc23dda8f224631f0b"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_inv.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:b3a57fd8477d1556872ce3fec33096ebafab177b71720f9a9d942e36010c5c5d"
+          "content_hash": "sha256:f9d422c56f8459d8acb5e23b372f8d664c368b7a0af4432b03915dd255458d68"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_nand2.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:dc9a5e578376ff77b6a4106dc5ae885def3640e8ea38f389eb696cfec1c27e48"
+          "content_hash": "sha256:9e1e6f0d9437e85b216dc6ba82d741706c105a7d7a84a66e4f7f4ae3e06b3e74"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_nand3.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:d13773fe6dff30b290dc445b425e5ac56aeeca6b2b5a3da9b341bc47c4c80308"
+          "content_hash": "sha256:3146937944139cd1cae1fb8721c056090a8560cd2dde78e8a18f1d51ab620463"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_nor2.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:900399a0f8519aae86511587de56df5d2abc6b789e7a38daaaf9e8d27fecc24f"
+          "content_hash": "sha256:0274b376c8c849b6d5ae448b424baa7eadf03cfe7e2197f59bd39e043fc09a04"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_ring.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:2950dbbd8b0eb15c118e19b02d27d6ad61f2d4d91da93dd056a86b99106153a2"
+          "content_hash": "sha256:146df4362b9bbf5bc6e7bb050cce0a70f0d5d0b1dcea281aecb37658c59879b8"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_vdd.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:eae9601db590ca392fbc82dd83e95c4107c9c548b1f259d5fa1eb87728fd333f"
+          "content_hash": "sha256:abe1be7186650fa548fa62bab02fe290ebba478aac1197f9c5929555d34057f7"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_vddio.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:549a20019c899f608d060998bdb6c8b99eafcea60c7e040ab57728f412e02d1a"
+          "content_hash": "sha256:7ec3e3b311562048ccd0ca9c645ae81344919c7fe530fa375fa37f5d76ed12a9"
         },
         {
           "path": {
             "path": "design/netlists/sky130_ioring_vss.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:cb3b34bdfc11bb9f00aff5212cc0454d7fc7c03c88126bd7d4a9081ee7245c1d"
+          "content_hash": "sha256:462cba6e6625b82b2db6e1d327a2e9be3e78c38ec42496e588a14fef277359ec"
         },
         {
           "path": {
@@ -1347,7 +1347,7 @@
           "content_hash": "sha256:a5282884b0579fb67612e6dbcaa95338b8cb72a60334af6bb91a8fa17e87656f"
         }
       ],
-      "content_hash": "sha256:82151fd4b491796994e6eb25bec3b7542cafd6e2d44a41b1bd3478e788251978"
+      "content_hash": "sha256:f81ebd0091aa2ac92891e694efed82adb82e3df1fd7e8c972ca8007ef88e5c06"
     }
   }
 }

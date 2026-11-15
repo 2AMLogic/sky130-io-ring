@@ -1,5 +1,5 @@
 ** klt-netlist-inputs: {"pdk_variant": "sky130A", "rcfile": "xschemrc", "xschem_version": "3.4.7"}
-** sch_path: /home/ubuntu/GitHub/sky130-io-ring/.loom/worktrees/issue-116/design/xschem/sky130_ioring_gpio_esd.sch
+** sch_path: design/xschem/sky130_ioring_gpio_esd.sch
 .subckt sky130_ioring_gpio_esd PAD RXG VDDIO VSS
 *.PININFO PAD:B RXG:O VDDIO:B VSS:B
 XDP PAD VDDIO sky130_fd_pr__diode_pd2nw_05v5 area=200 perim=60
