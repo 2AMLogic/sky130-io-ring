@@ -27,17 +27,9 @@
 # after another: the sky130 library is loaded once, and this is a single-corner
 # run, not a grid (no corners, no Monte Carlo, no parallel jobs).
 set -euo pipefail
-here="$(cd "$(dirname "$0")" && pwd)"
-repo="$(cd "${here}/../.." && pwd)"
-out="${1:-${here}/record}"
-[ ! -e "${out}" ] || { echo "run.sh: ${out} exists; records are append-only" >&2; exit 1; }
-
-# shellcheck source=../lib/pdk_env.sh
-source "${repo}/sim/lib/pdk_env.sh"
-command -v ngspice >/dev/null || { echo "run.sh: ngspice not on PATH" >&2; exit 1; }
-
-mkdir -p "${out}/netlists" "${out}/logs"
-work="$(mktemp -d)"; trap 'rm -rf "${work}"' EXIT
+# shellcheck source=../lib/run_common.sh
+source "$(dirname "$0")/../lib/run_common.sh"
+run_common_setup "${1:-}"
 
 nl="${repo}/design/netlists"
 cell=sky130_ioring_gpio_esd
@@ -333,16 +325,9 @@ emit "${SKY130_MODEL_LIB}" "${nl}" > "${work}/probe.sp"
 # Snapshot: no absolute paths.
 emit '$PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice' '.' > "${out}/netlists/probe.sp"
 
-rc=0
-(cd "${work}" && ngspice -b -o "${work}/probe.log" "${work}/probe.sp" </dev/null >/dev/null 2>&1) || rc=$?
-[ "${rc}" -eq 0 ] || echo "run.sh: ngspice exited ${rc}" >&2
-sed -e "s#${PDK_ROOT}#\$PDK_ROOT#g" -e "s#${work}#\$WORK#g" -e "s#${repo}#\$REPO#g" "${work}/probe.log" > "${out}/logs/probe.log"
+run_common_ngspice "${work}/probe.sp" "${work}/probe.log"
+run_common_scrub < "${work}/probe.log" > "${out}/logs/probe.log"
 
-ngspice_ver="$(ngspice --version | sed -n 's/.*ngspice-\([0-9.]*\).*/\1/p' | head -n1)"
-ciel_ver="$(ciel --version 2>/dev/null | sed -n 's/^Ciel v\([0-9.]*\).*/\1/p' | head -n1)" || true
-xschem_ver="$(xschem --version 2>&1 | sed -n 's/^XSCHEM V\([0-9.]*\).*/\1/p' | head -n1)" || true
-meta="$(printf '{"kind":"probe","probe":"G1/ESD.3 single-corner pad-diode forward-drop probe at the ESD.2 current","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","temp_c":27,"vddio_nominal_V":%s,"tools":{"ngspice":"%s","ciel":"%s","xschem":"%s"},"note":"Single-corner probe, not item-5 evidence; no corner or temperature set, no failure current, no ESD rating. The diode areas in design/netlists/sky130_ioring_gpio_esd.spice are explicit placeholders (gate G1, decision 0004), so every voltage here is the drop of a placeholder at a placeholder area. The diode models carry a stated |V| 0 to 5.0 V validity range and NO current validity range at all: current_validity=no_current_validity_range_on_record sits on every diode line, and a within_esd7_model_range voltage verdict is not a pass on ESD.3."}' \
-  "${PDK_REVISION}" "${PDK}" "${vddio_nom}" "${ngspice_ver}" "${ciel_ver:-unavailable}" "${xschem_ver:-unavailable}")"
-
-cd "${out}"
-python3 -I "${repo}/sim/lib/simrec.py" write record.json --meta "${meta}" --log "probe=logs/probe.log"
+meta="$(printf '{"kind":"probe","probe":"G1/ESD.3 single-corner pad-diode forward-drop probe at the ESD.2 current","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","temp_c":27,"vddio_nominal_V":%s,"tools":%s,"note":"Single-corner probe, not item-5 evidence; no corner or temperature set, no failure current, no ESD rating. The diode areas in design/netlists/sky130_ioring_gpio_esd.spice are explicit placeholders (gate G1, decision 0004), so every voltage here is the drop of a placeholder at a placeholder area. The diode models carry a stated |V| 0 to 5.0 V validity range and NO current validity range at all: current_validity=no_current_validity_range_on_record sits on every diode line, and a within_esd7_model_range voltage verdict is not a pass on ESD.3."}' \
+  "${PDK_REVISION}" "${PDK}" "${vddio_nom}" "$(run_common_tools_json ngspice ciel xschem)")"
+run_common_record "${meta}" --log "probe=logs/probe.log"

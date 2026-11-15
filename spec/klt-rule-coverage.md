@@ -76,37 +76,54 @@ decks and rule ids differ.
 
 ## Not checked in this survey
 
-- Whether the curated deck's width / spacing rules for the thick-oxide
-  devices' diffusion and poly match the 5 V device rules (the deck has one
-  `diff.width.1` row; whether the 5 V device uses a different value was not
-  examined).
-- The native deck was read, not run: no layout exists yet.
+- The native deck was read, not run: layout now exists (`layout/gds/`, ten
+  committed streams — one of them, `sky130_ioring_ring.gds`, was the report
+  above's input), but every run here used the curated deck; the native
+  engine's rules were never executed.
 
-## Reconciliation with the first committed DRC report (2026-10-27)
+## Reconciliation with the committed DRC report (regenerated 2026-11-14)
 
 Source: `signoff/evidence/drc/ring.json`, `klt drc --deck sky130` by `klt`
-0.8.0 on `layout/gds/sky130_ioring_ring.gds` (input
-`sha256:e8e7ba2fc8680905f043a42b5bea053a5e4c03102ae086ba11e341917415089d`).
-Deck `sky130`, `sha256:ba0f97887e3d231aec8b54f1f52f2941ded0228f0234b6759712bcaca0e942e6`,
-`released: true` (the `released: False` above is older than this deck).
-`status: clean`, `violation_count: 0`. The layout is placeholder drawing (no
-gates, clamp or level shifter), so this is clean on rails, pad openings and
-guard-ring geometry only.
+0.9.1 on `layout/gds/sky130_ioring_ring.gds` (input
+`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc`,
+the item-2 layout hash). Deck `sky130`,
+`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c`,
+`released: true` (newer content than the `ba0f9788…` pinned above, which the
+2026-10-27 predecessor of this report used).
+`status: clean`, `violation_count: 0`. The drawing includes the GPIO's
+transistors, diodes and resistor and the supply clamps in `vddio` / `vdd`
+(`layout/README.md`), so the checked rules exercise real device geometry; the
+pre-clamp predecessor (2026-10-27, `klt` 0.8.0) had skipped 57 rules on
+placeholder drawing.
 
 Quoted from the report's `coverage` block:
 
-- `layers_in_stream_without_rules` (3): `70/5`, `71/5`, `72/5` (in the stream, no rule applies).
-- `rules_skipped` (57, all `no_applicable_geometry`): 57 rule ids including
-  `nwell.enclosed.hvi.1`, the `hvi` / `hvntm` / `hvtp` / `hvtr` / `vhvi` / `uhvi`
-  `.angle.1` and `.ongrid.1` rules, `poly.*`, `npc.*`, `capm*`, `rpm.*`.
+- `rules_checked` (117) include `nwell.enclosed.hvi.1` — the one thick-oxide
+  rule the curated deck models — and, with the whole report `status: clean`,
+  it passed. `poly.*`, `npc.*`, `capm*` and `rpm.*` are checked too: the
+  clamp's shapes exercise them.
+- `rules_skipped` (36, all `no_applicable_geometry`): 36 rule ids — the
+  `hvntm` / `hvtp` / `hvtr` / `vhvi` / `uhvi` `.angle.1` and `.ongrid.1`
+  rules, `capm2.*`, `met4.enclosing.capm2.1`, `areaid_re.ongrid.1`, and
+  `.angle.1` / `.ongrid.1` pairs for marker layers absent from the stream
+  (`dnwell`, `lvtn`, `mf`, `ncm`, `nsm`, `pwbm`, `pwde`, `pwell_rs`, `tunm`,
+  `vpp`).
+- `layers_in_stream_without_rules` (6): `66/13`, `69/5`, `70/5`, `71/5`,
+  `72/5`, `81/23` (the resistor marker, the diode marker and the label
+  purposes).
 - `deck_scope` (23): `cap2m capm ct difftap li licon m1 m2 m3 m4 m5 npc nsdm nwell poly psdm rpm urpm via via2 via3 via4 x`.
-- `unmodeled_rules` (33) include `hvi.1`, `hvi.2a`, `hvntm.1/2`, `hvtp.1/2`, `hvtr.1/2`, `pad.2`, `rdl.1/2`.
+- `unmodeled_rules` (54) include `hvi.1`, `hvi.2a`, `hvntm.1/2`, `hvtp.1/2`, `hvtr.1/2`, `pad.2`, `rdl.1/2`.
+- `voltage_domain_warnings` (1): the deck reads the `hvi` marker only for MOS
+  device recognition / model binding and for `nwell.enclosed.hvi.1`; no other
+  rule reads `hvi`, so every rule applies its general-case threshold to
+  geometry drawn inside `hvi` — the 5 V devices are held only to the
+  general-case (1.8 V) thresholds (see the thick-oxide row below).
 
 Against the classes above:
 
 | Class | Effect of the clean report |
 |---|---|
-| Thick-oxide / high-voltage layers | **Still not checked.** `nwell.enclosed.hvi.1` was skipped (no geometry) and `hvi.1`, `hvi.2a`, `hvntm.*`, `hvtp.*`, `hvtr.*` are unmodeled. |
+| Thick-oxide / high-voltage layers | **Partly checked.** `nwell.enclosed.hvi.1` ran clean; `hvi.1`, `hvi.2a`, `hvntm.*`, `hvtp.*`, `hvtr.*` are unmodeled, and the marker width / spacing rules exist only in the native engine, never run here. The report's `voltage_domain_warnings` says no rule but `nwell.enclosed.hvi.1` reads `hvi`, so the dimensional rules that ran over the 5 V devices applied the general-case (1.8 V) thresholds — `diff.width.1` checks `difftap.1`'s 0.15 µm where the DRM's medium-voltage column, `difftap.14` (0.29 µm), is not transcribed in this deck. The deck's one `diff.width.1` row therefore does **not** match the 5 V device rule. |
 | Latch-up distance | **Still not checked.** No rule in the deck. |
 | Guard ring | **Not checked for construction.** Only the metal / diffusion rules in `deck_scope` apply. |
 | ESD | **Still not checked.** |

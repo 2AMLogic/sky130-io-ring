@@ -7,10 +7,23 @@
      only (no absolute path, no `..`, no drive letter, no home directory). Each
      path-shaped value must also resolve, relative to the record's own directory,
      to a file or directory that exists — a dangling reference fails.
+  3. Field-naming well-formedness (R1 of sim/README.md's "Record field
+     conventions"): within one object, numeric sibling keys sharing a leading
+     parameter token (text before the first `_`) must not hold exactly equal
+     values while any of them carries a `_per_m2` / `_per_m` / `_per_um2` /
+     `_per_um` suffix — that shape means two field names assert different
+     unit domains for one and the same figure. Grouping is on the leading
+     token, not a suffix-stripped stem (stem splitting cannot pair
+     `cj_card_F_per_m2` with `cj_prescaled`). `sim/diode-unit-probe/record/record.json`
+     is grandfathered: it is append-only evidence committed before this rule
+     and cannot be corrected in place — its own `conclusion` and the erratum
+     in its README carry the correct reading (2AMLogic/sky130-io-ring#120).
 
-Passes trivially when sim/ holds no records. Content is otherwise never judged:
-this checks that a record is well formed and that its referenced files are
-present, not that its numbers are right.
+Passes trivially when sim/ holds no records. Content is otherwise never judged
+beyond field-naming well-formedness (rule 3 below): this checks that a record
+is well formed, that its referenced files are present, and that field names do
+not contradict each other about unit domains — it never judges whether a
+recorded number is itself right.
 
   check_evidence_format.py [REPO_ROOT]
 """
@@ -22,7 +35,15 @@ from pathlib import Path
 EVIDENCE_DIRS = ["design", "layout", "sim", "measurements", "spec"]
 REQUIRED_FIELDS = ["kind", "pdk_revision", "pdk_variant", "runs"]
 REVISION_RE = re.compile(r"^[0-9a-f]{40}$")
-PATH_KEY_RE = re.compile(r"(^|_)(path|paths|file|files|log|logs|netlist|netlists|dir)$")
+PATH_KEY_RE = re.compile(r"(^|_)(path|paths|file|files|log|logs|netlist|netlists|dir|dirs)$")
+UNIT_SUFFIX_RE = re.compile(r"_per_(m2|m|um2|um)$")
+
+# R1 field-naming rule grandfather: this record predates the rule (sim/README.md,
+# "Record field conventions"), is append-only evidence, and cannot be corrected
+# in place — its own `conclusion` and the erratum in sim/diode-unit-probe/README.md
+# carry the correct reading. It is the only committed record the rule would
+# reject. (2AMLogic/sky130-io-ring#120)
+GRANDFATHERED_FIELD_NAMES = {"sim/diode-unit-probe/record/record.json"}
 
 
 def is_record(rel):
@@ -32,14 +53,20 @@ def is_record(rel):
 
 
 def bad_path(value, base=None):
+    """Return the full reason phrase for a rejected path value, or None.
+
+    The phrase is composed here — the only place that knows which condition
+    fired — so each failure names its own defect instead of borrowing the
+    shape-failure prefix ("is not repo-relative").
+    """
     if not isinstance(value, str) or not value:
-        return "not a non-empty string"
+        return "is not a usable path (not a non-empty string)"
     if value.startswith(("/", "~", "\\")) or re.match(r"^[A-Za-z]:[\\/]", value):
-        return "absolute path"
+        return "is not repo-relative (absolute path)"
     if ".." in re.split(r"[\\/]", value):
-        return "parent-directory component"
+        return "is not repo-relative (parent-directory component)"
     if base is not None and not (Path(base) / value).exists():
-        return "no such file"
+        return "does not exist (no such file)"
     return None
 
 
@@ -50,12 +77,53 @@ def walk_paths(node, where, errors, base=None):
                 for item in (v if isinstance(v, list) else [v]):
                     why = bad_path(item, base)
                     if why:
-                        errors.append(f"{where}: {k}={item!r} is not repo-relative ({why})")
+                        errors.append(f"{where}: {k}={item!r} {why}")
             else:
                 walk_paths(v, f"{where}.{k}", errors, base)
     elif isinstance(node, list):
         for i, v in enumerate(node):
             walk_paths(v, f"{where}[{i}]", errors, base)
+
+
+def check_field_names(node, where, errors, path=""):
+    """R1 (issue #120): a field name states the unit domain of its number.
+
+    Within one object, group numeric sibling keys by their leading parameter
+    token (text before the first `_`) and reject a group in which two or more
+    keys hold exactly equal values while any carries a `_per_(m2|m|um2|um)`
+    suffix — the shape of two names asserting different unit domains for one
+    figure (`cj_card_F_per_m2` == `cj_prescaled`). Booleans are not numeric;
+    a key pair that is equal but carries no unit-domain suffix passes.
+    """
+    if isinstance(node, dict):
+        groups = {}
+        for k, v in node.items():
+            if isinstance(v, bool) or not isinstance(v, (int, float)):
+                continue
+            groups.setdefault(k.split("_", 1)[0], []).append((k, v))
+        for lead, members in sorted(groups.items()):
+            by_value = {}
+            for k, v in members:
+                by_value.setdefault(v, []).append(k)
+            for value, keys in sorted(by_value.items(), key=lambda kv: str(kv[0])):
+                if len(keys) < 2:
+                    continue
+                suffixed = [k for k in keys if UNIT_SUFFIX_RE.search(k)]
+                if not suffixed:
+                    continue
+                errors.append(
+                    f"{where}{path}: sibling keys {', '.join(repr(k) for k in keys)} "
+                    f"(leading token {lead!r}) hold exactly equal value {value!r} "
+                    f"while {', '.join(repr(k) for k in suffixed)} carries a "
+                    f"unit-domain suffix — a field name must state the unit domain "
+                    f"of the number it holds (R1, sim/README.md 'Record field "
+                    f"conventions'); record the one figure you have, named for "
+                    f"its actual domain")
+        for k, v in node.items():
+            check_field_names(v, where, errors, f"{path}.{k}")
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            check_field_names(v, where, errors, f"{path}[{i}]")
 
 
 def check_record(text, where, base=None):
@@ -75,6 +143,8 @@ def check_record(text, where, base=None):
     if "pdk_revision" in rec and not (isinstance(rev, str) and REVISION_RE.match(rev)):
         errors.append(f"{where}: pdk_revision {rev!r} is not a 40-hex revision")
     walk_paths(rec, where, errors, base)
+    if where not in GRANDFATHERED_FIELD_NAMES:
+        check_field_names(rec, where, errors)
     return errors
 
 

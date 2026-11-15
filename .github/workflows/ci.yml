@@ -78,6 +78,31 @@ jobs:
             klt drc --check "$r"
           done
 
+      - name: Committed LVS reports must still match the streams and netlists (provenance re-hash; LVS not re-run)
+        run: |
+          for r in signoff/evidence/lvs/*.json; do
+            klt lvs --check "$r"
+          done
+
+      - name: LVS report contents must equal the pinned per-stream expectations
+        run: python3 -I scripts/ci/check_lvs_reports.py .
+
+      - name: Re-derive every committed LVS report from its stream (--rerun; engine pinned to the one the reports used)
+        run: |
+          # An unpinned --rerun drifts on version fields alone: the report diff
+          # includes environment.engine_version and
+          # provenance.klayout_version_mismatch, but the klt pin does not
+          # constrain the klayout engine (2AMLogic/klayout-tools#5601). Pin the
+          # engine to the version recorded in the committed reports, in an
+          # isolated venv so the job's shared pipx env (and the byte-for-byte
+          # signoff-record step) is untouched.
+          ENGINE=$(python3 -c "import json;print(json.load(open('signoff/evidence/lvs/ring.json'))['environment']['engine_version'])")
+          python3 -m venv "$RUNNER_TEMP/lvs-rerun"
+          "$RUNNER_TEMP/lvs-rerun/bin/pip" install --quiet "klayout-tools==${KLT_VERSION}" "klayout==${ENGINE}"
+          for r in signoff/evidence/lvs/*.json; do
+            "$RUNNER_TEMP/lvs-rerun/bin/klt" lvs --check "$r" --rerun
+          done
+
       - name: T1 item 10 hygiene attestation must reproduce (README, LICENSE, CI commands)
         run: |
           klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json

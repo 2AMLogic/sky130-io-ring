@@ -21,28 +21,17 @@
 # klt sim request on the batch fleet and is held by spec/review-2026-10.md
 # section 7 item 3 until decision 0004 ratifies.
 set -euo pipefail
-here="$(cd "$(dirname "$0")" && pwd)"
-repo="$(cd "${here}/../.." && pwd)"
-out="${1:-${here}/record}"
-[ ! -e "${out}" ] || { echo "run.sh: ${out} exists; records are append-only" >&2; exit 1; }
-
-# shellcheck source=../lib/pdk_env.sh
-source "${repo}/sim/lib/pdk_env.sh"
-command -v ngspice >/dev/null || { echo "run.sh: ngspice not on PATH" >&2; exit 1; }
-
-mkdir -p "${out}/netlists" "${out}/logs"
-work="$(mktemp -d)"; trap 'rm -rf "${work}"' EXIT
+# shellcheck source=../lib/run_common.sh
+source "$(dirname "$0")/../lib/run_common.sh"
+run_common_setup "${1:-}"
 
 corners='tt ff ss sf fs'
-# name|model|type|vsup|W|L   W, L in um (the library sets .option scale=1.0u).
-# Identical to sim/pdk-smoke/run.sh so the tt currents here are directly
-# comparable with the committed smoke record. Smoke values, not design values.
-devices='
-nfet_01v8|sky130_fd_pr__nfet_01v8|n|1.8|1.0|0.15
-pfet_01v8|sky130_fd_pr__pfet_01v8|p|1.8|1.0|0.15
-nfet_g5v0d10v5|sky130_fd_pr__nfet_g5v0d10v5|n|5.0|1.0|0.5
-pfet_g5v0d10v5|sky130_fd_pr__pfet_g5v0d10v5|p|5.0|1.0|0.5
-'
+# Shared smoke device table (sim/lib/smoke_devices.sh): identical numbers to
+# sim/pdk-smoke so the tt currents here are directly comparable with the
+# committed smoke record. Smoke values, not design values.
+# shellcheck source=../lib/smoke_devices.sh
+source "${repo}/sim/lib/smoke_devices.sh"
+devices="${smoke_devices}"
 
 # ---------------------------------------------------------------- helpers
 libdir="$(cd "$(dirname "${SKY130_MODEL_LIB}")" && pwd)"
@@ -175,17 +164,10 @@ emit "${SKY130_MODEL_LIB}" > "${work}/probe.sp"
 # Snapshot: no absolute paths.
 emit '$PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice' > "${out}/netlists/probe.sp"
 
-rc=0
-(cd "${work}" && ngspice -b -o "${work}/probe.log" "${work}/probe.sp" </dev/null >/dev/null 2>&1) || rc=$?
-[ "${rc}" -eq 0 ] || echo "run.sh: ngspice exited ${rc}" >&2
-sed -e "s#${PDK_ROOT}#\$PDK_ROOT#g" -e "s#${work}#\$WORK#g" "${work}/probe.log" > "${out}/logs/probe.log"
+run_common_ngspice "${work}/probe.sp" "${work}/probe.log"
+run_common_scrub < "${work}/probe.log" > "${out}/logs/probe.log"
 
-ngspice_ver="$(ngspice --version | sed -n 's/.*ngspice-\([0-9.]*\).*/\1/p' | head -n1)"
-ciel_ver="$(ciel --version 2>/dev/null | sed -n 's/^Ciel v\([0-9.]*\).*/\1/p' | head -n1)" || true
-xschem_ver="$(xschem --version 2>&1 | sed -n 's/^XSCHEM V\([0-9.]*\).*/\1/p' | head -n1)" || true
-meta="$(printf '{"kind":"probe","probe":"G2 corner-skew probe: 5 V device skew in ff/ss/sf/fs (card survey + one tt operating point)","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","corners_surveyed":["tt","ff","ss","sf","fs"],"temp_c":27,"tools":{"ngspice":"%s","ciel":"%s","xschem":"%s"},"note":"Single-corner G2 probe, not item-5 evidence. The cards run is a read-only survey of the pinned model library, not a simulation; converged there means it produced RESULT lines with no error text. Only the probe run is simulated, at tt/27 C. No corner set, no temperature sweep, no Monte Carlo. W, L and bias are carried over from sim/pdk-smoke and are not design values."}' \
-  "${PDK_REVISION}" "${PDK}" "${ngspice_ver}" "${ciel_ver:-unavailable}" "${xschem_ver:-unavailable}")"
+meta="$(printf '{"kind":"probe","probe":"G2 corner-skew probe: 5 V device skew in ff/ss/sf/fs (card survey + one tt operating point)","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","corners_surveyed":["tt","ff","ss","sf","fs"],"temp_c":27,"tools":%s,"note":"Single-corner G2 probe, not item-5 evidence. The cards run is a read-only survey of the pinned model library, not a simulation; converged there means it produced RESULT lines with no error text. Only the probe run is simulated, at tt/27 C. No corner set, no temperature sweep, no Monte Carlo. W, L and bias are carried over from sim/pdk-smoke and are not design values."}' \
+  "${PDK_REVISION}" "${PDK}" "$(run_common_tools_json ngspice ciel xschem)")"
 
-cd "${out}"
-python3 -I "${repo}/sim/lib/simrec.py" write record.json --meta "${meta}" \
-  --log "cards=logs/cards.log" --log "probe=logs/probe.log"
+run_common_record "${meta}" --log "cards=logs/cards.log" --log "probe=logs/probe.log"

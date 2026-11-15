@@ -34,17 +34,9 @@
 # Writes OUTDIR/{netlists/,logs/,record.json}; refuses to overwrite an
 # existing OUTDIR (records are append-only).
 set -euo pipefail
-here="$(cd "$(dirname "$0")" && pwd)"
-repo="$(cd "${here}/../.." && pwd)"
-out="${1:-${here}/record}"
-[ ! -e "${out}" ] || { echo "run.sh: ${out} exists; records are append-only" >&2; exit 1; }
-
-# shellcheck source=../lib/pdk_env.sh
-source "${repo}/sim/lib/pdk_env.sh"
-command -v ngspice >/dev/null || { echo "run.sh: ngspice not on PATH" >&2; exit 1; }
-
-mkdir -p "${out}/netlists" "${out}/logs"
-work="$(mktemp -d)"; trap 'rm -rf "${work}"' EXIT
+# shellcheck source=../lib/run_common.sh
+source "$(dirname "$0")/../lib/run_common.sh"
+run_common_setup "${1:-}"
 
 mdir="${PDK_ROOT}/${PDK}/libs.ref/sky130_fd_pr/spice"
 mparam() { # model-file param -> raw value ('a/b' kept as written)
@@ -217,26 +209,16 @@ emit() { # temp_c
 run_one() { # temp tag
   local t="$1" tag="$2"
   emit "$t" > "${work}/probe_${tag}.sp"
-  local rc=0
-  (cd "${work}" && ngspice -b -o "${work}/probe_${tag}.log" "${work}/probe_${tag}.sp" </dev/null >/dev/null 2>&1) || rc=$?
-  [ "${rc}" -eq 0 ] || echo "run.sh: ngspice (${tag}) exited ${rc}" >&2
-  sed -e "s#${PDK_ROOT}#\$PDK_ROOT#g" -e "s#${work}#\$WORK#g" -e "s#${repo}#\$REPO#g" \
-    "${work}/probe_${tag}.sp" > "${out}/netlists/probe_${tag}.sp"
-  sed -e "s#${PDK_ROOT}#\$PDK_ROOT#g" -e "s#${work}#\$WORK#g" -e "s#${repo}#\$REPO#g" \
-    "${work}/probe_${tag}.log" > "${out}/logs/probe_${tag}.log"
+  run_common_ngspice "${work}/probe_${tag}.sp" "${work}/probe_${tag}.log" "${tag}"
+  run_common_scrub < "${work}/probe_${tag}.sp" > "${out}/netlists/probe_${tag}.sp"
+  run_common_scrub < "${work}/probe_${tag}.log" > "${out}/logs/probe_${tag}.log"
 }
 
 run_one 27 tt27
 run_one 30 tref30
 
-ngspice_ver="$(ngspice --version | sed -n 's/.*ngspice-\([0-9.]*\).*/\1/p' | head -n1)"
-ciel_ver="$(ciel --version 2>/dev/null | sed -n 's/^Ciel v\([0-9.]*\).*/\1/p' | head -n1)" || true
-
-meta="$(printf '{"kind":"probe","probe":"diode instance area/perim unit-convention probe (sky130_fd_pr__diode_pd2nw_05v5, sky130_fd_pr__diode_pw2nd_05v5), issue #107","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","temp_c":27,"temp_c_tref_check":30,"tools":{"ngspice":"%s","ciel":"%s"},"conclusion":"Instance area is um^2 and perim is um (candidate C1). C3 (um^2 x 1e12 / um x 1e6, the old design/README.md reading) is refuted by a factor of 1e12 on BOTH the capacitance path and the current path. C2 (m^2 / m, the cards literal ; Units: comments) is numerically indistinguishable from C1 at the same instance values but is disposed of on physical consistency: under C2 the measured capacitance density is 1e12 times below the cards own stated F/m^2 figure, and 1 instance unit would be 1 m^2 of diode. The cards pre-scale cj (*1e-12, F/m^2 -> F/um^2), cjsw (*1e-6, F/m -> F/um) and ik (/1e-12, A/m^2 -> A/um^2) to match the um-based instance convention; js, jsw and rs carry NO such factor and ngspice applies them raw per instance unit (effective A/um^2, A/um, ohm*um^2), so their ; Units: ... meter ... comments describe pre-conversion source units, not the units the instance numbers are in. The design netlists area=2e14 perim=6e7 therefore instantiate a 2e14 um^2 = 200 m^2 diode.","note":"Settles a unit convention, which is corner- and temperature-independent; tt / 27 C is the repo convention and the .temp 30 companion deck (the cards own tref) only closes the residual measured/card ratio of the current path as a temperature artifact. GMIN is left at the ngspice default 1e-12 S: the primary current-path point is 0.6 V forward, well above the floor, and the recorded 0.2 / 0.3 / 0.4 V rows are the measured demonstration of why a low-bias operating point cannot settle this. The perim= / pj= alias is asserted from the devices own readback, not assumed. No device is resized and no ESD rating is stated anywhere; the a=2e14 / p=6e7 anchors record what the design netlists placeholder MEANS, not a sizing proposal (G1, decision 0004). Nothing under sim/diode-probe/ was touched (append-only)."}' \
-  "${PDK_REVISION}" "${PDK}" "${ngspice_ver}" "${ciel_ver:-unavailable}")"
-
-cd "${out}"
-python3 -I "${repo}/sim/lib/simrec.py" write record.json \
-  --meta "${meta}" \
+meta="$(printf '{"kind":"probe","probe":"diode instance area/perim unit-convention probe (sky130_fd_pr__diode_pd2nw_05v5, sky130_fd_pr__diode_pw2nd_05v5), issue #107","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","temp_c":27,"temp_c_tref_check":30,"tools":%s,"conclusion":"Instance area is um^2 and perim is um (candidate C1). C3 (um^2 x 1e12 / um x 1e6, the old design/README.md reading) is refuted by a factor of 1e12 on BOTH the capacitance path and the current path. C2 (m^2 / m, the cards literal ; Units: comments) is numerically indistinguishable from C1 at the same instance values but is disposed of on physical consistency: under C2 the measured capacitance density is 1e12 times below the cards own stated F/m^2 figure, and 1 instance unit would be 1 m^2 of diode. The cards pre-scale cj (*1e-12, F/m^2 -> F/um^2), cjsw (*1e-6, F/m -> F/um) and ik (/1e-12, A/m^2 -> A/um^2) to match the um-based instance convention; js, jsw and rs carry NO such factor and ngspice applies them raw per instance unit (effective A/um^2, A/um, ohm*um^2), so their ; Units: ... meter ... comments describe pre-conversion source units, not the units the instance numbers are in. The design netlists area=2e14 perim=6e7 therefore instantiate a 2e14 um^2 = 200 m^2 diode.","note":"Settles a unit convention, which is corner- and temperature-independent; tt / 27 C is the repo convention and the .temp 30 companion deck (the cards own tref) only closes the residual measured/card ratio of the current path as a temperature artifact. GMIN is left at the ngspice default 1e-12 S: the primary current-path point is 0.6 V forward, well above the floor, and the recorded 0.2 / 0.3 / 0.4 V rows are the measured demonstration of why a low-bias operating point cannot settle this. The perim= / pj= alias is asserted from the devices own readback, not assumed. No device is resized and no ESD rating is stated anywhere; the a=2e14 / p=6e7 anchors record what the design netlists placeholder MEANS, not a sizing proposal (G1, decision 0004). Nothing under sim/diode-probe/ was touched (append-only)."}' \
+  "${PDK_REVISION}" "${PDK}" "$(run_common_tools_json ngspice ciel)")"
+run_common_record "${meta}" \
   --log "main_tt27=logs/probe_tt27.log" \
   --log "tref30_check=logs/probe_tref30.log"

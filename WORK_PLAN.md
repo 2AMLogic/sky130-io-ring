@@ -26,32 +26,33 @@ _None._
 
 Human-approved issues ready for implementation (`loom:issue`).
 
-- **#93**: README attributes the four unmet T1 items to spec ratification; the record says no_evidence
-- **#113**: Consolidate the copy-pasted sim run.sh preamble and record tail into one sim/lib helper (copies have already drifted)
+_None._
 
 ## In Progress
 
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#90**: README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs
-- **#99**: Remove dead state, a passthrough wrapper and 7 ignored parameters from the layout generator
-- **#106**: A new sim probe's record/logs/*.log is gitignored, and a dangling log reference passes CI
-- **#107**: Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point
+- **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs
+- **#113**: Consolidate the copy-pasted sim run.sh preamble and record tail into one sim/lib helper (copies have already drifted)
+- **#118**: Evidence checker: existence failures report as 'is not repo-relative', plus two doc/comment inaccuracies
+- **#122**: ROADMAP.md: two coverage/gate claims are conservative but imprecise against their own cited sources
+- **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent
 
 ## PRs Awaiting Review
 
 PRs waiting on Judge (`loom:review-requested`).
 
-- **#114**: refactor(layout): drop dead state, the region wrapper and seven ignored parameters
-- **#115**: docs: count the supply clamps in the ring DRC envelope
-- **#117**: Add diode-unit-probe: settle sky130 diode area/perim unit as um2/um
+- **#128**: fix: reason-appropriate path-check failures; check dirs values in evidence format
+- **#131**: netlist: adopt klt netlist --relative-paths so committed netlists are checkout-independent
+- **#132**: refactor(sim): extract the copy-pasted run.sh preamble and record tail into sim/lib/run_common.sh
 
 ## Approved (Awaiting Merge)
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#111**: ci: commit sim probe logs without -f and reject dangling log references
+- **#126**: ci: gate LVS report contents and freshness, exit 6 on unverified bodies
+- **#129**: docs: align ROADMAP and rule-coverage claims with the committed DRC report
 
 ## Proposed
 
@@ -60,11 +61,13 @@ Issues carrying `loom:curated`.
 - **#2**: Draft and ratify the target spec *(curated)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
-- **#90**: README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs *(curated)*
-- **#93**: README attributes the four unmet T1 items to spec ratification; the record says no_evidence *(curated)*
-- **#106**: A new sim probe's record/logs/*.log is gitignored, and a dangling log reference passes CI *(curated)*
-- **#107**: Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point *(curated)*
 - **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)*
+- **#118**: Evidence checker: existence failures report as 'is not repo-relative', plus two doc/comment inaccuracies *(curated)*
+- **#120**: sim/ record provenance: two fields misreport what they hold (misnamed unit suffix, and ciel recorded 'unavailable' when installed) *(curated)*
+- **#122**: ROADMAP.md: two coverage/gate claims are conservative but imprecise against their own cited sources *(curated)*
+- **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent *(curated)*
+- **#127**: sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke) *(curated)*
+- **#130**: Rule-coverage doc omits the DRC report's voltage_domain_warnings; signoff/README.md quotes a superseded deck hash *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -81,11 +84,11 @@ _None._
 | Operator merge-risk holds | 0 |
 | Very important | 1 |
 | Important | 0 |
-| Ready (`loom:issue`) | 2 |
-| In Progress (`loom:building`) | 5 |
+| Ready (`loom:issue`) | 0 |
+| In Progress (`loom:building`) | 6 |
 | PRs awaiting review | 3 |
-| Approved PRs awaiting merge | 1 |
-| Curated | 8 |
+| Approved PRs awaiting merge | 2 |
+| Curated | 10 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->

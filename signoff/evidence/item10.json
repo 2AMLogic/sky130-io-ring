@@ -3,21 +3,21 @@
   "kind": "generic",
   "status": "pass",
   "t1_item": 10,
-  "summary": "T1 item 10 (Repo hygiene): 7/7 attestation checks passed (klt signoff --attest)",
+  "summary": "T1 item 10 (Repo hygiene): 8/8 attestation checks passed (klt signoff --attest)",
   "source": "signoff/attest/item10.json",
   "attestation": {
     "producer": "klt signoff --attest",
     "inventory_schema_version": 1,
     "hash_algorithm": "sha256-raw-bytes",
-    "check_count": 7,
-    "passed_count": 7,
+    "check_count": 8,
+    "passed_count": 8,
     "checks": [
       {
         "check": "present",
         "role": "hygiene",
         "path": ".github/workflows/ci.yml",
         "passed": true,
-        "content_hash": "sha256:f2719c5b36392c7552cfd556b4e3b2f269d46d49da2af5b1dc4c8a2f0c15147f"
+        "content_hash": "sha256:e7d3fe508498b06cdf33ce40bf4b0700c8b30d665f214002c3ddd1bd5d50ede6"
       },
       {
         "check": "present",
@@ -31,7 +31,7 @@
         "role": "hygiene",
         "path": "README.md",
         "passed": true,
-        "content_hash": "sha256:2fdb6b913045f7f13e8423b3be1f3c74dd02294e048619668cb65aa562393e78"
+        "content_hash": "sha256:a77c2baa286869e03ccbaeb200bd2f27b42bc60ab7dc219c6f77d5963f00774c"
       },
       {
         "check": "command",
@@ -53,6 +53,20 @@
           "python3",
           "-I",
           "scripts/ci/check_evidence_format.py",
+          "."
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true
+      },
+      {
+        "check": "command",
+        "role": "audit",
+        "name": "lvs-report-contents",
+        "argv": [
+          "python3",
+          "-I",
+          "scripts/ci/check_lvs_reports.py",
           "."
         ],
         "cwd": ".",
@@ -96,7 +110,7 @@
         "path": "signoff/attest/item10.json",
         "scope": "repo"
       },
-      "content_hash": "sha256:963fcbc018ffa6696b203e4267b3e9becd6c247d76be7e253de90ed26d9d8ddb"
+      "content_hash": "sha256:8be20f1f573628de734c299e00567a71e5146ed3c4351a31b226cb433bf108c4"
     }
   }
 }
