@@ -76,11 +76,10 @@ decks and rule ids differ.
 
 ## Not checked in this survey
 
-- Whether the curated deck's width / spacing rules for the thick-oxide
-  devices' diffusion and poly match the 5 V device rules (the deck has one
-  `diff.width.1` row; whether the 5 V device uses a different value was not
-  examined).
-- The native deck was read, not run: no layout exists yet.
+- The native deck was read, not run: layout now exists (`layout/gds/`, ten
+  committed streams — one of them, `sky130_ioring_ring.gds`, was the report
+  above's input), but every run here used the curated deck; the native
+  engine's rules were never executed.
 
 ## Reconciliation with the committed DRC report (regenerated 2026-11-14)
 
@@ -114,12 +113,17 @@ Quoted from the report's `coverage` block:
   purposes).
 - `deck_scope` (23): `cap2m capm ct difftap li licon m1 m2 m3 m4 m5 npc nsdm nwell poly psdm rpm urpm via via2 via3 via4 x`.
 - `unmodeled_rules` (54) include `hvi.1`, `hvi.2a`, `hvntm.1/2`, `hvtp.1/2`, `hvtr.1/2`, `pad.2`, `rdl.1/2`.
+- `voltage_domain_warnings` (1): the deck reads the `hvi` marker only for MOS
+  device recognition / model binding and for `nwell.enclosed.hvi.1`; no other
+  rule reads `hvi`, so every rule applies its general-case threshold to
+  geometry drawn inside `hvi` — the 5 V devices are held only to the
+  general-case (1.8 V) thresholds (see the thick-oxide row below).
 
 Against the classes above:
 
 | Class | Effect of the clean report |
 |---|---|
-| Thick-oxide / high-voltage layers | **Partly checked.** `nwell.enclosed.hvi.1` ran clean; `hvi.1`, `hvi.2a`, `hvntm.*`, `hvtp.*`, `hvtr.*` are unmodeled, and the marker width / spacing rules exist only in the native engine, never run here. |
+| Thick-oxide / high-voltage layers | **Partly checked.** `nwell.enclosed.hvi.1` ran clean; `hvi.1`, `hvi.2a`, `hvntm.*`, `hvtp.*`, `hvtr.*` are unmodeled, and the marker width / spacing rules exist only in the native engine, never run here. The report's `voltage_domain_warnings` says no rule but `nwell.enclosed.hvi.1` reads `hvi`, so the dimensional rules that ran over the 5 V devices applied the general-case (1.8 V) thresholds — `diff.width.1` checks `difftap.1`'s 0.15 µm where the DRM's medium-voltage column, `difftap.14` (0.29 µm), is not transcribed in this deck. The deck's one `diff.width.1` row therefore does **not** match the 5 V device rule. |
 | Latch-up distance | **Still not checked.** No rule in the deck. |
 | Guard ring | **Not checked for construction.** Only the metal / diffusion rules in `deck_scope` apply. |
 | ESD | **Still not checked.** |
