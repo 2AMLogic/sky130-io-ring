@@ -9,11 +9,15 @@ as <cell>.json.
 
     python3 signoff/gen_lvs_reports.py --klt "uvx --from klayout-tools==0.9.1 klt"
 
-Exit 0 only if every report was written and every status is `match`; a
-`mismatch` report is still written (it is the evidence) but makes the script
-exit 4. When `klt lvs` refuses a request (no report exists) the refusal is
-printed, no file is written, the remaining streams still run and the script
-exits 5. No hints, tolerances or ignored devices are passed: nothing is forced.
+Exit 0 only if every report was written, every status is `match` and every
+`body_verification.status` is `verified`. A `mismatch` report is still written
+(it is the evidence) but makes the script exit 4. A report that compares
+`match` but whose `body_verification.status` is not `verified` — or that lacks
+the block — makes it exit 6: bodies that do not resolve to a named net, the
+regression class behind #95. When `klt lvs` refuses a request (no report
+exists) the refusal is printed, no file is written, the remaining streams
+still run and the script exits 5. Exit precedence: 5 > 4 > 6. No hints,
+tolerances or ignored devices are passed: nothing is forced.
 
 `klt lvs` extracts the layout flat, so a reference that defines sub-circuits is
 compared flattened (`options.flatten_reference`, `--flatten-reference auto`);
@@ -55,7 +59,7 @@ def main():
                          "defines more than one .subckt)")
     a = ap.parse_args()
     os.makedirs(a.out_dir, exist_ok=True)
-    bad = refused = 0
+    bad = refused = unverified = 0
     for s in a.streams:
         cell = a.prefix + s
         req = {"layout": {"file": f"{a.gds_dir}/{cell}.gds", "deck": a.deck, "top": cell},
@@ -75,11 +79,14 @@ def main():
             continue
         with open(out, "w") as f:
             f.write(p.stdout)
-        status = json.loads(p.stdout)["status"]
-        print(f"{out}: rc={p.returncode} status={status}")
-        if status != "match":
+        rep = json.loads(p.stdout)
+        body = rep.get("body_verification", {}).get("status")
+        print(f"{out}: rc={p.returncode} status={rep['status']} body_verification={body}")
+        if rep["status"] != "match":
             bad += 1
-    sys.exit(5 if refused else 4 if bad else 0)
+        elif body != "verified":
+            unverified += 1
+    sys.exit(5 if refused else 4 if bad else 6 if unverified else 0)
 
 
 if __name__ == "__main__":
