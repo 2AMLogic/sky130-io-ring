@@ -12,8 +12,11 @@ and awaiting review and ratification, so every figure in it is a target. The
 cells and the closed ring are drawn and streamed, and the signoff verdict of
 record ([`signoff/signoff-record.json`](signoff/signoff-record.json)) grades
 **7 of 11** T1 items met — design sources, layout, DRC, LVS, testbenches, repo
-hygiene and structural power delivery. The four unmet items all grade against a
-ratified spec. There is no PVT simulation and no ESD result.
+hygiene and structural power delivery. The four unmet items — full corner
+verification, Monte Carlo, post-layout verification and characterization — all
+record `no_evidence`: those campaigns have not run, and the spec rows the first
+two would grade against are not ratified yet. There is no PVT simulation and no
+ESD result.
 
 **Built agent-native.** Every specification, decision record, testbench, and
 line of documentation here is produced by AI agents working from a written
