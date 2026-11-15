@@ -8,6 +8,7 @@
     {"name": "evidence-format", "argv": ["python3", "-I", "scripts/ci/check_evidence_format.py", "."]},
     {"name": "lvs-report-contents", "argv": ["python3", "-I", "scripts/ci/check_lvs_reports.py", "."]},
     {"name": "spec-md-json-agree", "argv": ["python3", "-I", "spec/check_spec.py"]},
+    {"name": "prose-citations", "argv": ["python3", "-I", "scripts/ci/check_prose_citations.py", "."]},
     {"name": "pdk-resolver-self-test", "argv": ["bash", "sim/lib/test_pdk_env.sh"]}
   ]
 }
