@@ -84,11 +84,22 @@ name across all 44 instances, which is what ring-seam LVS connects on.
   driver drain sits on `PAD` and only the receiver has the series R. Raise
   against `spec/` with a decision record if the spec means both.
 - **Pad cells for VDDIO/VDD/VSS have no `PAD` pin**; the pad is the rail.
-- **Diode `area`/`perim` units are unresolved.** Values follow the foundry's
-  convention (um2 x 1e12, um x 1e6). In a quick ngspice 46 operating-point
-  probe the sky130 diode wrapper conducted in both directions at `area=2e14`
-  and at the symbol default `1e12`, so these must be settled before any ESD
-  simulation. This is a model question for #34, not a claim about the cells.
+- **Diode `area`/`perim` units: settled by measurement (#107).** The instance
+  `area` is um^2 and `perim` is um; `sim/diode-unit-probe/` reads ngspice's
+  own junction capacitance and device current at known instance values and
+  matches the model cards' pre-scaled `cj`/`cjsw` (which carry `*1e-12` /
+  `*1e-6` conversions) and raw `js`/`jsw`/`rs` (which carry no factor and are
+  applied per instance unit) to within ~2% — and 1e12 times the
+  (refuted) um2-x-1e12 reading this bullet used to record. The cards'
+  `; Units: ... meter ...` comments describe pre-conversion source units
+  (fully so for `cj`/`cjsw`/`ik`; for `js`/`jsw`/`rs` they describe units the
+  simulator never converts). There is no `.subckt` wrapper for these diodes:
+  the netlist `X` lines bind directly to the `.model` cards. Under the
+  settled unit the placeholders `area=2e14 perim=6e7` instantiate a
+  2e14 um^2 = 200 m^2 diode, and the four design-side locations carrying them
+  (`sky130_ioring_gpio.spice:77-81`, `sky130_ioring_gpio_esd.spice:4-8`,
+  `sky130_ioring_ring.spice:198-202`, `sky130_ioring_gpio_esd.sch:17,20,27,30`)
+  must be resized together at gate G1 (decision 0004).
 - A throwaway transient on the GPIO with the four diodes removed showed drive
   high/low and the IE gate behaving as drawn; the pulls were slower than the
   window. It is not recorded evidence (no corners, no record).
