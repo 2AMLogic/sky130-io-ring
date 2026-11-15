@@ -83,12 +83,12 @@ decks and rule ids differ.
 
 ## Reconciliation with the committed DRC report (regenerated 2026-11-14)
 
-<!-- cite:begin source=signoff/evidence/drc/ring.json -->
+<!-- cite:begin source=signoff/evidence/drc/ring.json requires=rules_checked,rules_skipped,layers_in_stream_without_rules,deck_scope,unmodeled_rules,voltage_domain_warnings -->
 Source: `signoff/evidence/drc/ring.json`, `klt drc --deck sky130` by `klt`
-0.9.1 on `layout/gds/sky130_ioring_ring.gds` (input
-`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc`,
+0.9.1 on `layout/gds/sky130_ioring_ring.gds` (input stream hash
+`provenance.input.content_hash` is `sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc`,
 the item-2 layout hash). Deck `sky130`,
-`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c`,
+`provenance.deck.content_hash` is `sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c`,
 `released: true` (newer content than the `ba0f9788…` pinned above, which the <!-- cite:historical -->
 2026-10-27 predecessor of this report used).
 `status: clean`, `violation_count: 0`. The drawing includes the GPIO's

@@ -455,7 +455,12 @@ class ProseCitations(unittest.TestCase):
         "spec/klt-rule-coverage.md",
         "signoff/evidence/drc/ring.json",
     )
-    BEGIN = "<!-- cite:begin source=signoff/evidence/drc/ring.json -->"
+    BEGIN = ("<!-- cite:begin source=signoff/evidence/drc/ring.json "
+             "requires=rules_skipped,deck_scope -->")
+    SPEC_BEGIN = ("<!-- cite:begin source=signoff/evidence/drc/ring.json "
+                  "requires=rules_checked,rules_skipped,"
+                  "layers_in_stream_without_rules,deck_scope,"
+                  "unmodeled_rules,voltage_domain_warnings -->")
     END = "<!-- cite:end -->"
     ESCAPE = " <!-- cite:historical -->"
 
@@ -641,6 +646,102 @@ class ProseCitations(unittest.TestCase):
                   self.BEGIN + " `status: clean`, `violation_count: 0`.")
         errors = pc.check_root(root)
         self.assertTrue(any("nested cite:begin" in e for e in errors), errors)
+
+    def test_omitted_required_count_citation_rejected(self):
+        # The omitted-citation half of #130 (issue #144 gap 1): deleting a
+        # whole count citation from a region that declares requires= must
+        # fail — set-membership asserts what is present, never what is not.
+        root = self.tree()
+        path = root / "spec/klt-rule-coverage.md"
+        text = path.read_text()
+        old = ("- `voltage_domain_warnings` (1): the deck reads the `hvi` "
+               "marker only for MOS")
+        self.assertIn(old, text)
+        i, j = text.index(old), text.index(self.END)
+        path.write_text(text[:i] + text[j:])
+        errors = pc.check_root(root)
+        self.assertTrue(any("voltage_domain_warnings" in e
+                            and "asserts none" in e for e in errors), errors)
+
+    def test_omitted_citation_without_requires_still_passes(self):
+        # requires= is opt-in per region: strip the declaration and the
+        # omission is invisible again — a region without the declaration
+        # behaves exactly as before.
+        root = self.tree()
+        path = root / "spec/klt-rule-coverage.md"
+        text = path.read_text()
+        self.assertIn(self.SPEC_BEGIN, text)
+        text = text.replace(
+            self.SPEC_BEGIN,
+            "<!-- cite:begin source=signoff/evidence/drc/ring.json -->", 1)
+        old = ("- `voltage_domain_warnings` (1): the deck reads the `hvi` "
+               "marker only for MOS")
+        i, j = text.index(old), text.index(self.END)
+        path.write_text(text[:i] + text[j:])
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_requires_absent_field_rejected(self):
+        # A requires= naming a field the source's coverage does not have is
+        # a hard error, so the declaration cannot rot into a no-op.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "requires=rules_checked,", "requires=nonexistent_field,")
+        errors = pc.check_root(root)
+        self.assertTrue(any("nonexistent_field" in e and "absent from" in e
+                            for e in errors), errors)
+
+    def test_role_pinned_hash_swap_rejected(self):
+        # Issue #144 gap 2: the input-stream hash cited where the deck hash
+        # is pinned. Both live in the same source, so set-membership alone
+        # passes; the path pin must fail the mis-attribution.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertTrue(any("provenance.deck.content_hash" in e
+                            and "is cited as" in e for e in errors), errors)
+
+    def test_role_pin_absent_path_rejected(self):
+        # A pin naming a path the source does not have fails loudly, so the
+        # pin cannot silently rot when the report schema moves.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is",
+                  "`provenance.no.such.path` is")
+        errors = pc.check_root(root)
+        self.assertTrue(any("names a path absent from" in e for e in errors),
+                        errors)
+
+    def test_fenced_marker_example_is_inert(self):
+        # Issue #144 gap 3: a fenced example of the convention opens no
+        # region and asserts nothing. It used to fail closed with a loud
+        # "no such file" / "unterminated region" from the example markers.
+        root = self.tree()
+        (root / "doc.md").write_text(
+            "# documenting the convention\n\n"
+            "```markdown\n"
+            "<!-- cite:begin source=signoff/evidence/drc/ring.json -->\n"
+            "prose with a `deck_scope` (99) count and a bogus hash\n"
+            "<!-- cite:end -->\n"
+            "```\n")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_fenced_block_inside_region_is_not_asserted(self):
+        # Inside a real region a fence is inert too: illustrative hashes in
+        # it are example syntax, not citations of this source. (A stale hash
+        # hidden in a fence is a deliberate dodge, visible to review — the
+        # same act as deleting the citation, which requires= guards.)
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "Quoted from the report's `coverage` block:",
+                  "Quoted from the report's `coverage` block:\n\n"
+                  "```\nsha256:" + "f" * 64 + "\n```\n")
+        self.assertEqual(pc.check_root(root), [])
 
 
 if __name__ == "__main__":
