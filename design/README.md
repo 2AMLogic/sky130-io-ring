@@ -22,7 +22,8 @@ klt signoff --attest 1 --inventory design/attest-inventory.json -o signoff/evide
 klt signoff --attest 1 --inventory design/attest-inventory.json --check signoff/evidence/item1.json
 ```
 
-Needs `klt` >= 0.8 (`--attest`), xschem and the pinned PDK (`sim/pdk.json`).
+Needs `klt` >= 0.9.2 (`--relative-paths` in `netlist.sh`; `--attest` alone
+needs only >= 0.8), xschem and the pinned PDK (`sim/pdk.json`).
 Serial, one `klt netlist` (one xschem process) per cell, local; never call
 `xschem` directly. `xschemrc` sets the symbol path (this directory, then the
 PDK's `libs.tech/xschem` from `$PDK_ROOT`) and `top_is_subckt` so every netlist

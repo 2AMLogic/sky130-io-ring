@@ -3,7 +3,7 @@
 #   bash design/netlist.sh <cell>            regenerate
 #   bash design/netlist.sh --check <cell>    exit 0 if the committed netlist matches, 3 if it drifted
 # Goes through `klt netlist` (headless, bounded); never call xschem directly.
-# Runs one xschem process, locally. Needs klt >= 0.8, xschem and the pinned PDK
+# Runs one xschem process, locally. Needs klt >= 0.9.2 (--relative-paths), xschem and the pinned PDK
 # (sim/pdk.json); CI has none of them, so the attestation marks these
 # commands local_only.
 set -euo pipefail
@@ -16,4 +16,5 @@ cell="${1:?usage: netlist.sh [--check] <cell>}"
 source "${root}/sim/lib/pdk_env.sh"
 cd "${root}"
 exec klt netlist "design/xschem/${cell}.sch" -o "design/netlists/${cell}.spice" \
-  --rcfile design/xschemrc --pdk "${PDK}" --pdk-root "${PDK_ROOT}" "${check[@]}" --format json >/dev/null
+  --rcfile design/xschemrc --pdk "${PDK}" --pdk-root "${PDK_ROOT}" --relative-paths \
+  "${check[@]}" --format json >/dev/null
