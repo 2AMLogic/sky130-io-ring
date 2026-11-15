@@ -20,36 +20,38 @@ _None._
 
 `loom:important`; taken before unlabelled work.
 
-- **#94**: Gate G2 probe: do the sky130 skew corners move the 5 V devices?
-- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current
+_None._
 
 ## Ready
 
 Human-approved issues ready for implementation (`loom:issue`).
 
-- **#88**: Remove the never-used KINDS and FILL_KINDS constants from layout/sky130_cells.py
-- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current
-- **#98**: Collapse the duplicated open-guard-ring tests into one loop over GUARDED (and cover gpio_pulls)
-- **#99**: Remove dead state, a passthrough wrapper and 7 ignored parameters from the layout generator
+- **#93**: README attributes the four unmet T1 items to spec ratification; the record says no_evidence
+- **#113**: Consolidate the copy-pasted sim run.sh preamble and record tail into one sim/lib helper (copies have already drifted)
 
 ## In Progress
 
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#97**: Remove duplicated licon rule math: sky130_clamp._licons is sky130_devices._contacts
+- **#90**: README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs
+- **#99**: Remove dead state, a passthrough wrapper and 7 ignored parameters from the layout generator
+- **#106**: A new sim probe's record/logs/*.log is gitignored, and a dangling log reference passes CI
+- **#107**: Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point
 
 ## PRs Awaiting Review
 
 PRs waiting on Judge (`loom:review-requested`).
 
-- **#101**: refactor(layout): draw clamp contact columns from the one sky130_devices rule
+- **#114**: refactor(layout): drop dead state, the region wrapper and seven ignored parameters
+- **#115**: docs: count the supply clamps in the ring DRC envelope
+- **#117**: Add diode-unit-probe: settle sky130 diode area/perim unit as um2/um
 
 ## Approved (Awaiting Merge)
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-_None._
+- **#111**: ci: commit sim probe logs without -f and reject dangling log references
 
 ## Proposed
 
@@ -60,13 +62,13 @@ Issues carrying `loom:curated`.
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
 - **#90**: README understates ring DRC coverage: "(but no supply clamp)" contradicts layout/ and signoff/ READMEs *(curated)*
 - **#93**: README attributes the four unmet T1 items to spec ratification; the record says no_evidence *(curated)*
-- **#94**: Gate G2 probe: do the sky130 skew corners move the 5 V devices? *(curated)*
-- **#95**: vdd LVS report has body_verification "unverified" for 815 nfet bodies; find the cause *(curated)*
-- **#96**: Single-corner probe: pad diode forward drop at the ESD.2 pulse current *(curated)*
+- **#106**: A new sim probe's record/logs/*.log is gitignored, and a dangling log reference passes CI *(curated)*
+- **#107**: Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point *(curated)*
+- **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)*
 
 ## Proposed (Architect / Hermit)
 
-- **#100**: Remove dead code in clamp-probe emit_validity: shadowed node() definition and unused locals *(hermit)*
+_None._
 
 ## Epics
 
@@ -78,12 +80,12 @@ _None._
 |------|-------|
 | Operator merge-risk holds | 0 |
 | Very important | 1 |
-| Important | 2 |
-| Ready (`loom:issue`) | 4 |
-| In Progress (`loom:building`) | 2 |
-| PRs awaiting review | 1 |
-| Approved PRs awaiting merge | 0 |
+| Important | 0 |
+| Ready (`loom:issue`) | 2 |
+| In Progress (`loom:building`) | 5 |
+| PRs awaiting review | 3 |
+| Approved PRs awaiting merge | 1 |
 | Curated | 8 |
-| Architect / Hermit proposals | 1 |
+| Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->
