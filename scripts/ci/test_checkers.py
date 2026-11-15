@@ -93,13 +93,61 @@ class EvidenceFormat(unittest.TestCase):
             self.assertEqual(ef.check_record(json.dumps(GOOD), "r", base=rec), [])
 
     def test_dir_shaped_value_passes_with_base(self):
-        # PATH_KEY_RE matches `dir`/`dirs` too; a directory is a valid target.
+        # PATH_KEY_RE matches `dir` and `dirs`; a directory is a valid target.
         with tempfile.TemporaryDirectory() as t:
             rec = Path(t) / "record"
             (rec / "logs").mkdir(parents=True)
             (rec / "logs" / "smoke.log").write_text("x\n")
             rec2 = dict(GOOD, runs={"smoke": {"log": "logs/smoke.log", "dir": "logs"}})
             self.assertEqual(ef.check_record(json.dumps(rec2), "r", base=rec), [])
+
+    def test_resolvable_dirs_passes_with_base(self):
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            (rec / "logs").mkdir(parents=True)
+            rec2 = dict(GOOD, runs={"smoke": {"dirs": "logs"}})
+            self.assertEqual(ef.check_record(json.dumps(rec2), "r", base=rec), [])
+
+    def test_dangling_dirs_rejected_with_base(self):
+        # `dirs` is in PATH_KEY_RE, so a value naming a path that does not
+        # exist fails exactly like a dangling `log`; before the regex matched
+        # the key, such a reference passed CI silently.
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            (rec / "logs").mkdir(parents=True)
+            rec2 = dict(GOOD, runs={"smoke": {"dirs": "nonexistent-dir"}})
+            errors = ef.check_record(json.dumps(rec2), "r", base=rec)
+            self.assertTrue(any("no such file" in e for e in errors))
+
+    def test_dirs_list_value_checked_with_base(self):
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            (rec / "logs").mkdir(parents=True)
+            rec2 = dict(GOOD, runs={"smoke": {"dirs": ["logs", "missing"]}})
+            errors = ef.check_record(json.dumps(rec2), "r", base=rec)
+            self.assertTrue(any("no such file" in e for e in errors))
+
+    def test_existence_failure_message_names_missing_file(self):
+        # The full reason phrase is composed in bad_path; an existence failure
+        # must not borrow the shape-failure prefix ("is not repo-relative").
+        with tempfile.TemporaryDirectory() as t:
+            errors = ef.check_record(json.dumps(GOOD), "r", base=Path(t))
+            self.assertTrue(any("no such file" in e for e in errors))
+            self.assertFalse(any("is not repo-relative" in e for e in errors))
+
+    def test_shape_failure_message_keeps_prefix(self):
+        with tempfile.TemporaryDirectory() as t:
+            shape = ef.check_record(bad(runs={"s": {"log": "/abs/x.log"}}), "r", base=Path(t))
+            self.assertTrue(any("absolute path" in e for e in shape))
+            self.assertTrue(any("is not repo-relative" in e for e in shape))
+
+    def test_non_string_path_message_reads_sensibly(self):
+        # A bare non-string value is not a path-shaped value (walk_paths only
+        # descends into str/list); the non-string reason is reachable through
+        # a list item, where bad_path composes the phrase.
+        errors = ef.check_record(bad(runs={"s": {"netlist": [3]}}), "r")
+        self.assertTrue(any("not a usable path" in e for e in errors))
+        self.assertFalse(any("is not repo-relative" in e for e in errors))
 
     def test_no_path_value_passes_with_base(self):
         rec = copy.deepcopy(GOOD)

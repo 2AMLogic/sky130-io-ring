@@ -105,7 +105,7 @@ The pin moved 0.7.0 -> 0.8.0 because `--attest` first ships in 0.8.0; the record
 
 - `klt signoff --attest 9 --check`: the item-9 envelope still reproduces from the inventory and listed files (cold start skipped, see above).
 - `scripts/ci/test_checkers.py`: the checkers reject seeded defects (run first).
-- `scripts/ci/check_evidence_format.py`: `design/ layout/ sim/ measurements/ spec/` each have a README; every sim record (`sim/<experiment>/record{,s}/*.json`) has `kind`, `pdk_revision` (40-hex), `pdk_variant`, `runs`, and only repo-relative paths (keys such as `log`, `netlist`, `path`, `file`). Passes trivially with no records.
+- `scripts/ci/check_evidence_format.py`: `design/ layout/ sim/ measurements/ spec/` each have a README; every sim record (`sim/<experiment>/record{,s}/*.json`) has `kind`, `pdk_revision` (40-hex), `pdk_variant`, `runs`, and only repo-relative paths (keys such as `log`, `netlist`, `path`, `file`, `dir`), each of which must resolve — relative to the record's own directory — to an existing file or directory. Passes trivially with no records.
 - `klt signoff --attest 1 --check` on the item-1 envelope (`--attest` needs klt >= 0.8.0, hence the pin): re-hashes every source and netlist in `design/attest-inventory.json`. The re-netlist freshness commands are `local_only`, so CI does not re-run xschem; they run locally via `design/regen.sh --check`.
 - `klt drc --check` on every `evidence/drc/*.json` (the `fill_1` tile report with the pinned `KLT_TILE_COMMIT` build instead): the input stream and deck still hash as recorded (cheap mode; the DRC is not re-run, so a stale report after a stream edit fails).
 - Re-grade with the pinned grader; `signoff-record.json` must match byte for byte.

@@ -22,7 +22,7 @@ from pathlib import Path
 EVIDENCE_DIRS = ["design", "layout", "sim", "measurements", "spec"]
 REQUIRED_FIELDS = ["kind", "pdk_revision", "pdk_variant", "runs"]
 REVISION_RE = re.compile(r"^[0-9a-f]{40}$")
-PATH_KEY_RE = re.compile(r"(^|_)(path|paths|file|files|log|logs|netlist|netlists|dir)$")
+PATH_KEY_RE = re.compile(r"(^|_)(path|paths|file|files|log|logs|netlist|netlists|dir|dirs)$")
 
 
 def is_record(rel):
@@ -32,14 +32,20 @@ def is_record(rel):
 
 
 def bad_path(value, base=None):
+    """Return the full reason phrase for a rejected path value, or None.
+
+    The phrase is composed here — the only place that knows which condition
+    fired — so each failure names its own defect instead of borrowing the
+    shape-failure prefix ("is not repo-relative").
+    """
     if not isinstance(value, str) or not value:
-        return "not a non-empty string"
+        return "is not a usable path (not a non-empty string)"
     if value.startswith(("/", "~", "\\")) or re.match(r"^[A-Za-z]:[\\/]", value):
-        return "absolute path"
+        return "is not repo-relative (absolute path)"
     if ".." in re.split(r"[\\/]", value):
-        return "parent-directory component"
+        return "is not repo-relative (parent-directory component)"
     if base is not None and not (Path(base) / value).exists():
-        return "no such file"
+        return "does not exist (no such file)"
     return None
 
 
@@ -50,7 +56,7 @@ def walk_paths(node, where, errors, base=None):
                 for item in (v if isinstance(v, list) else [v]):
                     why = bad_path(item, base)
                     if why:
-                        errors.append(f"{where}: {k}={item!r} is not repo-relative ({why})")
+                        errors.append(f"{where}: {k}={item!r} {why}")
             else:
                 walk_paths(v, f"{where}.{k}", errors, base)
     elif isinstance(node, list):
