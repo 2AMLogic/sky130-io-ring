@@ -31,9 +31,13 @@ committed record, graded by klt 0.9.1, reads **7 of 11 T1 items met**:
 What "met" does and does not cover is stated in
 [`signoff/README.md`](signoff/README.md). In short:
 
-- DRC is clean on the deck's modeled rules. Thick-oxide marker rules, latch-up
-  distance, guard-ring construction and ESD rules are **not checked by any klt
-  sky130 deck** ([`spec/klt-rule-coverage.md`](spec/klt-rule-coverage.md)).
+- DRC is clean on the deck's modeled rules. Latch-up distance, guard-ring
+  construction and ESD rules are **not checked by any klt sky130 deck**. The
+  thick-oxide marker rules are only partly covered: the curated deck models
+  one of them (`nwell.enclosed.hvi.1`, checked clean on this ring), and the
+  marker width / spacing rules exist only in the PDK's native KLayout deck,
+  which was read but never run here
+  ([`spec/klt-rule-coverage.md`](spec/klt-rule-coverage.md)).
 - LVS is a flat comparison. The GPIO resistor's geometry is not compared and
   its `R` is a placeholder; per-cell `body_verification` states are read from
   [`signoff/evidence/lvs/`](signoff/evidence/lvs/) and are not restated here
@@ -43,8 +47,11 @@ What "met" does and does not cover is stated in
   probe (`sim/clamp-probe/`, #72) found that both clamps turn fully on
   during a 1 us supply ramp.
 - The spec ([`spec/io-ring.md`](spec/io-ring.md), 59 rows, four decision
-  records) is **proposed, not ratified**. Nine gates G1 to G9 remain open
-  ([`spec/review-2026-10.md`](spec/review-2026-10.md) section 5).
+  records) is **proposed, not ratified**. Nine gates G1 to G9 remain open in
+  [`spec/review-2026-10.md`](spec/review-2026-10.md) section 5 — that is the
+  list of record, not a claim that every gate still lacks evidence: G2's named
+  closing evidence (the single-corner skew probe, #94 / PR #108) has landed
+  and only awaits the reviewers' act on #24 / PR #27.
 - Items 5 to 8 are `no_evidence` in the record, which is what the Status column
   above states; the "waits on #2" reasons are this file's ordering, not the
   record's grading. Open #93 asks the same question of the README's wording —
