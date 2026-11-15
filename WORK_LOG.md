@@ -5,6 +5,18 @@ triage role. Newest first.
 
 ### 2026-11-14
 
+- **PR #110**: fix(layout): name every rail band in every edge cell so clamp bodies resolve to VSS
+- **PR #108**: feat(sim): add G2 corner-skew probe for the 5 V thick-oxide devices
+- **PR #105**: sim: add the G1/ESD.3 pad-diode probe at the ESD.2 current
+- **PR #104**: test: collapse the twin open-guard-ring tests into one loop over GUARDED
+- **PR #103**: refactor: drop the unread KINDS constants and the _tap_for pass-through
+- **PR #101**: refactor(layout): draw clamp contact columns from the one sky130_devices rule
+- **Issue #98** (closed): Collapse the duplicated open-guard-ring tests into one loop over GUARDED (and cover gpio_pulls)
+- **Issue #97** (closed): Remove duplicated licon rule math: sky130_clamp._licons is sky130_devices._contacts
+- **Issue #96** (closed): Single-corner probe: pad diode forward drop at the ESD.2 pulse current
+- **Issue #95** (closed): vdd LVS report has body_verification "unverified" for 815 nfet bodies; find the cause
+- **Issue #94** (closed): Gate G2 probe: do the sky130 skew corners move the 5 V devices?
+- **Issue #88** (closed): Remove the never-used KINDS and FILL_KINDS constants from layout/sky130_cells.py
 - **PR #89**: docs: align README status, evidence and layout block with the signoff record
 - **Issue #86** (closed): README overstates and understates repo state: four claims contradicted by signoff evidence (fix requires re-pinning the item-10 attestation)
 
