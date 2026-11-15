@@ -141,6 +141,20 @@ class AppendOnly(unittest.TestCase):
     def test_outside_sim_ignored(self):
         self.assertEqual(ao.violations("D\tdesign/README.md\nM\tspec/io-ring.md\n"), [])
 
+    def test_non_record_sim_paths_pass(self):
+        # The guard protects evidence, not code or index: the harness and
+        # index files around the records stay modifiable (issue #109).
+        self.assertEqual(ao.violations("M\tsim/README.md\nM\tsim/lib/simrec.py\n"
+                                       "M\tsim/clamp-probe/run.sh\nD\tsim/pdk.json\n"
+                                       "A\tsim/new-probe/README.md\n"), [])
+
+    def test_non_json_record_evidence_rejected(self):
+        # A log inside record/ is evidence even though is_record() (which is
+        # .json-only) would not match it; this pins the record-directory rule
+        # over the is_record() shape.
+        self.assertTrue(ao.violations("M\tsim/clamp-probe/record/logs/probe.log\n"))
+        self.assertTrue(ao.violations("D\tsim/pdk-smoke/record/netlists/smoke.sp\n"))
+
 
 if __name__ == "__main__":
     unittest.main()
