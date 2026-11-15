@@ -128,6 +128,27 @@ class EvidenceFormat(unittest.TestCase):
             errors = ef.check_record(json.dumps(rec2), "r", base=rec)
             self.assertTrue(any("no such file" in e for e in errors))
 
+    def test_bare_suffix_key_skipped_by_convention(self):
+        # A bare-suffix key (`logdir`, `logfile`, `basedir`) is NOT path-shaped:
+        # PATH_KEY_RE requires the path word to be the whole key or follow an
+        # underscore, and that separator anchor is a documented convention
+        # (issue #134), not an oversight. A record carrying a dangling
+        # bare-suffix value is therefore accepted — this asserts the skip as
+        # a decision, so a future pass that widens the regex has to confront
+        # it deliberately. Widening was measured and rejected: a bare-suffix
+        # pattern would newly match ordinary words like `profile`, `analog`
+        # and `catalog`. The contrast below asserts the separator-form
+        # spelling of the same key is still checked, so the skip is by the
+        # convention, not by accident.
+        with tempfile.TemporaryDirectory() as t:
+            rec = Path(t) / "record"
+            rec.mkdir()
+            bare = dict(GOOD, runs={"smoke": {"logdir": "nope/"}})
+            self.assertEqual(ef.check_record(json.dumps(bare), "r", base=rec), [])
+            anchored = dict(GOOD, runs={"smoke": {"log_dir": "nope/"}})
+            errors = ef.check_record(json.dumps(anchored), "r", base=rec)
+            self.assertTrue(any("no such file" in e for e in errors))
+
     def test_existence_failure_message_names_missing_file(self):
         # The full reason phrase is composed in bad_path; an existence failure
         # must not borrow the shape-failure prefix ("is not repo-relative").

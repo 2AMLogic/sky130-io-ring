@@ -4,9 +4,14 @@
   1. Each evidence directory (design, layout, sim, measurements, spec) has a README.md.
   2. Each sim record (sim/<experiment>/record/*.json or .../records/*.json) is a JSON
      object with the required fields, a 40-hex pdk_revision, and repo-relative paths
-     only (no absolute path, no `..`, no drive letter, no home directory). Each
-     path-shaped value must also resolve, relative to the record's own directory,
-     to a file or directory that exists — a dangling reference fails.
+     only (no absolute path, no `..`, no drive letter, no home directory). A key
+     counts as path-shaped only when the path word (`log`, `path`, `file`,
+     `netlist`, `dir` and their plurals) is the whole key or follows an underscore
+     (`log_dir`, `out_file`); a bare-suffix spelling (`logdir`, `logfile`,
+     `basedir`) is malformed by convention (2AMLogic/sky130-io-ring#134) and is
+     silently unchecked. Each path-shaped value must also resolve, relative to
+     the record's own directory, to a file or directory that exists — a dangling
+     reference fails.
   3. Field-naming well-formedness (R1 of sim/README.md's "Record field
      conventions"): within one object, numeric sibling keys sharing a leading
      parameter token (text before the first `_`) must not hold exactly equal
