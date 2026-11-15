@@ -12,6 +12,7 @@ from pathlib import Path
 import check_append_only as ao
 import check_evidence_format as ef
 import check_lvs_reports as lr
+import check_prose_citations as pc
 
 GOOD = {
     "kind": "pdk-smoke",
@@ -443,6 +444,203 @@ class LvsReports(unittest.TestCase):
             errors, n = lr.check_tree(t)
             self.assertEqual(n, 0)
             self.assertEqual(len(errors), len(lr.EXPECTATIONS))
+
+
+class ProseCitations(unittest.TestCase):
+    # The two marked regions and the evidence they cite, copied from the real
+    # tree into a temp root so each defect is seeded, never hand-committed.
+    REPO = Path(__file__).resolve().parents[2]
+    FILES = (
+        "signoff/README.md",
+        "spec/klt-rule-coverage.md",
+        "signoff/evidence/drc/ring.json",
+    )
+    BEGIN = "<!-- cite:begin source=signoff/evidence/drc/ring.json -->"
+    END = "<!-- cite:end -->"
+    ESCAPE = " <!-- cite:historical -->"
+
+    # One seeded off-by-one per count citation in each marked region.
+    OFF_BY_ONE = (
+        ("signoff/README.md",
+         "`coverage.rules_skipped` is 36", "`coverage.rules_skipped` is 35"),
+        ("signoff/README.md",
+         "`deck_scope` is 23", "`deck_scope` is 22"),
+        ("spec/klt-rule-coverage.md",
+         "`rules_checked` (117)", "`rules_checked` (116)"),
+        ("spec/klt-rule-coverage.md",
+         "`rules_skipped` (36,", "`rules_skipped` (35,"),
+        ("spec/klt-rule-coverage.md",
+         "`layers_in_stream_without_rules` (6)",
+         "`layers_in_stream_without_rules` (5)"),
+        ("spec/klt-rule-coverage.md",
+         "`deck_scope` (23)", "`deck_scope` (22)"),
+        ("spec/klt-rule-coverage.md",
+         "`unmodeled_rules` (54)", "`unmodeled_rules` (53)"),
+        ("spec/klt-rule-coverage.md",
+         "`voltage_domain_warnings` (1)", "`voltage_domain_warnings` (0)"),
+    )
+
+    def tree(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        for rel in self.FILES:
+            dst = root / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_text((self.REPO / rel).read_text())
+        return root
+
+    def seed(self, root, rel, old, new):
+        path = root / rel
+        text = path.read_text()
+        self.assertIn(old, text, f"seed defect does not hit {rel}")
+        path.write_text(text.replace(old, new, 1))
+
+    def test_unmodified_tree_passes(self):
+        self.assertEqual(pc.check_root(self.tree()), [])
+
+    def test_real_tree_passes_with_historical_pins_untouched(self):
+        # AC4: the four historical pins (spec/klt-rule-coverage.md, the
+        # io-ring survey) sit outside every marked region and must never be
+        # scanned; the only excused hash is the one real back-reference.
+        self.assertEqual(pc.check_root(self.REPO), [])
+
+    def test_stale_ascii_hash_rejected_and_file_named(self):
+        # AC3: the #130/#136 defect — the README deck hash reverted to the
+        # 2026-10-22 deck — must fail and name signoff/README.md.
+        root = self.tree()
+        self.seed(root, "signoff/README.md",
+                  "sha256:029ef177...0bf7c", "sha256:ba0f9788...942e6")
+        errors = pc.check_root(root)
+        self.assertTrue(any("signoff/README.md" in e and "ba0f9788" in e
+                            for e in errors), errors)
+
+    def test_unknown_ascii_abbreviation_rejected(self):
+        root = self.tree()
+        self.seed(root, "signoff/README.md",
+                  "sha256:029ef177...0bf7c", "sha256:deadbeef...12345")
+        errors = pc.check_root(root)
+        self.assertTrue(any("deadbeef...12345" in e for e in errors), errors)
+
+    def test_stale_unicode_hash_rejected_without_escape(self):
+        # AC6 (head-only, U+2026): with the escape stripped, the deliberate
+        # back-reference becomes an unexcused stale hash.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md", self.ESCAPE, "")
+        errors = pc.check_root(root)
+        self.assertTrue(any("ba0f9788…" in e and "does not match any hash" in e
+                            for e in errors), errors)
+
+    def test_stale_full_hash_rejected(self):
+        # A full 64-hex token matching nothing in the source fails, prefix
+        # form or not — the input-stream hash site is a real assertion.
+        root = self.tree()
+        bogus = "sha256:" + "f" * 64
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc",
+                  bogus)
+        errors = pc.check_root(root)
+        self.assertTrue(any("does not match any hash" in e for e in errors),
+                        errors)
+
+    def test_escape_on_current_hash_rejected(self):
+        # AC5: a blanket suppression is itself a CI error — escaping a line
+        # whose hash the source contains must fail, so cite:historical cannot
+        # silently grow to cover current citations.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "0bf7c`,", "0bf7c`," + self.ESCAPE)
+        errors = pc.check_root(root)
+        self.assertTrue(any("matches the source" in e for e in errors), errors)
+
+    def test_escape_hash_forms(self):
+        # The real tree's single escape covers the U+2026 abbreviation; the
+        # ASCII head...tail spelling of the same stale deck hash is excused
+        # the same way when written deliberately.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`ba0f9788…` pinned above, which the" + self.ESCAPE,
+                  "`ba0f9788...942e6` pinned above, which the" + self.ESCAPE)
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_count_off_by_one_rejected(self):
+        for rel, old, new in self.OFF_BY_ONE:
+            with self.subTest(citation=old):
+                root = self.tree()
+                self.seed(root, rel, old, new)
+                errors = pc.check_root(root)
+                field = old.split("`")[1].split("coverage.", 1)[-1]
+                self.assertTrue(any(field in e and "is cited as" in e
+                                    for e in errors), errors)
+
+    def test_unknown_count_field_rejected(self):
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`deck_scope` (23)", "`deck_scope_typo` (23)")
+        errors = pc.check_root(root)
+        self.assertTrue(any("absent from" in e for e in errors), errors)
+
+    def test_contents_list_is_not_a_count_citation(self):
+        # `field` is `66/13`, ... cites contents, not this source's count —
+        # documented out of the asserted grammar, so it must not fire.
+        root = self.tree()
+        self.seed(root, "signoff/README.md", "`66/13`, `69/5`",
+                  "`99/13`, `69/5`")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_marker_mention_inside_inline_code_is_not_a_region(self):
+        # Prose that documents the marker syntax inside backticks does not
+        # itself open or close a region — the real "What CI checks" bullet
+        # tripped the attestation before this rule existed.
+        root = self.tree()
+        self.seed(root, "signoff/README.md",
+                  "Unmarked prose is never scanned",
+                  "Wrapped prose uses `<!-- cite:begin source=x.json -->` / "
+                  "`<!-- cite:end -->`. Unmarked prose is never scanned")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_missing_source_file_hard_error(self):
+        # AC8: a check that cannot run must not look like one that passed.
+        root = self.tree()
+        self.seed(root, "signoff/README.md", self.BEGIN,
+                  "<!-- cite:begin source=signoff/evidence/missing.json -->")
+        errors = pc.check_root(root)
+        self.assertTrue(any("missing.json" in e and "no such file" in e
+                            for e in errors), errors)
+
+    def test_unreadable_source_hard_error(self):
+        root = self.tree()
+        (root / "signoff/evidence/drc/ring.json").write_text("{not json")
+        errors = pc.check_root(root)
+        self.assertTrue(any("unreadable evidence JSON" in e for e in errors))
+
+    def test_source_without_coverage_hard_error(self):
+        root = self.tree()
+        (root / "signoff/evidence/drc/ring.json").write_text('{"kind": "x"}')
+        errors = pc.check_root(root)
+        self.assertTrue(any("no coverage object" in e for e in errors), errors)
+
+    def test_unterminated_region_hard_error(self):
+        root = self.tree()
+        self.seed(root, "signoff/README.md", self.END, "")
+        errors = pc.check_root(root)
+        self.assertTrue(any("unterminated cite region" in e
+                            and "signoff/README.md" in e for e in errors))
+
+    def test_end_without_begin_hard_error(self):
+        root = self.tree()
+        self.seed(root, "signoff/README.md", self.BEGIN + "\n", "")
+        errors = pc.check_root(root)
+        self.assertTrue(any("cite:end without cite:begin" in e
+                            for e in errors), errors)
+
+    def test_nested_begin_hard_error(self):
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`status: clean`, `violation_count: 0`.",
+                  self.BEGIN + " `status: clean`, `violation_count: 0`.")
+        errors = pc.check_root(root)
+        self.assertTrue(any("nested cite:begin" in e for e in errors), errors)
 
 
 if __name__ == "__main__":

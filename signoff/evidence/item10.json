@@ -3,21 +3,21 @@
   "kind": "generic",
   "status": "pass",
   "t1_item": 10,
-  "summary": "T1 item 10 (Repo hygiene): 8/8 attestation checks passed (klt signoff --attest)",
+  "summary": "T1 item 10 (Repo hygiene): 9/9 attestation checks passed (klt signoff --attest)",
   "source": "signoff/attest/item10.json",
   "attestation": {
     "producer": "klt signoff --attest",
     "inventory_schema_version": 1,
     "hash_algorithm": "sha256-raw-bytes",
-    "check_count": 8,
-    "passed_count": 8,
+    "check_count": 9,
+    "passed_count": 9,
     "checks": [
       {
         "check": "present",
         "role": "hygiene",
         "path": ".github/workflows/ci.yml",
         "passed": true,
-        "content_hash": "sha256:e7d3fe508498b06cdf33ce40bf4b0700c8b30d665f214002c3ddd1bd5d50ede6"
+        "content_hash": "sha256:e320462c5ad753bed6a48ecb6efd22b880d0b13daa47ddd2c9e4a6a0a792d907"
       },
       {
         "check": "present",
@@ -89,6 +89,20 @@
       {
         "check": "command",
         "role": "audit",
+        "name": "prose-citations",
+        "argv": [
+          "python3",
+          "-I",
+          "scripts/ci/check_prose_citations.py",
+          "."
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true
+      },
+      {
+        "check": "command",
+        "role": "audit",
         "name": "pdk-resolver-self-test",
         "argv": [
           "bash",
@@ -110,7 +124,7 @@
         "path": "signoff/attest/item10.json",
         "scope": "repo"
       },
-      "content_hash": "sha256:8be20f1f573628de734c299e00567a71e5146ed3c4351a31b226cb433bf108c4"
+      "content_hash": "sha256:d969bc4ead15623ff5b94de8e7c19d018fd9d590d53b02bca1b89164ed567be4"
     }
   }
 }

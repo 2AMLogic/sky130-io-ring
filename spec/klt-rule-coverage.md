@@ -83,12 +83,13 @@ decks and rule ids differ.
 
 ## Reconciliation with the committed DRC report (regenerated 2026-11-14)
 
+<!-- cite:begin source=signoff/evidence/drc/ring.json -->
 Source: `signoff/evidence/drc/ring.json`, `klt drc --deck sky130` by `klt`
 0.9.1 on `layout/gds/sky130_ioring_ring.gds` (input
 `sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc`,
 the item-2 layout hash). Deck `sky130`,
 `sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a88194a83532d60bf7c`,
-`released: true` (newer content than the `ba0f9788…` pinned above, which the
+`released: true` (newer content than the `ba0f9788…` pinned above, which the <!-- cite:historical -->
 2026-10-27 predecessor of this report used).
 `status: clean`, `violation_count: 0`. The drawing includes the GPIO's
 transistors, diodes and resistor and the supply clamps in `vddio` / `vdd`
@@ -118,6 +119,7 @@ Quoted from the report's `coverage` block:
   rule reads `hvi`, so every rule applies its general-case threshold to
   geometry drawn inside `hvi` — the 5 V devices are held only to the
   general-case (1.8 V) thresholds (see the thick-oxide row below).
+<!-- cite:end -->
 
 Against the classes above:
 
