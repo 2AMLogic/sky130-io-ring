@@ -5,6 +5,18 @@ triage role. Newest first.
 
 ### 2026-11-15
 
+- **PR #147**: ci: error on near-miss prose hash pins that silently degrade to membership
+- **PR #145**: ci: catch omitted, mis-attributed and fenced-away prose citations
+- **PR #143**: ci: assert prose citations against the signoff evidence they cite
+- **PR #142**: docs: state the path-key separator rule as R3 in sim/README.md and qualify the #134 citation
+- **PR #139**: docs: qualify the sim probe-index preamble for the pdk-smoke outlier row
+- **PR #131**: netlist: adopt klt netlist --relative-paths so committed netlists are checkout-independent
+- **Issue #146** (closed): check_prose_citations: a role-pinned hash degrades silently to membership-only on three phrasing variants
+- **Issue #144** (closed): check_prose_citations: three measured residual gaps in the citation-drift class
+- **Issue #140** (closed): Record path-key separator convention is documented only in the CI-gate docs, not in sim/README.md's record field conventions
+- **Issue #137** (closed): No CI check cross-validates signoff prose citations against the committed evidence JSON
+- **Issue #127** (closed): sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke)
+- **Issue #124** (closed): Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent
 - **PR #138**: docs: state the path-key separator convention for evidence records
 - **PR #136**: docs: quote DRC report's voltage_domain_warnings; fix stale deck hash in signoff README
 - **PR #132**: refactor(sim): extract the copy-pasted run.sh preamble and record tail into sim/lib/run_common.sh
