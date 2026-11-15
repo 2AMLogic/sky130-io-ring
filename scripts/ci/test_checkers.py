@@ -176,6 +176,75 @@ class EvidenceFormat(unittest.TestCase):
             self.assertEqual(errors, [])
             self.assertEqual(n, 1)
 
+    # --- R1 field-naming rule (issue #120) ---
+
+    def sibling_record(self, **cards):
+        rec = copy.deepcopy(GOOD)
+        rec["runs"]["m"] = {"results": {"cards_m": cards}}
+        return json.dumps(rec)
+
+    def test_equal_sibling_with_unit_suffix_rejected(self):
+        # The exact diode-unit-probe shape: two field names asserting
+        # different unit domains for one and the same figure.
+        errors = ef.check_record(
+            self.sibling_record(cj_card_F_per_m2=7.4079e-16, cj_prescaled=7.4079e-16), "r")
+        self.assertTrue(any("cj_card_F_per_m2" in e and "cj_prescaled" in e
+                            and "unit-domain suffix" in e for e in errors))
+
+    def test_error_names_object_and_both_keys(self):
+        # The failure must name the offending object and every key in it.
+        errors = ef.check_record(
+            self.sibling_record(cjsw_card_F_per_m=9.88e-17, cjsw_prescaled=9.88e-17), "r")
+        hit = [e for e in errors if "cjsw_prescaled" in e]
+        self.assertEqual(len(hit), 1)
+        self.assertIn("runs.m.results.cards_m", hit[0])
+        self.assertIn("'cjsw_card_F_per_m'", hit[0])
+
+    def test_leading_token_grouping_not_stem(self):
+        # `cj_card_F_per_m2` and `cj_prescaled` share only a leading token, not
+        # a suffix-stripped stem (cj_card vs cj) — a stem-based rule would let
+        # this exact defect pass, so the test pins the grouping key itself.
+        errors = ef.check_record(
+            self.sibling_record(cj_card_F_per_m2=7.4079e-16, cj_prescaled=7.4079e-16), "r")
+        self.assertTrue(any("leading token 'cj'" in e for e in errors))
+
+    def test_distinct_sibling_values_pass(self):
+        # Same key pair, genuinely different domains' numbers: the source
+        # figure 7.4079e-4 F/m^2 next to the pre-scaled 7.4079e-16 F/um^2.
+        rec = self.sibling_record(cj_card_source_F_per_m2=7.4079e-4,
+                                  cj_prescaled_F_per_um2=7.4079e-16)
+        self.assertEqual(ef.check_record(rec, "r"), [])
+
+    def test_grandfathered_path_accepted(self):
+        defect = self.sibling_record(cj_card_F_per_m2=7.4079e-16, cj_prescaled=7.4079e-16)
+        self.assertEqual(
+            ef.check_record(defect, "sim/diode-unit-probe/record/record.json"), [])
+        # the grandfather is path-scoped, not a global amnesty
+        self.assertTrue(ef.check_record(defect, "sim/other/record/record.json"))
+
+    def test_equal_siblings_without_unit_suffix_pass(self):
+        # Legitimately equal values under one leading token, no unit-domain
+        # suffix anywhere: not the defect shape.
+        rec = self.sibling_record(js_a=1.5, js_b=1.5, temp_set=27, temp_measured=27.0)
+        self.assertEqual(ef.check_record(rec, "r"), [])
+
+    def test_int_and_float_equal_values_rejected(self):
+        # JSON 1 and 1.0 compare equal; the rule fires on numeric equality.
+        errors = ef.check_record(
+            self.sibling_record(cj_a_per_um2=1, cj_b_per_um2=1.0), "r")
+        self.assertTrue(any("unit-domain suffix" in e for e in errors))
+
+    def test_boolean_siblings_not_treated_as_numeric(self):
+        rec = self.sibling_record(cj_flag_per_m2=True, cj_flag=True)
+        self.assertEqual(ef.check_record(rec, "r"), [])
+
+    def test_unit_suffix_variants_rejected(self):
+        for pair in (("cj_x_per_m", "cj_y"), ("cj_x_per_um", "cj_y"),
+                     ("cj_x_per_um2", "cj_y")):
+            errors = ef.check_record(
+                self.sibling_record(**{pair[0]: 2.0, pair[1]: 2.0}), "r")
+            self.assertTrue(any("unit-domain suffix" in e for e in errors), pair)
+
 
 class AppendOnly(unittest.TestCase):
     def test_add_passes(self):
