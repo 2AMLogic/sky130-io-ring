@@ -229,5 +229,34 @@ append-only; this probe is a new directory).
   `tools.ciel` is `unavailable`, as in `sim/clamp-probe` and
   `sim/diode-probe`. The committed log needed `git add -f` (blanket `*.log`
   gitignore; tracked for removal by #106).
-- `sim/README.md`'s probe index is **not** updated: the `sim/` append-only
-  guard freezes it until #109 lands.
+- `sim/README.md`'s probe index carries this probe's row (added when the
+  #109 guard carve-out landed, which also made this README and the harness
+  index editable again; only `record/` stays append-only).
+
+### Erratum — three record field names assert the refuted C2 reading
+
+`record/record.json` is append-only evidence, so its field names stand
+uncorrected — and three of them state exactly the C2 reading (instance values
+in m^2 / m, the cards' literal `; Units:` comments) that the Conclusion and
+the table above refute:
+
+- `cj_card_F_per_m2` (= `7.4079e-16` pd2nw / `1.3459e-15` pw2nd) and
+  `cjsw_card_F_per_m` (= `9.88e-17` / `3.6001e-17`) carry `_per_m2` / `_per_m`
+  suffixes, but the numbers they hold are the **post-conversion per-um^2 /
+  per-um** values — the same figures as their `cj_prescaled` / `cjsw_prescaled`
+  neighbours, not the cards' source-domain `0.00074079` F/m^2 and
+  `9.88e-011` F/m. A reader who trusts the suffix gets the refuted C2 unit
+  back. The correct reading of these figures is the table in ["What the cards'
+  `; Units:` comments actually describe"](#what-the-cards--units-comments-actually-describe)
+  above.
+- `units_comment` restates the cards' `; Units:` text bare —
+  `cj_farad_per_meter^2_cjsw_farad_per_meter_...` — with no
+  "pre-conversion source units" qualifier, contradicting the record's own
+  `conclusion`, which states the comments "describe pre-conversion source
+  units, not the units the instance numbers are in".
+
+Neither defect touches any measured number or the settled unit (C1); the
+record's `conclusion` string is correct. The convention that prevents the
+shape in future records is R1/R2 in `sim/README.md` ("Record field
+conventions"), enforced by `scripts/ci/check_evidence_format.py` with this
+record grandfathered.

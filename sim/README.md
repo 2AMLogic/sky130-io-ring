@@ -50,6 +50,28 @@ probe` runs unless the row says otherwise; none is item-5 evidence.
 | `diode-probe` | G1 / ESD.3 | what do the GPIO pad diodes do at the ESD.2 current? (diode areas are unsized placeholders) |
 | `diode-unit-probe` | G1 | what unit is the diode instance `area` / `perim` parameter in? measured at 27 C and 30 C |
 
+## Record field conventions
+
+Two rules for any new probe's record fields (both violated by
+`diode-unit-probe`, whose record predates them and is append-only — its README
+carries the erratum):
+
+- **R1 — a field name states the unit domain of the number it holds.** A card
+  figure in its source domain and the same figure after the card's own
+  pre-scaling are different numbers. Record the one you have, named for its
+  domain: `cj_prescaled_F_per_um2` = `7.4079e-16` (F per um^2). Add a
+  source-domain key only if it really holds the source figure:
+  `cj_card_source_F_per_m2` = `7.4079e-4` (F per m^2). Never reuse a
+  `_per_m2` / `_per_m` suffix for a per-um^2 / per-um number, and do not emit
+  two keys for one figure. `scripts/ci/check_evidence_format.py` enforces the
+  failure shape (equal-valued numeric siblings under one leading token with a
+  unit-domain suffix on one of them); `diode-unit-probe` is grandfathered.
+- **R2 — a free-text unit field is qualified.** A `units_comment` restating a
+  model card's `; Units:` text must say those are **pre-conversion source**
+  units, so it cannot contradict the record's own `conclusion`. (The
+  `diode-unit-probe` record's bare `units_comment` asserts exactly the C2
+  reading its `conclusion` refutes.)
+
 ## Smoke record (`pdk-smoke/record/`)
 
 DC operating point and Id-Vgs sweep at `tt`, 27 C, of one NMOS and one PMOS from
