@@ -157,7 +157,7 @@
         "role": "source",
         "path": "design/xschem/sky130_ioring_gpio_esd.sch",
         "passed": true,
-        "content_hash": "sha256:1dbfcdf845e63d228cd96b935096461c59fb5424cd9d617e07e22e0a275617ef"
+        "content_hash": "sha256:58ba9665a0d9296a67ab59a4d076f6d87eba11c0594036dd21a8888f48742631"
       },
       {
         "check": "present",
@@ -395,7 +395,7 @@
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio.spice",
         "passed": true,
-        "content_hash": "sha256:e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e"
+        "content_hash": "sha256:8157cf0f9194056483cb09f0e782a127f1f6d38c63ef74c960b8d91a73257f05"
       },
       {
         "check": "present",
@@ -409,7 +409,7 @@
         "role": "derived",
         "path": "design/netlists/sky130_ioring_gpio_esd.spice",
         "passed": true,
-        "content_hash": "sha256:0da4baaf2994e27598248f1ab3075a07721a5f8a76358b95be84449c04344ba0"
+        "content_hash": "sha256:c2492588daa3c7c5bed70d107a1673a20f3602fa2404541586556b2e765397f9"
       },
       {
         "check": "present",
@@ -472,7 +472,7 @@
         "role": "derived",
         "path": "design/netlists/sky130_ioring_ring.spice",
         "passed": true,
-        "content_hash": "sha256:d900e66ab967bd4ce749108a2170dcd0870bf4d42dbdd40eb9ec9e8d73a77517"
+        "content_hash": "sha256:2950dbbd8b0eb15c118e19b02d27d6ad61f2d4d91da93dd056a86b99106153a2"
       },
       {
         "check": "present",
@@ -850,7 +850,7 @@
     ]
   },
   "provenance": {
-    "klt_version": "0.9.0",
+    "klt_version": "0.9.1",
     "klayout_version": null,
     "pdk": null,
     "deck": null,
@@ -924,7 +924,7 @@
             "path": "design/netlists/sky130_ioring_gpio.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:e1b217d061669c53e8985e5bf0524543b369b3d9759a449cdfe5ab6dd2827e1e"
+          "content_hash": "sha256:8157cf0f9194056483cb09f0e782a127f1f6d38c63ef74c960b8d91a73257f05"
         },
         {
           "path": {
@@ -938,7 +938,7 @@
             "path": "design/netlists/sky130_ioring_gpio_esd.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:0da4baaf2994e27598248f1ab3075a07721a5f8a76358b95be84449c04344ba0"
+          "content_hash": "sha256:c2492588daa3c7c5bed70d107a1673a20f3602fa2404541586556b2e765397f9"
         },
         {
           "path": {
@@ -1001,7 +1001,7 @@
             "path": "design/netlists/sky130_ioring_ring.spice",
             "scope": "repo"
           },
-          "content_hash": "sha256:d900e66ab967bd4ce749108a2170dcd0870bf4d42dbdd40eb9ec9e8d73a77517"
+          "content_hash": "sha256:2950dbbd8b0eb15c118e19b02d27d6ad61f2d4d91da93dd056a86b99106153a2"
         },
         {
           "path": {
@@ -1162,7 +1162,7 @@
             "path": "design/xschem/sky130_ioring_gpio_esd.sch",
             "scope": "repo"
           },
-          "content_hash": "sha256:1dbfcdf845e63d228cd96b935096461c59fb5424cd9d617e07e22e0a275617ef"
+          "content_hash": "sha256:58ba9665a0d9296a67ab59a4d076f6d87eba11c0594036dd21a8888f48742631"
         },
         {
           "path": {
@@ -1347,7 +1347,7 @@
           "content_hash": "sha256:a5282884b0579fb67612e6dbcaa95338b8cb72a60334af6bb91a8fa17e87656f"
         }
       ],
-      "content_hash": "sha256:75d7ca68782e98d71dc882e5d0d467ecd687367015ff48173d4995a962f4ccc4"
+      "content_hash": "sha256:82151fd4b491796994e6eb25bec3b7542cafd6e2d44a41b1bd3478e788251978"
     }
   }
 }

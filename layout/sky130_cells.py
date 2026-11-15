@@ -287,7 +287,7 @@ def _expected_devices(subckts):
             kind, thick = sb.dev.MOS_MODELS[d.model]
             mos += [(kind, thick, round(d.params["W"], 3), round(d.params["L"], 3))] * int(d.params["m"])
         elif d.model in sb.dev.DIODE_MODELS:
-            dio.append((sb.dev.DIODE_MODELS[d.model], round(d.params["area"] * 1e-12, 3)))
+            dio.append((sb.dev.DIODE_MODELS[d.model], round(d.params["area"], 3)))
         else:
             res.append(round(d.params["L"], 3))
     return sorted(mos), sorted(dio), sorted(res)

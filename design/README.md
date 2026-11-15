@@ -94,12 +94,21 @@ name across all 44 instances, which is what ring-seam LVS connects on.
   `; Units: ... meter ...` comments describe pre-conversion source units
   (fully so for `cj`/`cjsw`/`ik`; for `js`/`jsw`/`rs` they describe units the
   simulator never converts). There is no `.subckt` wrapper for these diodes:
-  the netlist `X` lines bind directly to the `.model` cards. Under the
-  settled unit the placeholders `area=2e14 perim=6e7` instantiate a
-  2e14 um^2 = 200 m^2 diode, and the four design-side locations carrying them
-  (`sky130_ioring_gpio.spice:77-81`, `sky130_ioring_gpio_esd.spice:4-8`,
-  `sky130_ioring_ring.spice:198-202`, `sky130_ioring_gpio_esd.sch:17,20,27,30`)
-  must be resized together at gate G1 (decision 0004).
+  the netlist `X` lines bind directly to the `.model` cards. Since #116 the
+  placeholders carry the instance units directly — `area=200 perim=60` (pad
+  pair) and `area=10 perim=14` (local pair) — so the netlist values, the
+  drawn rectangles (20 x 10 um and 5 x 2 um) and the simulated device agree;
+  the magnitudes remain placeholders pending gate G1 (decision 0004) and
+  resize together at the schematic source
+  (`design/xschem/sky130_ioring_gpio_esd.sch`), with the three
+  `design/netlists/*.spice` regenerated from it.
+- **`sim/diode-probe/record/` predates #116.** That record was derived from
+  the pre-fix `area=2e14` netlist (its `run.sh` snapshots the live design
+  netlist), so its forward-drop figures are the drop of a 200 m^2 diode and
+  are not reproducible from the post-fix tree. The record is append-only
+  (`scripts/ci/check_append_only.py`) and must not be edited or re-run
+  (`run.sh` refuses a non-empty OUTDIR); a fresh forward-drop measurement
+  belongs to a new experiment directory when needed.
 - A throwaway transient on the GPIO with the four diodes removed showed drive
   high/low and the IE gate behaving as drawn; the pulls were slower than the
   window. It is not recorded evidence (no corners, no record).
