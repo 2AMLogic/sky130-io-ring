@@ -33,26 +33,21 @@ _None._
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs
-- **#113**: Consolidate the copy-pasted sim run.sh preamble and record tail into one sim/lib helper (copies have already drifted)
-- **#118**: Evidence checker: existence failures report as 'is not repo-relative', plus two doc/comment inaccuracies
-- **#122**: ROADMAP.md: two coverage/gate claims are conservative but imprecise against their own cited sources
 - **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent
+- **#127**: sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke)
 
 ## PRs Awaiting Review
 
 PRs waiting on Judge (`loom:review-requested`).
 
-- **#128**: fix: reason-appropriate path-check failures; check dirs values in evidence format
-- **#131**: netlist: adopt klt netlist --relative-paths so committed netlists are checkout-independent
-- **#132**: refactor(sim): extract the copy-pasted run.sh preamble and record tail into sim/lib/run_common.sh
+_None._
 
 ## Approved (Awaiting Merge)
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#126**: ci: gate LVS report contents and freshness, exit 6 on unverified bodies
-- **#129**: docs: align ROADMAP and rule-coverage claims with the committed DRC report
+- **#131**: netlist: adopt klt netlist --relative-paths so committed netlists are checkout-independent
+- **#139**: docs: qualify the sim probe-index preamble for the pdk-smoke outlier row
 
 ## Proposed
 
@@ -62,12 +57,9 @@ Issues carrying `loom:curated`.
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
 - **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)*
-- **#118**: Evidence checker: existence failures report as 'is not repo-relative', plus two doc/comment inaccuracies *(curated)*
-- **#120**: sim/ record provenance: two fields misreport what they hold (misnamed unit suffix, and ciel recorded 'unavailable' when installed) *(curated)*
-- **#122**: ROADMAP.md: two coverage/gate claims are conservative but imprecise against their own cited sources *(curated)*
 - **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent *(curated)*
 - **#127**: sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke) *(curated)*
-- **#130**: Rule-coverage doc omits the DRC report's voltage_domain_warnings; signoff/README.md quotes a superseded deck hash *(curated)*
+- **#137**: No CI check cross-validates signoff prose citations against the committed evidence JSON *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -85,10 +77,10 @@ _None._
 | Very important | 1 |
 | Important | 0 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 6 |
-| PRs awaiting review | 3 |
+| In Progress (`loom:building`) | 3 |
+| PRs awaiting review | 0 |
 | Approved PRs awaiting merge | 2 |
-| Curated | 10 |
+| Curated | 7 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->

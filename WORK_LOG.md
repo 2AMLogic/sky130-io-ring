@@ -5,6 +5,13 @@ triage role. Newest first.
 
 ### 2026-11-15
 
+- **PR #138**: docs: state the path-key separator convention for evidence records
+- **PR #136**: docs: quote DRC report's voltage_domain_warnings; fix stale deck hash in signoff README
+- **PR #132**: refactor(sim): extract the copy-pasted run.sh preamble and record tail into sim/lib/run_common.sh
+- **PR #135**: ci: enforce record field-naming (R1), document conventions, diode-unit erratum
+- **PR #128**: fix: reason-appropriate path-check failures; check dirs values in evidence format
+- **PR #129**: docs: align ROADMAP and rule-coverage claims with the committed DRC report
+- **PR #126**: ci: gate LVS report contents and freshness, exit 6 on unverified bodies
 - **PR #125**: ci: scope the append-only guard to sim/ record directories
 - **PR #123**: fix: carry diode area/perim in instance units (um2/um), drop refuted x1e12 conversion
 - **PR #121**: fix: attribute the four unmet T1 items to the recorded no_evidence reason
@@ -13,6 +20,12 @@ triage role. Newest first.
 - **PR #114**: refactor(layout): drop dead state, the region wrapper and seven ignored parameters
 - **PR #111**: ci: commit sim probe logs without -f and reject dangling log references
 - **PR #91**: docs: roadmap as of 2026-11-13
+- **Issue #134** (closed): Evidence checker: PATH_KEY_RE needs a separator, so logdir/logfile-style keys are never path-checked
+- **Issue #130** (closed): Rule-coverage doc omits the DRC report's voltage_domain_warnings; signoff/README.md quotes a superseded deck hash
+- **Issue #122** (closed): ROADMAP.md: two coverage/gate claims are conservative but imprecise against their own cited sources
+- **Issue #120** (closed): sim/ record provenance: two fields misreport what they hold (misnamed unit suffix, and ciel recorded 'unavailable' when installed)
+- **Issue #118** (closed): Evidence checker: existence failures report as 'is not repo-relative', plus two doc/comment inaccuracies
+- **Issue #113** (closed): Consolidate the copy-pasted sim run.sh preamble and record tail into one sim/lib helper (copies have already drifted)
 - **Issue #116** (closed): Layout generator converts diode area/perim by the refuted x1e12 convention; drawn and simulated diode geometry disagree by 1e12
 - **Issue #109** (closed): The append-only guard freezes sim/README.md, so the sim index cannot be updated and is stale
 - **Issue #107** (closed): Establish the unit convention for sky130 diode area/perim, so G1 sizing has a defined starting point
