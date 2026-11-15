@@ -4,10 +4,13 @@
   1. Each evidence directory (design, layout, sim, measurements, spec) has a README.md.
   2. Each sim record (sim/<experiment>/record/*.json or .../records/*.json) is a JSON
      object with the required fields, a 40-hex pdk_revision, and repo-relative paths
-     only (no absolute path, no `..`, no drive letter, no home directory).
+     only (no absolute path, no `..`, no drive letter, no home directory). Each
+     path-shaped value must also resolve, relative to the record's own directory,
+     to a file or directory that exists — a dangling reference fails.
 
-Passes trivially when sim/ holds no records. Content is never judged: this checks
-that a record is well formed, not that its numbers are right.
+Passes trivially when sim/ holds no records. Content is otherwise never judged:
+this checks that a record is well formed and that its referenced files are
+present, not that its numbers are right.
 
   check_evidence_format.py [REPO_ROOT]
 """
@@ -28,33 +31,39 @@ def is_record(rel):
             and any(p in ("record", "records") for p in parts[1:-1]))
 
 
-def bad_path(value):
+def bad_path(value, base=None):
     if not isinstance(value, str) or not value:
         return "not a non-empty string"
     if value.startswith(("/", "~", "\\")) or re.match(r"^[A-Za-z]:[\\/]", value):
         return "absolute path"
     if ".." in re.split(r"[\\/]", value):
         return "parent-directory component"
+    if base is not None and not (Path(base) / value).exists():
+        return "no such file"
     return None
 
 
-def walk_paths(node, where, errors):
+def walk_paths(node, where, errors, base=None):
     if isinstance(node, dict):
         for k, v in node.items():
             if PATH_KEY_RE.search(k) and isinstance(v, (str, list)):
                 for item in (v if isinstance(v, list) else [v]):
-                    why = bad_path(item)
+                    why = bad_path(item, base)
                     if why:
                         errors.append(f"{where}: {k}={item!r} is not repo-relative ({why})")
             else:
-                walk_paths(v, f"{where}.{k}", errors)
+                walk_paths(v, f"{where}.{k}", errors, base)
     elif isinstance(node, list):
         for i, v in enumerate(node):
-            walk_paths(v, f"{where}[{i}]", errors)
+            walk_paths(v, f"{where}[{i}]", errors, base)
 
 
-def check_record(text, where):
-    """Return a list of error strings for one record's JSON text."""
+def check_record(text, where, base=None):
+    """Return a list of error strings for one record's JSON text.
+
+    `base` is the directory the record's path-shaped values resolve against
+    (the record's own directory); without it only the shape is checked.
+    """
     try:
         rec = json.loads(text)
     except ValueError as exc:
@@ -65,7 +74,7 @@ def check_record(text, where):
     rev = rec.get("pdk_revision")
     if "pdk_revision" in rec and not (isinstance(rev, str) and REVISION_RE.match(rev)):
         errors.append(f"{where}: pdk_revision {rev!r} is not a 40-hex revision")
-    walk_paths(rec, where, errors)
+    walk_paths(rec, where, errors, base)
     return errors
 
 
@@ -78,7 +87,7 @@ def check_tree(root):
         rel = p.relative_to(root).as_posix()
         if is_record(rel):
             n += 1
-            errors += check_record(p.read_text(encoding="utf-8"), rel)
+            errors += check_record(p.read_text(encoding="utf-8"), rel, base=p.parent)
     return errors, n
 
 

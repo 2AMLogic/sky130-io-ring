@@ -159,14 +159,19 @@ def _grid(lo, hi, pitch):
 
 
 def diode(kind, area, perim, nets, name=""):
-    """Junction diode of the given area / perimeter (SPICE units 1e-12 m^2 and 1e-6 m).
+    """Junction diode of the given area / perimeter in instance units um^2 and um.
+
+    The instance unit was settled by measurement (#107): `sim/diode-unit-probe/`
+    reads ngspice's junction capacitance and device current at known instance
+    values against the model cards. `area` and `perim` are the netlist values
+    as written, with no scaling.
 
     kind 'p': p+ diff in an n-well (pd2nw), nets = (anode, cathode); the cathode
     is the well, tied by the group's n-taps. kind 'n': n+ diff in the substrate
     (pw2nd), nets = (anode, cathode); the anode is the substrate, tied by p-taps.
     The marker layer covers the diff, as the deck's diode devices require.
     """
-    a_um2, p_um = area * 1e-12, perim * 1e-6
+    a_um2, p_um = area, perim
     half = p_um / 2
     disc = half * half / 4 - a_um2
     if disc < -1e-9:

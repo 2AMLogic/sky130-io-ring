@@ -65,7 +65,7 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
 | Netlist devices | Drawn as |
 |---|---|
 | `nfet_01v8`, `pfet_01v8`, `nfet_g5v0d10v5`, `pfet_g5v0d10v5` (`m` = `m` fingers) | one poly gate per finger at the netlist W and L over shared diffusion strips; 52 n + 54 p fingers, of which 31 n + 33 p are thick-oxide (`hvi`) |
-| `diode_pd2nw_05v5`, `diode_pw2nd_05v5` | rectangular diff at the netlist `area` / `perim` (200 um2 / 60 um and 10 um2 / 14 um) under the diode marker; p+ in an n-well, n+ in the substrate |
+| `diode_pd2nw_05v5`, `diode_pw2nd_05v5` | rectangular diff under the diode marker (p+ in an n-well, n+ in the substrate). The drawn rectangles are 200 um2 / 60 um (pad pair) and 10 um2 / 14 um (local pair) — the netlist `area` / `perim` values themselves: `sim/diode-unit-probe/` (#107) measured the instance unit as um2 / um, and since #116 the generator carries the values unscaled (`sky130_devices.py` takes `area` in um2 and `perim` in um), so the drawn and netlisted figures agree. The magnitudes remain placeholders pending gate G1 sizing |
 | `res_high_po_1p41` | 1.41 um poly strip, L = 1.0 um under the resistor marker and `rpm`, contacted at both ends |
 
 - Every p group sits in its own n-well, tied by n+ taps; a thick-oxide well is

@@ -108,8 +108,9 @@ the same commands.
 
 **What exists, and what does not:** DRC of the ring against the curated
 `sky130` deck reports clean on drawing that includes every device of the GPIO
-netlists (but no supply clamp); the deck does not cover every I/O rule
-(thick-oxide, latch-up and guard-ring rules among them); deck coverage is in
+netlists and the two supply clamps in `vddio` / `vdd`; the deck does not
+cover every I/O rule (thick-oxide, latch-up and guard-ring rules among
+them); deck coverage is in
 [`signoff/README.md`](signoff/README.md). LVS has run per cell and on the ring: with klt 0.9.1 the GPIO, the two supply clamps, the ring,
 the corner, fillers and `vss` are `match` against their reference netlists (flat comparison; the
 resistor geometry is not compared). Ring ERC reproduces clean against the

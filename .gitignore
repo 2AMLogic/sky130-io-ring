@@ -8,6 +8,9 @@ __pycache__/
 # sim/ harness: per-corner ngspice logs under corners/ are committed evidence
 # (append-only record trail), so they escape the *.log rule.
 !sim/*/corners/**/*.log
+# sim/ harness: a probe's committed log evidence under record/logs/ escapes
+# the *.log rule, so a new probe needs no `git add -f`.
+!sim/*/record*/logs/**/*.log
 sim/build/
 # synthesis / P&R scratch
 flow/build/
@@ -96,7 +99,6 @@ flow/build/
 
 # Repo Skills machine-local install metadata (absolute source path + timestamp)
 .claude/skills/repo/.install-local.json
-!sim/pdk-smoke/record/logs/*.log
 
 # Repo Skills Codex-side machine-local install metadata (never committed)
 .agents/skills/repo/.install-local.json

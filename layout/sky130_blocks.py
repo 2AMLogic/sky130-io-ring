@@ -83,7 +83,6 @@ class _Group:
         self.pad_y = self.rv + (RING_W if ring_net else 0.0)
         self.w = self.core_w + 2 * self.pad_x
         self.h = self.core_h + 2 * self.pad_y
-        self.ring_port = None
 
 
 class _Inst:
@@ -101,20 +100,20 @@ def _make_groups(row, units, ring_net):
     for (body, thick), us in by_key.items():
         taps = []
         if not ring_net:
-            taps = [dev.tap("n" if row == "n" else "p", body, thick)]
+            taps = [dev.tap(row, body, thick)]
         body_units = list(taps)
         if not ring_net:                       # a tap at each end and one at least every TAP_SPAN
             span = 0.0
             for u in us:
                 if span and span + u.w > TAP_SPAN:
-                    body_units.append(dev.tap("n" if row == "n" else "p", body, thick))
+                    body_units.append(dev.tap(row, body, thick))
                     span = 0.0
                 body_units.append(u)
                 span += u.w + GAP_UNIT
         else:
             body_units += us
         if not ring_net and sum(u.w for u in us) > 5.0:
-            body_units.append(dev.tap("n" if row == "n" else "p", body, thick))
+            body_units.append(dev.tap(row, body, thick))
         groups.append(_Group(row, (body, thick), body_units, ring_net=ring_net))
     return groups
 
@@ -132,8 +131,7 @@ def _layout_row(items, x0=0.7):
 
 
 class _Emit:
-    def __init__(self, cell, layout, top_y):
-        self.cell, self.layout, self.top_y = cell, layout, top_y
+    def __init__(self, cell, layout):
         self.pen = dev.Pen(layout, cell)
 
     def track(self, net, x0, x1, y):
@@ -180,7 +178,7 @@ def child_block(ctx, sname):
     return build_block(ctx, sname, **getattr(ctx, "block_args", {}).get(sname, {}))
 
 
-def assemble(subckts, name, calls, pins):
+def assemble(name, calls, pins):
     """Synthetic subcircuit grouping `calls` (of a parent): pins = nets shared with the rest."""
     nets = []
     for c in calls:
@@ -326,7 +324,7 @@ def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, l
         extra_ports.append(cr.Port(land[0], land[1], 0.0, "land"))
 
     cell = layout.create_cell(sname)
-    emit = _Emit(cell, layout, height)
+    emit = _Emit(cell, layout)
     tracks = cr.route(ports + exports + extra_ports, ys, emit)
     for net in label_nets:
         x0 = min(p.x for p in ports + exports + extra_ports if p.net == net)
@@ -339,7 +337,7 @@ def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, l
         shift = dx if flip else 0.0
         for it in items:
             if isinstance(it, _Group):
-                _draw_group(layout, cell, it, r, it.x + shift, Y_N0 if r == "n" else y_outer, flip)
+                _draw_group(layout, cell, it, it.x + shift, Y_N0 if r == "n" else y_outer, flip)
             else:
                 x0 = it.x + shift
                 if flip:
@@ -369,7 +367,7 @@ def _ring_port(grp, row, shift, xy, ports):
     return cr.Port(grp.ring_net, gx, gy, "li")
 
 
-def _draw_group(layout, cell, grp, row, gx, base_y, flip):
+def _draw_group(layout, cell, grp, gx, base_y, flip):
     """Draw a group's units, its well / hvi / guard ring. (gx, base_y) = local origin."""
     def at(lx, ly):
         return gx + lx, (base_y - ly) if flip else (base_y + ly)
