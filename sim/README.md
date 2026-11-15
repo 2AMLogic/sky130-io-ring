@@ -13,13 +13,16 @@ revision (for example a stale `~/.volare`) is refused, never used silently.
 | File | Half | Role |
 |---|---|---|
 | `lib/simrec.py` | PDK-independent | ngspice log parsing, append-only JSON record writing |
-| `pdk-smoke/run.sh` (driver skeleton) | mixed | the `devices` table and model names are sky130; netlist/record plumbing is not |
+| `lib/run_common.sh` | PDK-independent | the shared `run.sh` preamble (OUTDIR guard, ngspice check, workdir) and record tail (ngspice run, path scrub, tool versions, record write) |
+| `pdk-smoke/run.sh` (driver skeleton) | mixed | the netlist emitters and model names are sky130; the preamble and record plumbing are shared (`lib/run_common.sh`) |
 | `lib/pdk_env.sh` | sky130 | resolver: pin check, model-library path, corner file layout |
+| `lib/smoke_devices.sh` | sky130 | the four-device smoke table shared by `pdk-smoke` and `corner-skew-probe` |
 | `lib/test_pdk_env.sh` | sky130 | self-test of the resolver's refusal |
 | `pdk.json` | sky130 | the pin and tool versions |
 
-The port (`gf180-io-ring`) takes `lib/simrec.py` by pinned reference and supplies
-its own `pdk.json`, `pdk_env.sh` and device table.
+The port (`gf180-io-ring`) takes `lib/simrec.py` and `lib/run_common.sh` by
+pinned reference and supplies its own `pdk.json`, `pdk_env.sh`, device table
+and netlist emitters.
 
 ## Cold start
 

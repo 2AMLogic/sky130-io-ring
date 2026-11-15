@@ -4,7 +4,7 @@
 Names no PDK path, device or corner; callers pass those in. Stdlib only.
 
   simrec.py parse LOG                      -> JSON of RESULT lines and error flags
-  simrec.py write RECORD --refuse-overwrite ...  (see main)
+  simrec.py write RECORD --meta JSON [--log NAME=PATH]...  (see main)
 """
 import argparse
 import json
@@ -36,10 +36,10 @@ def parse_log(text):
     return results, errors
 
 
-def write_record(path, record, refuse_overwrite=True):
+def write_record(path, record):
     """Write a JSON record; records are append-only, so never replace one."""
     path = Path(path)
-    if refuse_overwrite and path.exists():
+    if path.exists():
         raise FileExistsError(f"{path} exists; records are append-only, use a new name")
     path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
 

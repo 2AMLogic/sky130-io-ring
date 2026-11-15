@@ -17,7 +17,7 @@
         "role": "testbench",
         "path": "sim/clamp-probe/run.sh",
         "passed": true,
-        "content_hash": "sha256:8f3e9d2098cf9b653ecaa0267c8879a74278611d234b81464dc5516a41ebe0a9"
+        "content_hash": "sha256:7a7da621efa10bd7a8e5d97363e155daa7cd6fdd92709fc685d962e573455205"
       },
       {
         "check": "present",
@@ -31,7 +31,7 @@
         "role": "testbench",
         "path": "sim/pdk-smoke/run.sh",
         "passed": true,
-        "content_hash": "sha256:fe15decdf6e7387e6f47c82780e4e5e4ced2e1a1cca5bfce510b35ffd635b7ca"
+        "content_hash": "sha256:6e2ba5e47fc8a10d93e55493e4bee1c8fc33b66a651ba9f32737ceccab6538d1"
       },
       {
         "check": "command",
@@ -68,7 +68,7 @@
     ]
   },
   "provenance": {
-    "klt_version": "0.9.0",
+    "klt_version": "0.9.1",
     "klayout_version": null,
     "pdk": null,
     "deck": null,
