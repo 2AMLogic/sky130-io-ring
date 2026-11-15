@@ -1,11 +1,14 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "engine": "klayout",
   "layout": {
     "path": "layout/gds/sky130_ioring_corner.gds",
     "scope": "repo"
   },
-  "reference": "design/netlists/sky130_ioring_corner.spice",
+  "reference": {
+    "path": "design/netlists/sky130_ioring_corner.spice",
+    "scope": "repo"
+  },
   "top": "sky130_ioring_corner",
   "reference_top": "SKY130_IORING_CORNER",
   "reference_conversion": {
@@ -102,17 +105,17 @@
   ],
   "environment": {
     "engine": "klayout",
-    "engine_version": "0.30.12",
+    "engine_version": "0.30.13",
     "netgen_binary": null,
     "layout_sha256": "6d2acfd587fa4036fa36f94660084a7dcfcc01b22f72d33040c6eca3ff986500",
     "reference_sha256": "97102068d144559dabb0c13ba634d520d1df9ba619df354252907673102b6c54",
     "extracted_netlist": null
   },
   "provenance": {
-    "klt_version": "0.9.0",
-    "klt_git_commit": "5dbbad05ff42265c92a6f3d2f20d1bbcd2957d49",
-    "klt_reinstall_spec": "klayout-tools==0.9.0",
-    "klayout_version": "0.30.12",
+    "klt_version": "0.9.1",
+    "klt_git_commit": "4d0d29be4fd991f499d59e783a908082d5e24c56",
+    "klt_reinstall_spec": "klayout-tools==0.9.1",
+    "klayout_version": "0.30.13",
     "pdk": null,
     "deck": {
       "name": "sky130",
@@ -123,7 +126,7 @@
       "content_hash": "sha256:6d2acfd587fa4036fa36f94660084a7dcfcc01b22f72d33040c6eca3ff986500",
       "role": "layout"
     },
-    "klayout_version_mismatch": false
+    "klayout_version_mismatch": true
   },
   "mismatches": [
     {

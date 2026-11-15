@@ -35,6 +35,7 @@ DEVICE_MODELS = set(MOS_MODELS) | set(DIODE_MODELS) | {RES_MODEL}
 
 SW = 0.5          # source/drain strip width (diff)
 LICON = 0.17
+LICON_PITCH = 0.34  # licon centre to centre down a contact column
 LI_W = 0.2        # li1 stripe over a contact column
 PAD = 0.3         # li1 port pad
 B = 0.77          # source bar bottom to diff bottom
@@ -68,13 +69,18 @@ class Unit:
         self.draw, self.body, self.thick, self.name = draw, body, thick, name
 
 
-def _contacts(span_lo, span_hi):
-    """Centres of a licon column that fits [span_lo, span_hi] with 0.06 end enclosure."""
+def contacts(span_lo, span_hi):
+    """Centres of a licon column that fits [span_lo, span_hi] with 0.06 end enclosure.
+
+    The single contact-column rule for both device drawers: sky130_clamp.mos_row
+    calls it as `contacts(0.0, W)` for its source/drain columns, so a correction
+    to the enclosure or the pitch lands in one place.
+    """
     room = span_hi - span_lo
-    n = max(1, int((room - LICON - 0.12) / 0.34) + 1)
-    used = LICON + (n - 1) * 0.34
+    n = max(1, int((room - LICON - 0.12) / LICON_PITCH) + 1)
+    used = LICON + (n - 1) * LICON_PITCH
     first = span_lo + (room - used) / 2 + LICON / 2
-    return [first + i * 0.34 for i in range(n)]
+    return [first + i * LICON_PITCH for i in range(n)]
 
 
 def mos(kind, thick, w, length, m, nets, name=""):
@@ -90,7 +96,7 @@ def mos(kind, thick, w, length, m, nets, name=""):
     xg = xs[-1] + 0.65
     width = xg + 0.4
     top = B + w + 1.3
-    cons = _contacts(B, B + w)
+    cons = contacts(B, B + w)
     ytop_con, ybot_con = cons[-1] + LICON / 2 + 0.06, cons[0] - LICON / 2 - 0.06
     x_riser = xs[0] - 0.75
     ypad = B + w + 1.15
@@ -130,7 +136,7 @@ def mos(kind, thick, w, length, m, nets, name=""):
 def tap(kind, net, thick=False):
     """Substrate (kind 'n': p+ tap) or n-well (kind 'p': n+ tap) contact, 0.5 x 1.0 um."""
     dop = "psdm" if kind == "n" else "nsdm"
-    cons = _contacts(0.2, 1.2)
+    cons = contacts(0.2, 1.2)
 
     def draw(p):
         p.box("tap", 0.3, 0.2, 0.8, 1.2)

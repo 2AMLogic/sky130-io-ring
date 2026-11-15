@@ -95,6 +95,25 @@ class Good(unittest.TestCase):
             self.assertEqual([(q.bbox().width(), q.bbox().height()) for q in plates],
                              [(g.U(30), g.U(33))] * 2, kind)
 
+    def test_every_cell_labels_each_rail_band(self):
+        """Every edge cell names each rail band on the rail's label layer.
+
+        A device body resolves only to a named net: with the gpio cell's rails
+        unlabelled klt reported 106 bodies unverified (klayout-tools#4361), and
+        the supply cells still drew only their own pad net, leaving the vdd
+        clamp's 815 bodies unverified.
+        """
+        p, layout, cells, *_ = build()
+        for kind, cell in cells.items():
+            if kind == "corner":
+                continue
+            for net, (b0, b1) in T.RAIL_BANDS.items():
+                layer = layout.layer(*T.LAYERS[p["rail_layers"][net] + ".label"])
+                hits = [s.text for s in cell.shapes(layer).each()
+                        if s.is_text() and s.text.string == net
+                        and g.U(b0) <= s.text.y <= g.U(b1)]
+                self.assertTrue(hits, f"{kind}: no {net} label inside its rail band")
+
     def test_erc_spec_lists_the_vdd_clamp_wells(self):
         """signoff/erc-supply-spec.json names the four VDD-tied clamp n-wells as boxes (among others)."""
         import json
@@ -142,9 +161,7 @@ class Defects(unittest.TestCase):
         def cut(p, layout, cells, *_):
             li = layout.layer(*T.LAYERS["met4"])
             c = cells["vss"]
-            r = db.Region(c.shapes(li)) - db.Region(g.box(30, 25, 35, 45))
-            c.shapes(li).clear()
-            c.shapes(li).insert(r)
+            replace(c, li, db.Region(c.shapes(li)) - db.Region(g.box(30, 25, 35, 45)))
         self.assert_flags(cut, "VDDIO")
 
     def test_rail_on_wrong_y_extent(self):
@@ -172,36 +189,32 @@ class Defects(unittest.TestCase):
         self.assert_flags(bevel, "45/90")
 
     def test_open_guard_ring(self):
-        def open_ring(p, layout, cells, *_):
-            drv = layout.cell("sky130_ioring_gpio_drv")
-            li = layout.layer(*T.LAYERS["tap"])
-            ring = [r for r in db.Region(drv.shapes(li)).merged().each() if r.holes() == 1][0]
-            b = ring.bbox()
-            cut = g.box(b.left * g.DBU - 1, (b.bottom + b.top) / 2 * g.DBU - 0.3,
-                        b.left * g.DBU + 1, (b.bottom + b.top) / 2 * g.DBU + 0.3)
-            r = db.Region(drv.shapes(li)) - db.Region(cut)
-            drv.shapes(li).clear()
-            drv.shapes(li).insert(r)
-        self.assert_flags(open_ring, "LU.1")
-
-    def test_open_pad_side_guard_ring(self):
-        """A ring cut open in the ESD block (not only the driver) is named by LU.1."""
-        def open_ring(p, layout, cells, *_):
-            esd = layout.cell("sky130_ioring_gpio_esd")
-            li = layout.layer(*T.LAYERS["tap"])
-            ring = [r for r in db.Region(esd.shapes(li)).merged().each() if r.holes() == 1][0]
-            b = ring.bbox()
-            cut = g.box(b.left * g.DBU - 1, (b.bottom + b.top) / 2 * g.DBU - 0.3,
-                        b.left * g.DBU + 1, (b.bottom + b.top) / 2 * g.DBU + 0.3)
-            r = db.Region(esd.shapes(li)) - db.Region(cut)
-            esd.shapes(li).clear()
-            esd.shapes(li).insert(r)
-        self.assert_flags(open_ring, "LU.1")
+        """LU.1: a ring cut open in any pad-connected bank, not only the driver, is named."""
+        for sname in sb.GUARDED:
+            with self.subTest(block=sname):
+                self.assert_flags(lambda p, layout, *_, s=sname: cut_ring(layout, s), "LU.1")
 
     def test_cell_too_deep(self):
         def deep(p, layout, cells, *_):
             cells["vss"].shapes(layout.layer(*T.LAYERS["met5"])).insert(g.box(0, 190, 10, 201))
         self.assert_flags(deep, "CELL.3")
+
+
+def replace(cell, li, region):
+    """Swap one cell's own shapes on layer index `li` for `region`."""
+    cell.shapes(li).clear()
+    cell.shapes(li).insert(region)
+
+
+def cut_ring(layout, cellname):
+    """Cut a 0.6 um slab through the left arm of the first closed tap annulus of a cell."""
+    cell = layout.cell(cellname)
+    li = layout.layer(*T.LAYERS["tap"])
+    ring = [r for r in db.Region(cell.shapes(li)).merged().each() if r.holes() == 1][0]
+    b = ring.bbox()
+    cut = g.box(b.left * g.DBU - 1, (b.bottom + b.top) / 2 * g.DBU - 0.3,
+                b.left * g.DBU + 1, (b.bottom + b.top) / 2 * g.DBU + 0.3)
+    replace(cell, li, db.Region(cell.shapes(li)) - db.Region(cut))
 
 
 def gates(layout, cellname):
@@ -255,8 +268,7 @@ class Devices(unittest.TestCase):
             li = layout.layer(*T.LAYERS["diff"])
             before = db.Region(cell.shapes(li)).area()
             reg = db.Region(cell.shapes(li)) - db.Region(db.Box(-10**7, g.U(2.0), 10**7, 10**7))
-            cell.shapes(li).clear()
-            cell.shapes(li).insert(reg)
+            replace(cell, li, reg)
             return before - reg.area()
         self.assert_flags(thin)
 

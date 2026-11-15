@@ -29,13 +29,17 @@ Written without timestamps, so output is byte-identical across runs.
 | Cell | Role |
 |---|---|
 | `sky130_ioring_gpio` | pad (`PAD`) and every device of the GPIO netlists, wired: 106 MOS fingers, 4 junction diodes, 1 poly resistor (see below) |
-| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail (net labels `VDDIO`, `VDD`, `VSS`); `_vddio` and `_vdd` also carry the supply clamp (below) |
+| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail; `_vddio` and `_vdd` also carry the supply clamp (below) |
 | `sky130_ioring_corner` | square corner, edge = cell depth, rails and strips turn 90 degrees with 45-degree chamfer/mitre, no pad |
 | `sky130_ioring_fill_{1,5,10,20}` | rails and guard strips only |
 | `sky130_ioring_ring` | closed ring: 4 corners + 4 identical sides (five pad cells, 37 um of filler) |
 
 Pin/net names (`PAD`, `VSS`, `VDDIO`, `VDD`) are labels on met5/met4/met3 label
-purposes and are the inputs to DRC/LVS/ERC; keep them stable.
+purposes and are the inputs to DRC/LVS/ERC; keep them stable. Every edge cell
+labels all three rail bands where it draws them (`_edge_common`): a device body
+resolves only to a named net, so an unnamed rail conductor leaves device bodies
+`unverified` in LVS. The corner labels none — its bands continue the
+neighbours'.
 
 ## What is drawn (die edge at y = 0, local frame of an edge cell)
 
@@ -61,7 +65,7 @@ Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
 | Netlist devices | Drawn as |
 |---|---|
 | `nfet_01v8`, `pfet_01v8`, `nfet_g5v0d10v5`, `pfet_g5v0d10v5` (`m` = `m` fingers) | one poly gate per finger at the netlist W and L over shared diffusion strips; 52 n + 54 p fingers, of which 31 n + 33 p are thick-oxide (`hvi`) |
-| `diode_pd2nw_05v5`, `diode_pw2nd_05v5` | rectangular diff at the netlist `area` / `perim` (200 um2 / 60 um and 10 um2 / 14 um) under the diode marker; p+ in an n-well, n+ in the substrate |
+| `diode_pd2nw_05v5`, `diode_pw2nd_05v5` | rectangular diff under the diode marker (p+ in an n-well, n+ in the substrate). The drawn rectangles are 200 um2 / 60 um (pad pair) and 10 um2 / 14 um (local pair), produced by converting the netlist values as um2-x-1e12 / um-x-1e6 (`sky130_devices.py` computes `area * 1e-12`). Issue #107 measured that reading refuted — the instance unit is um2 / um, so netlist `area=2e14` simulates a 2e14 um2 = 200 m2 diode, and drawn vs simulated geometry disagree by 1e12. Reconciliation (generator conversion + the four design-side placeholder locations, resized together at gate G1) is tracked in #116 |
 | `res_high_po_1p41` | 1.41 um poly strip, L = 1.0 um under the resistor marker and `rpm`, contacted at both ends |
 
 - Every p group sits in its own n-well, tied by n+ taps; a thick-oxide well is
