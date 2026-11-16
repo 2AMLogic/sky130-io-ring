@@ -8,7 +8,7 @@ region between the markers is machine-generated.
 
 Judge-approved PRs under a hold (`loom:blocked` or `loom:operator`) — only a human merge decision is missing.
 
-_None._
+- **#154**: chore(loom): resync installed Loom to v0.19.1302
 
 ## Very Important
 
@@ -33,8 +33,6 @@ _None._
 Issues currently being built (`loom:building`).
 
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews
-- **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent
-- **#127**: sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke)
 
 ## PRs Awaiting Review
 
@@ -46,8 +44,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#131**: netlist: adopt klt netlist --relative-paths so committed netlists are checkout-independent
-- **#139**: docs: qualify the sim probe-index preamble for the pdk-smoke outlier row
+- **#154**: chore(loom): resync installed Loom to v0.19.1302
 
 ## Proposed
 
@@ -57,9 +54,6 @@ Issues carrying `loom:curated`.
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
 - **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)*
-- **#124**: Committed netlists carry absolute host paths: adopt klt netlist --relative-paths so regeneration is checkout-independent *(curated)*
-- **#127**: sim/README.md probe-table preamble is inaccurate for pdk-smoke (no README.md, kind: pdk-smoke) *(curated)*
-- **#137**: No CI check cross-validates signoff prose citations against the committed evidence JSON *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -73,14 +67,14 @@ _None._
 
 | Bucket | Count |
 |------|-------|
-| Operator merge-risk holds | 0 |
+| Operator merge-risk holds | 1 |
 | Very important | 1 |
 | Important | 0 |
 | Ready (`loom:issue`) | 0 |
-| In Progress (`loom:building`) | 3 |
+| In Progress (`loom:building`) | 1 |
 | PRs awaiting review | 0 |
-| Approved PRs awaiting merge | 2 |
-| Curated | 7 |
+| Approved PRs awaiting merge | 1 |
+| Curated | 4 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->
