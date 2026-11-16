@@ -8,7 +8,7 @@ region between the markers is machine-generated.
 
 Judge-approved PRs under a hold (`loom:blocked` or `loom:operator`) — only a human merge decision is missing.
 
-- **#154**: chore(loom): resync installed Loom to v0.19.1302
+- **#156**: chore(loom): resync installed Loom to v0.19.1305
 
 ## Very Important
 
@@ -44,7 +44,7 @@ _None._
 
 PRs that passed review and are queued for Champion auto-merge (`loom:pr`).
 
-- **#154**: chore(loom): resync installed Loom to v0.19.1302
+- **#156**: chore(loom): resync installed Loom to v0.19.1305
 
 ## Proposed
 

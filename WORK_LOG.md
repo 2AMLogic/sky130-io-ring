@@ -5,6 +5,7 @@ triage role. Newest first.
 
 ### 2026-11-16
 
+- **PR #154**: chore(loom): resync installed Loom to v0.19.1302
 - **PR #152**: ci: narrow prose split-pin lookahead to the immediately-next line
 - **Issue #151** (closed): check_prose_citations: the split-pin lookahead also completes across a blank line and across list items
 
