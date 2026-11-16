@@ -1017,6 +1017,74 @@ class ProseCitations(unittest.TestCase):
         self.assertTrue(any("matches the source" in e for e in errors),
                         errors)
 
+    def test_split_candidate_blank_line_breaks_lookahead(self):
+        # #151 row 1: a blank line between the name line and the hash
+        # completed the old non-blank lookahead. A reflow never inserts a
+        # paragraph break, so the lookahead is the immediately-next line
+        # only — the blank line ends it and this stays quiet. (The bare
+        # hash is the input hash, present in the source, so bare
+        # set-membership passes; only the split pin can fire.)
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_split_candidate_list_item_passes(self):
+        # #151 row 2: the more plausible shape — a spec doc's two-item
+        # list, not a reflow. A candidate line that itself begins a list
+        # item or table cell never starts the lookahead.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "- `provenance.deck.content_hash`\n"
+                  "- the input stream is "
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        self.assertEqual(pc.check_root(root), [])
+
+    def test_split_immediately_next_line_still_fires(self):
+        # #151: the narrowed lookahead keeps its one true positive — a
+        # hash on the immediately-next line still completes the candidate,
+        # exactly one error, naming the fix.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "`provenance.deck.content_hash` is\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("split across lines", errors[0])
+
+    def test_version_number_lead_is_not_a_list_marker(self):
+        # #151: the disqualification's trailing whitespace is
+        # load-bearing — the real spec's `0.9.1 on \`layout/gds/…\``
+        # version prose (the line above the deck pin) starts with a
+        # digit-dot but is not an ordered-list marker, so a candidate led
+        # by that shape must still complete the lookahead.
+        root = self.tree()
+        self.seed(root, "spec/klt-rule-coverage.md",
+                  "`provenance.deck.content_hash` is "
+                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                  "88194a83532d60bf7c`",
+                  "0.9.1 records the deck `provenance.deck.content_hash` "
+                  "is\n"
+                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc`")
+        errors = pc.check_root(root)
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("split across lines", errors[0])
+
 
 if __name__ == "__main__":
     unittest.main()

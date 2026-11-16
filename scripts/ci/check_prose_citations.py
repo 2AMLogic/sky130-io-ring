@@ -87,8 +87,9 @@ never count-cites, a role path absent from the source, a role-pinned hash
 that disagrees with the path's value, a near-miss pin (a backticked
 path name that resolves to a hash on a hash-carrying line but is not
 written in the pinned form), and a split pin (a resolving name ending its
-line hash-free with a hash token reflowed onto the region's next
-non-blank line) are hard errors.
+line hash-free with a hash token on the region's immediately-next line —
+a blank line ends the lookahead, and a candidate line that itself begins
+a list item or table cell never arms one; #151) are hard errors.
 
 Usage:
     python3 -I scripts/ci/check_prose_citations.py .    # exit 1 on any
@@ -110,6 +111,7 @@ PATH_HASH = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is `(sha256:[^`]+)`")
 COUNT_IS = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` is (\d+)\b")
 COUNT_PAREN = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)` \((\d+)[,)]")
 SPLIT_TAIL = re.compile(r"^(?:\s*(?:is now|is|=|:))?\s*$")
+LIST_OR_TABLE_CELL = re.compile(r"^\s*(?:[-*+]|\d+[.)]|\|)\s")
 FIELD_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_.]*")
 BACKTICKED = re.compile(r"`([^`]+)`")
 HEX64 = re.compile(r"[0-9a-f]{64}")
@@ -306,8 +308,7 @@ def check_near_miss_pin(region, where, line, pinned, errors):
     and stays quiet here — a hash-free name ending its line with a pin
     connector is #148's split-pin candidate instead, completed across
     lines by check_split_pin; cite:historical does not excuse a near-miss
-    (the
-    escape excuses hashes absent from the source, and a near-miss path
+    (the escape excuses hashes absent from the source, and a near-miss path
     resolves in it by definition)."""
     if region["data"] is None or not HASH_RE.search(line):
         return
@@ -330,13 +331,23 @@ def split_pin_candidate(region, line):
     name that matches FIELD_NAME, resolves to a hash value in the region's
     source, and ends the line — apart from a pin connector (`is`, `is now`,
     `=`, `:`) or whitespace — is a pin whose hash may have reflowed onto
-    the next line. The narrowing is measured, not guessed: sentence
-    punctuation after the name (a resolving name ending a sentence above an
-    unrelated hash) disqualifies the candidate and keeps that prose shape
-    quiet. A path name written without backticks is never scanned — the
-    canonical grammar has always required them, so a bare name is prose by
+    the next line. #151 narrows the rule's reach, both measured free: the
+    lookahead the candidate arms is one immediately-next line (a reflow
+    never inserts a paragraph break, so check_file ends the lookahead at a
+    blank line), and a line that begins a list item or table cell (the
+    LIST_OR_TABLE_CELL lead: `-`, `*`, `+`, a digit dot/paren marker, or
+    `|`, each followed by whitespace) never arms one — a list or table
+    reads as structured prose, not a reflowed pin. The trailing whitespace
+    in that regex is load-bearing: `0.9.1` version prose is not an
+    ordered-list marker. The earlier narrowing stays: sentence punctuation
+    after the name (a resolving name ending a sentence above an unrelated
+    hash) disqualifies the candidate and keeps that prose shape quiet. A
+    path name written without backticks is never scanned — the canonical
+    grammar has always required them, so a bare name is prose by
     definition (#148 row 3, out of scope)."""
     if HASH_RE.search(line):
+        return None
+    if LIST_OR_TABLE_CELL.match(line):
         return None
     for m in BACKTICKED.finditer(line):
         name = m.group(1)
@@ -350,8 +361,12 @@ def split_pin_candidate(region, line):
 
 
 def check_split_pin(region, pending, where, line, errors):
-    """#148's one-line lookahead: a hash token on this line completes the
-    previous line's split-pin candidate. The pin is de-pinned whether the
+    """#148's one-line lookahead, narrowed in #151 to the immediately-next
+    line: a hash token on this line completes the previous line's
+    split-pin candidate — check_file clears `pending` on every in-region
+    line, blank ones included, so a paragraph break ends the lookahead,
+    and a candidate under a list item or table cell never arms it (see
+    split_pin_candidate). The pin is de-pinned whether the
     reflowed hash is right or wrong — a split pin asserts set-membership
     only — so the value is never consulted and the error names the
     canonical single-line form. cite:historical on the hash line does not
@@ -461,8 +476,9 @@ def check_file(root, rel, text, errors):
             continue
         if region is not None and region["hashes"] is not None:
             check_split_pin(region, pending, where, line, errors)
+            pending = None    # the lookahead is the immediately-next line
+                              # only (#151): a blank line ends it
             if line.strip():
-                pending = None
                 name = split_pin_candidate(region, line)
                 if name is not None:
                     pending = (name, where)
