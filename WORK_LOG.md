@@ -3,8 +3,15 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-16
+
+- **PR #152**: ci: narrow prose split-pin lookahead to the immediately-next line
+- **Issue #151** (closed): check_prose_citations: the split-pin lookahead also completes across a blank line and across list items
+
 ### 2026-11-15
 
+- **PR #150**: ci: catch prose hash pins split across lines by a reflow
+- **Issue #148** (closed): check_prose_citations: a pin de-pinned by an un-backticked path name, or by a reflow onto the next line, still degrades to membership silently
 - **PR #147**: ci: error on near-miss prose hash pins that silently degrade to membership
 - **PR #145**: ci: catch omitted, mis-attributed and fenced-away prose citations
 - **PR #143**: ci: assert prose citations against the signoff evidence they cite
