@@ -3,6 +3,10 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-17
+
+- **PR #158**: chore(loom): resync installed Loom to v0.19.1306
+
 ### 2026-11-16
 
 - **PR #154**: chore(loom): resync installed Loom to v0.19.1302
