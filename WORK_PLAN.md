@@ -14,7 +14,7 @@ _None._
 
 `loom:very-important` (one counts per workspace); every stage takes these first.
 
-- **#2**: Draft and ratify the target spec
+- **#2**: Draft and ratify the target spec *(held)*
 
 ## Important
 
@@ -24,7 +24,7 @@ _None._
 
 ## Ready
 
-Human-approved issues ready for implementation (`loom:issue`).
+Human-approved issues (`loom:issue`) ready for implementation — excluding held (`loom:blocked`/`loom:operator`/`loom:frozen`), `loom:building`, and issues closed by an open `loom:pr` PR (listed under Approved).
 
 _None._
 
@@ -50,10 +50,10 @@ _None._
 
 Issues carrying `loom:curated`.
 
-- **#2**: Draft and ratify the target spec *(curated)*
+- **#2**: Draft and ratify the target spec *(curated)* *(held)*
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
-- **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)*
+- **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)* *(held)*
 
 ## Proposed (Architect / Hermit)
 
