@@ -12,6 +12,10 @@ them. The `record*` glob is the same marker `.gitignore` uses for committed
 evidence, so the two agree by construction. Reads `git diff --name-status`.
 
   check_append_only.py BASE_REF       # compares BASE_REF...HEAD
+
+An absent (empty, or the bare `origin/` a template expansion can leave) or
+unresolvable base fails explicitly with a message and a nonzero status: the
+gate must never silently pass because the diff could not be taken.
 """
 import subprocess
 import sys
@@ -42,9 +46,19 @@ def main(argv=None):
     if len(args) != 1:
         print(__doc__, file=sys.stderr)
         return 2
-    out = subprocess.run(["git", "diff", "--name-status", "--no-renames", f"{args[0]}...HEAD", "--", PROTECTED],
-                         check=True, capture_output=True, text=True).stdout
-    errors = violations(out)
+    base = args[0]
+    if not base.strip() or base.rstrip("/") == "origin":
+        print(f"append-only check FAILED: no usable base ref ({base!r}); the "
+              "event supplied none, so the diff cannot be taken — refusing to "
+              "pass", file=sys.stderr)
+        return 2
+    proc = subprocess.run(["git", "diff", "--name-status", "--no-renames", f"{base}...HEAD", "--", PROTECTED],
+                          capture_output=True, text=True)
+    if proc.returncode != 0:
+        print(f"append-only check FAILED: base {base!r} does not resolve; "
+              f"git diff said: {proc.stderr.strip()}", file=sys.stderr)
+        return 2
+    errors = violations(proc.stdout)
     if errors:
         print("append-only check FAILED:", file=sys.stderr)
         for e in errors:
