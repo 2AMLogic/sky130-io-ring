@@ -3,6 +3,13 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-18
+
+- **PR #166**: ci: add least-privilege permissions block and re-attest item 10
+- **PR #164**: ci: add merge_group trigger; append-only gate fails closed on an unusable base
+- **Issue #165** (closed): ci.yml: add an explicit least-privilege permissions block (CodeQL alert 3)
+- **Issue #162** (closed): Merge queue: add the merge_group trigger and adapt the PR-metadata gates
+
 ### 2026-11-17
 
 - **PR #158**: chore(loom): resync installed Loom to v0.19.1306
