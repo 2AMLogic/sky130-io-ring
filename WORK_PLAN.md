@@ -26,7 +26,7 @@ _None._
 
 Human-approved issues (`loom:issue`) ready for implementation — excluding held (`loom:blocked`/`loom:operator`/`loom:frozen`), `loom:building`, and issues closed by an open `loom:pr` PR (listed under Approved).
 
-- **#162**: Merge queue: add the merge_group trigger and adapt the PR-metadata gates
+_None._
 
 ## In Progress
 
@@ -54,7 +54,6 @@ Issues carrying `loom:curated`.
 - **#3**: Track the gap to T1 (klayout-tools design-evidence-tiers.md) *(curated)*
 - **#24**: Open the spec ratification PR for the four decision records and 59 rows, and get both key reviews *(curated)*
 - **#112**: Nothing gates an LVS body_verification regression: gen_lvs_reports.py keys its exit on status alone and CI never re-runs klt lvs *(curated)* *(held)*
-- **#162**: Merge queue: add the merge_group trigger and adapt the PR-metadata gates *(curated)*
 
 ## Proposed (Architect / Hermit)
 
@@ -71,11 +70,11 @@ _None._
 | Operator merge-risk holds | 0 |
 | Very important | 1 |
 | Important | 0 |
-| Ready (`loom:issue`) | 1 |
+| Ready (`loom:issue`) | 0 |
 | In Progress (`loom:building`) | 1 |
 | PRs awaiting review | 0 |
 | Approved PRs awaiting merge | 0 |
-| Curated | 5 |
+| Curated | 4 |
 | Architect / Hermit proposals | 0 |
 | Active epics | 0 |
 <!-- guide:plan-body:end -->
