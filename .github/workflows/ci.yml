@@ -7,6 +7,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  merge_group:
 
 env:
   # The one place the signoff grader is pinned. A bump must regenerate
@@ -123,11 +124,22 @@ jobs:
           PY
 
   append-only:
-    if: github.event_name == 'pull_request'
+    # push is skipped as today; pull_request and merge_group both report (a
+    # skipped required check would stall the merge queue, not pass it).
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0
         with:
           fetch-depth: 0
       - name: sim/ records may be added, never edited or deleted
-        run: python3 -I scripts/ci/check_append_only.py "origin/${{ github.base_ref }}"
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          MERGE_BASE_SHA: ${{ github.event.merge_group.base_sha }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = merge_group ]; then
+            BASE="$MERGE_BASE_SHA"
+          else
+            BASE="origin/$BASE_REF"
+          fi
+          python3 -I scripts/ci/check_append_only.py "$BASE"

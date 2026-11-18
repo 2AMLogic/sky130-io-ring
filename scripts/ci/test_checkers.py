@@ -3,8 +3,12 @@
 
 CI runs this before trusting the checkers' verdicts. Stdlib only.
 """
+import contextlib
 import copy
+import io
 import json
+import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -294,6 +298,74 @@ class AppendOnly(unittest.TestCase):
         # over the is_record() shape.
         self.assertTrue(ao.violations("M\tsim/clamp-probe/record/logs/probe.log\n"))
         self.assertTrue(ao.violations("D\tsim/pdk-smoke/record/netlists/smoke.sp\n"))
+
+    # --- base handling: an absent or unresolvable base fails closed ---
+
+    def sha_base_repo(self, edit_record):
+        """Temp repo; BASE commit holds one record, HEAD edits or adds one.
+
+        Returns (root, base_sha): the SHA a merge_group event would hand the
+        gate (github.event.merge_group.base_sha).
+        """
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        root = Path(d.name)
+        run = lambda *a: subprocess.run(["git", *a], cwd=root, check=True,
+                                        capture_output=True, text=True)
+        run("init", "-q")
+        run("config", "user.name", "t")
+        run("config", "user.email", "t@example.com")
+        rec = root / "sim" / "exp" / "record"
+        rec.mkdir(parents=True)
+        (rec / "old.json").write_text("{}\n")
+        (root / "README.md").write_text("baseline\n")
+        run("add", "-A")
+        run("commit", "-qm", "baseline")
+        base = run("rev-parse", "HEAD").stdout.strip()
+        if edit_record:
+            (rec / "old.json").write_text("{}\n{}\n")
+        else:
+            (rec / "new.json").write_text("{}\n")
+        run("add", "-A")
+        run("commit", "-qm", "head commit")
+        return root, base
+
+    def run_in(self, root, argv):
+        old = os.getcwd()
+        os.chdir(root)
+        self.addCleanup(os.chdir, old)
+        err = io.StringIO()
+        with contextlib.redirect_stderr(err):
+            rc = ao.main(argv)
+        return rc, err.getvalue()
+
+    def test_merge_group_sha_base_catches_edit(self):
+        root, base = self.sha_base_repo(edit_record=True)
+        rc, err = self.run_in(root, [base])
+        self.assertEqual(rc, 1)
+        self.assertIn("old.json", err)
+
+    def test_merge_group_sha_base_passes_add(self):
+        root, base = self.sha_base_repo(edit_record=False)
+        rc, err = self.run_in(root, [base])
+        self.assertEqual(rc, 0)
+
+    def test_empty_base_fails_explicitly(self):
+        rc, err = self.run_in(Path.cwd(), [""])
+        self.assertEqual(rc, 2)
+        self.assertIn("no usable base", err)
+
+    def test_origin_only_base_fails_explicitly(self):
+        # the shape an empty github.base_ref leaves in the old template
+        rc, err = self.run_in(Path.cwd(), ["origin/"])
+        self.assertEqual(rc, 2)
+        self.assertIn("no usable base", err)
+
+    def test_unresolvable_base_fails_explicitly(self):
+        root, base = self.sha_base_repo(edit_record=False)
+        rc, err = self.run_in(root, ["0" * 40])
+        self.assertEqual(rc, 2)
+        self.assertIn("does not resolve", err)
 
 
 class LvsReports(unittest.TestCase):
