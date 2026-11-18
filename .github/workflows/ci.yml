@@ -9,6 +9,9 @@ on:
   pull_request:
   merge_group:
 
+permissions:
+  contents: read
+
 env:
   # The one place the signoff grader is pinned. A bump must regenerate
   # signoff/signoff-record.json in the same PR (signoff/README.md).
