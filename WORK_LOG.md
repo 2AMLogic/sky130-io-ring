@@ -5,6 +5,10 @@ triage role. Newest first.
 
 ### 2026-11-19
 
+- **PR #174**: test: define deck/input hash fixtures once in ProseCitations
+- **PR #172**: docs: resolve split-pin rule contradiction in citation checker docstrings
+- **Issue #173** (closed): Define the deck and input hash fixtures once in the prose citation tests
+- **Issue #170** (closed): Consolidate the conflicting split-pin rules in citation checker docstrings
 - **PR #168**: sim: remove dead node() in clamp-probe, add decision 0005, re-attest item 9
 
 ### 2026-11-18
