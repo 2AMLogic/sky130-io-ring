@@ -3,6 +3,10 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-19
+
+- **PR #168**: sim: remove dead node() in clamp-probe, add decision 0005, re-attest item 9
+
 ### 2026-11-18
 
 - **PR #166**: ci: add least-privilege permissions block and re-attest item 10
