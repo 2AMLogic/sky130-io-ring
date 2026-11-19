@@ -536,6 +536,16 @@ class ProseCitations(unittest.TestCase):
     END = "<!-- cite:end -->"
     ESCAPE = " <!-- cite:historical -->"
 
+    # Pinned fixture literals, copied from the real documents: the seed
+    # assertion only catches drift in the copied tree because these values
+    # are spelled out here, never read back from it.
+    DECK_HASH = ("029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
+                 "88194a83532d60bf7c")
+    INPUT_HASH = ("8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
+                  "877b919475806d74cc")
+    DECK_PIN = ("`provenance.deck.content_hash` is `sha256:"
+                + DECK_HASH + "`")
+
     # One seeded off-by-one per count citation in each marked region.
     OFF_BY_ONE = (
         ("signoff/README.md",
@@ -614,8 +624,7 @@ class ProseCitations(unittest.TestCase):
         root = self.tree()
         bogus = "sha256:" + "f" * 64
         self.seed(root, "spec/klt-rule-coverage.md",
-                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc",
-                  bogus)
+                  "sha256:" + self.INPUT_HASH, bogus)
         errors = pc.check_root(root)
         self.assertTrue(any("does not match any hash" in e for e in errors),
                         errors)
@@ -767,13 +776,9 @@ class ProseCitations(unittest.TestCase):
         # is pinned. Both live in the same source, so set-membership alone
         # passes; the path pin must fail the mis-attribution.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is `sha256:"
+                  + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "is cited as" in e for e in errors), errors)
@@ -797,13 +802,9 @@ class ProseCitations(unittest.TestCase):
         # the input hash — present in the source — so bare set-membership
         # passes and only the near-miss catches the de-pinned deck role.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is "
-                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is sha256:"
+                  + self.INPUT_HASH)
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "spec/klt-rule-coverage.md" in e
@@ -814,13 +815,9 @@ class ProseCitations(unittest.TestCase):
         # though the hash is still the correct deck hash — the pin stopped
         # being *asserted*, which is exactly the rot this guards.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is now "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is now `sha256:"
+                  + self.DECK_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "role pin" in e for e in errors), errors)
@@ -828,13 +825,9 @@ class ProseCitations(unittest.TestCase):
     def test_equals_separator_pin_rejected(self):
         # Variant 3: "=" in place of "is".
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` = "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` = `sha256:"
+                  + self.DECK_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "role pin" in e for e in errors), errors)
@@ -843,13 +836,9 @@ class ProseCitations(unittest.TestCase):
         # The near-miss message must carry the fix: the canonical `path` is
         # `sha256:...` spelling, readable straight off the CI log.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` = "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` = `sha256:"
+                  + self.DECK_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("`provenance.deck.content_hash` is `sha256:...`"
                             in e for e in errors), errors)
@@ -872,9 +861,8 @@ class ProseCitations(unittest.TestCase):
         self.seed(root, "spec/klt-rule-coverage.md",
                   "Deck `sky130`,",
                   "Deck `sky130` (`coverage.rules_skipped` enumerates 36 "
-                  "and `deck_scope` counts 23; ref "
-                  "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc),")
+                  "and `deck_scope` counts 23; ref sha256:"
+                  + self.INPUT_HASH + "),")
         self.assertEqual(pc.check_root(root), [])
 
     def test_correct_pin_and_near_miss_on_one_line_rejected(self):
@@ -886,13 +874,11 @@ class ProseCitations(unittest.TestCase):
         # next on the same line. The fix is to pin both canonically.
         root = self.tree()
         self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.input.content_hash` is "
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`,",
-                  "`provenance.input.content_hash` is "
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc` and "
-                  "`provenance.deck.content_hash` differs,")
+                  "`provenance.input.content_hash` is `sha256:"
+                  + self.INPUT_HASH + "`,",
+                  "`provenance.input.content_hash` is `sha256:"
+                  + self.INPUT_HASH
+                  + "` and `provenance.deck.content_hash` differs,")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "role pin" in e for e in errors), errors)
@@ -957,13 +943,9 @@ class ProseCitations(unittest.TestCase):
         # so bare set-membership passes) landed on the next line. The role
         # pin stopped being asserted; the one-line lookahead must be loud.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n`sha256:"
+                  + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "split across lines" in e
@@ -975,13 +957,9 @@ class ProseCitations(unittest.TestCase):
         # split pin asserts set-membership only — the de-pin is the
         # defect, so the value is never consulted and this stays an error.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n`sha256:"
+                  + self.DECK_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("provenance.deck.content_hash" in e
                             and "split across lines" in e for e in errors),
@@ -992,13 +970,9 @@ class ProseCitations(unittest.TestCase):
         # as the line's last token; the lookahead still completes it. (A
         # connector is optional; sentence punctuation is not.)
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash`\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash`\n`sha256:"
+                  + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("split across lines", errors[0])
@@ -1007,13 +981,9 @@ class ProseCitations(unittest.TestCase):
         # The split-pin message must carry the fix — the canonical
         # single-line spelling — readable straight off the CI log.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n`sha256:"
+                  + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertTrue(any("`provenance.deck.content_hash` is `sha256:...`"
                             " on one line" in e for e in errors), errors)
@@ -1025,24 +995,17 @@ class ProseCitations(unittest.TestCase):
         # not a pin — the naive lookahead fires here, the narrowed rule
         # must stay quiet.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
                   "The deck is named by `provenance.deck.content_hash`.\n"
-                  "The input stream is "
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+                  "The input stream is `sha256:"
+                  + self.INPUT_HASH + "`")
         self.assertEqual(pc.check_root(root), [])
 
     def test_split_candidate_without_following_hash_passes(self):
         # The lookahead alone asserts nothing: a candidate line whose next
         # non-blank line carries no hash stays prose.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
                   "`provenance.deck.content_hash` is\n"
                   "asserted against the curated deck's provenance.")
         self.assertEqual(pc.check_root(root), [])
@@ -1053,9 +1016,7 @@ class ProseCitations(unittest.TestCase):
         root = self.tree()
         self.seed(root, "spec/klt-rule-coverage.md", self.END,
                   "`provenance.deck.content_hash`\n"
-                  + self.END + "\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+                  + self.END + "\n`sha256:" + self.INPUT_HASH + "`")
         self.assertEqual(pc.check_root(root), [])
 
     def test_split_candidate_as_final_line_does_not_crash(self):
@@ -1075,13 +1036,9 @@ class ProseCitations(unittest.TestCase):
         # split-pin error fires on the name line — the escape does not
         # re-canonise the split pin (consistent with #146).
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`" + self.ESCAPE)
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n`sha256:"
+                  + self.INPUT_HASH + "`" + self.ESCAPE)
         errors = pc.check_root(root)
         self.assertEqual(len(errors), 2, errors)
         self.assertTrue(any("split across lines" in e for e in errors),
@@ -1097,14 +1054,9 @@ class ProseCitations(unittest.TestCase):
         # hash is the input hash, present in the source, so bare
         # set-membership passes; only the split pin can fire.)
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n\n`sha256:"
+                  + self.INPUT_HASH + "`")
         self.assertEqual(pc.check_root(root), [])
 
     def test_split_candidate_list_item_passes(self):
@@ -1112,14 +1064,10 @@ class ProseCitations(unittest.TestCase):
         # list, not a reflow. A candidate line that itself begins a list
         # item or table cell never starts the lookahead.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
                   "- `provenance.deck.content_hash`\n"
-                  "- the input stream is "
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+                  "- the input stream is `sha256:"
+                  + self.INPUT_HASH + "`")
         self.assertEqual(pc.check_root(root), [])
 
     def test_split_immediately_next_line_still_fires(self):
@@ -1127,13 +1075,9 @@ class ProseCitations(unittest.TestCase):
         # hash on the immediately-next line still completes the candidate,
         # exactly one error, naming the fix.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
-                  "`provenance.deck.content_hash` is\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
+                  "`provenance.deck.content_hash` is\n`sha256:"
+                  + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("split across lines", errors[0])
@@ -1145,14 +1089,9 @@ class ProseCitations(unittest.TestCase):
         # digit-dot but is not an ordered-list marker, so a candidate led
         # by that shape must still complete the lookahead.
         root = self.tree()
-        self.seed(root, "spec/klt-rule-coverage.md",
-                  "`provenance.deck.content_hash` is "
-                  "`sha256:029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
-                  "88194a83532d60bf7c`",
+        self.seed(root, "spec/klt-rule-coverage.md", self.DECK_PIN,
                   "0.9.1 records the deck `provenance.deck.content_hash` "
-                  "is\n"
-                  "`sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc`")
+                  "is\n`sha256:" + self.INPUT_HASH + "`")
         errors = pc.check_root(root)
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("split across lines", errors[0])
