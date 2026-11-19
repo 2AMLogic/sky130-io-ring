@@ -123,9 +123,7 @@ emit() { # libpath includepath-prefix
 
 # Peak |VDS| and |VGS| of every clamp transistor and the ESD.7 comparison.
 emit_validity() { # instance resultname tag
-  local inst="$1" rname="$2" tag="$3" name d g s pol vds vgs
-  local node
-  node() { case "$1" in 0) echo 0;; vp) echo "v(${inst/x/x}_vp)";; *) echo "v(${inst}.$1)";; esac; }
+  local inst="$1" rname="$2" tag="$3" name d g s pol
   local vpn
   case "${inst}" in xr*) vpn="vr_${tag}";; xh*) vpn="vh_${tag}";; esac
   node() { case "$1" in 0) echo "0";; vp) echo "v(${vpn})";; *) echo "v(${inst}.$1)";; esac; }
