@@ -37,18 +37,24 @@ region the checker extracts and asserts — it never regenerates narrative:
   - a split pin is an error too (#148): the pinned form is single-line by
     convention, so a backticked path name that resolves to a hash and ends
     its line carrying no hash — only a pin connector (`is`, `is now`, `=`,
-    `:`) or whitespace after the name — is checked against the next
-    non-blank line of the same region; a hash token there means the hash
+    `:`) or whitespace after the name — arms a one-line lookahead; a hash
+    token on the immediately-next line of the same region means the hash
     reflowed off the pin line and the citation silently degraded to
     set-membership (even when the reflowed hash is the correct value — a
     split pin asserts membership either way). The error names the canonical
-    single-line form so the fix is mechanical. Sentence punctuation after
-    the name — a resolving name ending a sentence above an unrelated hash
-    — is prose and stays quiet; the lookahead is region-bounded and never
-    crosses cite:end, cite:begin, a fence, or end of file. A path name
-    written without backticks is not scanned at all: the canonical grammar
-    has always required them, so a bare name is prose by definition (#148
-    row 3, out of scope).
+    single-line form so the fix is mechanical. The boundaries: a blank line
+    ends the lookahead (a reflow never inserts a paragraph break; #151), a
+    line whose first token is a list marker (`-`, `*`, `+`, a digit with
+    `.` or `)`) or a table-cell pipe, each recognized only when followed by
+    whitespace, never arms a candidate — the whitespace is part of the
+    recognized prefix, so a bare pipe with no space (a one-column table
+    row like |`deck`) is not a cell start and its line is checked — and
+    sentence punctuation after the name disqualifies one — a resolving
+    name ending a sentence above an unrelated hash is prose. The lookahead
+    is region-bounded: it never crosses cite:end, cite:begin, a fence, or
+    end of file. A path name written without backticks is not scanned at
+    all: the canonical grammar has always required them, so a bare name is
+    prose by definition (#148 row 3, out of scope).
 
 Set-membership also cannot see an *omitted* citation (the other half of
 #130), so a begin marker may declare the coverage fields the region must
@@ -88,8 +94,9 @@ that disagrees with the path's value, a near-miss pin (a backticked
 path name that resolves to a hash on a hash-carrying line but is not
 written in the pinned form), and a split pin (a resolving name ending its
 line hash-free with a hash token on the region's immediately-next line —
-a blank line ends the lookahead, and a candidate line that itself begins
-a list item or table cell never arms one; #151) are hard errors.
+a blank line ends the lookahead, and a candidate line whose first token
+is the module rule's list-marker or table-cell prefix never arms one;
+#151) are hard errors.
 
 Usage:
     python3 -I scripts/ci/check_prose_citations.py .    # exit 1 on any
@@ -297,19 +304,15 @@ def resolves_to_hash(region, path):
 
 
 def check_near_miss_pin(region, where, line, pinned, errors):
-    """A de-pinned citation made loud (#146): a backticked name that
-    (1) matches FIELD_NAME, (2) resolves to a hash value in the region's
-    source, and (3) shares its line with a hash-shaped token, but is not
-    itself part of a recognised PATH_HASH pin (4), is a phrasing edit away
-    from a role pin — "is now", "=", or backticks dropped around the hash —
-    and the citation has silently degraded to set-membership. The error
-    names the canonical form so the fix is mechanical from the CI log. A
-    field name on a hash-free line is prose about the path, not a citation,
-    and stays quiet here — a hash-free name ending its line with a pin
-    connector is #148's split-pin candidate instead, completed across
-    lines by check_split_pin; cite:historical does not excuse a near-miss
-    (the escape excuses hashes absent from the source, and a near-miss path
-    resolves in it by definition)."""
+    """Near-miss pin (#146): a backticked name that resolves to a hash in
+    the region's source and shares its line with a hash token, but is not
+    part of a recognised pin, is a phrasing edit away from a role pin —
+    the citation has silently degraded to set-membership. The error names
+    the canonical form so the fix is mechanical. A hash-free line stays
+    quiet here (a name ending its line with a pin connector is the
+    split-pin candidate instead); cite:historical does not excuse a
+    near-miss — the escape excuses hashes absent from the source, and a
+    near-miss path resolves in it by definition."""
     if region["data"] is None or not HASH_RE.search(line):
         return
     for m in BACKTICKED.finditer(line):
@@ -327,24 +330,17 @@ def check_near_miss_pin(region, where, line, pinned, errors):
 
 
 def split_pin_candidate(region, line):
-    """#148's split-pin candidate rule: on a hash-free line, a backticked
-    name that matches FIELD_NAME, resolves to a hash value in the region's
-    source, and ends the line — apart from a pin connector (`is`, `is now`,
-    `=`, `:`) or whitespace — is a pin whose hash may have reflowed onto
-    the next line. #151 narrows the rule's reach, both measured free: the
-    lookahead the candidate arms is one immediately-next line (a reflow
-    never inserts a paragraph break, so check_file ends the lookahead at a
-    blank line), and a line that begins a list item or table cell (the
-    LIST_OR_TABLE_CELL lead: `-`, `*`, `+`, a digit dot/paren marker, or
-    `|`, each followed by whitespace) never arms one — a list or table
-    reads as structured prose, not a reflowed pin. The trailing whitespace
-    in that regex is load-bearing: `0.9.1` version prose is not an
-    ordered-list marker. The earlier narrowing stays: sentence punctuation
-    after the name (a resolving name ending a sentence above an unrelated
-    hash) disqualifies the candidate and keeps that prose shape quiet. A
-    path name written without backticks is never scanned — the canonical
-    grammar has always required them, so a bare name is prose by
-    definition (#148 row 3, out of scope)."""
+    """Split-pin candidate (#148, narrowed by #151): on a hash-free line, a
+    backticked name that resolves to a hash in the region's source and ends
+    the line — apart from a pin connector (`is`, `is now`, `=`, `:`) or
+    whitespace — arms the one-line lookahead in check_split_pin. A line
+    whose first token matches the module rule's list-marker or table-cell
+    prefix (LIST_OR_TABLE_CELL) never arms one — structured prose, not a
+    reflow; the trailing whitespace in that regex is part of the prefix
+    and is load-bearing: `0.9.1` version prose is not an ordered-list
+    marker, and a bare pipe with no space is not a cell start. Nor does
+    sentence punctuation after the name. Bare (unbackticked) names are
+    never scanned: the canonical grammar has always required them."""
     if HASH_RE.search(line):
         return None
     if LIST_OR_TABLE_CELL.match(line):
@@ -361,18 +357,13 @@ def split_pin_candidate(region, line):
 
 
 def check_split_pin(region, pending, where, line, errors):
-    """#148's one-line lookahead, narrowed in #151 to the immediately-next
-    line: a hash token on this line completes the previous line's
-    split-pin candidate — check_file clears `pending` on every in-region
-    line, blank ones included, so a paragraph break ends the lookahead,
-    and a candidate under a list item or table cell never arms it (see
-    split_pin_candidate). The pin is de-pinned whether the
-    reflowed hash is right or wrong — a split pin asserts set-membership
-    only — so the value is never consulted and the error names the
-    canonical single-line form. cite:historical on the hash line does not
-    excuse the split (consistent with #146: the escape excuses hashes
-    absent from the source, and a split-pin path resolves in it by
-    definition)."""
+    """Complete a split-pin candidate: a hash token on the immediately-next
+    line of a candidate is the error, whatever the hash's value — a split
+    pin asserts set-membership either way, so the value is never consulted
+    and the error names the canonical single-line form. check_file clears
+    the candidate on every in-region line, blank ones included, so a
+    paragraph break ends the lookahead; cite:historical on the hash line
+    does not excuse the split (same reasoning as the near-miss)."""
     if pending is None or not HASH_RE.search(line):
         return
     name, name_where = pending
