@@ -2,7 +2,7 @@
 
 - **Status**: proposed; ratification pending (human). Ratified by: _unrecorded_.
 - **Date**: 2026-11-19
-- **Rows**: SIGN.6, section 5 of `io-ring.md` (results are append-only).
+- **Rows**: SIGN.6, section 8 of `io-ring.md` (results are append-only).
 - **Review**: EE-key review (`ratification/ee-key/`): _not yet recorded_.
   Market-key review (`ratification/market-key/`): _not yet recorded_.
   Operator disposition: _not yet recorded_.
