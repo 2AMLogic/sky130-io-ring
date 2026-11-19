@@ -44,7 +44,11 @@ region the checker extracts and asserts — it never regenerates narrative:
     split pin asserts membership either way). The error names the canonical
     single-line form so the fix is mechanical. The boundaries: a blank line
     ends the lookahead (a reflow never inserts a paragraph break; #151), a
-    line that begins a list item or table cell never arms a candidate, and
+    line whose first token is a list marker (`-`, `*`, `+`, a digit with
+    `.` or `)`) or a table-cell pipe, each recognized only when followed by
+    whitespace, never arms a candidate — the whitespace is part of the
+    recognized prefix, so a bare pipe with no space (a one-column table
+    row like |`deck`) is not a cell start and its line is checked — and
     sentence punctuation after the name disqualifies one — a resolving
     name ending a sentence above an unrelated hash is prose. The lookahead
     is region-bounded: it never crosses cite:end, cite:begin, a fence, or
@@ -90,8 +94,9 @@ that disagrees with the path's value, a near-miss pin (a backticked
 path name that resolves to a hash on a hash-carrying line but is not
 written in the pinned form), and a split pin (a resolving name ending its
 line hash-free with a hash token on the region's immediately-next line —
-a blank line ends the lookahead, and a candidate line that itself begins
-a list item or table cell never arms one; #151) are hard errors.
+a blank line ends the lookahead, and a candidate line whose first token
+is the module rule's list-marker or table-cell prefix never arms one;
+#151) are hard errors.
 
 Usage:
     python3 -I scripts/ci/check_prose_citations.py .    # exit 1 on any
@@ -329,10 +334,12 @@ def split_pin_candidate(region, line):
     backticked name that resolves to a hash in the region's source and ends
     the line — apart from a pin connector (`is`, `is now`, `=`, `:`) or
     whitespace — arms the one-line lookahead in check_split_pin. A line
-    that begins a list item or table cell never arms one (structured prose,
-    not a reflow — the trailing whitespace in LIST_OR_TABLE_CELL is
-    load-bearing: `0.9.1` version prose is not an ordered-list marker), nor
-    does sentence punctuation after the name. Bare (unbackticked) names are
+    whose first token matches the module rule's list-marker or table-cell
+    prefix (LIST_OR_TABLE_CELL) never arms one — structured prose, not a
+    reflow; the trailing whitespace in that regex is part of the prefix
+    and is load-bearing: `0.9.1` version prose is not an ordered-list
+    marker, and a bare pipe with no space is not a cell start. Nor does
+    sentence punctuation after the name. Bare (unbackticked) names are
     never scanned: the canonical grammar has always required them."""
     if HASH_RE.search(line):
         return None
