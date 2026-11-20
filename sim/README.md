@@ -13,6 +13,7 @@ revision (for example a stale `~/.volare`) is refused, never used silently.
 | File | Half | Role |
 |---|---|---|
 | `lib/simrec.py` | PDK-independent | ngspice log parsing, append-only JSON record writing |
+| `lib/gpio_measurements.sp` | PDK-independent | the GPIO measurement deck (stimuli, loads, extraction; spec rows GF / GE); the caller binds the cell, the model library and the rails |
 | `lib/run_common.sh` | PDK-independent | the shared `run.sh` preamble (OUTDIR guard, ngspice check, workdir) and record tail (ngspice run, path scrub, tool versions, record write) |
 | `pdk-smoke/run.sh` (driver skeleton) | mixed | the netlist emitters and model names are sky130; the preamble and record plumbing are shared (`lib/run_common.sh`) |
 | `lib/pdk_env.sh` | sky130 | resolver: pin check, model-library path, corner file layout |
@@ -51,6 +52,7 @@ none is item-5 evidence.
 | `pdk-smoke` | — | the PDK smoke test, not a design probe (`kind: pdk-smoke`, no `README.md`) — documented under [Smoke record](#smoke-record-pdk-smokerecord) below; do the pinned models load and converge? DC op + Id-Vgs of the 1.8 V core and 5 V thick-oxide families |
 | `clamp-probe` | G6 | do the RC supply clamps turn on? `clamp_io` (ESD.4, 5 V) and `clamp_core` (ESD.5, 1.8 V), power-up ramps + HBM pulses |
 | `corner-skew-probe` | G2 | does the sky130 skew set (`ff ss sf fs`) move the 5 V thick-oxide devices, or only the 1.8 V core? |
+| `gpio-probe` | GF / GE | first GPIO bench: function, VOH / VOL, edge rate, delays, input thresholds and hysteresis, leakage and pull resistance of the drawn GPIO at `tt`, 27 C, nominal rails (no corner; not item-5 evidence) |
 | `diode-probe` | G1 / ESD.3 | what do the GPIO pad diodes do at the ESD.2 current? (diode areas are unsized placeholders) |
 | `diode-unit-probe` | G1 | what unit is the diode instance `area` / `perim` parameter in? measured at 27 C and 30 C |
 

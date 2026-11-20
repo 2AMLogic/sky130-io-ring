@@ -6,7 +6,7 @@
     "2": {"file": "signoff/evidence/layout-attestation.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
     "3": {"file": "signoff/evidence/drc/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
     "4": {"file": "signoff/evidence/lvs/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
-    "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:a1f5af152371316e5e002dbbe38208fd9f79dd900f4a0ddf8cf6f058fb24569f"},
+    "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:9b689d949fe562bde0abdb166af01a37727de433dce5db39626b1b88ced131a2"},
     "10": {"file": "signoff/evidence/item10.json", "content_hash": "sha256:d969bc4ead15623ff5b94de8e7c19d018fd9d590d53b02bca1b89164ed567be4"},
     "11": [
       {"file": "signoff/evidence/erc/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
