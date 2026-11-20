@@ -50,4 +50,5 @@ expect="$(sed -n 's/^echo "RESULT \([^ ]*\) .*/\1/p' "${deck}" | paste -sd, -)"
 
 meta="$(printf '{"kind":"probe","probe":"first GPIO single-corner probe (GF.1-3, GF.7-8, GE.1-8, GE.10 definitions)","pdk_revision":"%s","pdk_variant":"%s","corner":"tt","temp_c":27,"vddio_v":%s,"vdd_v":%s,"tools":%s,"note":"Single-corner probe, not item-5 evidence. Values sit next to each row'"'"'s proposed target as text; there is no pass/fail field. No corner, no temperature, no post-layout, no ESD claim."}' \
   "${PDK_REVISION}" "${PDK}" "${vddio_v}" "${vdd_v}" "$(run_common_tools_json ngspice ciel xschem)")"
-run_common_record "${meta}" --log "probe=logs/probe.log" --expect "probe=${expect}"
+run_common_record "${meta}" --log "probe=logs/probe.log" --expect "probe=${expect}" \
+  --text-field row --text-field pad_forced --text-field proposed_target

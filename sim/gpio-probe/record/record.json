@@ -14,15 +14,15 @@
       "results": {
         "delay_input_path": {
           "pad_fall_to_y_fall_s": 2.60879e-10,
-          "pad_rise_to_y_rise_s": 3.80124e-10,
+          "pad_rise_to_y_rise_s": 3.80123e-10,
           "pad_threshold_V": 1.65,
           "proposed_target": "le_3ns_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
           "row": "GE.8",
           "y_threshold_V": 0.9
         },
         "delay_output_path_10pF": {
-          "a_fall_to_pad_fall_s": 4.2146e-09,
-          "a_rise_to_pad_rise_s": 2.06484e-09,
+          "a_fall_to_pad_fall_s": 4.21486e-09,
+          "a_rise_to_pad_rise_s": 2.07165e-09,
           "a_threshold_V": 0.9,
           "pad_threshold_V": 1.65,
           "proposed_target": "le_5ns_into_10pF_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
@@ -31,14 +31,14 @@
         "edge_rate_10pF": {
           "proposed_target": "GE.3_le_3ns_corner_ss_125C_VDDIO_2p97V_and_GE.4_ge_0p8ns_corner_ff_m40C_VDDIO_3p63V",
           "row": "GE.3,GE.4",
-          "slew_fall_V_per_ns": 0.879249,
-          "slew_rise_V_per_ns": 1.20751,
+          "slew_fall_V_per_ns": 0.879265,
+          "slew_rise_V_per_ns": 1.20752,
           "stimulus_edge_s": 1e-10,
-          "tf_80_20_s": 2.25192e-09,
-          "tr_20_80_s": 1.63974e-09
+          "tf_80_20_s": 2.25188e-09,
+          "tr_20_80_s": 1.63972e-09
         },
         "input_hysteresis": {
-          "hyst_V": 0.475402,
+          "hyst_V": 0.475717,
           "proposed_target": "ge_200mV_VDDIO_3p30V_tt_25C",
           "row": "GF.7",
           "temp_c": 27.0
@@ -48,19 +48,19 @@
           "pad_at_0p7_vddio_V": 2.31,
           "proposed_target": "VIL_le_0p3_VDDIO_and_VIH_ge_0p7_VDDIO_all_corners",
           "row": "GE.5",
-          "vih_obs_V": 1.8614,
-          "vil_obs_V": 1.386,
-          "y_at_0p3_falling_V": 0.000226273,
+          "vih_obs_V": 1.8612,
+          "vil_obs_V": 1.38548,
+          "y_at_0p3_falling_V": 0.0036344,
           "y_at_0p3_rising_V": 3.27649e-07,
           "y_at_0p7_falling_V": 1.8,
-          "y_at_0p7_rising_V": 1.80892
+          "y_at_0p7_rising_V": 1.7994
         },
         "leakage_sweep": {
           "i_at_pad_0V_A": -7.59741e-11,
-          "i_at_pad_VDDIO_A": 1.05434e-10,
-          "imax_abs_A": 1.05434e-10,
+          "i_at_pad_VDDIO_A": 1.05207e-10,
+          "imax_abs_A": 1.05207e-10,
           "imax_at_pad_V": 3.3,
-          "imax_signed_A": 1.05434e-10,
+          "imax_signed_A": 1.05207e-10,
           "points": 34.0,
           "proposed_target": "le_100nA_0_to_VDDIO_25C_corner_ff_VDDIO_3p63V",
           "row": "GE.6"
@@ -257,7 +257,7 @@
           "y_V": 1.8
         },
         "st_voh": {
-          "il_A": "4m",
+          "il_A": 0.004,
           "pad_V": 3.01589,
           "pad_forced": "no",
           "proposed_target": "ge_VDDIO_minus_0p4V_at_IOH_minus4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
@@ -265,7 +265,7 @@
           "y_V": 3.27649e-07
         },
         "st_vol": {
-          "il_A": "-4m",
+          "il_A": -0.004,
           "pad_V": 0.174112,
           "pad_forced": "no",
           "proposed_target": "le_0p4V_at_IOL_4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",

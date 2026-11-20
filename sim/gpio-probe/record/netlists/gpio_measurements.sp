@@ -13,7 +13,7 @@
 * proposed and most name a worst-case corner this deck does not run.
 *
 * Conventions
-*   A and Y are in the core (vdd_v) domain, PAD in the I/O (vddio_v) domain.
+*   A, OE, IE, PU, PD and Y use the core rail (vdd_v). PAD uses the I/O rail (vddio_v).
 *   "pad_forced=no": PAD is free (1e12 ohm to its force source). Forced: an
 *   ideal source behind 1 mohm; i_pad_into_dut_A is the current that source
 *   supplies into the PAD pin (positive = into the cell). il_A > 0 sinks from
@@ -50,7 +50,7 @@ Xd a oe ie pu pd y pad vddio vdd 0 gpio_dut
 * output-path bench: A pulses 0 -> vdd_v -> 0, 10 pF on PAD (GE.3, GE.4, GE.7)
 .subckt gpio_tb_out y pad vddio vdd
 Va a 0 pulse(0 {vdd_v} 5n 0.1n 0.1n 20n 1)
-Voe oe 0 dc {vddio_v}
+Voe oe 0 dc {vdd_v}
 Vie ie 0 dc {vdd_v}
 Vpu pu 0 dc 0
 Vpd pd 0 dc 0
@@ -82,18 +82,18 @@ Rf pf pad 1m
 Xd a oe ie pu pd y pad vddio vdd 0 gpio_dut
 .ends
 
-Xs_drv_hi y_drv_hi p_drv_hi vddio vdd gpio_tb_dc va={vdd_v} voe={vddio_v} vie={vddio_v} vpu=0 vpd=0 vpf=0 rf=1e12 il=0
-Xs_drv_lo y_drv_lo p_drv_lo vddio vdd gpio_tb_dc va=0 voe={vddio_v} vie={vddio_v} vpu=0 vpd=0 vpf=0 rf=1e12 il=0
-Xs_drv_hi_ie0 y_drv_hi_ie0 p_drv_hi_ie0 vddio vdd gpio_tb_dc va={vdd_v} voe={vddio_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=0
-Xs_drv_lo_ie0 y_drv_lo_ie0 p_drv_lo_ie0 vddio vdd gpio_tb_dc va=0 voe={vddio_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=0
+Xs_drv_hi y_drv_hi p_drv_hi vddio vdd gpio_tb_dc va={vdd_v} voe={vdd_v} vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1e12 il=0
+Xs_drv_lo y_drv_lo p_drv_lo vddio vdd gpio_tb_dc va=0 voe={vdd_v} vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1e12 il=0
+Xs_drv_hi_ie0 y_drv_hi_ie0 p_drv_hi_ie0 vddio vdd gpio_tb_dc va={vdd_v} voe={vdd_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=0
+Xs_drv_lo_ie0 y_drv_lo_ie0 p_drv_lo_ie0 vddio vdd gpio_tb_dc va=0 voe={vdd_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=0
 Xs_in_hi_ie1 y_in_hi_ie1 p_in_hi_ie1 vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu=0 vpd=0 vpf={vddio_v} rf=1m il=0
 Xs_in_lo_ie1 y_in_lo_ie1 p_in_lo_ie1 vddio vdd gpio_tb_dc va={vdd_v} voe=0 vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1m il=0
 Xs_in_hi_ie0 y_in_hi_ie0 p_in_hi_ie0 vddio vdd gpio_tb_dc va=0 voe=0 vie=0 vpu=0 vpd=0 vpf={vddio_v} rf=1m il=0
 Xs_in_lo_ie0 y_in_lo_ie0 p_in_lo_ie0 vddio vdd gpio_tb_dc va={vdd_v} voe=0 vie=0 vpu=0 vpd=0 vpf=0 rf=1m il=0
 Xs_hz_hi y_hz_hi p_hz_hi vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu=0 vpd=0 vpf={vddio_v} rf=1m il=0
 Xs_hz_lo y_hz_lo p_hz_lo vddio vdd gpio_tb_dc va={vdd_v} voe=0 vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1m il=0
-Xs_contention_hi y_contention_hi p_contention_hi vddio vdd gpio_tb_dc va=0 voe={vddio_v} vie={vdd_v} vpu=0 vpd=0 vpf={vddio_v} rf=1m il=0
-Xs_contention_lo y_contention_lo p_contention_lo vddio vdd gpio_tb_dc va={vdd_v} voe={vddio_v} vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1m il=0
+Xs_contention_hi y_contention_hi p_contention_hi vddio vdd gpio_tb_dc va=0 voe={vdd_v} vie={vdd_v} vpu=0 vpd=0 vpf={vddio_v} rf=1m il=0
+Xs_contention_lo y_contention_lo p_contention_lo vddio vdd gpio_tb_dc va={vdd_v} voe={vdd_v} vie={vdd_v} vpu=0 vpd=0 vpf=0 rf=1m il=0
 Xs_pu_free y_pu_free p_pu_free vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu={vdd_v} vpd=0 vpf=0 rf=1e12 il=0
 Xs_pd_free y_pd_free p_pd_free vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu=0 vpd={vdd_v} vpf=0 rf=1e12 il=0
 Xs_both_free y_both_free p_both_free vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu={vdd_v} vpd={vdd_v} vpf=0 rf=1e12 il=0
@@ -102,12 +102,12 @@ Xs_pu_mid y_pu_mid p_pu_mid vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu={vdd
 Xs_pd_mid y_pd_mid p_pd_mid vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu=0 vpd={vdd_v} vpf={vddio_v/2} rf=1m il=0
 Xs_both_mid y_both_mid p_both_mid vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu={vdd_v} vpd={vdd_v} vpf={vddio_v/2} rf=1m il=0
 Xs_off_mid y_off_mid p_off_mid vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu=0 vpd=0 vpf={vddio_v/2} rf=1m il=0
-Xs_inh_pu y_inh_pu p_inh_pu vddio vdd gpio_tb_dc va=0 voe={vddio_v} vie={vdd_v} vpu={vdd_v} vpd=0 vpf=0 rf=1m il=0
+Xs_inh_pu y_inh_pu p_inh_pu vddio vdd gpio_tb_dc va=0 voe={vdd_v} vie={vdd_v} vpu={vdd_v} vpd=0 vpf=0 rf=1m il=0
 Xs_inh_pu_ref y_inh_pu_ref p_inh_pu_ref vddio vdd gpio_tb_dc va=0 voe=0 vie={vdd_v} vpu={vdd_v} vpd=0 vpf=0 rf=1m il=0
-Xs_inh_pd y_inh_pd p_inh_pd vddio vdd gpio_tb_dc va={vdd_v} voe={vddio_v} vie={vdd_v} vpu=0 vpd={vdd_v} vpf={vddio_v} rf=1m il=0
+Xs_inh_pd y_inh_pd p_inh_pd vddio vdd gpio_tb_dc va={vdd_v} voe={vdd_v} vie={vdd_v} vpu=0 vpd={vdd_v} vpf={vddio_v} rf=1m il=0
 Xs_inh_pd_ref y_inh_pd_ref p_inh_pd_ref vddio vdd gpio_tb_dc va={vdd_v} voe=0 vie={vdd_v} vpu=0 vpd={vdd_v} vpf={vddio_v} rf=1m il=0
-Xs_voh y_voh p_voh vddio vdd gpio_tb_dc va={vdd_v} voe={vddio_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=4m
-Xs_vol y_vol p_vol vddio vdd gpio_tb_dc va=0 voe={vddio_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=-4m
+Xs_voh y_voh p_voh vddio vdd gpio_tb_dc va={vdd_v} voe={vdd_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=4m
+Xs_vol y_vol p_vol vddio vdd gpio_tb_dc va=0 voe={vdd_v} vie=0 vpu=0 vpd=0 vpf=0 rf=1e12 il=-4m
 Xlk ylk plk vddio vdd gpio_tb_sw voe=0 vie={vdd_v}
 Vlk plk 0 dc 0
 Xo y_o p_o vddio vdd gpio_tb_out
@@ -208,10 +208,10 @@ let ip_inh_pd_ref = 0 - v.xs_inh_pd_ref.vpf#branch
 echo "RESULT st_inh_pd_ref row=GF.3 pad_forced=yes il_A=0 pad_V=$&vp_inh_pd_ref y_V=$&vy_inh_pd_ref i_pad_into_dut_A=$&ip_inh_pd_ref"
 let vp_voh = v(p_voh)
 let vy_voh = v(y_voh)
-echo "RESULT st_voh row=GE.1 pad_forced=no il_A=4m pad_V=$&vp_voh y_V=$&vy_voh proposed_target=ge_VDDIO_minus_0p4V_at_IOH_minus4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V"
+echo "RESULT st_voh row=GE.1 pad_forced=no il_A=0.004 pad_V=$&vp_voh y_V=$&vy_voh proposed_target=ge_VDDIO_minus_0p4V_at_IOH_minus4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V"
 let vp_vol = v(p_vol)
 let vy_vol = v(y_vol)
-echo "RESULT st_vol row=GE.2 pad_forced=no il_A=-4m pad_V=$&vp_vol y_V=$&vy_vol proposed_target=le_0p4V_at_IOL_4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V"
+echo "RESULT st_vol row=GE.2 pad_forced=no il_A=-0.004 pad_V=$&vp_vol y_V=$&vy_vol proposed_target=le_0p4V_at_IOL_4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V"
 * pull resistance (GE.10): pulls-on current net of the pulls-off current at the same bias
 let vmid = vddio_v / 2
 let r_pu = (vddio_v - vmid) / (ip_off_mid - ip_pu_mid)

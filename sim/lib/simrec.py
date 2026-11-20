@@ -5,8 +5,8 @@ Names no PDK path, device or corner; callers pass those in. Stdlib only.
 
   simrec.py parse LOG                      -> JSON of RESULT lines and error flags
   simrec.py write RECORD --meta JSON [--log NAME=PATH]... [--expect NAME=R1,R2,...]...
-      --expect: run NAME converged only if every named RESULT line is present
-      and every numeric value in it is finite (a partial log is not converged)
+      --expect requires each named RESULT to contain finite measurements.
+      Use --text-field KEY for fields that carry annotations.
 """
 import argparse
 import json
@@ -39,15 +39,20 @@ def parse_log(text):
     return results, errors
 
 
-def check_expected(results, names):
-    """Error strings for expected RESULT names that are missing or hold non-finite numbers."""
+def check_expected(results, names, text_fields=()):
+    """Report missing RESULTs and invalid measurements in expected lines."""
     errs = []
     for n in names:
         if n not in results:
             errs.append(f"missing expected RESULT {n}")
             continue
+        if all(key in text_fields for key in results[n]):
+            errs.append(f"no measurement in RESULT {n}")
         for k, v in results[n].items():
-            if isinstance(v, float) and not math.isfinite(v):
+            if isinstance(v, str):
+                if k not in text_fields or not v:
+                    errs.append(f"invalid value in RESULT {n}: {k}={v}")
+            elif not math.isfinite(v):
                 errs.append(f"non-finite value in RESULT {n}: {k}={v}")
     return errs
 
@@ -72,6 +77,8 @@ def main(argv=None):
                    help="per-run log to parse; NAME is the run id")
     w.add_argument("--expect", action="append", default=[], metavar="NAME=R1,R2,...",
                    help="RESULT names run NAME must contain, all finite")
+    w.add_argument("--text-field", action="append", default=[], metavar="KEY",
+                   help="allow text in this annotation field of expected RESULT lines")
     args = ap.parse_args(argv)
     if args.cmd == "parse":
         res, err = parse_log(Path(args.log).read_text())
@@ -81,15 +88,21 @@ def main(argv=None):
     expect = {}
     for spec in args.expect:
         name, _, names = spec.partition("=")
-        expect[name] = [n for n in names.split(",") if n]
+        result_names = names.split(",")
+        if not name or not all(result_names):
+            w.error(f"invalid --expect {spec!r}, expected NAME=R1,R2,...")
+        expect.setdefault(name, []).extend(result_names)
     runs, ok = {}, True
     for spec in args.log:
         name, _, path = spec.partition("=")
         res, err = parse_log(Path(path).read_text())
-        err = err + check_expected(res, expect.get(name, []))
+        err = err + check_expected(res, expect.get(name, []), args.text_field)
         converged = bool(res) and not err
         ok &= converged
         runs[name] = {"converged": converged, "results": res, "errors": err, "log": path}
+    unknown_runs = expect.keys() - runs.keys()
+    if unknown_runs:
+        w.error(f"--expect has no matching --log for {', '.join(sorted(unknown_runs))}")
     record = json.loads(args.meta)
     record["runs"] = runs
     record["all_converged"] = ok

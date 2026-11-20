@@ -24,14 +24,14 @@
         "role": "testbench",
         "path": "sim/gpio-probe/run.sh",
         "passed": true,
-        "content_hash": "sha256:760cdcf63a27e5e2cbc63b7344429432cfe60e2ca443701fc0f570682625cd28"
+        "content_hash": "sha256:05bdac6cb893b9ba35d9e15233ad7ccaebd740daa6031c24b5b8b718bb5a0311"
       },
       {
         "check": "present",
         "role": "testbench",
         "path": "sim/lib/gpio_measurements.sp",
         "passed": true,
-        "content_hash": "sha256:a6aa4187b400eb5ba9d4f845f7289c5fd3aebdcb553bc45a42ffd348971ecf87"
+        "content_hash": "sha256:519113985c6204f079a07b04addbd049a9be5cd37eb391ef81dd12b520dda743"
       },
       {
         "check": "present",
