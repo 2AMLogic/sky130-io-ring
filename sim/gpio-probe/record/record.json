@@ -1,0 +1,286 @@
+{
+  "all_converged": true,
+  "corner": "tt",
+  "kind": "probe",
+  "note": "Single-corner probe, not item-5 evidence. Values sit next to each row's proposed target as text; there is no pass/fail field. No corner, no temperature, no post-layout, no ESD claim.",
+  "pdk_revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "pdk_variant": "sky130A",
+  "probe": "first GPIO single-corner probe (GF.1-3, GF.7-8, GE.1-8, GE.10 definitions)",
+  "runs": {
+    "probe": {
+      "converged": true,
+      "errors": [],
+      "log": "logs/probe.log",
+      "results": {
+        "delay_input_path": {
+          "pad_fall_to_y_fall_s": 2.60879e-10,
+          "pad_rise_to_y_rise_s": 3.80124e-10,
+          "pad_threshold_V": 1.65,
+          "proposed_target": "le_3ns_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
+          "row": "GE.8",
+          "y_threshold_V": 0.9
+        },
+        "delay_output_path_10pF": {
+          "a_fall_to_pad_fall_s": 4.2146e-09,
+          "a_rise_to_pad_rise_s": 2.06484e-09,
+          "a_threshold_V": 0.9,
+          "pad_threshold_V": 1.65,
+          "proposed_target": "le_5ns_into_10pF_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
+          "row": "GE.7"
+        },
+        "edge_rate_10pF": {
+          "proposed_target": "GE.3_le_3ns_corner_ss_125C_VDDIO_2p97V_and_GE.4_ge_0p8ns_corner_ff_m40C_VDDIO_3p63V",
+          "row": "GE.3,GE.4",
+          "slew_fall_V_per_ns": 0.879249,
+          "slew_rise_V_per_ns": 1.20751,
+          "stimulus_edge_s": 1e-10,
+          "tf_80_20_s": 2.25192e-09,
+          "tr_20_80_s": 1.63974e-09
+        },
+        "input_hysteresis": {
+          "hyst_V": 0.475402,
+          "proposed_target": "ge_200mV_VDDIO_3p30V_tt_25C",
+          "row": "GF.7",
+          "temp_c": 27.0
+        },
+        "input_thresholds": {
+          "pad_at_0p3_vddio_V": 0.99,
+          "pad_at_0p7_vddio_V": 2.31,
+          "proposed_target": "VIL_le_0p3_VDDIO_and_VIH_ge_0p7_VDDIO_all_corners",
+          "row": "GE.5",
+          "vih_obs_V": 1.8614,
+          "vil_obs_V": 1.386,
+          "y_at_0p3_falling_V": 0.000226273,
+          "y_at_0p3_rising_V": 3.27649e-07,
+          "y_at_0p7_falling_V": 1.8,
+          "y_at_0p7_rising_V": 1.80892
+        },
+        "leakage_sweep": {
+          "i_at_pad_0V_A": -7.59741e-11,
+          "i_at_pad_VDDIO_A": 1.05434e-10,
+          "imax_abs_A": 1.05434e-10,
+          "imax_at_pad_V": 3.3,
+          "imax_signed_A": 1.05434e-10,
+          "points": 34.0,
+          "proposed_target": "le_100nA_0_to_VDDIO_25C_corner_ff_VDDIO_3p63V",
+          "row": "GE.6"
+        },
+        "pull_resistance": {
+          "bias_V": 1.65,
+          "proposed_target": "20k_to_60k_ohm_at_VPAD_VDDIO_half_all_corners",
+          "r_pulldown_ohm": 30769.9,
+          "r_pullup_ohm": 97972.4,
+          "row": "GE.10"
+        },
+        "st_both_free": {
+          "il_A": 0.0,
+          "pad_V": 1.29561,
+          "pad_forced": "no",
+          "row": "GF.3",
+          "y_V": 3.27649e-07
+        },
+        "st_both_mid": {
+          "i_pad_into_dut_A": 1.75078e-11,
+          "il_A": 0.0,
+          "pad_V": 1.65,
+          "pad_forced": "yes",
+          "row": "GF.3",
+          "y_V": 1.8
+        },
+        "st_contention_hi": {
+          "i_pad_into_dut_A": 0.0172523,
+          "il_A": 0.0,
+          "pad_V": 3.29998,
+          "pad_forced": "yes",
+          "row": "GF.1",
+          "y_V": 1.8
+        },
+        "st_contention_lo": {
+          "i_pad_into_dut_A": -0.0163597,
+          "il_A": 0.0,
+          "pad_V": 1.63597e-05,
+          "pad_forced": "yes",
+          "row": "GF.1",
+          "y_V": 3.27649e-07
+        },
+        "st_drv_hi": {
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "no",
+          "row": "GF.1,GF.8",
+          "y_V": 1.8
+        },
+        "st_drv_hi_ie0": {
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "no",
+          "row": "GF.2",
+          "y_V": 3.27649e-07
+        },
+        "st_drv_lo": {
+          "il_A": 0.0,
+          "pad_V": 3.03722e-09,
+          "pad_forced": "no",
+          "row": "GF.1,GF.8",
+          "y_V": 3.27649e-07
+        },
+        "st_drv_lo_ie0": {
+          "il_A": 0.0,
+          "pad_V": 3.03722e-09,
+          "pad_forced": "no",
+          "row": "GF.2",
+          "y_V": 3.27649e-07
+        },
+        "st_hz_hi": {
+          "i_pad_into_dut_A": 1.06411e-10,
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "yes",
+          "row": "GF.1",
+          "y_V": 1.8
+        },
+        "st_hz_lo": {
+          "i_pad_into_dut_A": -7.59741e-11,
+          "il_A": 0.0,
+          "pad_V": 7.59741e-14,
+          "pad_forced": "yes",
+          "row": "GF.1",
+          "y_V": 3.27649e-07
+        },
+        "st_in_hi_ie0": {
+          "i_pad_into_dut_A": 1.05501e-10,
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "yes",
+          "row": "GF.2",
+          "y_V": 3.27649e-07
+        },
+        "st_in_hi_ie1": {
+          "i_pad_into_dut_A": 1.05956e-10,
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "yes",
+          "row": "GF.2,GF.8",
+          "y_V": 1.8
+        },
+        "st_in_lo_ie0": {
+          "i_pad_into_dut_A": -7.59741e-11,
+          "il_A": 0.0,
+          "pad_V": 7.59741e-14,
+          "pad_forced": "yes",
+          "row": "GF.2",
+          "y_V": 3.27649e-07
+        },
+        "st_in_lo_ie1": {
+          "i_pad_into_dut_A": -7.59741e-11,
+          "il_A": 0.0,
+          "pad_V": 7.59741e-14,
+          "pad_forced": "yes",
+          "row": "GF.2,GF.8",
+          "y_V": 3.27649e-07
+        },
+        "st_inh_pd": {
+          "i_pad_into_dut_A": 1.05501e-10,
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "yes",
+          "row": "GF.3",
+          "y_V": 1.8
+        },
+        "st_inh_pd_ref": {
+          "i_pad_into_dut_A": 5.69643e-05,
+          "il_A": 0.0,
+          "pad_V": 3.3,
+          "pad_forced": "yes",
+          "row": "GF.3",
+          "y_V": 1.8
+        },
+        "st_inh_pu": {
+          "i_pad_into_dut_A": -7.59722e-11,
+          "il_A": 0.0,
+          "pad_V": 7.59722e-14,
+          "pad_forced": "yes",
+          "row": "GF.3",
+          "y_V": 3.27649e-07
+        },
+        "st_inh_pu_ref": {
+          "i_pad_into_dut_A": -1.78771e-05,
+          "il_A": 0.0,
+          "pad_V": 1.78771e-08,
+          "pad_forced": "yes",
+          "row": "GF.3",
+          "y_V": 3.27649e-07
+        },
+        "st_off_free": {
+          "il_A": 0.0,
+          "pad_V": 1.29561,
+          "pad_forced": "no",
+          "row": "GF.3",
+          "y_V": 3.27649e-07
+        },
+        "st_off_mid": {
+          "i_pad_into_dut_A": 1.75078e-11,
+          "il_A": 0.0,
+          "pad_V": 1.65,
+          "pad_forced": "yes",
+          "row": "GF.3,GE.10",
+          "y_V": 1.8
+        },
+        "st_pd_free": {
+          "il_A": 0.0,
+          "pad_V": 1.28959e-06,
+          "pad_forced": "no",
+          "row": "GF.3",
+          "y_V": 3.27649e-07
+        },
+        "st_pd_mid": {
+          "i_pad_into_dut_A": 5.36238e-05,
+          "il_A": 0.0,
+          "pad_V": 1.65,
+          "pad_forced": "yes",
+          "row": "GF.3,GE.10",
+          "y_V": 1.8
+        },
+        "st_pu_free": {
+          "il_A": 0.0,
+          "pad_V": 3.29999,
+          "pad_forced": "no",
+          "row": "GF.3",
+          "y_V": 1.8
+        },
+        "st_pu_mid": {
+          "i_pad_into_dut_A": -1.68415e-05,
+          "il_A": 0.0,
+          "pad_V": 1.65,
+          "pad_forced": "yes",
+          "row": "GF.3,GE.10",
+          "y_V": 1.8
+        },
+        "st_voh": {
+          "il_A": "4m",
+          "pad_V": 3.01589,
+          "pad_forced": "no",
+          "proposed_target": "ge_VDDIO_minus_0p4V_at_IOH_minus4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
+          "row": "GE.1",
+          "y_V": 3.27649e-07
+        },
+        "st_vol": {
+          "il_A": "-4m",
+          "pad_V": 0.174112,
+          "pad_forced": "no",
+          "proposed_target": "le_0p4V_at_IOL_4mA_corner_ss_125C_VDDIO_2p97V_VDD_1p62V",
+          "row": "GE.2",
+          "y_V": 3.27649e-07
+        }
+      }
+    }
+  },
+  "temp_c": 27,
+  "tools": {
+    "ciel": "absent",
+    "ngspice": "47",
+    "xschem": "3.4.7"
+  },
+  "vdd_v": 1.8,
+  "vddio_v": 3.3
+}

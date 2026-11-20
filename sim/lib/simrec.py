@@ -4,10 +4,13 @@
 Names no PDK path, device or corner; callers pass those in. Stdlib only.
 
   simrec.py parse LOG                      -> JSON of RESULT lines and error flags
-  simrec.py write RECORD --meta JSON [--log NAME=PATH]...  (see main)
+  simrec.py write RECORD --meta JSON [--log NAME=PATH]... [--expect NAME=R1,R2,...]...
+      --expect: run NAME converged only if every named RESULT line is present
+      and every numeric value in it is finite (a partial log is not converged)
 """
 import argparse
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -36,6 +39,19 @@ def parse_log(text):
     return results, errors
 
 
+def check_expected(results, names):
+    """Error strings for expected RESULT names that are missing or hold non-finite numbers."""
+    errs = []
+    for n in names:
+        if n not in results:
+            errs.append(f"missing expected RESULT {n}")
+            continue
+        for k, v in results[n].items():
+            if isinstance(v, float) and not math.isfinite(v):
+                errs.append(f"non-finite value in RESULT {n}: {k}={v}")
+    return errs
+
+
 def write_record(path, record):
     """Write a JSON record; records are append-only, so never replace one."""
     path = Path(path)
@@ -54,16 +70,23 @@ def main(argv=None):
     w.add_argument("--meta", required=True, help="JSON object merged into the record")
     w.add_argument("--log", action="append", default=[], metavar="NAME=PATH",
                    help="per-run log to parse; NAME is the run id")
+    w.add_argument("--expect", action="append", default=[], metavar="NAME=R1,R2,...",
+                   help="RESULT names run NAME must contain, all finite")
     args = ap.parse_args(argv)
     if args.cmd == "parse":
         res, err = parse_log(Path(args.log).read_text())
         json.dump({"results": res, "errors": err}, sys.stdout, indent=2)
         print()
         return 0 if res and not err else 1
+    expect = {}
+    for spec in args.expect:
+        name, _, names = spec.partition("=")
+        expect[name] = [n for n in names.split(",") if n]
     runs, ok = {}, True
     for spec in args.log:
         name, _, path = spec.partition("=")
         res, err = parse_log(Path(path).read_text())
+        err = err + check_expected(res, expect.get(name, []))
         converged = bool(res) and not err
         ok &= converged
         runs[name] = {"converged": converged, "results": res, "errors": err, "log": path}
