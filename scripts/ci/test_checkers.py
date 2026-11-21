@@ -9,6 +9,7 @@ import io
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -270,6 +271,74 @@ class EvidenceFormat(unittest.TestCase):
             errors = ef.check_record(
                 self.sibling_record(**{pair[0]: 2.0, pair[1]: 2.0}), "r")
             self.assertTrue(any("unit-domain suffix" in e for e in errors), pair)
+
+
+class SimrecExpect(unittest.TestCase):
+    def write_record(self, log, *options):
+        script = Path(__file__).resolve().parents[2] / "sim/lib/simrec.py"
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "probe.log").write_text(log)
+            proc = subprocess.run(
+                [sys.executable, "-I", str(script), "write", "record.json",
+                 "--meta", "{}", "--log", "probe=probe.log", *options],
+                cwd=root, capture_output=True, text=True,
+            )
+            record = root / "record.json"
+            return proc, json.loads(record.read_text()) if record.exists() else None
+
+    def test_finite_measurement_with_text_annotations(self):
+        proc, record = self.write_record(
+            "RESULT level row=GE.1 pad_V=2.9\n", "--expect", "probe=level",
+            "--text-field", "row",
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertTrue(record["all_converged"])
+        self.assertEqual(record["runs"]["probe"]["results"]["level"],
+                         {"row": "GE.1", "pad_V": 2.9})
+
+    def test_missing_expected_result(self):
+        proc, record = self.write_record(
+            "RESULT level pad_V=2.9\n", "--expect", "probe=edge", "--expect", "probe=level")
+        self.assertEqual(proc.returncode, 1)
+        self.assertFalse(record["all_converged"])
+        self.assertIn("missing expected RESULT edge", record["runs"]["probe"]["errors"])
+
+    def test_annotation_alone_is_not_a_measurement(self):
+        proc, record = self.write_record(
+            "RESULT level row=GE.1\n", "--expect", "probe=level", "--text-field", "row")
+        self.assertEqual(proc.returncode, 1)
+        self.assertIn("no measurement in RESULT level", record["runs"]["probe"]["errors"])
+
+    def test_invalid_measurement(self):
+        for value in ("nan", "inf", "-inf", "$&unexpanded", "", "typo"):
+            with self.subTest(value=value):
+                proc, record = self.write_record(
+                    f"RESULT level pad_V={value}\n", "--expect", "probe=level")
+                self.assertEqual(proc.returncode, 1)
+                self.assertFalse(record["all_converged"])
+                run = record["runs"]["probe"]
+                self.assertFalse(run["converged"])
+                self.assertIn("pad_V=", run["errors"][0])
+
+    def test_unknown_run_is_a_cli_error(self):
+        proc, record = self.write_record(
+            "RESULT level pad_V=2.9\n", "--expect", "typo=level")
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("typo", proc.stderr)
+        self.assertIsNone(record)
+
+    def test_empty_expectation_is_a_cli_error(self):
+        proc, record = self.write_record(
+            "RESULT level pad_V=2.9\n", "--expect", "probe=")
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("--expect", proc.stderr)
+        self.assertIsNone(record)
+
+    def test_log_without_expectation_keeps_text_fields(self):
+        proc, record = self.write_record("RESULT level bias_source=current_source\n")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertTrue(record["all_converged"])
 
 
 class AppendOnly(unittest.TestCase):
