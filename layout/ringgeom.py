@@ -66,11 +66,6 @@ def ring_mask(size, b0, b1, co, ci):
     return outer - inner
 
 
-def annulus(x0, y0, x1, y1, w):
-    """Closed rectangular annulus: outer box minus the box inset by w."""
-    return db.Region(box(x0, y0, x1, y1)) - db.Region(box(x0 + w, y0 + w, x1 - w, y1 - w))
-
-
 def via_array(cx, cy, size, pitch, nx, ny=None):
     """nx x ny array of size x size squares at `pitch`, centred on (cx, cy)."""
     ny = nx if ny is None else ny

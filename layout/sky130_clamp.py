@@ -43,16 +43,6 @@ def row_height(W):
     return DIFF_Y0 + W + DBUS_GAP + BUS_H / 2
 
 
-class Draw:
-    """Thin wrapper over the sky130 Ctx: add(layer, shape) into one cell."""
-
-    def __init__(self, ctx, cell):
-        self.ctx, self.cell = ctx, cell
-
-    def __call__(self, layer, shape):
-        self.ctx.add(self.cell, layer, shape)
-
-
 def _via1(d, x, y):
     d("via", g.cbox(x, y, 0.15))
 
@@ -60,8 +50,8 @@ def _via1(d, x, y):
 def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net):
     """One finger row at (x0, ry): nf fingers of W x L sharing S/D regions.
 
-    kind 'n' or 'p'. Returns a dict of attachment points: bus y centres, x
-    extents, the gate pad centre and the per-net buses the router must reach.
+    kind 'n' or 'p'. Returns the row's attachment points: the x extent and the
+    source/tap, drain and gate bus y centres.
     """
     pitch = L + SDW
     xend = x0 + nf * pitch + SDW
@@ -126,8 +116,7 @@ def mos_row(d, x0, ry, nf, W, L, kind, hv, s_net, d_net, g_net):
     _via1(d, STRAP_X[s_net], ys)
     _via1(d, STRAP_X[d_net], yd)
     _via1(d, STRAP_X[g_net], gyc)
-    return {"x0": x0, "xend": xend, "y0": ry - 0.5, "y1": yd + BUS_H / 2,
-            "ys": ys, "yd": yd, "yg": gyc, "yd0": yd0, "yd1": yd1}
+    return {"xend": xend, "ys": ys, "yd": yd, "yg": gyc}
 
 
 # ----------------------------------------------------------- resistors ----
@@ -147,14 +136,15 @@ def _head(d, x, y):
 
 def resistor_chain(d, x0, ya, length, a_net, b_net):
     """Two series xhigh poly bars, a_net - R1 - T1 - R2 - b_net, joined at the
-    far end by an unrouted poly head (the T1 node). Returns the top y."""
+    far end by an unrouted poly head (the T1 node). Returns the a and b head
+    y centres."""
     yb = ya + RES_PITCH
     hl = 1.4
     xb0, xb1 = x0 + hl, x0 + hl + length
     for y in (ya, yb):
         yc = y + RES_W / 2
         d("poly", g.box(x0, y, xb1 + hl, y + RES_W))
-        d("polyres", g.box(xb0, y, xb1, y + RES_W))
+        d("res.mark", g.box(xb0, y, xb1, y + RES_W))
         d("urpm", g.box(xb0 - 0.2, yc - 0.7, xb1 + 0.2, yc + 0.7))
         d("psdm", g.box(xb0 - 0.2, yc - 0.7, xb1 + 0.2, yc + 0.7))
     d("poly", g.box(xb1, ya, xb1 + hl, yb + RES_W))      # T1 node, no contact
@@ -165,7 +155,7 @@ def resistor_chain(d, x0, ya, length, a_net, b_net):
     d("met1", g.box(STRAP_X[b_net] - 0.2, cb - BUS_H / 2, x0 + 0.85, cb + BUS_H / 2))
     _via1(d, STRAP_X[a_net], ca)
     _via1(d, STRAP_X[b_net], cb)
-    return {"a": ca, "b": cb, "top": yb + RES_W + 0.7}
+    return {"a": ca, "b": cb}
 
 
 # ------------------------------------------------------------ MIM cap ----
@@ -218,19 +208,16 @@ def build_clamp(d, core, vp_rail, y_start=66.0, y_vss_tie=16.0, mim_y=156.2,
     """Draw the full clamp into `d`'s cell.
 
     vp_rail = (layer, y) where the VP strap ties into the cell's own rail band.
-    Returns a dict of what was drawn (rows, device counts) for the self-checks.
     """
     sp = clamp_spec(core)
     L, hv = sp["L"], sp["hv"]
     pitch = L + SDW
     fit = int((width - 3.0 - ARRAY_X0 - SDW) / pitch)       # fingers per row
     use = {n: [] for n in STRAP_X}            # net -> y of every via1 on its strap
-    rows = []
 
     def add_row(kind, W, nf, s, dn, gn, ry):
         r = mos_row(d, ARRAY_X0, ry, nf, W, L, kind, hv, s, dn, gn)
         use[s].append(r["ys"]); use[dn].append(r["yd"]); use[gn].append(r["yg"])
-        rows.append((kind, W, nf))
         return r
 
     ry = y_start
@@ -289,4 +276,3 @@ def build_clamp(d, core, vp_rail, y_start=66.0, y_vss_tie=16.0, mim_y=156.2,
     for net, ys in use.items():
         d("met2", g.box(STRAP_X[net] - STRAP_W / 2, min(ys) - 0.3,
                         STRAP_X[net] + STRAP_W / 2, max(ys) + 0.3))
-    return {"rows": rows, "top": res["top"], "uses": {k: len(v) for k, v in use.items()}}
