@@ -237,11 +237,11 @@
     "pdk": null,
     "deck": null,
     "input": {
-      "content_hash": "sha256:15680df67a72aa078a1f47f7d4dd56204df983b8e37b6b26b4d8bc9528a17a95",
+      "content_hash": "sha256:7a4e7f884e19dab5ee152866e97c35a3dd9b026f130d4d17ff8a0f262cfaa60b",
       "role": "layout"
     },
     "spec": {
-      "content_hash": "sha256:18a9ba526439abead9a7411fc390d41c95a3be8037e26e231eb227a626359663"
+      "content_hash": "sha256:64bf00a41ae394dbeeb3f16dd45d99930f9b71761a96b2969b965e32ba010625"
     },
     "devices": [
       {

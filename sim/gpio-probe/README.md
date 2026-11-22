@@ -2,6 +2,8 @@
 
 First **single-corner probe** of the drawn GPIO cell (`sky130_ioring_gpio`, `design/netlists/`, included unchanged). `tt`, 27 C, nominal rails (VDDIO 3.30 V, VDD 1.80 V), one ngspice process. The record is `kind: probe`: it is **not** item-5 evidence, ratifies nothing and grades no spec row.
 
+Two records now sit here. `record/` is the original baseline (pull-up PMOS `MPU` at W = 1, L = 4 um). `record-mpu-w2p5/` re-runs the same bench and deck after the pull-up resize (#181) with only `MPU` widened to W = 2.5 um (L, nf and the pull-down device untouched); both were produced by this `run.sh` at the same pinned operating point, so the two `record.json` files differ only where the resized pull-up can reach.
+
 ```sh
 bash sim/gpio-probe/run.sh /tmp/x          # ~2 min; default OUTDIR sim/gpio-probe/record
 diff -r sim/gpio-probe/record /tmp/x       # empty unless tool versions differ
@@ -30,7 +32,16 @@ Currents `i_pad_into_dut_A` are what the PAD force source supplies into the pin 
 
 ## Reading the tt numbers (no verdicts; the rows are proposed and mostly name other corners)
 
-- GE.10: the pull-up is about 98 kohm and the pull-down about 31 kohm at 1.65 V; the proposed range is 20-60 kohm at all corners, so the pull-up is already far outside it at tt. Filed as #181; the row is not edited.
+- GE.10: the baseline (`record/`) measured the pull-up at about 98 kohm and the pull-down about 31 kohm at 1.65 V, against a proposed range of 20-60 kohm at all corners — the pull-up was far outside it at tt, which was filed as #181. After resizing only `MPU` (W 1 -> 2.5 um, L = 4 um held), `record-mpu-w2p5/` measures:
+
+  | | `record/` (MPU W = 1) | `record-mpu-w2p5/` (MPU W = 2.5) |
+  |---|---|---|
+  | pull-up `r_pullup_ohm` | 97,972.4 | 40,043.5 |
+  | pull-down `r_pulldown_ohm` | 30,769.9 | 30,769.9 |
+  | pulls-off `st_off_mid.i_pad_into_dut_A` | 1.75078e-11 | 1.75078e-11 |
+  | pull-up `st_pu_mid.i_pad_into_dut_A` | -1.68415e-05 | -4.12051e-05 |
+
+  The pull-up lands inside the proposed range at tt and mid-way between its bounds; the pull-down and pulls-off rows are bit-identical, so the resize moved nothing else in the control path. This is one corner: the row binds at all corners and is not re-graded here; the row itself is not edited.
 - GE.7: the output-path fall delay is 4.2 ns at tt, against a proposed 5 ns at the ss / 125 C corner, which this probe does not run.
 - GE.1 / GE.2 / GE.3 / GE.5 / GE.6 / GE.8 / GF.7 values sit in the record next to their targets; compare only with the corner in mind.
 

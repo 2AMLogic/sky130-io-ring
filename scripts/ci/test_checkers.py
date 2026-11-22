@@ -610,8 +610,8 @@ class ProseCitations(unittest.TestCase):
     # are spelled out here, never read back from it.
     DECK_HASH = ("029ef177c1f4e872c13cc81093f94a02a9bbfe1f51939a"
                  "88194a83532d60bf7c")
-    INPUT_HASH = ("8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a"
-                  "877b919475806d74cc")
+    INPUT_HASH = ("901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a"
+                  "0c45f5d984261908ca6")
     DECK_PIN = ("`provenance.deck.content_hash` is `sha256:"
                 + DECK_HASH + "`")
 
