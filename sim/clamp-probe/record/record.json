@@ -1,0 +1,466 @@
+{
+  "all_converged": true,
+  "corner": "tt",
+  "kind": "probe",
+  "note": "Single-corner G6 probe, not item-5 evidence; says nothing about ESD rating. No validity range on record for the thin-oxide family.",
+  "pdk_revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7",
+  "pdk_variant": "sky130A",
+  "probe": "G6 single-corner RC clamp trigger probe (ESD.4, ESD.5)",
+  "runs": {
+    "probe": {
+      "converged": true,
+      "errors": [],
+      "log": "logs/probe.log",
+      "results": {
+        "esd7_hbm_core_mcl": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 4.7784,
+          "vgs_pk_V": 1.44864
+        },
+        "esd7_hbm_core_mn1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 3.66371,
+          "vgs_pk_V": 0.505773
+        },
+        "esd7_hbm_core_mn2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 3.15879,
+          "vgs_pk_V": 3.66371
+        },
+        "esd7_hbm_core_mn3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.44864,
+          "vgs_pk_V": 3.15879
+        },
+        "esd7_hbm_core_mp1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.32958,
+          "vgs_pk_V": 4.77689
+        },
+        "esd7_hbm_core_mp2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 3.29955,
+          "vgs_pk_V": 1.32958
+        },
+        "esd7_hbm_core_mp3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 3.68793,
+          "vgs_pk_V": 3.29955
+        },
+        "esd7_hbm_io_mcl": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 8.59329,
+          "vgs_pk_V": 5.19049
+        },
+        "esd7_hbm_io_mn1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 6.86519,
+          "vgs_pk_V": 0.897117
+        },
+        "esd7_hbm_io_mn2": {
+          "validity": "outside_model_validity",
+          "vds_pk_V": 4.79149,
+          "vgs_pk_V": 6.86519
+        },
+        "esd7_hbm_io_mn3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.19049,
+          "vgs_pk_V": 4.79149
+        },
+        "esd7_hbm_io_mp1": {
+          "validity": "outside_model_validity",
+          "vds_pk_V": 3.05243,
+          "vgs_pk_V": 8.58748
+        },
+        "esd7_hbm_io_mp2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 6.86241,
+          "vgs_pk_V": 3.05243
+        },
+        "esd7_hbm_io_mp3": {
+          "validity": "outside_model_validity",
+          "vds_pk_V": 6.66307,
+          "vgs_pk_V": 6.86241
+        },
+        "esd7_ramp_core_100u_mcl": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.126539
+        },
+        "esd7_ramp_core_100u_mn1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.239119,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_100u_mn2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.239119
+        },
+        "esd7_ramp_core_100u_mn3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.126539,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_100u_mp1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.0180569
+        },
+        "esd7_ramp_core_100u_mp2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.107699,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_100u_mp3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.107699
+        },
+        "esd7_ramp_core_10u_mcl": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.193193
+        },
+        "esd7_ramp_core_10u_mn1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.410841,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_10u_mn2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.410841
+        },
+        "esd7_ramp_core_10u_mn3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.193193,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_10u_mp1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.180523
+        },
+        "esd7_ramp_core_10u_mp2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.236867,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_10u_mp3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.236867
+        },
+        "esd7_ramp_core_1m_mcl": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.0939127
+        },
+        "esd7_ramp_core_1m_mn1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.18585,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_1m_mn2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.18585
+        },
+        "esd7_ramp_core_1m_mn3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.0939127,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_1m_mp1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.0018057
+        },
+        "esd7_ramp_core_1m_mp2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 0.0558976,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_1m_mp3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 0.0558976
+        },
+        "esd7_ramp_core_1u_mcl": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 1.80001
+        },
+        "esd7_ramp_core_1u_mn1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.78368,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_core_1u_mn2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.80338,
+          "vgs_pk_V": 1.78368
+        },
+        "esd7_ramp_core_1u_mn3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.80001,
+          "vgs_pk_V": 1.80338
+        },
+        "esd7_ramp_core_1u_mp1": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.80012,
+          "vgs_pk_V": 1.13928
+        },
+        "esd7_ramp_core_1u_mp2": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.8,
+          "vgs_pk_V": 1.80012
+        },
+        "esd7_ramp_core_1u_mp3": {
+          "validity": "no_validity_range_on_record",
+          "vds_pk_V": 1.80816,
+          "vgs_pk_V": 1.8
+        },
+        "esd7_ramp_io_100u_mcl": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.200205
+        },
+        "esd7_ramp_io_100u_mn1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.276017,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_100u_mn2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.276017
+        },
+        "esd7_ramp_io_100u_mn3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.200205,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_100u_mp1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.0501857
+        },
+        "esd7_ramp_io_100u_mp2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.302286,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_100u_mp3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.302286
+        },
+        "esd7_ramp_io_10u_mcl": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.328407
+        },
+        "esd7_ramp_io_10u_mn1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.54533,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_10u_mn2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.00001,
+          "vgs_pk_V": 0.54533
+        },
+        "esd7_ramp_io_10u_mn3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.328407,
+          "vgs_pk_V": 5.00001
+        },
+        "esd7_ramp_io_10u_mp1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.501515
+        },
+        "esd7_ramp_io_10u_mp2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.655759,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_10u_mp3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.655759
+        },
+        "esd7_ramp_io_1m_mcl": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.150665
+        },
+        "esd7_ramp_io_1m_mn1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.162688,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_1m_mn2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.162688
+        },
+        "esd7_ramp_io_1m_mn3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.150665,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_1m_mp1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.00501817
+        },
+        "esd7_ramp_io_1m_mp2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 0.237722,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_1m_mp3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 0.237722
+        },
+        "esd7_ramp_io_1u_mcl": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.0,
+          "vgs_pk_V": 5.00007
+        },
+        "esd7_ramp_io_1u_mn1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 4.47036,
+          "vgs_pk_V": 5.0
+        },
+        "esd7_ramp_io_1u_mn2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.00653,
+          "vgs_pk_V": 4.47036
+        },
+        "esd7_ramp_io_1u_mn3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.00007,
+          "vgs_pk_V": 5.00653
+        },
+        "esd7_ramp_io_1u_mp1": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.00091,
+          "vgs_pk_V": 3.16342
+        },
+        "esd7_ramp_io_1u_mp2": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.00002,
+          "vgs_pk_V": 5.00091
+        },
+        "esd7_ramp_io_1u_mp3": {
+          "validity": "within_esd7_model_range",
+          "vds_pk_V": 5.02068,
+          "vgs_pk_V": 5.00002
+        },
+        "hbm_core": {
+          "c_F": "100p",
+          "decay_tau_s": 1.5e-07,
+          "gate_above_0p5V_s": 1.39838e-06,
+          "gate_above_1p0V_s": 1.94503e-07,
+          "gate_at_9p9us_V": 0.276546,
+          "gate_pk_V": 1.44864,
+          "id_xmcl_pk_A": 1.34893,
+          "ipulse_pk_A": 1.33268,
+          "r_ohm": 1500.0,
+          "vhbm_V": 2000.0,
+          "vp_at_9p9us_V": 0.095302,
+          "vp_pk_V": 4.7784
+        },
+        "hbm_io": {
+          "c_F": "100p",
+          "decay_tau_s": 1.5e-07,
+          "gate_above_0p5V_s": 1e-05,
+          "gate_above_1p0V_s": 6.61921e-07,
+          "gate_at_9p9us_V": 0.508078,
+          "gate_pk_V": 5.19049,
+          "id_xmcl_pk_A": 1.31144,
+          "ipulse_pk_A": 1.33161,
+          "r_ohm": 1500.0,
+          "vhbm_V": 2000.0,
+          "vp_at_9p9us_V": 0.000150713,
+          "vp_pk_V": 8.59329
+        },
+        "ramp_core_100u": {
+          "gate_pk_V": 0.126539,
+          "id_xmcl_pk_A": 1.61317e-08,
+          "ileak_end_A": 1.48748e-08,
+          "isup_pk_A": 1.92681e-07,
+          "tr_s": "100u",
+          "vnom": 1.8
+        },
+        "ramp_core_10u": {
+          "gate_pk_V": 0.193193,
+          "id_xmcl_pk_A": 1.25217e-07,
+          "ileak_end_A": 1.48021e-08,
+          "isup_pk_A": 5.30454e-06,
+          "tr_s": "10u",
+          "vnom": 1.8
+        },
+        "ramp_core_1m": {
+          "gate_pk_V": 0.0939127,
+          "id_xmcl_pk_A": 5.57956e-09,
+          "ileak_end_A": 1.48915e-08,
+          "isup_pk_A": 2.67294e-08,
+          "tr_s": "1m",
+          "vnom": 1.8
+        },
+        "ramp_core_1u": {
+          "gate_pk_V": 1.80001,
+          "id_xmcl_pk_A": 2.11472,
+          "ileak_end_A": -3.04047e-05,
+          "isup_pk_A": 2.11496,
+          "tr_s": "1u",
+          "vnom": 1.8
+        },
+        "ramp_io_100u": {
+          "gate_pk_V": 0.200205,
+          "id_xmcl_pk_A": 2.58889e-08,
+          "ileak_end_A": 6.44704e-09,
+          "isup_pk_A": 6.13261e-07,
+          "tr_s": "100u",
+          "vnom": 5.0
+        },
+        "ramp_io_10u": {
+          "gate_pk_V": 0.328407,
+          "id_xmcl_pk_A": 3.48782e-07,
+          "ileak_end_A": 6.03019e-09,
+          "isup_pk_A": 1.09936e-05,
+          "tr_s": "10u",
+          "vnom": 5.0
+        },
+        "ramp_io_1m": {
+          "gate_pk_V": 0.150665,
+          "id_xmcl_pk_A": 9.50844e-09,
+          "ileak_end_A": 6.49052e-09,
+          "isup_pk_A": 5.0191e-08,
+          "tr_s": "1m",
+          "vnom": 5.0
+        },
+        "ramp_io_1u": {
+          "gate_pk_V": 5.00007,
+          "id_xmcl_pk_A": 1.24892,
+          "ileak_end_A": -7.18256e-05,
+          "isup_pk_A": 1.25778,
+          "tr_s": "1u",
+          "vnom": 5.0
+        }
+      }
+    }
+  },
+  "temp_c": 27,
+  "tools": {
+    "ciel": "unavailable",
+    "ngspice": "46",
+    "xschem": "3.4.7"
+  }
+}

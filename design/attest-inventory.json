@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "kind": "t1-attestation-inventory",
+  "t1_item": 1,
+  "description": "Item 1 (design sources) for the sky130 I/O ring: xschem schematics and symbols, plus the SPICE netlists klt netlist derives from them. Built against the proposed (unratified) spec; not ESD-rated.",
+  "sources": [
+    "design/xschem/sky130_ioring_clamp_core.sch",
+    "design/xschem/sky130_ioring_clamp_core.sym",
+    "design/xschem/sky130_ioring_clamp_io.sch",
+    "design/xschem/sky130_ioring_clamp_io.sym",
+    "design/xschem/sky130_ioring_corner.sch",
+    "design/xschem/sky130_ioring_corner.sym",
+    "design/xschem/sky130_ioring_fill_1.sch",
+    "design/xschem/sky130_ioring_fill_1.sym",
+    "design/xschem/sky130_ioring_fill_10.sch",
+    "design/xschem/sky130_ioring_fill_10.sym",
+    "design/xschem/sky130_ioring_fill_20.sch",
+    "design/xschem/sky130_ioring_fill_20.sym",
+    "design/xschem/sky130_ioring_fill_5.sch",
+    "design/xschem/sky130_ioring_fill_5.sym",
+    "design/xschem/sky130_ioring_gpio.sch",
+    "design/xschem/sky130_ioring_gpio.sym",
+    "design/xschem/sky130_ioring_gpio_drv.sch",
+    "design/xschem/sky130_ioring_gpio_drv.sym",
+    "design/xschem/sky130_ioring_gpio_esd.sch",
+    "design/xschem/sky130_ioring_gpio_esd.sym",
+    "design/xschem/sky130_ioring_gpio_logic.sch",
+    "design/xschem/sky130_ioring_gpio_logic.sym",
+    "design/xschem/sky130_ioring_gpio_ls.sch",
+    "design/xschem/sky130_ioring_gpio_ls.sym",
+    "design/xschem/sky130_ioring_gpio_pulls.sch",
+    "design/xschem/sky130_ioring_gpio_pulls.sym",
+    "design/xschem/sky130_ioring_gpio_rcv.sch",
+    "design/xschem/sky130_ioring_gpio_rcv.sym",
+    "design/xschem/sky130_ioring_inv.sch",
+    "design/xschem/sky130_ioring_inv.sym",
+    "design/xschem/sky130_ioring_nand2.sch",
+    "design/xschem/sky130_ioring_nand2.sym",
+    "design/xschem/sky130_ioring_nand3.sch",
+    "design/xschem/sky130_ioring_nand3.sym",
+    "design/xschem/sky130_ioring_nor2.sch",
+    "design/xschem/sky130_ioring_nor2.sym",
+    "design/xschem/sky130_ioring_ring.sch",
+    "design/xschem/sky130_ioring_ring.sym",
+    "design/xschem/sky130_ioring_vdd.sch",
+    "design/xschem/sky130_ioring_vdd.sym",
+    "design/xschem/sky130_ioring_vddio.sch",
+    "design/xschem/sky130_ioring_vddio.sym",
+    "design/xschem/sky130_ioring_vss.sch",
+    "design/xschem/sky130_ioring_vss.sym",
+    "design/xschemrc",
+    "design/netlist.sh",
+    "design/regen.sh"
+  ],
+  "derived": [
+    {
+      "path": "design/netlists/sky130_ioring_clamp_core.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_clamp_core"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_clamp_io.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_clamp_io"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_corner.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_corner"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_fill_1.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_1"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_fill_10.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_10"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_fill_20.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_20"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_fill_5.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_5"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_drv.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_drv"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_esd.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_esd"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_logic.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_logic"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_ls.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_ls"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_pulls.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_pulls"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_gpio_rcv.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_rcv"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_inv.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_inv"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_nand2.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nand2"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_nand3.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nand3"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_nor2.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nor2"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_ring.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_ring"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_vdd.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vdd"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_vddio.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vddio"
+        ],
+        "local_only": true
+      }
+    },
+    {
+      "path": "design/netlists/sky130_ioring_vss.spice",
+      "generator": "klt netlist",
+      "check": {
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vss"
+        ],
+        "local_only": true
+      }
+    }
+  ]
+}

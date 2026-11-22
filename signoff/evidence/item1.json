@@ -1,0 +1,1353 @@
+{
+  "schema_version": 1,
+  "kind": "generic",
+  "status": "pass",
+  "t1_item": 1,
+  "summary": "T1 item 1 (Design sources): 91/91 attestation checks passed (klt signoff --attest)",
+  "source": "design/attest-inventory.json",
+  "attestation": {
+    "producer": "klt signoff --attest",
+    "inventory_schema_version": 1,
+    "hash_algorithm": "sha256-raw-bytes",
+    "check_count": 91,
+    "passed_count": 91,
+    "checks": [
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/netlist.sh",
+        "passed": true,
+        "content_hash": "sha256:5476ea5fef92e95bb2e0807634452daccbc38627d6c873b91007ebd99873d02a"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/regen.sh",
+        "passed": true,
+        "content_hash": "sha256:915b4394161658e3fb1d01f0e65e281fc3dcf8bffa8e29c6de2b4c95abc80367"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_clamp_core.sch",
+        "passed": true,
+        "content_hash": "sha256:4a64f5a3934617f974cc58d1a3f54ca41384c05aba6eb7185a2873b7ff7f3e9e"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_clamp_core.sym",
+        "passed": true,
+        "content_hash": "sha256:88dcc2ef0046f8a6f05d2860fdccaae4f1d1053bf194b6d243e773cded7a8838"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_clamp_io.sch",
+        "passed": true,
+        "content_hash": "sha256:e42ec1f717af026c0a93b7beadf0adcc5a4bc7f5c39e61e8501a4ed49ec12f85"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_clamp_io.sym",
+        "passed": true,
+        "content_hash": "sha256:88dcc2ef0046f8a6f05d2860fdccaae4f1d1053bf194b6d243e773cded7a8838"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_corner.sch",
+        "passed": true,
+        "content_hash": "sha256:8bab8727cc705aa0a4651c61c832f33db91629b4239ff9ee1e1d60da38a9317d"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_corner.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_1.sch",
+        "passed": true,
+        "content_hash": "sha256:b0ce90b3c0af8cfccec6f5691f077848a799abdeb34d03908a3aba242ca34e9b"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_1.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_10.sch",
+        "passed": true,
+        "content_hash": "sha256:1fa1c98c475bb25f788f921e76d2fa8ed2273c894429958c67186083cbe51933"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_10.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_20.sch",
+        "passed": true,
+        "content_hash": "sha256:92fc241680c7f85043afba350924bb7ad3a3878f582e12dd88556ce15509caa3"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_20.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_5.sch",
+        "passed": true,
+        "content_hash": "sha256:2832a4bce0f0efb13d214b1f5959aa7824cf928be5281975ce5ff981f92e4809"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_fill_5.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio.sch",
+        "passed": true,
+        "content_hash": "sha256:d0588c2397051935f1ede2d38f4ae8c1cefd51adaac30a7c2f807bf6683916e1"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio.sym",
+        "passed": true,
+        "content_hash": "sha256:fe7da907dbb0b22acbafa34d741bba6d8681ccc6fe506d4a7e4517ca2d072a46"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_drv.sch",
+        "passed": true,
+        "content_hash": "sha256:c1b50eae926419dbbc2ff4b8a65739e58eb493a4a600ef9788e86583355ca06a"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_drv.sym",
+        "passed": true,
+        "content_hash": "sha256:d65296477ad8a1a3aa9fce4dfda7509521ad61d01473437196b3449ca44c7068"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_esd.sch",
+        "passed": true,
+        "content_hash": "sha256:58ba9665a0d9296a67ab59a4d076f6d87eba11c0594036dd21a8888f48742631"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_esd.sym",
+        "passed": true,
+        "content_hash": "sha256:8484b4071008d5141968ca9bae314a6997e22997da999ed617afe967d9bbbc74"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_logic.sch",
+        "passed": true,
+        "content_hash": "sha256:63877631cc17c81cfe38d837115530ad36ffb53b0328f7df326aa3bd435dd78f"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_logic.sym",
+        "passed": true,
+        "content_hash": "sha256:e90778f797a7b0ac2caf9feab832427264b7e624bd2c1e93c5b6f1b571b5fa1e"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_ls.sch",
+        "passed": true,
+        "content_hash": "sha256:d0b17d874f3c6ebc11a9af9ae216f39ef6a657cb0b296abd8863e6ebe638e44d"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_ls.sym",
+        "passed": true,
+        "content_hash": "sha256:9f24ab44dc52d677acb9155e96a73e027dcd65e5b5094ae1e9a8d70162b17936"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_pulls.sch",
+        "passed": true,
+        "content_hash": "sha256:b49a9e8b577b885a9296efa533dbfc5a85f35d242255c816cc6d15af63952085"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_pulls.sym",
+        "passed": true,
+        "content_hash": "sha256:081196d62623d1ec98ec09b9ee67602ac81616b897bdd5901c4ffe02b55bf32a"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_rcv.sch",
+        "passed": true,
+        "content_hash": "sha256:7ca8b2613936e22c8d38f9e0d6fb768a07d387e9780f9d78ff8ad9a59ef8d117"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_gpio_rcv.sym",
+        "passed": true,
+        "content_hash": "sha256:b4133ead855b03ff566ae98816382311867d0e256c7e60ce1f88a46b06228484"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_inv.sch",
+        "passed": true,
+        "content_hash": "sha256:0ecbe21e7fcbb041aaba5e83801c37be472f393b0355cbc0920a6e5049277822"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_inv.sym",
+        "passed": true,
+        "content_hash": "sha256:9e68053107088d3c6467360b55c28905cf57d6f039d92e9bc1b37c0216f7e512"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nand2.sch",
+        "passed": true,
+        "content_hash": "sha256:8c52bcced08d6c62ed4143890e51844c720e3fcfb9afeed08291107ac2943283"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nand2.sym",
+        "passed": true,
+        "content_hash": "sha256:5234278a61c2bc01137599bf6315e373cc2b0b69fe1c405b3a2a4610b03bd426"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nand3.sch",
+        "passed": true,
+        "content_hash": "sha256:438fd938a94b2093d7404a33c3187bdb31fd643601b3defe89ecb780a1074d83"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nand3.sym",
+        "passed": true,
+        "content_hash": "sha256:55726e6349a999e50f5dec177b022fd272ffa6bc8051ad1c1029f840b3f2b212"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nor2.sch",
+        "passed": true,
+        "content_hash": "sha256:30bbed360cd3597db998c650fa4df5dcb99a0edcb434127d79fe9415b4869e65"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_nor2.sym",
+        "passed": true,
+        "content_hash": "sha256:5234278a61c2bc01137599bf6315e373cc2b0b69fe1c405b3a2a4610b03bd426"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_ring.sch",
+        "passed": true,
+        "content_hash": "sha256:69052a852958a36a199445571e1384e55b618d087684d8abb3554f0214726114"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_ring.sym",
+        "passed": true,
+        "content_hash": "sha256:5e56153ad1f9b9463cebab541bb1d0443f546696e663d03de8710bb530a48cba"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vdd.sch",
+        "passed": true,
+        "content_hash": "sha256:ed35a923426d38a63fa2cddf90c7f4c84098a1a3274510b4817c4d3c3966be43"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vdd.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vddio.sch",
+        "passed": true,
+        "content_hash": "sha256:b4a76e1335968fa1c975965b50805c9de47d6a45b4871dc2a1046b71c6477359"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vddio.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vss.sch",
+        "passed": true,
+        "content_hash": "sha256:96c0219b20eb89e89b8e613834ebc8135013e3ecc93020c87d6dcc35c2f2158e"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschem/sky130_ioring_vss.sym",
+        "passed": true,
+        "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+      },
+      {
+        "check": "present",
+        "role": "source",
+        "path": "design/xschemrc",
+        "passed": true,
+        "content_hash": "sha256:a5282884b0579fb67612e6dbcaa95338b8cb72a60334af6bb91a8fa17e87656f"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_clamp_core.spice",
+        "passed": true,
+        "content_hash": "sha256:cddfe25bdfb367144e9ac1381eaaf1a2a686857d22b1d66c97d93aef1b681c2d"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_clamp_io.spice",
+        "passed": true,
+        "content_hash": "sha256:13383ebb57cca49a165c4b20ebd12227c28063c0de72a2b147e6c3b53f4938e4"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_corner.spice",
+        "passed": true,
+        "content_hash": "sha256:6e249ec50676a129d693c354d3f87bb0f439b1f4e89f487199957a35b4f268b8"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_fill_1.spice",
+        "passed": true,
+        "content_hash": "sha256:f91405a5eb00991aa0847711f0efb704f15443c390a713b5ab3b63d36529c4b7"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_fill_10.spice",
+        "passed": true,
+        "content_hash": "sha256:a9645c89f016aeb54c716eae47c0dab2f52db1e12567153b8e27c271ff157410"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_fill_20.spice",
+        "passed": true,
+        "content_hash": "sha256:094a05a863aa5e084f56080b3e5d4151a07fc64bc54c29ddb14d5032631dad66"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_fill_5.spice",
+        "passed": true,
+        "content_hash": "sha256:30ba1153df56a64c0284f57a90c5a5e0a74022264ecc8feea80f62ed5b585204"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio.spice",
+        "passed": true,
+        "content_hash": "sha256:d8d33d66639967b4a45c5abe8e981946500138d5a9a502a3a6d720353b4aa6ef"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_drv.spice",
+        "passed": true,
+        "content_hash": "sha256:897caf3b58c27c76fa46885e11a2c6a1c842b371f318bb7d738bea27ff9aca88"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_esd.spice",
+        "passed": true,
+        "content_hash": "sha256:953e268ab9047d835b563333416f105349f82afc71edb14b7f4253e572d5464f"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_logic.spice",
+        "passed": true,
+        "content_hash": "sha256:0437c9b997d6d1457fba8a71d3e262c23c228238d5cab7a3941404e82fafd19d"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_ls.spice",
+        "passed": true,
+        "content_hash": "sha256:a2e529339600ef290665399acae3c211a61d47b3de7b0be90a933ebe1426fb91"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_pulls.spice",
+        "passed": true,
+        "content_hash": "sha256:05059629e034376b5689c43b38eb0366cc17c4d5ddd5c35602441418c3030beb"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_gpio_rcv.spice",
+        "passed": true,
+        "content_hash": "sha256:67b03a94af6fa6456ca50fb7a251b7f14a1779b8cc52c5bc23dda8f224631f0b"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_inv.spice",
+        "passed": true,
+        "content_hash": "sha256:f9d422c56f8459d8acb5e23b372f8d664c368b7a0af4432b03915dd255458d68"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_nand2.spice",
+        "passed": true,
+        "content_hash": "sha256:9e1e6f0d9437e85b216dc6ba82d741706c105a7d7a84a66e4f7f4ae3e06b3e74"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_nand3.spice",
+        "passed": true,
+        "content_hash": "sha256:3146937944139cd1cae1fb8721c056090a8560cd2dde78e8a18f1d51ab620463"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_nor2.spice",
+        "passed": true,
+        "content_hash": "sha256:0274b376c8c849b6d5ae448b424baa7eadf03cfe7e2197f59bd39e043fc09a04"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_ring.spice",
+        "passed": true,
+        "content_hash": "sha256:146df4362b9bbf5bc6e7bb050cce0a70f0d5d0b1dcea281aecb37658c59879b8"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_vdd.spice",
+        "passed": true,
+        "content_hash": "sha256:abe1be7186650fa548fa62bab02fe290ebba478aac1197f9c5929555d34057f7"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_vddio.spice",
+        "passed": true,
+        "content_hash": "sha256:7ec3e3b311562048ccd0ca9c645ae81344919c7fe530fa375fa37f5d76ed12a9"
+      },
+      {
+        "check": "present",
+        "role": "derived",
+        "path": "design/netlists/sky130_ioring_vss.spice",
+        "passed": true,
+        "content_hash": "sha256:462cba6e6625b82b2db6e1d327a2e9be3e78c38ec42496e588a14fef277359ec"
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_clamp_core.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_clamp_core"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_clamp_io.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_clamp_io"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_corner.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_corner"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_fill_1.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_1"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_fill_10.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_10"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_fill_20.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_20"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_fill_5.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_fill_5"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_drv.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_drv"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_esd.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_esd"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_logic.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_logic"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_ls.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_ls"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_pulls.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_pulls"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_gpio_rcv.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_gpio_rcv"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_inv.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_inv"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_nand2.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nand2"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_nand3.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nand3"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_nor2.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_nor2"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_ring.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_ring"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_vdd.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vdd"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_vddio.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vddio"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "command",
+        "role": "freshness",
+        "target": "design/netlists/sky130_ioring_vss.spice",
+        "generator": "klt netlist",
+        "argv": [
+          "bash",
+          "design/netlist.sh",
+          "--check",
+          "sky130_ioring_vss"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      }
+    ]
+  },
+  "provenance": {
+    "klt_version": "0.9.1",
+    "klayout_version": null,
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "paths": [
+        {
+          "path": {
+            "path": "design/attest-inventory.json",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:c9e3c17390fc0465d60e8a5a664150ff15b52532c6a8f9d97f62dfdfb3dec4d3"
+        },
+        {
+          "path": {
+            "path": "design/netlist.sh",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:5476ea5fef92e95bb2e0807634452daccbc38627d6c873b91007ebd99873d02a"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_clamp_core.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:cddfe25bdfb367144e9ac1381eaaf1a2a686857d22b1d66c97d93aef1b681c2d"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_clamp_io.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:13383ebb57cca49a165c4b20ebd12227c28063c0de72a2b147e6c3b53f4938e4"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_corner.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:6e249ec50676a129d693c354d3f87bb0f439b1f4e89f487199957a35b4f268b8"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_fill_1.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:f91405a5eb00991aa0847711f0efb704f15443c390a713b5ab3b63d36529c4b7"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_fill_10.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:a9645c89f016aeb54c716eae47c0dab2f52db1e12567153b8e27c271ff157410"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_fill_20.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:094a05a863aa5e084f56080b3e5d4151a07fc64bc54c29ddb14d5032631dad66"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_fill_5.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:30ba1153df56a64c0284f57a90c5a5e0a74022264ecc8feea80f62ed5b585204"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:d8d33d66639967b4a45c5abe8e981946500138d5a9a502a3a6d720353b4aa6ef"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_drv.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:897caf3b58c27c76fa46885e11a2c6a1c842b371f318bb7d738bea27ff9aca88"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_esd.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:953e268ab9047d835b563333416f105349f82afc71edb14b7f4253e572d5464f"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_logic.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:0437c9b997d6d1457fba8a71d3e262c23c228238d5cab7a3941404e82fafd19d"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_ls.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:a2e529339600ef290665399acae3c211a61d47b3de7b0be90a933ebe1426fb91"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_pulls.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:05059629e034376b5689c43b38eb0366cc17c4d5ddd5c35602441418c3030beb"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_gpio_rcv.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:67b03a94af6fa6456ca50fb7a251b7f14a1779b8cc52c5bc23dda8f224631f0b"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_inv.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:f9d422c56f8459d8acb5e23b372f8d664c368b7a0af4432b03915dd255458d68"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_nand2.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:9e1e6f0d9437e85b216dc6ba82d741706c105a7d7a84a66e4f7f4ae3e06b3e74"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_nand3.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:3146937944139cd1cae1fb8721c056090a8560cd2dde78e8a18f1d51ab620463"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_nor2.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:0274b376c8c849b6d5ae448b424baa7eadf03cfe7e2197f59bd39e043fc09a04"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_ring.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:146df4362b9bbf5bc6e7bb050cce0a70f0d5d0b1dcea281aecb37658c59879b8"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_vdd.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:abe1be7186650fa548fa62bab02fe290ebba478aac1197f9c5929555d34057f7"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_vddio.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:7ec3e3b311562048ccd0ca9c645ae81344919c7fe530fa375fa37f5d76ed12a9"
+        },
+        {
+          "path": {
+            "path": "design/netlists/sky130_ioring_vss.spice",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:462cba6e6625b82b2db6e1d327a2e9be3e78c38ec42496e588a14fef277359ec"
+        },
+        {
+          "path": {
+            "path": "design/regen.sh",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:915b4394161658e3fb1d01f0e65e281fc3dcf8bffa8e29c6de2b4c95abc80367"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_clamp_core.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:4a64f5a3934617f974cc58d1a3f54ca41384c05aba6eb7185a2873b7ff7f3e9e"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_clamp_core.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:88dcc2ef0046f8a6f05d2860fdccaae4f1d1053bf194b6d243e773cded7a8838"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_clamp_io.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:e42ec1f717af026c0a93b7beadf0adcc5a4bc7f5c39e61e8501a4ed49ec12f85"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_clamp_io.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:88dcc2ef0046f8a6f05d2860fdccaae4f1d1053bf194b6d243e773cded7a8838"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_corner.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:8bab8727cc705aa0a4651c61c832f33db91629b4239ff9ee1e1d60da38a9317d"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_corner.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_1.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:b0ce90b3c0af8cfccec6f5691f077848a799abdeb34d03908a3aba242ca34e9b"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_1.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_10.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:1fa1c98c475bb25f788f921e76d2fa8ed2273c894429958c67186083cbe51933"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_10.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_20.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:92fc241680c7f85043afba350924bb7ad3a3878f582e12dd88556ce15509caa3"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_20.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_5.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2832a4bce0f0efb13d214b1f5959aa7824cf928be5281975ce5ff981f92e4809"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_fill_5.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:d0588c2397051935f1ede2d38f4ae8c1cefd51adaac30a7c2f807bf6683916e1"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:fe7da907dbb0b22acbafa34d741bba6d8681ccc6fe506d4a7e4517ca2d072a46"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_drv.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:c1b50eae926419dbbc2ff4b8a65739e58eb493a4a600ef9788e86583355ca06a"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_drv.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:d65296477ad8a1a3aa9fce4dfda7509521ad61d01473437196b3449ca44c7068"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_esd.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:58ba9665a0d9296a67ab59a4d076f6d87eba11c0594036dd21a8888f48742631"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_esd.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:8484b4071008d5141968ca9bae314a6997e22997da999ed617afe967d9bbbc74"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_logic.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:63877631cc17c81cfe38d837115530ad36ffb53b0328f7df326aa3bd435dd78f"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_logic.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:e90778f797a7b0ac2caf9feab832427264b7e624bd2c1e93c5b6f1b571b5fa1e"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_ls.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:d0b17d874f3c6ebc11a9af9ae216f39ef6a657cb0b296abd8863e6ebe638e44d"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_ls.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:9f24ab44dc52d677acb9155e96a73e027dcd65e5b5094ae1e9a8d70162b17936"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_pulls.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:b49a9e8b577b885a9296efa533dbfc5a85f35d242255c816cc6d15af63952085"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_pulls.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:081196d62623d1ec98ec09b9ee67602ac81616b897bdd5901c4ffe02b55bf32a"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_rcv.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:7ca8b2613936e22c8d38f9e0d6fb768a07d387e9780f9d78ff8ad9a59ef8d117"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_gpio_rcv.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:b4133ead855b03ff566ae98816382311867d0e256c7e60ce1f88a46b06228484"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_inv.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:0ecbe21e7fcbb041aaba5e83801c37be472f393b0355cbc0920a6e5049277822"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_inv.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:9e68053107088d3c6467360b55c28905cf57d6f039d92e9bc1b37c0216f7e512"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nand2.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:8c52bcced08d6c62ed4143890e51844c720e3fcfb9afeed08291107ac2943283"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nand2.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:5234278a61c2bc01137599bf6315e373cc2b0b69fe1c405b3a2a4610b03bd426"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nand3.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:438fd938a94b2093d7404a33c3187bdb31fd643601b3defe89ecb780a1074d83"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nand3.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:55726e6349a999e50f5dec177b022fd272ffa6bc8051ad1c1029f840b3f2b212"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nor2.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:30bbed360cd3597db998c650fa4df5dcb99a0edcb434127d79fe9415b4869e65"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_nor2.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:5234278a61c2bc01137599bf6315e373cc2b0b69fe1c405b3a2a4610b03bd426"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_ring.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:69052a852958a36a199445571e1384e55b618d087684d8abb3554f0214726114"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_ring.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:5e56153ad1f9b9463cebab541bb1d0443f546696e663d03de8710bb530a48cba"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vdd.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:ed35a923426d38a63fa2cddf90c7f4c84098a1a3274510b4817c4d3c3966be43"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vdd.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vddio.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:b4a76e1335968fa1c975965b50805c9de47d6a45b4871dc2a1046b71c6477359"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vddio.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vss.sch",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:96c0219b20eb89e89b8e613834ebc8135013e3ecc93020c87d6dcc35c2f2158e"
+        },
+        {
+          "path": {
+            "path": "design/xschem/sky130_ioring_vss.sym",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:2da097e58515cd48cd6137bbbfe3b05ef9510447e05558d749e19733889bf7da"
+        },
+        {
+          "path": {
+            "path": "design/xschemrc",
+            "scope": "repo"
+          },
+          "content_hash": "sha256:a5282884b0579fb67612e6dbcaa95338b8cb72a60334af6bb91a8fa17e87656f"
+        }
+      ],
+      "content_hash": "sha256:f81ebd0091aa2ac92891e694efed82adb82e3df1fd7e8c972ca8007ef88e5c06"
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "schema_version": 2,
+  "file": {
+    "path": null,
+    "scope": "external"
+  },
+  "spec": "signoff/erc-supply-spec.json",
+  "pdk": null,
+  "findings_only": true,
+  "gate_role": "poly",
+  "gate_count": 260,
+  "antenna_tables_omitted": true,
+  "gates": [],
+  "nets": [
+    {
+      "name": "VDDIO",
+      "matched_islands": 2,
+      "expected_islands": 1,
+      "roles": [
+        "met4"
+      ],
+      "unlabelled_islands": 0,
+      "unlabelled_area_um2": 0.0,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VDD",
+      "matched_islands": 2,
+      "expected_islands": 1,
+      "roles": [
+        "met3"
+      ],
+      "unlabelled_islands": 0,
+      "unlabelled_area_um2": 0.0,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": 0
+    },
+    {
+      "name": "VSS",
+      "matched_islands": 2,
+      "expected_islands": 1,
+      "roles": [],
+      "unlabelled_islands": null,
+      "unlabelled_area_um2": null,
+      "unlabelled_bbox": null,
+      "unlabelled_allowed_islands": null
+    }
+  ],
+  "erc_findings": [
+    {
+      "rule": "erc.unconnected_net",
+      "description": "declared net 'VDD' resolves to 2 disconnected electrical islands (expected exactly one)",
+      "net": "VDD",
+      "other_net": null,
+      "gate_id": null,
+      "layer": null,
+      "bbox": {
+        "left": 50000,
+        "bottom": 50000,
+        "right": 777000,
+        "top": 777000
+      },
+      "islands": [
+        {
+          "bbox": {
+            "left": 415500,
+            "bottom": 50000,
+            "right": 777000,
+            "top": 777000
+          },
+          "layer": "met3",
+          "shape_count": 1187
+        },
+        {
+          "bbox": {
+            "left": 50000,
+            "bottom": 50000,
+            "right": 413500,
+            "top": 777000
+          },
+          "layer": "met3",
+          "shape_count": 1187
+        }
+      ]
+    },
+    {
+      "rule": "erc.unconnected_net",
+      "description": "declared net 'VDDIO' resolves to 2 disconnected electrical islands (expected exactly one)",
+      "net": "VDDIO",
+      "other_net": null,
+      "gate_id": null,
+      "layer": null,
+      "bbox": {
+        "left": 30000,
+        "bottom": 30000,
+        "right": 797000,
+        "top": 797000
+      },
+      "islands": [
+        {
+          "bbox": {
+            "left": 30000,
+            "bottom": 30000,
+            "right": 413500,
+            "top": 797000
+          },
+          "layer": "met4",
+          "shape_count": 772
+        },
+        {
+          "bbox": {
+            "left": 415500,
+            "bottom": 30000,
+            "right": 797000,
+            "top": 797000
+          },
+          "layer": "met4",
+          "shape_count": 772
+        }
+      ]
+    },
+    {
+      "rule": "erc.unconnected_net",
+      "description": "declared net 'VSS' resolves to 2 disconnected electrical islands (expected exactly one)",
+      "net": "VSS",
+      "other_net": null,
+      "gate_id": null,
+      "layer": null,
+      "bbox": {
+        "left": 10000,
+        "bottom": 10000,
+        "right": 817000,
+        "top": 817000
+      },
+      "islands": [
+        {
+          "bbox": {
+            "left": 10000,
+            "bottom": 10000,
+            "right": 425500,
+            "top": 817000
+          },
+          "layer": "met5",
+          "shape_count": 622
+        },
+        {
+          "bbox": {
+            "left": 401500,
+            "bottom": 10000,
+            "right": 817000,
+            "top": 817000
+          },
+          "layer": "met5",
+          "shape_count": 622
+        }
+      ]
+    }
+  ],
+  "erc_finding_count": 3,
+  "erc_status": "violations",
+  "status": "violations",
+  "coverage": {
+    "scope": "antenna",
+    "schema_version": 1,
+    "known": true,
+    "checked": [],
+    "skipped": [
+      {
+        "id": "antenna:[]",
+        "reason": "findings_only"
+      }
+    ],
+    "inapplicable": [
+      {
+        "id": "antenna:[\"gate_reference_level\"]",
+        "reason": "gate_reference_level"
+      }
+    ],
+    "unknown": [],
+    "nothing_checked": true,
+    "nothing_checked_reasons": [
+      "findings_only",
+      "gate_reference_level"
+    ]
+  },
+  "erc_coverage": {
+    "scope": "connectivity",
+    "schema_version": 1,
+    "known": true,
+    "checked": [
+      "erc.floating_gate:[]",
+      "erc.missing_tie:[\"ntap_vdd\"]",
+      "erc.missing_tie:[\"ntap_vddio\"]",
+      "erc.missing_tie:[\"ptap_vss\"]",
+      "erc.net_connectivity:[\"VDD\"]",
+      "erc.net_connectivity:[\"VDDIO\"]",
+      "erc.net_connectivity:[\"VSS\"]"
+    ],
+    "skipped": [],
+    "inapplicable": [
+      {
+        "id": "erc.supply_short",
+        "reason": "substrate_continuity_not_modelled"
+      }
+    ],
+    "unknown": [],
+    "nothing_checked": false,
+    "nothing_checked_reasons": [],
+    "missing_tie_checked": true,
+    "checked_by_assertion": [],
+    "checked_by_well_assertion": [
+      "erc.missing_tie:[\"ntap_vdd\"]",
+      "erc.missing_tie:[\"ntap_vddio\"]",
+      "erc.missing_tie:[\"ptap_vss\"]"
+    ],
+    "layers_in_stream_without_declaration": [
+      "65/20",
+      "66/13",
+      "75/20",
+      "76/20",
+      "79/20",
+      "81/23",
+      "86/20",
+      "93/44",
+      "94/20",
+      "95/20"
+    ],
+    "well_assertion_coverage": []
+  },
+  "ties_disclosure": null,
+  "provenance": {
+    "klt_version": "0.9.1",
+    "klt_git_commit": "4d0d29be4fd991f499d59e783a908082d5e24c56",
+    "klt_reinstall_spec": "klayout-tools==0.9.1",
+    "klayout_version": "0.30.13",
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "content_hash": "sha256:15680df67a72aa078a1f47f7d4dd56204df983b8e37b6b26b4d8bc9528a17a95",
+      "role": "layout"
+    },
+    "spec": {
+      "content_hash": "sha256:18a9ba526439abead9a7411fc390d41c95a3be8037e26e231eb227a626359663"
+    },
+    "devices": [
+      {
+        "name": "cap_mim",
+        "body_layer": "89/44",
+        "on": "via3",
+        "body_area_um2": 153.6
+      }
+    ],
+    "net_exclusions": [],
+    "label_layers": [
+      {
+        "name": "met2",
+        "label_layer": "69/5",
+        "label_text_count": 120
+      },
+      {
+        "name": "met3",
+        "label_layer": "70/5",
+        "label_text_count": 40
+      },
+      {
+        "name": "met4",
+        "label_layer": "71/5",
+        "label_text_count": 40
+      },
+      {
+        "name": "met5",
+        "label_layer": "72/5",
+        "label_text_count": 48
+      }
+    ]
+  },
+  "compact": {
+    "gate_count": 260,
+    "antenna_levels_skipped": 1560,
+    "antenna_reference_levels": 260,
+    "floating_gate_checked": 260,
+    "skipped_reason": "findings_only"
+  }
+}

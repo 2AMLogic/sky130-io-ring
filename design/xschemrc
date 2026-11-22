@@ -1,0 +1,17 @@
+# xschem resource file for the sky130 I/O ring sources (read by `klt netlist --rcfile`).
+# Symbol search path: this repo's cells first, then the sky130A PDK xschem
+# library resolved from $PDK_ROOT (sim/lib/pdk_env.sh exports it; default ~/.ciel).
+set XSCHEM_LIBRARY_PATH {}
+append XSCHEM_LIBRARY_PATH :[file dirname [file normalize [info script]]]/xschem
+append XSCHEM_LIBRARY_PATH :${XSCHEM_SHAREDIR}/xschem_library/devices
+append XSCHEM_LIBRARY_PATH :${XSCHEM_SHAREDIR}/xschem_library
+if {[info exists env(PDK_ROOT)]} {
+  set pdk_root $env(PDK_ROOT)
+} else {
+  set pdk_root $env(HOME)/.ciel
+}
+append XSCHEM_LIBRARY_PATH :${pdk_root}/sky130A/libs.tech/xschem
+
+# Netlist the top-level schematic as a real .subckt (not a commented-out block), so each
+# cell netlist is a self-contained, includable subcircuit library.
+set top_is_subckt 1

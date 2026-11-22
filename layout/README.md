@@ -1,3 +1,156 @@
 # layout
 
-Empty until the first work lands here. See the repo README for scope.
+Generated, not hand-drawn. The PDK-independent half names no layer and no
+rule: `gen_ring.py` (ring assembly, spec readers, seam checks, stream writer),
+`ringgeom.py` (geometry primitives), `netlist_read.py` (reads the committed
+`design/netlists/*.spice`) and `chanroute.py` (single-channel router). The
+sky130 half is `sky130_cells.py` (layer numbers, rail bands, edge cells, the
+GPIO core and its connection to rails and pad), `sky130_blocks.py` (turns a
+`.subckt` into a cell of wired devices) and `sky130_devices.py` (MOS fingers,
+taps, diodes, poly resistor). Cell numbers are read from `spec/io-ring.json`
+(CELL.2/3/4/5/6/7/8/9, LU.1), device sizes from the netlists; neither is
+duplicated. To port, replace the `sky130_*` modules.
+
+```sh
+pip install klayout==0.30.10          # no PDK needed
+python3 layout/gen_ring.py --attest signoff/evidence/layout-attestation.json
+python3 layout/tests/test_ring.py     # seeded-defect tests
+python3 scripts/ci/check_layout_reproducible.py .
+```
+
+After regenerating, update the `content_hash` for item 2 in
+`signoff/block-manifest.json` and regenerate `signoff/signoff-record.json`
+(`signoff/README.md`).
+
+## Streams (`gds/`)
+
+Written without timestamps, so output is byte-identical across runs.
+
+| Cell | Role |
+|---|---|
+| `sky130_ioring_gpio` | pad (`PAD`) and every device of the GPIO netlists, wired: 106 MOS fingers, 4 junction diodes, 1 poly resistor (see below) |
+| `sky130_ioring_vddio`, `_vdd`, `_vss` | supply pads tied to their rail; `_vddio` and `_vdd` also carry the supply clamp (below) |
+| `sky130_ioring_corner` | square corner, edge = cell depth, rails and strips turn 90 degrees with 45-degree chamfer/mitre, no pad |
+| `sky130_ioring_fill_{1,5,10,20}` | rails and guard strips only |
+| `sky130_ioring_ring` | closed ring: 4 corners + 4 identical sides (five pad cells, 37 um of filler) |
+
+Pin/net names (`PAD`, `VSS`, `VDDIO`, `VDD`) are labels on met5/met4/met3 label
+purposes and are the inputs to DRC/LVS/ERC; keep them stable. Every edge cell
+labels all three rail bands where it draws them (`_edge_common`): a device body
+resolves only to a named net, so an unnamed rail conductor leaves device bodies
+`unverified` in LVS. The corner labels none — its bands continue the
+neighbours'.
+
+## What is drawn (die edge at y = 0, local frame of an edge cell)
+
+- Pitch 80 um, depth 195 um (spec: 80, <= 200). Rails 12 um wide: VSS met5 at
+  10-22, VDDIO met4 at 30-42, VDD met3 at 50-62 um from the die edge (layers
+  from CELL.5), identical in every cell.
+- Continuous guard strips on every edge cell and around the corners: p+ tap
+  strip (VSS) and n-well with n+ tap strip (VDDIO). Pad cells tie them to the
+  rails by via stacks.
+- Bond pad: 55 um opening on `pad`, met5 metal 61 um. 55 um is the provisional
+  minimum (CELL.4 is OPEN).
+
+## GPIO devices
+
+`sky130_ioring_gpio` instantiates `sky130_ioring_gpio_core`, which holds the
+sub-blocks of `design/netlists/sky130_ioring_gpio.spice` in two assemblies of
+two rows each (`gpio_asm_a`: logic, pull network, three level shifters;
+`gpio_asm_b`: fourth level shifter, receiver, driver, ESD diodes and resistor).
+Each sub-block is its own cell (`gpio_logic`, `gpio_ls`, `gpio_drv`,
+`gpio_pulls`, `gpio_esd`, `gpio_rcv`) with the called `inv` / `nand2` / `nand3` /
+`nor2` drawn inline.
+
+| Netlist devices | Drawn as |
+|---|---|
+| `nfet_01v8`, `pfet_01v8`, `nfet_g5v0d10v5`, `pfet_g5v0d10v5` (`m` = `m` fingers) | one poly gate per finger at the netlist W and L over shared diffusion strips; 52 n + 54 p fingers, of which 31 n + 33 p are thick-oxide (`hvi`) |
+| `diode_pd2nw_05v5`, `diode_pw2nd_05v5` | rectangular diff under the diode marker (p+ in an n-well, n+ in the substrate). The drawn rectangles are 200 um2 / 60 um (pad pair) and 10 um2 / 14 um (local pair) — the netlist `area` / `perim` values themselves: `sim/diode-unit-probe/` (#107) measured the instance unit as um2 / um, and since #116 the generator carries the values unscaled (`sky130_devices.py` takes `area` in um2 and `perim` in um), so the drawn and netlisted figures agree. The magnitudes remain placeholders pending gate G1 sizing |
+| `res_high_po_1p41` | 1.41 um poly strip, L = 1.0 um under the resistor marker and `rpm`, contacted at both ends |
+
+- Every p group sits in its own n-well, tied by n+ taps; a thick-oxide well is
+  enclosed by `hvi`, and the VDDIO and VDD wells are separate. Substrate taps
+  tie the n groups to VSS.
+- LU.1 / LU.4: every pad-connected bank sits inside a closed annulus. The
+  driver (10 NMOS, 20 PMOS fingers), the pull pair (`gpio_pulls`) and the ESD
+  diodes with the series resistor (`gpio_esd`) each get a p+ tap annulus (VSS)
+  round the n row and an n+ tap annulus (VDDIO) round the p row, in its own
+  well: 6 annuli (`sky130_blocks.GUARDED`; the count the self-check expects is
+  `sky130_cells.GUARD_RINGS`). The receiver, level shifters and logic have no
+  ring.
+- LU.2: a group without a ring has a tap at each end and another at least every
+  `TAP_SPAN` of unit width (`layout/sky130_blocks.py`). A ringed group's taps are its annulus.
+- Fit: the core ends at x = 79.45 um of the 80 um cell width and y = 173.3 um of
+  the 195 um depth; the cell outline is unchanged. Rings use 1 um side and 2 um
+  top/bottom clearance to keep the widest assembly inside the width.
+- Wiring: li1 / mcon / met1 inside devices, met2 tracks, met3 pins and drops.
+  VSS, VDDIO and VDD leave the core on met2 spines at x = 2, 6, 10 um; VSS joins
+  the existing tie stack, VDDIO and VDD get a stack on their rail. `PAD` goes
+  through a stack on the core's pad track and a met5 strap to the pad metal.
+  Rails and pad are named by labels (`VSS`, `VDDIO`, `VDD`, `PAD`), the six
+  signal pins and the eight internal signal nets (`PG`, `NG`, `PUN`, `PDP` and their `_C` sources)
+  by labels on their tracks.
+- Bank widths and strap widths are layout choices, not sized for ESD current.
+
+## Supply clamp (`sky130_clamp.py`, in `vddio` and `vdd`)
+
+Drawn from `design/netlists/sky130_ioring_clamp_{io,core}.spice` at netlist
+W / L / m, one finger per `m`: the big NMOS (400 fingers W=5 L=0.5 thick-oxide in
+`vddio`; 800 fingers W=5 L=0.15 in `vdd`), the three-stage inverter chain, two
+xhigh-poly 43 um resistors in series (`R1`, `R2`; the joint is an unrouted poly
+head) and the 2 x (30 x 33 um) MIM capacitor as two `capm` plates. Poly, hvi
+(thick-oxide cell only), diffusion, li1 and met1 build the devices; vertical
+met2 straps at the left of the cell carry `VSS`, `VDDIO`/`VDD`, the three gate
+nets and the RC node, and tie into the cell's own rail band. The MIM sits over
+the devices (met3/met4) and clear of the pad stub. `klt extract` finds 444
+(`vddio`) / 844 (`vdd`) devices.
+
+Finger pitch, bus widths and strap widths are drawing choices; no
+current-density, electromigration or snapback check was made.
+
+## What is not claimed
+
+- Nothing here is ESD-rated or qualified. The diodes and the resistor are the
+  netlist's, drawn at its area / perimeter. The supply clamp is a
+  connectivity-correct drawing for extraction, LVS and the curated DRC deck, not
+  a sized ESD protection. ESD sizing is decision 0004.
+- DRC passes the curated `sky130` deck (`signoff/README.md`); that deck has
+  no rule for thick-oxide drawing beyond `nwell.enclosed.hvi.1` (the report's
+  `voltage_domain_warnings`), none for latch-up, tap spacing or guard-ring
+  construction. `klt tap-distance` is the check for LU.2, run on
+  `sky130_ioring_gpio.gds` (klt 0.8.0, 10 um target, foundry figure 15 um):
+
+  ```sh
+  klt tap-distance --subject '65/20 & 93/44' --taps '65/44 & 94/20' --max-distance-um 10 --top sky130_ioring_gpio layout/gds/sky130_ioring_gpio.gds
+  klt tap-distance --subject '65/20 & 94/20' --taps '65/44 & 93/44' --island '64/20' --max-distance-um 10 --top sky130_ioring_gpio layout/gds/sky130_ioring_gpio.gds
+  ```
+
+  | | n-diff to p-tap | p-diff to n-tap, per well island |
+  |---|---|---|
+  | before (taps at group ends, rings on the driver only) | fail, 22.7 um (9 areas) | fail, 22.7 um (9 areas) |
+  | now | pass, <= 8.9 um | pass, <= 8.9 um |
+
+  No island remains over 10 um. LU.4 now holds for every n+ diffusion on the
+  pad: driver NMOS, pull-down NMOS and the ESD n+ diode are inside a VSS
+  annulus. The deck does not check ring construction, so that is the
+  generator's own self-check plus the tap-distance result, not a deck result.
+  Nothing here is an ESD rating.
+- LVS of this cell is `match` with klt 0.9.1: the four diode cards resolve
+  (2AMLogic/klayout-tools#4319), so all devices, pins and nets compare. Not
+  compared: the resistor `L`/`W`/`A`/`P`, and its `R` is a placeholder
+  (`signoff/README.md`). ERC on the ring is clean (`signoff/README.md`). The
+  comparison is flat (`signoff/README.md`).
+- Metal and via widths, current density and electromigration are not
+  checked; parasitics are not extracted.
+- The spec is proposed, not ratified; re-check the CELL rows when it is.
+- No geometry is taken from `sky130_fd_io` (decision 0001).
+
+## Self-checks (run on every generation)
+
+Spec values (pitch, depth, rail width/layer, fillers, grid, 45-degree edges),
+every edge cell's rails and strips span x = 0..width at the same y-extent,
+instances tile the ring with no gap or overlap, each continuous conductor
+covers an independently constructed closed ring, the guard annuli in the
+GPIO (the tech module's count) are closed, and the drawn GPIO devices equal the netlists': each MOS
+finger's kind, oxide, W and L, each diode's kind and area, and the resistor's
+L, read back from the geometry and compared with `design/netlists/`.

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "kind": "generic",
+  "status": "pass",
+  "t1_item": 9,
+  "summary": "T1 item 9 (Testbenches shipped): 8/8 attestation checks passed (klt signoff --attest)",
+  "source": "signoff/attest/item9.json",
+  "attestation": {
+    "producer": "klt signoff --attest",
+    "inventory_schema_version": 1,
+    "hash_algorithm": "sha256-raw-bytes",
+    "check_count": 8,
+    "passed_count": 8,
+    "checks": [
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/clamp-probe/run.sh",
+        "passed": true,
+        "content_hash": "sha256:514c0d443345b588a80fa7ecdf2e611d0bf9e21fdf66bd3d50960034a7eeffa2"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/gpio-probe/run.sh",
+        "passed": true,
+        "content_hash": "sha256:05bdac6cb893b9ba35d9e15233ad7ccaebd740daa6031c24b5b8b718bb5a0311"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/lib/gpio_measurements.sp",
+        "passed": true,
+        "content_hash": "sha256:519113985c6204f079a07b04addbd049a9be5cd37eb391ef81dd12b520dda743"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/pdk-smoke/cold-start.sh",
+        "passed": true,
+        "content_hash": "sha256:3f013b2f4864288078264660b55d54dfa93906115376ca347bbd538cbe6e4809"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/pdk-smoke/run.sh",
+        "passed": true,
+        "content_hash": "sha256:6e2ba5e47fc8a10d93e55493e4bee1c8fc33b66a651ba9f32737ceccab6538d1"
+      },
+      {
+        "check": "command",
+        "role": "cold_start",
+        "argv": [
+          "bash",
+          "sim/pdk-smoke/cold-start.sh"
+        ],
+        "cwd": ".",
+        "exit_status": 0,
+        "passed": true,
+        "local_only": true
+      },
+      {
+        "check": "pin",
+        "role": "pdk",
+        "passed": true,
+        "value": {
+          "name": "sky130A",
+          "revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7"
+        }
+      },
+      {
+        "check": "pin",
+        "role": "tools",
+        "passed": true,
+        "value": {
+          "ciel": "2.6.1",
+          "klt": "0.8.0",
+          "ngspice": "46",
+          "xschem": "3.4.7"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "klt_version": "0.9.1",
+    "klayout_version": null,
+    "pdk": null,
+    "deck": null,
+    "input": {
+      "path": {
+        "path": "signoff/attest/item9.json",
+        "scope": "repo"
+      },
+      "content_hash": "sha256:9b689d949fe562bde0abdb166af01a37727de433dce5db39626b1b88ced131a2"
+    }
+  }
+}

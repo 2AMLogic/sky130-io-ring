@@ -39,6 +39,7 @@ remain. Nothing here is ratified by that review.
 | [0002 supplies and device flavors](decisions/0002-supplies-and-device-flavors.md) | VDDIO / VDD / ground and which devices each uses |
 | [0003 PVT corner set](decisions/0003-pvt-corner-set.md) | The 75 named corners |
 | [0004 ESD network topology](decisions/0004-esd-network-topology.md) | Per-pad and supply protection, evidence limits |
+| [0005 sim record integrity](decisions/0005-sim-record-integrity.md) | Records append-only, harness scripts hash-pinned by item 9 |
 
 Rule coverage of klt's sky130 deck: [`klt-rule-coverage.md`](klt-rule-coverage.md).
 

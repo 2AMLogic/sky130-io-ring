@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "t1-attestation-inventory",
+  "t1_item": 9,
+  "description": "PDK smoke, the G6 single-corner RC clamp probe (power-up ramps and an HBM pulse, tt only) and the first GPIO single-corner probe (function, levels, edges, delays, thresholds, leakage, pulls; tt, 27 C, nominal rails). Probes, not item-5 evidence.",
+  "testbenches": ["sim/pdk-smoke/run.sh", "sim/pdk-smoke/cold-start.sh", "sim/clamp-probe/run.sh", "sim/gpio-probe/run.sh", "sim/lib/gpio_measurements.sp"],
+  "cold_start": {"argv": ["bash", "sim/pdk-smoke/cold-start.sh"], "local_only": true},
+  "pins": {
+    "pdk": {"name": "sky130A", "revision": "f6eeac7dad085ffcc829ccfd721f7b4ce39edcf7"},
+    "tools": {"klt": "0.8.0", "ngspice": "46", "xschem": "3.4.7", "ciel": "2.6.1"}
+  }
+}

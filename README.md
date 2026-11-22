@@ -7,10 +7,19 @@ designed by AI agents driving
 [klayout-tools](https://github.com/2AMLogic/klayout-tools) and the
 open-source xschem + ngspice flow.
 
-**Status: specification phase.** The spec is proposed; nothing is designed yet.
+**Status: spec proposed, cells drawn and rule-checked.** The spec is proposed
+and awaiting review and ratification, so every figure in it is a target. The
+cells and the closed ring are drawn and streamed, and the signoff verdict of
+record ([`signoff/signoff-record.json`](signoff/signoff-record.json)) grades
+**7 of 11** T1 items met — design sources, layout, DRC, LVS, testbenches, repo
+hygiene and structural power delivery. The four unmet items — full corner
+verification, Monte Carlo, post-layout verification and characterization — all
+record `no_evidence`: those campaigns have not run, and the spec rows the first
+two would grade against are not ratified yet. There is no PVT simulation and no
+ESD result.
 
 **Built agent-native.** Every specification, decision record, testbench, and
-line of documentation here is produced by AI agents working from a ratified
+line of documentation here is produced by AI agents working from a written
 spec and an append-only evidence trail — not human-authored work that agents
 merely assisted with. Verification is the product: every claim traces to a
 recorded result under PVT corners. Where the agents hit friction with the
@@ -67,13 +76,61 @@ Maturity ladder: spec ratified → GPIO cell simulated across PVT → cells
 DRC/LVS-clean → ring assembled, DRC/LVS/ERC-clean → shuttle seat → measured
 silicon. **Current position: spec proposed, awaiting EE-key and market-key review, then operator ratification.**
 
+## Reproduce every result
+
+Every result in this repo is a command. From the repo root:
+
+```sh
+# The four CI checkers, the PDK resolver self-test (no PDK needed)
+python3 scripts/ci/test_checkers.py
+python3 -I scripts/ci/check_evidence_format.py .
+python3 -I spec/check_spec.py
+bash sim/lib/test_pdk_env.sh
+
+# Layout generator and stream reproducibility (needs: pip install "klayout==0.30.10")
+python3 layout/tests/test_ring.py
+python3 scripts/ci/check_layout_reproducible.py .
+
+# PDK smoke: models load and converge. Needs the pinned PDK (sim/pdk.json) and ngspice.
+bash sim/pdk-smoke/run.sh /tmp/pdk-smoke-out
+
+# Ring DRC report against the curated sky130 deck: stream and deck hashes still match (DRC is not re-run)
+uvx --from "klayout-tools==0.9.1" klt drc --check signoff/evidence/drc/ring.json
+
+# Signoff verdict of record and the item-10 hygiene attestation, with the pinned grader
+uvx --from "klayout-tools==0.9.1" klt signoff --manifest signoff/block-manifest.json --check signoff/signoff-record.json
+uvx --from "klayout-tools==0.9.1" klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+```
+
+How to regenerate the record and the attestation is in
+[`signoff/README.md`](signoff/README.md). CI (`.github/workflows/ci.yml`) runs
+the same commands.
+
+**What exists, and what does not:** DRC of the ring against the curated
+`sky130` deck reports clean on drawing that includes every device of the GPIO
+netlists and the two supply clamps in `vddio` / `vdd`; the deck does not
+cover every I/O rule (thick-oxide, latch-up and guard-ring rules among
+them); deck coverage is in
+[`signoff/README.md`](signoff/README.md). LVS has run per cell and on the ring: with klt 0.9.1 the GPIO, the two supply clamps, the ring,
+the corner, fillers and `vss` are `match` against their reference netlists (flat comparison; the
+resistor geometry is not compared). Ring ERC reproduces clean against the
+ring's supply spec ([`signoff/evidence/erc/ring.json`](signoff/evidence/erc/ring.json)):
+`VDDIO`, `VDD` and `VSS` are each one island through every abutment seam and
+every declared well-tap tie holds, and a negative control confirms that a ring
+cut at two opposite edges still splits all three. That is supply continuity and
+well ties — not antenna, latch-up or IR drop. There is no ESD result and no PVT
+simulation of any cell. Nothing above claims one.
+
 ## Repo layout
 
 ```
-spec/          ratified spec + decision records
-design/        pad cell schematics (xschem): driver, receiver, level shifter, ESD
-sim/           testbenches + PVT corner results (ngspice)
-layout/        cell and ring GDS + DRC/LVS/ERC reports
+spec/          proposed spec + decision records
+design/        pad cell schematics (xschem) + netlists: driver, receiver, level shifter, ESD
+sim/           testbenches, the PDK pin and a single-corner clamp probe (ngspice)
+layout/        cell and ring GDS + the generator and its tests
+signoff/       DRC/LVS/ERC evidence, the attestations and the signoff record
+ratification/  EE-key and market-key reviewer rubrics
+scripts/       the CI checkers
 measurements/  silicon characterization (empty until tape-out)
 ```
 

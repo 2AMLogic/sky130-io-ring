@@ -1,4 +1,5 @@
-# PDK-free, headless CI: no PDK, ngspice, xschem or klayout is installed or run.
+# PDK-free, headless CI: no PDK, ngspice or xschem is installed or run. The pip
+# `klayout` module is installed only to re-run the layout generator (no PDK).
 # See signoff/README.md for what this does and does not check.
 name: ci
 
@@ -6,11 +7,15 @@ on:
   push:
     branches: [main]
   pull_request:
+  merge_group:
+
+permissions:
+  contents: read
 
 env:
   # The one place the signoff grader is pinned. A bump must regenerate
   # signoff/signoff-record.json in the same PR (signoff/README.md).
-  KLT_VERSION: "0.7.0"
+  KLT_VERSION: "0.9.1"
 
 jobs:
   signoff:
@@ -21,18 +26,33 @@ jobs:
       - name: Checker self-tests (each must reject its seeded defects)
         run: python3 scripts/ci/test_checkers.py
 
+      - name: Layout generator tests and stream reproducibility (klayout module, no PDK)
+        run: |
+          python3 -m pip install "klayout==0.30.10"
+          python3 layout/tests/test_ring.py
+          python3 scripts/ci/check_layout_reproducible.py .
+
       - name: Evidence directories and sim record format
         run: python3 -I scripts/ci/check_evidence_format.py .
 
       - name: Ratified spec, md and json must agree
         run: python3 -I spec/check_spec.py
 
+      - name: Prose citations must agree with the evidence they cite
+        run: python3 -I scripts/ci/check_prose_citations.py .
+
       - name: PDK resolver self-test (fake trees, no PDK needed)
         run: bash sim/lib/test_pdk_env.sh
 
-      - name: Re-grade the block manifest with the pinned grader
+      - name: Design-sources attestation still reproduces (item 1, no xschem)
         run: |
           pipx install "klayout-tools==${KLT_VERSION}"
+          # Re-hashes every inventoried source and netlist and the envelope.
+          # The re-netlist freshness commands are local_only (no xschem or PDK here).
+          klt signoff --attest 1 --inventory design/attest-inventory.json --check signoff/evidence/item1.json
+
+      - name: Re-grade the block manifest with the pinned grader
+        run: |
           set +e
           klt signoff --manifest signoff/block-manifest.json --format json > "$RUNNER_TEMP/fresh.json"
           rc=$?
@@ -55,12 +75,74 @@ jobs:
           diff -u <(python3 -m json.tool signoff/signoff-record.json) <(python3 -m json.tool "$RUNNER_TEMP/fresh.json") || true
           exit 1
 
+      - name: Item 9 attestation must still reproduce (cold start is local-only, reported as skipped)
+        run: |
+          klt signoff --attest 9 --inventory signoff/attest/item9.json --check signoff/evidence/item9.json
+
+      - name: Committed DRC reports must still match the streams and deck (provenance re-hash; DRC not re-run)
+        run: |
+          for r in signoff/evidence/drc/*.json; do
+            klt drc --check "$r"
+          done
+
+      - name: Committed LVS reports must still match the streams and netlists (provenance re-hash; LVS not re-run)
+        run: |
+          for r in signoff/evidence/lvs/*.json; do
+            klt lvs --check "$r"
+          done
+
+      - name: LVS report contents must equal the pinned per-stream expectations
+        run: python3 -I scripts/ci/check_lvs_reports.py .
+
+      - name: Re-derive every committed LVS report from its stream (--rerun; engine pinned to the one the reports used)
+        run: |
+          # An unpinned --rerun drifts on version fields alone: the report diff
+          # includes environment.engine_version and
+          # provenance.klayout_version_mismatch, but the klt pin does not
+          # constrain the klayout engine (2AMLogic/klayout-tools#5601). Pin the
+          # engine to the version recorded in the committed reports, in an
+          # isolated venv so the job's shared pipx env (and the byte-for-byte
+          # signoff-record step) is untouched.
+          ENGINE=$(python3 -c "import json;print(json.load(open('signoff/evidence/lvs/ring.json'))['environment']['engine_version'])")
+          python3 -m venv "$RUNNER_TEMP/lvs-rerun"
+          "$RUNNER_TEMP/lvs-rerun/bin/pip" install --quiet "klayout-tools==${KLT_VERSION}" "klayout==${ENGINE}"
+          for r in signoff/evidence/lvs/*.json; do
+            "$RUNNER_TEMP/lvs-rerun/bin/klt" lvs --check "$r" --rerun
+          done
+
+      - name: T1 item 10 hygiene attestation must reproduce (README, LICENSE, CI commands)
+        run: |
+          klt signoff --attest 10 --inventory signoff/attest/item10.json --check signoff/evidence/item10.json
+
+      - name: Ring ERC must reproduce clean (the three supplies stay separate nets) and the cut ring must still split
+        run: |
+          klt erc --check signoff/evidence/erc/ring.json --rerun
+          python3 -I - <<'PY'
+          import json
+          ring = json.load(open("signoff/evidence/erc/ring.json"))
+          neg = json.load(open("signoff/evidence/erc/ring-negative.json"))
+          assert ring["erc_status"] == "clean" and not ring["erc_findings"], ring["erc_findings"]
+          assert all(n["matched_islands"] == n["expected_islands"] == 1 for n in ring["nets"])
+          assert all(n["matched_islands"] != n["expected_islands"] for n in neg["nets"])
+          PY
+
   append-only:
-    if: github.event_name == 'pull_request'
+    # push is skipped as today; pull_request and merge_group both report (a
+    # skipped required check would stall the merge queue, not pass it).
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09  # v5.1.0
         with:
           fetch-depth: 0
       - name: sim/ records may be added, never edited or deleted
-        run: python3 -I scripts/ci/check_append_only.py "origin/${{ github.base_ref }}"
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          MERGE_BASE_SHA: ${{ github.event.merge_group.base_sha }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = merge_group ]; then
+            BASE="$MERGE_BASE_SHA"
+          else
+            BASE="origin/$BASE_REF"
+          fi
+          python3 -I scripts/ci/check_append_only.py "$BASE"

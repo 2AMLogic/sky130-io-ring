@@ -1,0 +1,5 @@
+** klt-netlist-inputs: {"pdk_variant": "sky130A", "rcfile": "xschemrc", "xschem_version": "3.4.7"}
+** sch_path: design/xschem/sky130_ioring_fill_10.sch
+.subckt sky130_ioring_fill_10 VDDIO VDD VSS
+*.PININFO VDDIO:B VDD:B VSS:B
+.ends

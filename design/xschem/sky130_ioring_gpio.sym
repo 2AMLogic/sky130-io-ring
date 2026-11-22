@@ -1,0 +1,36 @@
+v {xschem version=3.4.7 file_version=1.2
+}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=X1"
+}
+V {}
+S {}
+E {}
+L 4 -100 -120 100 -120 {}
+L 4 100 -120 100 120 {}
+L 4 100 120 -100 120 {}
+L 4 -100 120 -100 -120 {}
+B 5 -102.5 -92.5 -97.5 -87.5 {name=A dir=in}
+T {A} -94 -94 0 0 0.2 0.2 {}
+B 5 -102.5 -72.5 -97.5 -67.5 {name=OE dir=in}
+T {OE} -94 -74 0 0 0.2 0.2 {}
+B 5 -102.5 -52.5 -97.5 -47.5 {name=IE dir=in}
+T {IE} -94 -54 0 0 0.2 0.2 {}
+B 5 -102.5 -32.5 -97.5 -27.5 {name=PU dir=in}
+T {PU} -94 -34 0 0 0.2 0.2 {}
+B 5 -102.5 -12.5 -97.5 -7.5 {name=PD dir=in}
+T {PD} -94 -14 0 0 0.2 0.2 {}
+B 5 97.5 -92.5 102.5 -87.5 {name=Y dir=out}
+T {Y} 94 -94 0 1 0.2 0.2 {}
+B 5 97.5 -72.5 102.5 -67.5 {name=PAD dir=inout}
+T {PAD} 94 -74 0 1 0.2 0.2 {}
+B 5 -62.5 -122.5 -57.5 -117.5 {name=VDDIO dir=inout}
+T {VDDIO} -60 -114 3 0 0.2 0.2 {}
+B 5 -22.5 -122.5 -17.5 -117.5 {name=VDD dir=inout}
+T {VDD} -20 -114 3 0 0.2 0.2 {}
+B 5 -62.5 117.5 -57.5 122.5 {name=VSS dir=inout}
+T {VSS} -60 114 1 0 0.2 0.2 {}
+T {@symname} 0 -134 0 2 0.3 0.3 {}
+T {@name} 106 -120 0 0 0.2 0.2 {}
