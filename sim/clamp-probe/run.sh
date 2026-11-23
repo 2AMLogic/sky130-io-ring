@@ -13,39 +13,15 @@
 set -euo pipefail
 # shellcheck source=../lib/run_common.sh
 source "$(dirname "$0")/../lib/run_common.sh"
+# shellcheck source=../lib/clamp_common.sh
+source "$(dirname "$0")/../lib/clamp_common.sh"
 run_common_setup "${1:-}"
 
 nl="${repo}/design/netlists"
-# The clamp subcircuits are included unchanged. Copies in the snapshot keep the
-# record self-contained; the io netlist's absolute sch_path comment is scrubbed.
-for c in io core; do
-  sed -e "s#/[^ ]*/design/xschem/#\$REPO/design/xschem/#" "${nl}/sky130_ioring_clamp_${c}.spice" \
-    > "${out}/netlists/sky130_ioring_clamp_${c}.spice"
-done
+clamp_snapshot "${nl}"
 
-# tag|subckt|vnom|nmos_model|mult_xmcl (mult is informational: ngspice's [id] of the
-# subcircuit device is already the total, checked against the supply current)
-#   tag io:   VDDIO clamp, thick-oxide family (ESD.7 limits apply)
-#   tag core: VDD clamp, thin-oxide family (no ESD.7 limit on record)
-clamps='
-io|sky130_ioring_clamp_io|5.0|sky130_fd_pr__nfet_g5v0d10v5|400
-core|sky130_ioring_clamp_core|1.8|sky130_fd_pr__nfet_01v8|800
-'
 rises='1u 10u 100u 1m'
-hold_s=5e-5; hold=50u # time at nominal after the ramp (50 tau of the ~1 us trigger) before reading leakage
 hbm_v=2000; hbm_c=100p; hbm_r=1500
-
-# (device : drain gate source) of every clamp transistor, ESD.7 pairs per device
-# name|d|g|s|polarity
-devs='
-mp1|g1|t|vp|p
-mn1|g1|t|0|n
-mp2|g2|g1|vp|p
-mn2|g2|g1|0|n
-mp3|gate|g2|vp|p
-mn3|gate|g2|0|n
-mcl|vp|gate|0|n
-'
 
 emit() { # libpath includepath-prefix
   echo "* clamp-probe: G6 single-corner probe, tt, 27 C"
@@ -80,24 +56,9 @@ emit() { # libpath includepath-prefix
   echo "${sv}"
 
   # ---- power-up ramps: 4 rise times x 2 clamps, sequential in this process
-  local tr stop
+  local tr
   for tr in ${rises}; do
-    stop="$(awk -v tr="${tr}" -v h="${hold}" 'function s(x){u=substr(x,length(x)); v=substr(x,1,length(x)-1)+0;
-      return v*(u=="u"?1e-6:u=="m"?1e-3:u=="n"?1e-9:1)} BEGIN{printf "%.6g", s(tr)+s(h)}')"
-    echo "alter Vr_io pulse = [ 0 5.0 0 ${tr} 1 1 1 ]"
-    echo "alter Vr_core pulse = [ 0 1.8 0 ${tr} 1 1 1 ]"
-    echo "tran $(awk -v t="${stop}" 'BEGIN{printf "%.4g", t/4000}') ${stop} 0 $(awk -v t="${stop}" 'BEGIN{printf "%.4g", t/1000}')"
-    echo "let tend = ${stop}"
-    echo "let nn = length(time)"
-    while IFS='|' read -r tag sub vnom nm mult; do
-      [ -n "${tag}" ] || continue
-      echo "let idpk = maximum(@m.xr${tag}.xmcl.m${nm}[id])"
-      echo "let vgpk = maximum(v(xr${tag}.gate))"
-      echo "let ilk = -i(Vr_${tag})[nn-1]"
-      echo "let ipk = maximum(abs(i(Vr_${tag})))"
-      echo "echo \"RESULT ramp_${tag}_${tr} vnom=${vnom} tr_s=${tr} id_xmcl_pk_A=\$&idpk gate_pk_V=\$&vgpk isup_pk_A=\$&ipk ileak_end_A=\$&ilk\""
-      emit_validity "xr${tag}" "ramp_${tag}_${tr}" "${tag}"
-    done <<< "${clamps}"
+    emit_ramp_step "${tr}" 1
   done
 
   # ---- ESD.2 HBM pulse: 2 kV, 100 pF, 1.5 kohm, one 10 us transient (uic: C starts charged; long enough to see GATE fall)
@@ -114,34 +75,11 @@ emit() { # libpath includepath-prefix
     echo "meas tran tab05_${tag} integ v(ia05_${tag})"
     echo "meas tran tab10_${tag} integ v(ia10_${tag})"
     echo "echo \"RESULT hbm_${tag} vhbm_V=${hbm_v} c_F=${hbm_c} r_ohm=${hbm_r} vp_pk_V=\$&vpk id_xmcl_pk_A=\$&idpk ipulse_pk_A=\$&ipk gate_pk_V=\$&vgpk gate_at_9p9us_V=\$&gend_${tag} vp_at_9p9us_V=\$&vpend_${tag} gate_above_0p5V_s=\$&tab05_${tag} gate_above_1p0V_s=\$&tab10_${tag} decay_tau_s=1.5e-7\""
-    emit_validity "xh${tag}" "hbm_${tag}" "${tag}"
+    emit_validity "xh${tag}" "hbm_${tag}" "${tag}" "vh_${tag}"
   done <<< "${clamps}"
   echo "quit"
   echo ".endc"
   echo ".end"
-}
-
-# Peak |VDS| and |VGS| of every clamp transistor and the ESD.7 comparison.
-emit_validity() { # instance resultname tag
-  local inst="$1" rname="$2" tag="$3" name d g s pol
-  local vpn
-  case "${inst}" in xr*) vpn="vr_${tag}";; xh*) vpn="vh_${tag}";; esac
-  node() { case "$1" in 0) echo "0";; vp) echo "v(${vpn})";; *) echo "v(${inst}.$1)";; esac; }
-  while IFS='|' read -r name d g s pol; do
-    [ -n "${name}" ] || continue
-    echo "let pvds = maximum(abs($(node "${d}") - $(node "${s}")))"
-    echo "let pvgs = maximum(abs($(node "${g}") - $(node "${s}")))"
-    if [ "${tag}" = io ]; then
-      echo "if ( pvds > 11.0 | pvgs > 5.5 )"
-      echo "  set lab = outside_model_validity"
-      echo "else"
-      echo "  set lab = within_esd7_model_range"
-      echo "end"
-    else
-      echo "set lab = no_validity_range_on_record"
-    fi
-    echo "echo \"RESULT esd7_${rname}_${name} vds_pk_V=\$&pvds vgs_pk_V=\$&pvgs validity=\$lab\""
-  done <<< "${devs}"
 }
 
 emit "${SKY130_MODEL_LIB}" "${nl}" > "${work}/probe.sp"

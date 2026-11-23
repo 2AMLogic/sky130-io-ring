@@ -261,11 +261,8 @@ def _opts():
     return o
 
 
-def write_gds(layout, path, top=None):
-    o = _opts()
-    if top is not None:
-        o.select_all_cells()
-    layout.write(str(path), o)
+def write_gds(layout, path):
+    layout.write(str(path), _opts())
 
 
 def sha256_file(path):

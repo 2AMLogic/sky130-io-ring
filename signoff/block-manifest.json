@@ -2,39 +2,15 @@
   "block": "sky130-io-ring",
   "kind": "analog",
   "evidence": {
-    "1": {
-      "file": "signoff/evidence/item1.json",
-      "content_hash": "sha256:6a07964d628538daefbca03be902b35f0388af6f80eefc96d08bfd5747a6c2c5"
-    },
-    "2": {
-      "file": "signoff/evidence/layout-attestation.json",
-      "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6"
-    },
-    "3": {
-      "file": "signoff/evidence/drc/ring.json",
-      "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6"
-    },
-    "4": {
-      "file": "signoff/evidence/lvs/ring.json",
-      "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6"
-    },
-    "9": {
-      "file": "signoff/evidence/item9.json",
-      "content_hash": "sha256:9b689d949fe562bde0abdb166af01a37727de433dce5db39626b1b88ced131a2"
-    },
-    "10": {
-      "file": "signoff/evidence/item10.json",
-      "content_hash": "sha256:d969bc4ead15623ff5b94de8e7c19d018fd9d590d53b02bca1b89164ed567be4"
-    },
+    "1": {"file": "signoff/evidence/item1.json", "content_hash": "sha256:f81ebd0091aa2ac92891e694efed82adb82e3df1fd7e8c972ca8007ef88e5c06"},
+    "2": {"file": "signoff/evidence/layout-attestation.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
+    "3": {"file": "signoff/evidence/drc/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
+    "4": {"file": "signoff/evidence/lvs/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
+    "9": {"file": "signoff/evidence/item9.json", "content_hash": "sha256:74cbcf55503d4f7534f5848cbad5e04da4942a322780e7a8710eb01f136677dc"},
+    "10": {"file": "signoff/evidence/item10.json", "content_hash": "sha256:d969bc4ead15623ff5b94de8e7c19d018fd9d590d53b02bca1b89164ed567be4"},
     "11": [
-      {
-        "file": "signoff/evidence/erc/ring.json",
-        "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6"
-      },
-      {
-        "file": "signoff/evidence/lvs/ring.json",
-        "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6"
-      }
+      {"file": "signoff/evidence/erc/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"},
+      {"file": "signoff/evidence/lvs/ring.json", "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc"}
     ]
   }
 }
