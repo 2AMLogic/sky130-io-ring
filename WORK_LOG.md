@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-11-23
 
+- **PR #197**: signoff: pin clamp_common.sh and smoke_devices.sh in the item-9 inventory
+- **Issue #195** (closed): Signoff item-9 attestation does not pin the sim/lib files its testbenches source (ESD.7 limits now unpinned)
 - **PR #194**: refactor(sim): hoist shared clamp scaffolding into sim/lib/clamp_common.sh
 - **Issue #193** (closed): Dedupe clamp-probe and clamp-trigger-probe: ~100 shared lines incl. ESD.7 limits
 - **PR #190**: refactor: remove dead helpers, unused parameters and duplicate layer alias from layout generator
