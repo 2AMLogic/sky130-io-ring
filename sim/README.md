@@ -18,6 +18,7 @@ revision (for example a stale `~/.volare`) is refused, never used silently.
 | `pdk-smoke/run.sh` (driver skeleton) | mixed | the netlist emitters and model names are sky130; the preamble and record plumbing are shared (`lib/run_common.sh`) |
 | `lib/pdk_env.sh` | sky130 | resolver: pin check, model-library path, corner file layout |
 | `lib/smoke_devices.sh` | sky130 | the four-device smoke table shared by `pdk-smoke` and `corner-skew-probe` |
+| `lib/clamp_common.sh` | sky130 | the clamp tables (subckt/model names), netlist snapshot copy, ramp-step and ESD.7 validity emitters shared by `clamp-probe` and `clamp-trigger-probe`, so the ESD.7 limits live in one place |
 | `lib/test_pdk_env.sh` | sky130 | self-test of the resolver's refusal |
 | `pdk.json` | sky130 | the pin and tool versions |
 

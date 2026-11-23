@@ -17,7 +17,7 @@
         "role": "testbench",
         "path": "sim/clamp-probe/run.sh",
         "passed": true,
-        "content_hash": "sha256:514c0d443345b588a80fa7ecdf2e611d0bf9e21fdf66bd3d50960034a7eeffa2"
+        "content_hash": "sha256:15a24eb6f25c489d918246a0b45a2c9b4f9773bb66d0b096fcc7e87472e3a954"
       },
       {
         "check": "present",
