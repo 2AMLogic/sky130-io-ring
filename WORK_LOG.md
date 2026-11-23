@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-11-23
 
+- **PR #201**: refactor: export standalone cell GDS from the checked ring layout
+- **Issue #200** (closed): Export standalone GDS cells from the checked layout to avoid nine redraws
 - **PR #197**: signoff: pin clamp_common.sh and smoke_devices.sh in the item-9 inventory
 - **Issue #195** (closed): Signoff item-9 attestation does not pin the sim/lib files its testbenches source (ESD.7 limits now unpinned)
 - **PR #194**: refactor(sim): hoist shared clamp scaffolding into sim/lib/clamp_common.sh
