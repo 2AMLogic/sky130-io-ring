@@ -3,14 +3,14 @@
   "kind": "generic",
   "status": "pass",
   "t1_item": 9,
-  "summary": "T1 item 9 (Testbenches shipped): 8/8 attestation checks passed (klt signoff --attest)",
+  "summary": "T1 item 9 (Testbenches shipped): 10/10 attestation checks passed (klt signoff --attest)",
   "source": "signoff/attest/item9.json",
   "attestation": {
     "producer": "klt signoff --attest",
     "inventory_schema_version": 1,
     "hash_algorithm": "sha256-raw-bytes",
-    "check_count": 8,
-    "passed_count": 8,
+    "check_count": 10,
+    "passed_count": 10,
     "checks": [
       {
         "check": "present",
@@ -29,9 +29,23 @@
       {
         "check": "present",
         "role": "testbench",
+        "path": "sim/lib/clamp_common.sh",
+        "passed": true,
+        "content_hash": "sha256:0c1b3c510e1a0ec8c463bcc8eeca7288cde48767b2c7abc404ffc6bcd498aac8"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
         "path": "sim/lib/gpio_measurements.sp",
         "passed": true,
         "content_hash": "sha256:519113985c6204f079a07b04addbd049a9be5cd37eb391ef81dd12b520dda743"
+      },
+      {
+        "check": "present",
+        "role": "testbench",
+        "path": "sim/lib/smoke_devices.sh",
+        "passed": true,
+        "content_hash": "sha256:04b1631a2044ecd022bebfcd5313b522aead7e72054defd11079acd424a028ff"
       },
       {
         "check": "present",
@@ -91,7 +105,7 @@
         "path": "signoff/attest/item9.json",
         "scope": "repo"
       },
-      "content_hash": "sha256:9b689d949fe562bde0abdb166af01a37727de433dce5db39626b1b88ced131a2"
+      "content_hash": "sha256:74cbcf55503d4f7534f5848cbad5e04da4942a322780e7a8710eb01f136677dc"
     }
   }
 }
