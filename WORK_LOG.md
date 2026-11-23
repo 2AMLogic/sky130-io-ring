@@ -3,6 +3,23 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-23
+
+- **PR #190**: refactor: remove dead helpers, unused parameters and duplicate layer alias from layout generator
+- **PR #186**: feat(sim): add G6 follow-up clamp-trigger probe (rise-time bracket, settled leakage)
+- **Issue #189** (closed): Remove dead annulus helper, Draw wrapper, unused parameters/returns, and duplicate layer alias from layout generator
+- **Issue #178** (closed): Gate G6 follow-up probe: resolve the clamp false-trigger transition between 1 us and 10 us supply rise, with a settled leakage
+
+### 2026-11-22
+
+- **PR #185**: test: fold ProseCitations seeded setup into check_after_replacement
+- **Issue #179** (closed): Consolidate repeated setup in 40 prose citation tests
+
+### 2026-11-21
+
+- **PR #182**: feat: add single-corner GPIO probe and PDK-independent measurement deck
+- **Issue #177** (closed): Add the first GPIO testbench: a single-corner (tt) probe of the drawn GPIO cell using the GE/GF rows' measurement definitions
+
 ### 2026-11-19
 
 - **PR #174**: test: define deck/input hash fixtures once in ProseCitations
