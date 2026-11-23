@@ -190,8 +190,8 @@
     "engine": "klayout",
     "engine_version": "0.30.13",
     "netgen_binary": null,
-    "layout_sha256": "8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc",
-    "reference_sha256": "146df4362b9bbf5bc6e7bb050cce0a70f0d5d0b1dcea281aecb37658c59879b8",
+    "layout_sha256": "901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6",
+    "reference_sha256": "81b513b57a139d1125dc15282631db6fb41aca7c36e898f73f859724671a2290",
     "extracted_netlist": null
   },
   "provenance": {
@@ -206,7 +206,7 @@
       "released": true
     },
     "input": {
-      "content_hash": "sha256:8c026a33c7dc51842a84e91aa7f65a137bb5bae7ca792a877b919475806d74cc",
+      "content_hash": "sha256:901963ee25a1cab2503033b7cfdd0d970f5c0c47c337a0c45f5d984261908ca6",
       "role": "layout"
     },
     "klayout_version_mismatch": true
@@ -1078,7 +1078,7 @@
       "pin": false
     },
     {
-      "layout": "\\$66",
+      "layout": "\\$63",
       "reference": "S0_1_VDDIO_1_T",
       "pin": false
     },
@@ -1088,7 +1088,7 @@
       "pin": false
     },
     {
-      "layout": "\\$68",
+      "layout": "\\$64",
       "reference": "S0_3_VDD_1_G1",
       "pin": false
     },
@@ -1278,7 +1278,7 @@
       "pin": true
     },
     {
-      "layout": "\\$112",
+      "layout": "\\$111",
       "reference": "S1_0_GPIO_1_4_N1",
       "pin": false
     },
@@ -1298,12 +1298,12 @@
       "pin": false
     },
     {
-      "layout": "\\$134",
+      "layout": "\\$132",
       "reference": "S1_0_GPIO_1_7_N1",
       "pin": false
     },
     {
-      "layout": "\\$139",
+      "layout": "\\$140",
       "reference": "S1_0_GPIO_1_7_N2",
       "pin": false
     },
@@ -1313,7 +1313,7 @@
       "pin": false
     },
     {
-      "layout": "\\$110",
+      "layout": "\\$109",
       "reference": "S1_0_GPIO_1_PDB",
       "pin": false
     },
@@ -1343,12 +1343,12 @@
       "pin": false
     },
     {
-      "layout": "\\$128",
+      "layout": "\\$129",
       "reference": "S1_0_GPIO_5_RXL",
       "pin": false
     },
     {
-      "layout": "\\$144",
+      "layout": "\\$142",
       "reference": "S1_0_GPIO_5_RXN",
       "pin": false
     },
@@ -1378,7 +1378,7 @@
       "pin": false
     },
     {
-      "layout": "\\$151",
+      "layout": "\\$153",
       "reference": "S1_0_GPIO_L3_INB",
       "pin": false
     },
@@ -1533,12 +1533,12 @@
       "pin": false
     },
     {
-      "layout": "\\$132",
+      "layout": "\\$131",
       "reference": "S1_4_GPIO_1_PDN",
       "pin": false
     },
     {
-      "layout": "\\$143",
+      "layout": "\\$144",
       "reference": "S1_4_GPIO_1_PUB",
       "pin": false
     },
@@ -1558,12 +1558,12 @@
       "pin": false
     },
     {
-      "layout": "\\$133",
+      "layout": "\\$135",
       "reference": "S1_4_GPIO_5_RXL",
       "pin": false
     },
     {
-      "layout": "\\$129",
+      "layout": "\\$128",
       "reference": "S1_4_GPIO_5_RXN",
       "pin": false
     },
@@ -1583,7 +1583,7 @@
       "pin": false
     },
     {
-      "layout": "\\$152",
+      "layout": "\\$151",
       "reference": "S1_4_GPIO_L2_INB",
       "pin": false
     },
@@ -1598,7 +1598,7 @@
       "pin": false
     },
     {
-      "layout": "\\$140",
+      "layout": "\\$139",
       "reference": "S1_4_GPIO_L3_OUTB",
       "pin": false
     },
@@ -1703,7 +1703,7 @@
       "pin": false
     },
     {
-      "layout": "\\$202",
+      "layout": "\\$203",
       "reference": "S2_0_GPIO_1_PUB",
       "pin": false
     },
@@ -1723,12 +1723,12 @@
       "pin": false
     },
     {
-      "layout": "\\$229",
+      "layout": "\\$228",
       "reference": "S2_0_GPIO_5_RXL",
       "pin": false
     },
     {
-      "layout": "\\$244",
+      "layout": "\\$243",
       "reference": "S2_0_GPIO_5_RXN",
       "pin": false
     },
@@ -1918,7 +1918,7 @@
       "pin": false
     },
     {
-      "layout": "\\$243",
+      "layout": "\\$244",
       "reference": "S2_4_GPIO_1_PUB",
       "pin": false
     },
@@ -1943,7 +1943,7 @@
       "pin": false
     },
     {
-      "layout": "\\$226",
+      "layout": "\\$229",
       "reference": "S2_4_GPIO_5_RXN",
       "pin": false
     },
@@ -2118,7 +2118,7 @@
       "pin": false
     },
     {
-      "layout": "\\$332",
+      "layout": "\\$321",
       "reference": "S3_0_GPIO_L1_INB",
       "pin": false
     },
@@ -2128,7 +2128,7 @@
       "pin": false
     },
     {
-      "layout": "\\$331",
+      "layout": "\\$319",
       "reference": "S3_0_GPIO_L2_INB",
       "pin": false
     },
@@ -2138,7 +2138,7 @@
       "pin": false
     },
     {
-      "layout": "\\$330",
+      "layout": "\\$316",
       "reference": "S3_0_GPIO_L3_INB",
       "pin": false
     },
@@ -2208,12 +2208,12 @@
       "pin": false
     },
     {
-      "layout": "\\$313",
+      "layout": "\\$314",
       "reference": "S3_1_VDDIO_1_G2",
       "pin": false
     },
     {
-      "layout": "\\$314",
+      "layout": "\\$313",
       "reference": "S3_1_VDDIO_1_GATE",
       "pin": false
     },
@@ -2333,7 +2333,7 @@
       "pin": false
     },
     {
-      "layout": "\\$335",
+      "layout": "\\$328",
       "reference": "S3_4_GPIO_L1_INB",
       "pin": false
     },
@@ -2343,7 +2343,7 @@
       "pin": false
     },
     {
-      "layout": "\\$334",
+      "layout": "\\$326",
       "reference": "S3_4_GPIO_L2_INB",
       "pin": false
     },
@@ -2353,7 +2353,7 @@
       "pin": false
     },
     {
-      "layout": "\\$333",
+      "layout": "\\$323",
       "reference": "S3_4_GPIO_L3_INB",
       "pin": false
     },
