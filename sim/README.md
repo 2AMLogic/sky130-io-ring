@@ -51,6 +51,7 @@ none is item-5 evidence.
 |---|---|---|
 | `pdk-smoke` | — | the PDK smoke test, not a design probe (`kind: pdk-smoke`, no `README.md`) — documented under [Smoke record](#smoke-record-pdk-smokerecord) below; do the pinned models load and converge? DC op + Id-Vgs of the 1.8 V core and 5 V thick-oxide families |
 | `clamp-probe` | G6 | do the RC supply clamps turn on? `clamp_io` (ESD.4, 5 V) and `clamp_core` (ESD.5, 1.8 V), power-up ramps + HBM pulses |
+| `clamp-trigger-probe` | G6 | where between 1 us and 10 us of supply rise does the false trigger stop (rise-time sweep with 0.25 us refinement), and what was the first probe's negative post-ramp supply current (settling runs at default and tightened solver tolerances)? |
 | `corner-skew-probe` | G2 | does the sky130 skew set (`ff ss sf fs`) move the 5 V thick-oxide devices, or only the 1.8 V core? |
 | `gpio-probe` | GF / GE | first GPIO bench: function, VOH / VOL, edge rate, delays, input thresholds and hysteresis, leakage and pull resistance of the drawn GPIO at `tt`, 27 C, nominal rails (no corner; not item-5 evidence) |
 | `diode-probe` | G1 / ESD.3 | what do the GPIO pad diodes do at the ESD.2 current? (diode areas are unsized placeholders) |
