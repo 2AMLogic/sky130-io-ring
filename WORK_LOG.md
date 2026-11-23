@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-11-23
 
+- **PR #194**: refactor(sim): hoist shared clamp scaffolding into sim/lib/clamp_common.sh
+- **Issue #193** (closed): Dedupe clamp-probe and clamp-trigger-probe: ~100 shared lines incl. ESD.7 limits
 - **PR #190**: refactor: remove dead helpers, unused parameters and duplicate layer alias from layout generator
 - **PR #186**: feat(sim): add G6 follow-up clamp-trigger probe (rise-time bracket, settled leakage)
 - **Issue #189** (closed): Remove dead annulus helper, Draw wrapper, unused parameters/returns, and duplicate layer alias from layout generator
