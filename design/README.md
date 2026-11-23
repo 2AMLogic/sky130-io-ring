@@ -18,12 +18,12 @@ netlist was copied from it.
 bash design/regen.sh            # rewrite design/netlists/*.spice from design/xschem/*.sch
 bash design/regen.sh --check    # write nothing; exit 3 if a netlist drifted from its schematic
 bash design/netlist.sh [--check] <cell>      # one cell
-klt signoff --attest 1 --inventory design/attest-inventory.json -o signoff/evidence/item1.json
-klt signoff --attest 1 --inventory design/attest-inventory.json --check signoff/evidence/item1.json
+uvx --from "klayout-tools==0.9.1" klt signoff --attest 1 --inventory design/attest-inventory.json -o signoff/evidence/item1.json
+uvx --from "klayout-tools==0.9.1" klt signoff --attest 1 --inventory design/attest-inventory.json --check signoff/evidence/item1.json
 ```
 
 Needs `klt` >= 0.9.2 (`--relative-paths` in `netlist.sh`; `--attest` alone
-needs only >= 0.8), xschem and the pinned PDK (`sim/pdk.json`).
+needs only >= 0.8; the item-1 envelope must be produced by the CI pin 0.9.1, a dev build writes fields the pin does not and the check drifts), xschem and the pinned PDK (`sim/pdk.json`).
 Serial, one `klt netlist` (one xschem process) per cell, local; never call
 `xschem` directly. `xschemrc` sets the symbol path (this directory, then the
 PDK's `libs.tech/xschem` from `$PDK_ROOT`) and `top_is_subckt` so every netlist

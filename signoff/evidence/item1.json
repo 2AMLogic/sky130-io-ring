@@ -847,12 +847,11 @@
         "passed": true,
         "local_only": true
       }
-    ],
-    "description": "Item 1 (design sources) for the sky130 I/O ring: xschem schematics and symbols, plus the SPICE netlists klt netlist derives from them. Built against the proposed (unratified) spec; not ESD-rated."
+    ]
   },
   "provenance": {
-    "klt_version": "0.9.3.dev2626+g0e5dd121c7d2",
-    "klayout_version": "0.30.12",
+    "klt_version": "0.9.1",
+    "klayout_version": null,
     "pdk": null,
     "deck": null,
     "input": {
