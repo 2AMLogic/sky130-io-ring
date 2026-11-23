@@ -5,6 +5,8 @@ triage role. Newest first.
 
 ### 2026-11-23
 
+- **PR #188**: feat: widen GPIO pull-up PMOS to W=2.5 for proposed GE.10 pull range
+- **Issue #181** (closed): GPIO pull-up resistance is ~98 kohm at tt, outside the proposed GE.10 range
 - **PR #201**: refactor: export standalone cell GDS from the checked ring layout
 - **Issue #200** (closed): Export standalone GDS cells from the checked layout to avoid nine redraws
 - **PR #197**: signoff: pin clamp_common.sh and smoke_devices.sh in the item-9 inventory
