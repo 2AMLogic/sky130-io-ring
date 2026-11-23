@@ -189,7 +189,7 @@ def assemble(name, calls, pins):
 
 
 def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, land=None,
-                no_export=(), label_nets=()):
+                label_nets=()):
     """Cell for `sname`.
 
     inline: draw the devices of called subcircuits in this cell's own rows (one channel)
@@ -200,7 +200,6 @@ def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, l
       x left of every row; their tracks are ordered so no track crosses a spine.
     land: (net, x): the net's track is the highest and extends to x, where the parent lands a
       via stack; the track's end position is returned in Built.extra["land"].
-    no_export: pins that leave by spine / land instead of a met3 stub.
     label_nets: nets that get a name label on their track (top-level pins of the design that
       no parent cell exports).
     """
@@ -309,7 +308,7 @@ def build_block(ctx, sname, inline=True, assign=None, x_left=0.7, spines=None, l
     wcell = max(wn, wp + dx) + 0.7
 
     # ---- export columns
-    pins_out = [p for p in sub.pins if p not in no_export]
+    pins_out = list(sub.pins)
     taken = [p.x for p in ports if p.kind == "m3"]
     while True:
         try:

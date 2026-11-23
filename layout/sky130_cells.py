@@ -18,6 +18,8 @@ vddio / vdd, the supply clamp devices (sky130_clamp.py). Nothing here is
 ESD-rated; DRC and LVS results are in signoff/ (LVS of the GPIO is a mismatch
 on the netlist's diode cards only).
 """
+import functools
+
 import klayout.db as db
 
 import ringgeom as g
@@ -234,7 +236,7 @@ def build_edge(ctx, kind, w):
         if kind in ("vddio", "vdd"):
             net = "VDDIO" if kind == "vddio" else "VDD"
             b0, b1 = RAIL_BANDS[net]
-            clamp.build_clamp(clamp.Draw(ctx, cell), kind == "vdd",
+            clamp.build_clamp(functools.partial(ctx.add, cell), kind == "vdd",
                               (ctx.rail_layer[net], (b0 + b1) / 2), width=w)
     return cell
 
