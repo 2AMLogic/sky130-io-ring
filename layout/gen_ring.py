@@ -265,6 +265,12 @@ def write_gds(layout, path):
     layout.write(str(path), _opts())
 
 
+def write_cell_gds(layout, cell, path):
+    o = _opts()
+    o.select_cell(cell.cell_index())
+    layout.write(str(path), o)
+
+
 def sha256_file(path):
     return "sha256:" + hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -279,11 +285,8 @@ def generate(out_dir, tech):
         raise SystemExit("layout self-check failed:\n  " + "\n  ".join(bad))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    for k in cells:
-        cl = db.Layout()
-        cl.dbu = g.DBU
-        tech.build_cells(cl, params, [k])
-        write_gds(cl, out / f"{tech.PREFIX}{k}.gds")
+    for k, cell in cells.items():
+        write_cell_gds(layout, cell, out / f"{tech.PREFIX}{k}.gds")
     ring = out / f"{tech.PREFIX}{TOP}.gds"
     write_gds(layout, ring)
     return ring, params, size
