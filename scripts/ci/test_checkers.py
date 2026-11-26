@@ -73,6 +73,15 @@ class EvidenceFormat(unittest.TestCase):
             self.assertEqual(n, 1)
             self.assertTrue(errors)
 
+            rerun = rec.with_name("record-mpu-w2p5")
+            rerun.mkdir()
+            (rerun / "record.json").write_text("{not json")
+            (rerun / "probe.log").write_text("simulation output")
+            errors, n = ef.check_tree(root)
+            self.assertEqual(n, 2)
+            expected = "sim/exp/record-mpu-w2p5/record.json: not valid JSON"
+            self.assertTrue(any(e.startswith(expected) for e in errors), errors)
+
     def test_tree_missing_readme_rejected(self):
         with tempfile.TemporaryDirectory() as t:
             errors, _ = ef.check_tree(t)

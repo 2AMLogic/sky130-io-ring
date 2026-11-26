@@ -2,7 +2,7 @@
 """PDK-free evidence-format check. Stdlib only.
 
   1. Each evidence directory (design, layout, sim, measurements, spec) has a README.md.
-  2. Each sim record (sim/<experiment>/record/*.json or .../records/*.json) is a JSON
+  2. Each .json file under a record* directory inside sim/ must be a JSON
      object with the required fields, a 40-hex pdk_revision, and repo-relative paths
      only (no absolute path, no `..`, no drive letter, no home directory). A key
      counts as path-shaped only when the path word (`log`, `path`, `file`,
@@ -53,8 +53,11 @@ GRANDFATHERED_FIELD_NAMES = {"sim/diode-unit-probe/record/record.json"}
 
 def is_record(rel):
     parts = Path(rel).parts
-    return (parts[0] == "sim" and rel.endswith(".json")
-            and any(p in ("record", "records") for p in parts[1:-1]))
+    return (
+        parts[0] == "sim"
+        and rel.endswith(".json")
+        and any(p.startswith("record") for p in parts[1:-1])
+    )
 
 
 def bad_path(value, base=None):
