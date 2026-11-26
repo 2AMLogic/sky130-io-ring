@@ -3,6 +3,13 @@
 Chronological record of merged PRs and closed issues, maintained by the Guide
 triage role. Newest first.
 
+### 2026-11-26
+
+- **PR #209**: fix: validate simulation JSON in named rerun directories
+- **Issue #208** (closed): Use the same record-directory rule in both simulation evidence checks
+- **PR #207**: docs: link ROADMAP.md from the README repo layout
+- **Issue #92** (closed): Link the roadmap from the README repo layout and refresh item 10
+
 ### 2026-11-23
 
 - **Issue #100** (closed): Record the sim evidence policy, clean up clamp-probe node mapping, and re-attest item 9
