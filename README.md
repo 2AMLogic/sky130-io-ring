@@ -134,6 +134,9 @@ scripts/       the CI checkers
 measurements/  silicon characterization (empty until tape-out)
 ```
 
+[`ROADMAP.md`](ROADMAP.md) explains the record's verdict item by item and
+orders the remaining work.
+
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
